@@ -61268,3 +61268,69 @@ transition:0.3s;
 background:#09c5df;
 transform:translateY(-2px);
 }
+
+/* Footer text justify */
+.footer-widget p{
+text-align: justify;
+}
+
+/* Reach Us section spacing improve */
+.footer-widget p{
+margin-bottom: 10px;
+line-height: 1.7;
+}
+
+/* Footer links spacing */
+.footer-menu ul li{
+margin-bottom: 8px;
+}
+
+/* Equal spacing footer columns */
+.footer-top .row{
+display: flex;
+justify-content: space-between;
+align-items: flex-start;
+flex-wrap: wrap;
+}
+
+/* Make all columns equal */
+.footer-top .row > div{
+flex: 1;
+min-width: 220px;
+padding: 0 15px;
+}
+
+/* Align content properly */
+.footer-widget{
+height: 100%;
+}
+
+.footer-title{
+margin-bottom: 15px;
+}
+
+.footer-widget p{
+text-align: justify;
+line-height: 1.7;
+}
+/* Space between description and next column */
+.footer-top .col-xl-3:first-child{
+margin-right: 30px;
+}
+.footer-bottom .copyright{
+text-align: center;
+justify-content: center;
+}
+
+.footer-bottom .copyright-text{
+width: 100%;
+}
+/* Compact middle sections */
+.footer-menu ul li{
+margin-bottom: 6px;
+}
+
+/* Give more breathing space to Reach Us */
+.footer-widget:last-child{
+padding-left: 20px;
+}
