@@ -61079,3 +61079,26 @@ ul li {
 }
 
 /*# sourceMappingURL=style.css.map */
+/* Book button alignment fix */
+.book-btn-wrapper {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+}
+
+/* Button styling according to theme */
+.book-btn {
+    background: linear-gradient(45deg, #0d6efd, #0dcaf0); /* theme gradient */
+    color: #fff;
+    padding: 8px 20px;
+    border-radius: 6px;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: 0.3s;
+}
+
+/* Hover effect */
+.book-btn:hover {
+    background: linear-gradient(45deg, #0b5ed7, #0aa2c0);
+    color: #fff;
+}
