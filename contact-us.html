@@ -31,8 +31,7 @@
 	<!-- Apple Touch Icon -->
 	<link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png">
 
-	<!-- Theme Settings Js -->
-	<script src="assets/js/theme-script.js" type="9390a872e2078728d8708dc7-text/javascript"></script>
+	
 
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -73,12 +72,12 @@
 			</button>
 		</div>
 
-		<!-- Header -->
-		<header class="header header-default inner-header">
+	  <!-- Page Header -->
+	<header class="header header-default inner-header">
 		<div class="container">
 			<nav class="navbar navbar-expand-lg header-nav">
 				<div class="navbar-header">
-					<a id="mobile_btn" href="search-2.html#">
+					<a id="mobile_btn" href="javascript:void(0);">
 						<i class="fa-solid fa-bars"></i>
 					</a>
 					<a href="index.html" class="navbar-brand logo">
@@ -91,7 +90,7 @@
 							<a href="index.html" class="menu-logo">
 								<img src="assets/img/logo.svg" class="img-fluid" alt="Logo">
 							</a>
-							<a id="menu_close" class="menu-close" href="search-2.html#">
+							<a id="menu_close" class="menu-close" href="javascript:void(0);">
 								<i class="fas fa-times"></i>
 							</a>
 						</div>
@@ -110,14 +109,16 @@
 							</li>
 
 							<li class="has-submenu">
-								<a href="#" class="main-menu">Service <span><i
-											class="fa-solid fa-chevron-down"></i></span></a>
-								<ul class="submenu sub-menu-one sub-menu-default">
-									<li><a href="search.html">Hospital Services </a></li>
-									<li><a href="product-all.html">Gynecology services</a></li>
-									<li><a href="product-description.html">Orthopedic Services</a></li>
-								</ul>
-							</li>
+    <a href="#" class="main-menu" onclick="toggleMobileSubmenu(this); return false;">
+        Service 
+        <span><i class="fa-solid fa-chevron-down"></i></span>
+    </a>
+    <ul class="submenu sub-menu-one sub-menu-default">
+        <li><a href="search.html">Hospital Services</a></li>
+        <li><a href="product-all.html">Gynecology services</a></li>
+        <li><a href="product-description.html">Orthopedic Services</a></li>
+    </ul>
+</li>
 							<li class="has-submenu">
 								<a href="contact-us.html" class="main-menu">Contact Us </a>
 
@@ -130,15 +131,14 @@
 				</div>
 
 				<li>
-					<a href="login.html" class="btn btn-md btn-primary-gradient">
-						<i class="isax isax-lock-1 me-2"></i><span>Book Now</span>
-					</a>
+					<a href="login.html" class="btn btn-md btn-primary-gradient d-none d-lg-inline-block">
+    <i class="isax isax-lock-1 me-2"></i><span>Book Now</span>
+</a>
 				</li>
 
 			</nav>
 		</div>
 	</header>
-		<!-- /Header -->
 
 		<!-- Breadcrumb -->
 		<div class="breadcrumb-bar">
@@ -437,24 +437,24 @@
 	</div>
 	<!-- end offcanvas -->
 
-	<!-- jQuery -->
-	<script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-	<script src="assets/js/jquery-3.7.1.min.js" type="9390a872e2078728d8708dc7-text/javascript"></script>
-
-	<!-- Bootstrap Core JS -->
-	<script src="assets/js/bootstrap.bundle.min.js" type="9390a872e2078728d8708dc7-text/javascript"></script>
-
-	<!-- Daterangepikcer JS -->
-	<script src="assets/js/moment.min.js" type="9390a872e2078728d8708dc7-text/javascript"></script>
-	<script src="assets/plugins/daterangepicker/daterangepicker.js"
-		type="9390a872e2078728d8708dc7-text/javascript"></script>
-
-	<!-- Fancybox JS -->
-	<script src="assets/plugins/fancybox/jquery.fancybox.min.js"
-		type="9390a872e2078728d8708dc7-text/javascript"></script>
-
-	<!-- Custom JS -->
-	<script src="assets/js/script.js" type="9390a872e2078728d8708dc7-text/javascript"></script>
+			<!-- Footer End -->
+    <!-- ==================== /Footer ==================== -->
+       <!-- JS Scripts -->
+    <script src="assets/js/jquery-3.7.1.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/feather.min.js"></script>
+    <script src="assets/js/owl.carousel.min.js"></script>
+    <script src="assets/js/slick.js"></script>
+    <script src="assets/js/jquery.waypoints.min.js"></script>
+    <script src="assets/js/jquery.counterup.min.js"></script>
+    <script src="assets/js/moment.min.js"></script>
+    <script src="assets/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="assets/js/circle-progress.min.js"></script>
+    <script src="assets/js/skrollr.min.js"></script>
+    <script src="assets/js/backToTop.js"></script>
+    <script src="assets/js/theme-script.js"></script>
+    <script src="assets/js/script.js"></script>
+    <!-- /JS Scripts -->
 
 	<script src="../../cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js"
 		data-cf-settings="9390a872e2078728d8708dc7-|49" defer></script>
