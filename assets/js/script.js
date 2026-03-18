@@ -130,25 +130,40 @@ Version      : 1.3
 
 	// Mobile menu sidebar overlay
 
-	$('body').append('<div class="sidebar-overlay"></div>');
-	$(document).on('click', '#mobile_btn', function () {
-		$('main-wrapper').toggleClass('slide-nav');
-		$('.sidebar-overlay').toggleClass('opened');
-		$('html').toggleClass('menu-opened');
-		return false;
-	});
+	$(document).ready(function() {
 
-	$(document).on('click', '.sidebar-overlay', function () {
-		$('html').removeClass('menu-opened');
-		$(this).removeClass('opened');
-		$('main-wrapper').removeClass('slide-nav');
-	});
+    $('body').append('<div class="sidebar-overlay"></div>');
+    
+    $(document).on('click', '#mobile_btn', function () {
+        $('.main-wrapper').toggleClass('slide-nav');
+        $('.sidebar-overlay').toggleClass('opened');
+        $('html').toggleClass('menu-opened');
+        return false;
+    });
 
-	$(document).on('click', '#menu_close', function () {
-		$('html').removeClass('menu-opened');
-		$('.sidebar-overlay').removeClass('opened');
-		$('main-wrapper').removeClass('slide-nav');
-	});
+    $(document).on('click', '.sidebar-overlay', function () {
+        $('html').removeClass('menu-opened');
+        $(this).removeClass('opened');
+        $('.main-wrapper').removeClass('slide-nav');
+    });
+
+    $(document).on('click', '#menu_close', function () {
+        $('html').removeClass('menu-opened');
+        $('.sidebar-overlay').removeClass('opened');
+        $('.main-wrapper').removeClass('slide-nav');
+    });
+
+    // Tooltip
+    if ($('[data-bs-toggle="tooltip"]').length > 0) {
+        var tooltipTriggerList = [].slice.call(
+            document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        );
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    }
+
+}); // document.ready end
 
 	// Tooltip
 
@@ -4715,5 +4730,4 @@ document.querySelectorAll(".animate-button").forEach(btn => {
 		container.appendChild(span);
 	});
 });
-
 
