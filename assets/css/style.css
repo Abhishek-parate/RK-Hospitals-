@@ -328,7 +328,32 @@
   display: -ms-inline-flexbox;
   display: inline-flex;
 }
+.navbar-brand.logo img {
+  height: 70px;
+  width: auto;
+  object-fit: contain;
+}
 
+@media (max-width: 991.98px) {
+  .navbar-brand.logo img {
+    height: 50px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .navbar-brand.logo img {
+    height: 40px;
+  }
+}
+.footer.inner-footer .footer-top {
+  padding-top: 60px !important;
+  padding-bottom: 60px !important;
+}
+
+.footer.inner-footer .footer-widget {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
 .consultation-types, .booking-date, .booking-range .btn, .contact-card .card-body, .signup-info, .about-contact, .testimonial-info, .pricing-header-info, .booking-doctor-left, .booking-doctor-right p, .lang-dropdown .dropdown-toggle, .lang-dropdown .dropdown-menu .dropdown-item, .shopping-cart-amount, .browse-categorie .categorie-dropdown .dropdown-toggle, .browse-categorie .categorie-dropdown .dropdown-menu .dropdown-item, .welcome-grid .welcome-info, .seller-grid, .trusted-info .trusted-text h6, .products-card .product-content .product-cart, .coupon-card, .footer.pharmacy-footer .top-footer, .footer.pharmacy-footer .mid-footer .footer-links .app-store-links, .filter-grid h4 a, .doctor-filter-availability, .doctor-filter-option, .doctor-filter-sort, .doctor-widget-one .doc-location, .doctor-widget-one .clini-infos ul li, .booking-date.choose-date-book, .doc-pro-location p, .articles-info, .flag-dropdown .dropdown-toggle, .flag-dropdown .dropdown-menu .dropdown-item {
   display: flex;
   display: -webkit-flex;
@@ -45511,22 +45536,23 @@ ul li {
 }
 
 .appointment-section {
-  background: url("../img/about/appointment.jpg") no-repeat;
-  background-size: cover;
-  background-position: top center;
-  background-attachment: fixed;
+  background: url("../img/booking.webp") no-repeat center center / cover;
+  background-attachment: scroll;
   position: relative;
   padding: 100px 0;
   z-index: 1;
 }
+
 @media (max-width: 767.98px) {
   .appointment-section {
     padding: 50px 0;
   }
 }
+
 .appointment-section::before {
   content: "";
-  background: linear-gradient(var(--primary), var(--primary)) no-repeat top right/70% 4px, linear-gradient(180.99deg, rgba(0, 0, 0, 0) -1.04%, rgba(0, 0, 0, 0.9) 86.12%);
+  background: linear-gradient(var(--primary), var(--primary)) no-repeat top right/70% 4px,
+              linear-gradient(180.99deg, rgba(0, 0, 0, 0) -1.04%, rgba(0, 0, 0, 0.9) 86.12%);
   position: absolute;
   top: 0;
   left: 0;
@@ -45534,6 +45560,7 @@ ul li {
   height: 100%;
   z-index: -1;
 }
+
 .appointment-section::after {
   content: "";
   background: var(--primary);
@@ -48818,6 +48845,7 @@ ul li {
 }
 .dark-mode .mission-item-five .mission-icon {
   background: #0F172A;
+  
 }
 .dark-mode .work-item-two .work-info .work-icon img {
   filter: brightness(0) invert(1);
@@ -51006,6 +51034,21 @@ ul li {
   filter: brightness(0) invert(1);
 }
 .work-item-two:hover .count-number {
+  color: var(--primary);
+}
+.work-item-two:first-child {
+  border-color: var(--primary);
+}
+
+.work-item-two:first-child .work-icon {
+  background: var(--primary);
+}
+
+.work-item-two:first-child .work-icon img {
+  filter: brightness(0) invert(1);
+}
+
+.work-item-two:first-child .count-number {
   color: var(--primary);
 }
 .work-item-ten {
@@ -53200,6 +53243,21 @@ ul li {
     top: -30px;
   }
 }
+.hero-banner-section {
+  width: 100vw;        /* ✅ viewport full width */
+  margin-left: calc(-1 * (100vw - 100%) / 2);  /* ✅ center se bahar nikaal */
+  overflow: hidden;
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.hero-banner-img img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
 .banner-section-six .icon-one {
   position: absolute;
   bottom: 11%;
@@ -53230,6 +53288,7 @@ ul li {
     left: -57px;
   }
 }
+
 .banner-section-seven {
   background: linear-gradient(180deg, #1565C0 0%, #1013B5 100%);
   background-size: cover;
@@ -56185,6 +56244,109 @@ ul li {
     display: none;
   }
 }
+/* Team Section */
+.rk-team-section {
+  padding: 80px 0;
+  background: #fff;
+}
+
+.rk-team-header {
+  margin-bottom: 50px;
+}
+
+.rk-sub-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+  text-decoration: underline;
+}
+
+.rk-title {
+  font-size: 36px;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+.rk-title span {
+  color: var(--primary);
+  font-style: italic;
+}
+
+/* Card */
+.rk-doctor-card {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  background: #fff;
+  transition: transform 0.3s ease;
+}
+
+.rk-doctor-card:hover {
+  transform: translateY(-6px);
+}
+
+/* Image */
+.rk-doctor-img {
+  width: 100%;
+  height: 450px;
+  overflow: hidden;
+}
+
+.rk-doctor-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.rk-doctor-card:hover .rk-doctor-img img {
+  transform: scale(1.04);
+}
+
+/* Info */
+.rk-doctor-info {
+  padding: 20px 24px;
+  border-left: 4px solid var(--primary);
+}
+
+.rk-doctor-info h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.rk-doctor-info h3 a {
+  color: #1a1a2e;
+  text-decoration: none;
+}
+
+.rk-doctor-info h3 a:hover {
+  color: var(--primary);
+}
+
+.rk-doctor-info p {
+  font-size: 14px;
+  color: #777;
+  margin: 0;
+}
+
+/* Mobile */
+@media (max-width: 767.98px) {
+  .rk-team-section {
+    padding: 50px 0;
+  }
+  .rk-doctor-img {
+    height: 320px;
+  }
+  .rk-title {
+    font-size: 24px;
+  }
+}
 .team-section-six {
   position: relative;
 }
@@ -56378,6 +56540,7 @@ ul li {
 .team-item-six .team-content .custom-title {
   margin-bottom: 8px;
 }
+
 .team-item-six .team-content p {
   margin-bottom: 0px;
 }
@@ -59631,15 +59794,18 @@ ul li {
   position: relative;
   text-align: center;
 }
+
+/* ✅ Solid red color, no stroke outline */
 .counter-item-seven h2 {
   font-size: 80px;
   margin-bottom: 4px;
-  transition: all 1.6s;
-  color: transparent;
-  -webkit-text-stroke: 1px var(--primary);
-  -webkit-font-smoothing: antialiased;
   transition: all 0.6s ease;
+  color: var(--primary);           /* solid fill instead of transparent */
+  -webkit-text-stroke: 0px;        /* removes the outline stroke */
+  -webkit-text-fill-color: var(--primary); /* ensures solid color in webkit */
+  -webkit-font-smoothing: antialiased;
 }
+
 @media (max-width: 991.98px) {
   .counter-item-seven h2 {
     font-size: 60px;
@@ -59650,21 +59816,19 @@ ul li {
     font-size: 42px;
   }
 }
+
 .counter-item-seven p {
   margin-bottom: 0;
 }
+
+/* ✅ Hover: only subtle lift, no color change */
 .counter-item-seven:hover {
   background: url("../img/bg/circle-bg.png") no-repeat;
   background-position: center;
   transform: translateY(-4px);
 }
-.counter-item-seven:hover h2 {
-  background: var(--primary-gradient);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -webkit-text-stroke: 1px transparent;
-}
+
+/* ✅ Remove the hover h2 block entirely — no gradient, no stroke change */
 .counter-item-ten {
   transition: all 1.6s;
   position: relative;
