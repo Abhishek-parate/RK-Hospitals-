@@ -11473,7 +11473,99 @@ select:focus {
   border-color: #ff6b35;
   outline: none;
 }
+  /* Footer base */
+  .footer {
+    background-color: #e8f0f8;
+    font-family: 'Nunito', sans-serif;
+  }
 
+  .footer-top {
+    padding: 48px 0 40px;
+  }
+
+    /* All 5 columns equal width */
+  .footer-top .row {
+    --bs-gutter-x: 1.5rem;
+  }
+
+  .footer-widget {
+    padding-right: 8px;
+  }
+
+    /* Logo */
+  .footer-logo img {
+    height: 75px;
+    width: auto;
+    object-fit: contain;
+  }
+
+    /* Description — 3 lines max */
+  .footer-widget p {
+    font-size: 13.5px;
+    color: #555;
+    line-height: 1.7;
+   
+    margin-bottom: 0;
+  }
+
+    /* Section titles */
+  .footer-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 18px;
+  }
+
+    /* Nav links */
+  .footer-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .footer-menu ul li {
+    margin-bottom: 11px;
+  }
+
+  .footer-menu ul li a {
+    font-size: 13.5px;
+    color: #555;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-menu ul li a:hover {
+    color: #c0392b;
+  }
+
+    /* Reach Us */
+  .footer-widget strong {
+    color: #1a1a2e;
+    font-weight: 700;
+  }
+
+    /* Dividers between columns */
+  .footer-top .col-xl-2,
+  .footer-top .col-xl-4 {
+    border-right: 1px solid rgba(0,0,0,0.08);
+  }
+
+  .footer-top .col-xl-4 {
+    border-right: none;
+  }
+
+    /* Footer bottom bar */
+  .footer-bottom {
+    background: #d0dcea;
+    padding: 14px 0;
+    border-top: 1px solid rgba(0,0,0,0.1);
+  }
+
+  .footer-bottom p {
+    font-size: 13px;
+    color: #555;
+    margin: 0;
+  }
 /****** UTILS ******/
 .footer {
   background-color: #15558d;
@@ -61443,7 +61535,72 @@ transition:0.3s;
 background:#09c5df;
 transform:translateY(-2px);
 }
+/* Wrap labels in a scrollable flex container */
+.tabs-scroll-wrapper {
+  display: flex;
+  overflow-x: auto;          /* enables horizontal scroll */
+  gap: 10px;
+  padding: 0 16px 10px 16px;
+  scrollbar-width: none;     /* hide scrollbar - Firefox */
+  -ms-overflow-style: none;  /* hide scrollbar - IE */
+}
 
+.tabs-scroll-wrapper::-webkit-scrollbar {
+  display: none;             /* hide scrollbar - Chrome/Safari */
+}
+
+/* Prevent labels from shrinking or wrapping */
+.service-tabs label {
+  flex-shrink: 0;            /* keeps label at its natural width */
+  white-space: nowrap;       /* prevents text from wrapping */
+  padding: 10px 18px;
+  background: #f4f6f9;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
+  transition: 0.3s;
+  border: 2px solid transparent;
+}
+
+.service-tabs label:hover {
+  background: #0de0fe22;
+  color: #0de0fe;
+  border-color: #0de0fe;
+}
+
+/* Active tab state */
+#tab1:checked ~ .tabs-scroll-wrapper label[for="tab1"],
+#tab2:checked ~ .tabs-scroll-wrapper label[for="tab2"],
+#tab3:checked ~ .tabs-scroll-wrapper label[for="tab3"],
+#tab4:checked ~ .tabs-scroll-wrapper label[for="tab4"] {
+  background: #0de0fe;
+  color: white;
+  border-color: #0de0fe;
+}
+
+/* Tab content grid */
+.tab-content {
+  display: none;
+  margin-top: 20px;
+  padding: 0 16px;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+#tab1:checked ~ .content1,
+#tab2:checked ~ .content2,
+#tab3:checked ~ .content3,
+#tab4:checked ~ .content4 {
+  display: grid;
+}
+
+/* Single column on small screens */
+@media (max-width: 400px) {
+  .tab-content {
+    grid-template-columns: 1fr;
+  }
+}
 /* Footer text justify */
 .footer-widget p{
 text-align: justify;
