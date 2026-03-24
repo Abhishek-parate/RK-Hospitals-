@@ -47,15 +47,52 @@ Version      : 1.3
     init();
 }
 
-	// JQuery counterUp
 
-	if ($('.counter').length > 0) {
-		$('.counter').counterUp({
-			delay: 10,
-			time: 2000
-		});
-		$('.counter').addClass('animated fadeInDownBig');
-	}
+if ($('.counter').length > 0) {
+    
+    function animateCounter(el) {
+        if ($(el).hasClass('counted')) return;
+        $(el).addClass('counted');
+        
+        var target = parseInt($(el).text());
+        var duration = 2000;
+        var start = 0;
+        var startTime = null;
+
+        function step(timestamp) {
+            if (!startTime) startTime = timestamp;
+            var progress = Math.min((timestamp - startTime) / duration, 1);
+            // Easing - smooth end
+            var eased = progress < 1 ? 1 - Math.pow(1 - progress, 3) : 1;
+            var current = Math.floor(eased * target);
+            $(el).text(current);
+            if (progress < 1) {
+                requestAnimationFrame(step);
+            } else {
+                $(el).text(target); // final exact value
+            }
+        }
+        requestAnimationFrame(step);
+    }
+
+
+    $(window).on('load', function() {
+        setTimeout(function() {
+            $('.counter').each(function() {
+                animateCounter(this);
+            });
+        }, 100);
+    });
+
+    
+    if (document.readyState === 'complete') {
+        setTimeout(function() {
+            $('.counter').each(function() {
+                animateCounter(this);
+            });
+        }, 100);
+    }
+}
 
 	// Textarea Text Count
 
