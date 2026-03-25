@@ -51,7 +51,7 @@
                     <a href="index.html" class="logo">
 						<img src="assets/img/logo.png" alt="Logo">
 					</a>
-					<a href="index.html" class="logo logo-small">
+					<a href="index.php" class="logo logo-small">
 						<img src="assets/img/logo-small.png" alt="Logo" width="30" height="30">
 					</a>
                 </div>
@@ -102,50 +102,12 @@
 											</div>
 										</a>
 									</li>
-									<li class="notification-message">
-										<a href="index.html#">
-											<div class="notify-block d-flex">
-												<span class="avatar avatar-sm flex-shrink-0">
-													<img class="avatar-img rounded-circle" alt="User Image" src="assets/img/patients/patient1.jpg">
-												</span>
-												<div class="media-body flex-grow-1">
-													<p class="noti-details"><span class="noti-title">Charlene Reed</span> has booked her appointment to <span class="noti-title">Dr. Ruby Perrin</span></p>
-													<p class="noti-time"><span class="notification-time">6 mins ago</span></p>
-												</div>
-											</div>
-										</a>
-									</li>
-									<li class="notification-message">
-										<a href="index.html#">
-											<div class="notify-block d-flex">
-												<span class="avatar avatar-sm flex-shrink-0">
-													<img class="avatar-img rounded-circle" alt="User Image" src="assets/img/patients/patient2.jpg">
-												</span>
-												<div class="media-body flex-grow-1">
-												<p class="noti-details"><span class="noti-title">Travis Trimble</span> sent a amount of $210 for his <span class="noti-title">appointment</span></p>
-												<p class="noti-time"><span class="notification-time">8 mins ago</span></p>
-												</div>
-											</div>
-										</a>
-									</li>
-									<li class="notification-message">
-										<a href="index.html#">
-											<div class="notify-block d-flex">
-												<span class="avatar avatar-sm flex-shrink-0">
-													<img class="avatar-img rounded-circle" alt="User Image" src="assets/img/patients/patient3.jpg">
-												</span>
-												<div class="media-body flex-grow-1">
-													<p class="noti-details"><span class="noti-title">Carl Kelly</span> send a message <span class="noti-title"> to his doctor</span></p>
-													<p class="noti-time"><span class="notification-time">12 mins ago</span></p>
-												</div>
-											</div>
-										</a>
-									</li>
+									
+									
+									
 								</ul>
 							</div>
-							<div class="topnav-dropdown-footer">
-								<a href="index.html#">View all Notifications</a>
-							</div>
+							
 						</div>
 					</li>
 					<!-- /Notifications -->
@@ -202,7 +164,7 @@
 								<a href="patient-list.html"><i class="fe fe-user"></i> <span>Patients</span></a>
 							</li>
 							<li> 
-								<a href="reviews.html"><i class="fe fe-star-o"></i> <span>Reviews</span></a>
+								<a href="blogs.php"><i class="fe fe-star-o"></i> <span>Blogs</span></a>
 							</li>
 							<li> 
 								<a href="transactions-list.html"><i class="fe fe-activity"></i> <span>Transactions</span></a>
@@ -442,7 +404,7 @@
 													<th>Doctor Name</th>
 													<th>Speciality</th>
 													<th>Earned</th>
-													<th>Reviews</th>
+													<th>Blogs</th>
 												</tr>
 											</thead>
 											<tbody>
