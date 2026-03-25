@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Doctors | R K Hospital Nagpur</title>
+
+	<!-- CSS Links -->
+	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="assets/css/animate.css">
+	<link rel="stylesheet" href="assets/css/iconsax.css">
+	<link rel="stylesheet" href="assets/css/feather.css">
+	<link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+	<link rel="stylesheet" href="assets/css/slick.css">
+	<link rel="stylesheet" href="assets/css/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+	<!-- /CSS Links -->
+
+	<style>
+		/* ═══════════════════════════════════════════
+		   THEME VARIABLES — matches homepage red/white
+		═══════════════════════════════════════════ */
+		:root {
+			--red: #d32f2f;
+			--red-dark: #b71c1c;
+			--red-light: #ef5350;
+			--red-bg: #fff5f5;
+			--red-border: #fecaca;
+			--text-dark: #1a1a2e;
+			--text-mid: #374151;
+			--text-soft: #6b7280;
+			--white: #ffffff;
+			--off-white: #f9fafb;
+			--border: #e5e7eb;
+			--shadow-sm: 0 2px 12px rgba(211, 47, 47, 0.08);
+			--shadow-md: 0 6px 28px rgba(211, 47, 47, 0.13);
+			--shadow-lg: 0 16px 48px rgba(211, 47, 47, 0.18);
+		}
+
+		/* ─── HERO BANNER ─── */
+		.doctors-hero {
+			background: linear-gradient(135deg, #1a0000 0%, #7f0000 45%, #c62828 100%);
+			padding: 70px 0 60px;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.doctors-hero::before {
+			content: '';
+			position: absolute;
+			top: -80px;
+			right: -80px;
+			width: 380px;
+			height: 380px;
+			border-radius: 50%;
+			background: radial-gradient(circle, rgba(255, 255, 255, 0.06) 0%, transparent 70%);
+		}
+
+		.doctors-hero::after {
+			content: '';
+			position: absolute;
+			bottom: -1px;
+			left: 0;
+			right: 0;
+			height: 52px;
+			background: var(--off-white);
+			clip-path: ellipse(55% 100% at 50% 100%);
+		}
+
+		.hero-eyebrow {
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
+			background: rgba(255, 255, 255, 0.10);
+			border: 1px solid rgba(255, 255, 255, 0.20);
+			color: #fca5a5;
+			font-size: 11.5px;
+			font-weight: 700;
+			padding: 6px 16px;
+			border-radius: 100px;
+			letter-spacing: 1.2px;
+			text-transform: uppercase;
+			margin-bottom: 20px;
+		}
+
+		.doctors-hero h1 {
+			font-size: clamp(2rem, 4vw, 2.8rem);
+			font-weight: 800;
+			color: #fff;
+			line-height: 1.2;
+			margin-bottom: 16px;
+		}
+
+		.doctors-hero h1 em {
+			font-style: normal;
+			color: #fca5a5;
+		}
+
+		.doctors-hero .hero-sub {
+			color: rgba(255, 255, 255, 0.70);
+			font-size: 15px;
+			line-height: 1.8;
+			max-width: 480px;
+		}
+
+		/* Stats grid — matches homepage counter style */
+		.hero-stats-grid {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 16px;
+		}
+
+		.hero-stat {
+			background: rgba(255, 255, 255, 0.08);
+			border: 1px solid rgba(255, 255, 255, 0.15);
+			border-radius: 14px;
+			padding: 22px 18px;
+			text-align: center;
+			backdrop-filter: blur(8px);
+			transition: background 0.2s;
+		}
+
+		.hero-stat:hover {
+			background: rgba(255, 255, 255, 0.13);
+		}
+
+		.hero-stat .s-num {
+			font-size: 2.1rem;
+			font-weight: 800;
+			color: #fca5a5;
+			line-height: 1;
+			display: block;
+		}
+
+		.hero-stat .s-label {
+			font-size: 11.5px;
+			color: rgba(255, 255, 255, 0.60);
+			margin-top: 6px;
+			letter-spacing: 0.3px;
+		}
+
+		/* ─── SECTION LABEL (matches homepage "Our Specialty Services" style) ─── */
+		.rk-eyebrow {
+			font-size: 11.5px;
+			font-weight: 700;
+			letter-spacing: 2px;
+			text-transform: uppercase;
+			color: var(--red);
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			margin-bottom: 8px;
+		}
+
+		.rk-eyebrow::before {
+			content: '';
+			width: 30px;
+			height: 3px;
+			background: var(--red);
+			border-radius: 2px;
+			flex-shrink: 0;
+		}
+
+		.rk-section-title {
+			font-size: clamp(1.5rem, 3vw, 2rem);
+			font-weight: 800;
+			color: var(--text-dark);
+			margin-bottom: 6px;
+			line-height: 1.25;
+		}
+
+		.rk-section-title span {
+			color: var(--red);
+		}
+
+		/* ─── WHY TRUST US CARDS ─── */
+		.trust-card {
+			background: var(--white);
+			border: 1px solid var(--border);
+			border-radius: 16px;
+			padding: 28px 24px;
+			height: 100%;
+			transition: all 0.28s;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.trust-card::after {
+			content: '';
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			height: 3px;
+			background: linear-gradient(90deg, var(--red), var(--red-light));
+			transform: scaleX(0);
+			transition: transform 0.28s;
+		}
+
+		.trust-card:hover {
+			box-shadow: var(--shadow-md);
+			transform: translateY(-4px);
+			border-color: var(--red-border);
+		}
+
+		.trust-card:hover::after {
+			transform: scaleX(1);
+		}
+
+		.trust-icon {
+			width: 52px;
+			height: 52px;
+			border-radius: 13px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 22px;
+			margin-bottom: 16px;
+			background: var(--red-bg);
+			color: var(--red);
+		}
+
+		.trust-card h6 {
+			font-size: 15.5px;
+			font-weight: 700;
+			color: var(--text-dark);
+			margin-bottom: 8px;
+		}
+
+		.trust-card p {
+			font-size: 13.5px;
+			color: var(--text-soft);
+			line-height: 1.68;
+			margin: 0;
+		}
+
+		/* ─── DOCTOR CARD ─── */
+		.doc-card {
+			background: var(--white);
+			border-radius: 20px;
+			overflow: hidden;
+			border: 1px solid var(--border);
+			box-shadow: var(--shadow-sm);
+			transition: all 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+		}
+
+		.doc-card:hover {
+			box-shadow: var(--shadow-lg);
+			transform: translateY(-6px);
+			border-color: var(--red-border);
+		}
+
+		/* Top red banner with photo — mirrors homepage card style */
+		.doc-banner {
+			background: linear-gradient(135deg, #7f0000 0%, #c62828 100%);
+			padding: 36px 28px 0;
+			text-align: center;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.doc-banner .deco-ring {
+			position: absolute;
+			border: 2px solid rgba(255, 255, 255, 0.07);
+			border-radius: 50%;
+		}
+
+		.doc-banner .deco-ring.r1 {
+			width: 180px;
+			height: 180px;
+			top: -60px;
+			right: -50px;
+		}
+
+		.doc-banner .deco-ring.r2 {
+			width: 110px;
+			height: 110px;
+			bottom: 10px;
+			left: -30px;
+		}
+
+		.doc-banner::after {
+			content: '';
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			height: 38px;
+			background: var(--white);
+			border-radius: 50% 50% 0 0 / 30px 30px 0 0;
+		}
+
+		.doc-photo-wrap {
+			display: inline-block;
+			position: relative;
+			z-index: 2;
+			margin-bottom: 8px;
+		}
+
+		.doc-photo-wrap img {
+			width: 155px;
+			height: 155px;
+			border-radius: 50%;
+			object-fit: cover;
+			object-position: top;
+			border: 5px solid #fff;
+			box-shadow: 0 6px 30px rgba(0, 0, 0, 0.25);
+			display: block;
+		}
+
+		/* Red ring around photo — matches homepage circular photo style */
+		.doc-photo-wrap::before {
+			content: '';
+			position: absolute;
+			inset: -6px;
+			border-radius: 50%;
+			border: 3px solid rgba(255, 255, 255, 0.35);
+		}
+
+		.doc-spec-badge {
+			position: absolute;
+			bottom: 2px;
+			left: 50%;
+			transform: translateX(-50%);
+			white-space: nowrap;
+			background: linear-gradient(135deg, var(--red-dark), var(--red));
+			color: #fff;
+			font-size: 10.5px;
+			font-weight: 700;
+			padding: 4px 14px;
+			border-radius: 100px;
+			box-shadow: 0 3px 12px rgba(183, 28, 28, 0.45);
+			letter-spacing: 0.4px;
+		}
+
+		/* Card body */
+		.doc-body {
+			padding: 16px 26px 28px;
+			display: flex;
+			flex-direction: column;
+			flex: 1;
+		}
+
+		.doc-name {
+			font-size: 1.22rem;
+			font-weight: 800;
+			color: var(--text-dark);
+			text-align: center;
+			margin-bottom: 2px;
+		}
+
+		.doc-degree {
+			font-size: 12px;
+			color: var(--text-soft);
+			text-align: center;
+			margin-bottom: 16px;
+		}
+
+		.doc-hr {
+			height: 1px;
+			background: var(--border);
+			margin: 0 0 15px;
+		}
+
+		/* Specialty tags — pill style matching homepage badges */
+		.doc-tags {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 7px;
+			margin-bottom: 16px;
+		}
+
+		.doc-tag {
+			background: var(--red-bg);
+			color: var(--red-dark);
+			font-size: 11px;
+			font-weight: 600;
+			padding: 4px 12px;
+			border-radius: 100px;
+			border: 1px solid var(--red-border);
+		}
+
+		.doc-bio {
+			font-size: 13.5px;
+			color: var(--text-mid);
+			line-height: 1.75;
+			margin-bottom: 18px;
+			flex: 1;
+		}
+
+		/* Info strip */
+		.doc-info-strip {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 14px;
+			background: var(--red-bg);
+			border: 1px solid var(--red-border);
+			border-radius: 11px;
+			padding: 12px 15px;
+			margin-bottom: 20px;
+		}
+
+		.doc-info-item {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			font-size: 12.5px;
+			color: var(--text-mid);
+		}
+
+		.doc-info-item i {
+			color: var(--red);
+			font-size: 13px;
+		}
+
+		.doc-info-item strong {
+			color: var(--text-dark);
+		}
+
+		/* Buttons — red gradient matching homepage CTA */
+		.doc-actions {
+			display: flex;
+			gap: 10px;
+		}
+
+		.btn-rk-primary {
+			flex: 1;
+			display: block;
+			text-align: center;
+			background: linear-gradient(135deg, var(--red-dark), var(--red-light));
+			color: #fff !important;
+			font-size: 13.5px;
+			font-weight: 700;
+			padding: 12px 16px;
+			border-radius: 10px;
+			text-decoration: none;
+			transition: all 0.22s;
+			box-shadow: 0 4px 16px rgba(183, 28, 28, 0.32);
+			letter-spacing: 0.3px;
+		}
+
+		.btn-rk-primary:hover {
+			background: linear-gradient(135deg, #7f0000, var(--red-dark));
+			box-shadow: 0 6px 22px rgba(183, 28, 28, 0.45);
+			transform: translateY(-1px);
+			color: #fff !important;
+		}
+
+		.btn-rk-outline {
+			display: flex;
+			align-items: center;
+			gap: 7px;
+			padding: 12px 16px;
+			border-radius: 10px;
+			border: 2px solid var(--red);
+			color: var(--red);
+			font-size: 13.5px;
+			font-weight: 700;
+			text-decoration: none;
+			transition: all 0.22s;
+			white-space: nowrap;
+		}
+
+		.btn-rk-outline:hover {
+			background: var(--red);
+			color: #fff;
+		}
+
+		/* ─── RESPONSIVE ─── */
+		@media (max-width: 768px) {
+			.doctors-hero h1 {
+				font-size: 1.8rem;
+			}
+
+			.hero-stats-grid {
+				grid-template-columns: 1fr 1fr;
+			}
+
+			.hero-stat .s-num {
+				font-size: 1.6rem;
+			}
+
+			.doc-actions {
+				flex-direction: column;
+			}
+
+			.doc-info-strip {
+				flex-direction: column;
+				gap: 10px;
+			}
+		}
+
+		/* ─── PATIENT CARE JOURNEY ─── */
+
+		.process-card {
+			background: var(--white);
+			border: 1px solid var(--border);
+			border-radius: 18px;
+			padding: 28px 22px 26px;
+			text-align: center;
+			position: relative;
+			transition: all 0.3s ease;
+			height: 100%;
+			overflow: hidden;
+		}
+
+		.process-card:hover {
+			transform: translateY(-6px);
+			box-shadow: var(--shadow-md);
+			border-color: var(--red-border);
+		}
+
+		/* Step Number (top corner badge) */
+		.process-step {
+			position: absolute;
+			top: 12px;
+			right: 14px;
+			font-size: 11px;
+			font-weight: 700;
+			color: var(--red);
+			background: var(--red-bg);
+			border: 1px solid var(--red-border);
+			padding: 4px 10px;
+			border-radius: 100px;
+		}
+
+		/* Icon */
+		.process-icon {
+			width: 64px;
+			height: 64px;
+			margin: 0 auto 16px;
+			border-radius: 50%;
+			background: linear-gradient(135deg, var(--red-bg), #fff);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 24px;
+			color: var(--red);
+			border: 1px solid var(--red-border);
+		}
+
+		/* Title */
+		.process-card h6 {
+			font-size: 15.5px;
+			font-weight: 700;
+			color: var(--text-dark);
+			margin-bottom: 8px;
+		}
+
+		/* Text */
+		.process-card p {
+			font-size: 13.5px;
+			color: var(--text-soft);
+			line-height: 1.7;
+			margin: 0;
+		}
+	</style>
+</head>
+
+<body>
+
+	<!-- ==================== Header ==================== -->
+	<header class="header header-default inner-header">
+		<div class="container">
+			<nav class="navbar navbar-expand-lg header-nav">
+				<div class="navbar-header">
+					<a id="mobile_btn" href="javascript:void(0);">
+						<i class="fa-solid fa-bars"></i>
+					</a>
+					<a href="index-7.html" class="navbar-brand logo">
+						<img src="assets/img/RK-Logo.png" class="img-fluid" alt="Logo">
+					</a>
+				</div>
+				<div class="header-menu">
+					<div class="main-menu-wrapper">
+						<div class="menu-header">
+							<a href="index-7.html" class="menu-logo">
+								<img src="assets/img/RK-Logo.png" class="img-fluid" alt="Logo">
+							</a>
+							<a id="menu_close" class="menu-close" href="javascript:void(0);">
+								<i class="fas fa-times"></i>
+							</a>
+						</div>
+						<ul class="main-nav">
+							<li class="has-submenu megamenu">
+								<a href="index-7.html" class="main-menu">Home</a>
+							</li>
+							<li class="has-submenu">
+								<a href="two-doctor.html" class="main-menu active">Doctors</a>
+							</li>
+							<li class="has-submenu">
+								<a href="about-us.html" class="main-menu">About Us</a>
+							</li>
+							<li class="has-submenu">
+								<a href="#" class="main-menu" onclick="toggleMobileSubmenu(this); return false;">
+									Service <span><i class="fa-solid fa-chevron-down"></i></span>
+								</a>
+								<ul class="submenu sub-menu-one sub-menu-default">
+									<li><a href="hospital-services.html">Hospital Services</a></li>
+									<li><a href="gynecology-services.html">Gynecology Services</a></li>
+									<li><a href="orthopedic-services.html">Orthopedic Services</a></li>
+								</ul>
+							</li>
+							<li class="has-submenu">
+								<a href="contact-us.html" class="main-menu">Contact Us</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<li>
+					<a href="contact-us.html" class="btn btn-md btn-primary-gradient d-none d-lg-inline-block">
+						<i class="isax isax-lock-1 me-2"></i><span>Book Now</span>
+					</a>
+				</li>
+			</nav>
+		</div>
+	</header>
+	<!-- ==================== /Header ==================== -->
+
+
+	<!-- ==================== Hero Banner ==================== -->
+	<section class="doctors-hero">
+		<div class="container">
+			<div class="row align-items-center gy-5">
+
+				<div class="col-lg-6">
+					<div class="hero-eyebrow">
+						<i class="fa-solid fa-circle-dot fa-xs"></i> Trusted Healthcare Professionals
+					</div>
+					<h1>Meet Our <em>Expert</em><br>Medical Team</h1>
+					<p class="hero-sub">
+						Compassionate, experienced specialists dedicated to your health and well-being.
+						Serving Nagpur and Central India with advanced care and precision.
+					</p>
+				</div>
+
+				<div class="col-lg-6">
+					<div class="hero-stats-grid">
+						<div class="hero-stat">
+							<span class="s-num">10+</span>
+							<div class="s-label">Years of Experience</div>
+						</div>
+						<div class="hero-stat">
+							<span class="s-num">5000+</span>
+							<div class="s-label">Patients Treated</div>
+						</div>
+						<div class="hero-stat">
+							<span class="s-num">24/7</span>
+							<div class="s-label">Emergency Care</div>
+						</div>
+						<div class="hero-stat">
+							<span class="s-num">5/7</span>
+							<div class="s-label">Emergency Available</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</section>
+	<!-- ==================== /Hero Banner ==================== -->
+
+
+	<!-- ==================== Why Trust Us ==================== -->
+
+	<!-- <section class="section" style="background: var(--off-white); padding: 56px 0 48px;">
+		<div class="container">
+			<div class="row mb-4">
+				<div class="col-12">
+					<div class="rk-eyebrow">About R.K. Hospital</div>
+					<h2 class="rk-section-title">Why Patients <span>Trust Us</span></h2>
+				</div>
+			</div>
+			<div class="row g-4">
+				<div class="col-md-4">
+					<div class="trust-card">
+						<div class="trust-icon"><i class="fa-solid fa-bone"></i></div>
+						<h6>Orthopedic Excellence</h6>
+						<p>Robotic Knee Replacement, fracture &amp; trauma care, sports injuries and spine treatment using the latest precision technology.</p>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="trust-card">
+						<div class="trust-icon"><i class="fa-solid fa-person-pregnant"></i></div>
+						<h6>Complete Women's Care</h6>
+						<p>Pregnancy monitoring, normal &amp; cesarean delivery, infertility support, menstrual &amp; hormonal treatments, and gynecologic surgery.</p>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="trust-card">
+						<div class="trust-icon"><i class="fa-solid fa-shield-heart"></i></div>
+						<h6>Advanced Facilities</h6>
+						<p>24/7 emergency care, ICU, digital X-ray and ultrasound — safe, modern, personalized treatment for patients across Central India.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section> -->
+
+	<!-- ==================== Patient Care Journey ==================== -->
+	<section class="section" style="background: var(--off-white); padding: 56px 0 60px;">
+		<div class="container">
+
+			<!-- Section Header -->
+			<div class="row mb-5">
+				<div class="col-12 text-center">
+					<div class="rk-eyebrow justify-content-center">Our Care Process</div>
+					<h2 class="rk-section-title">How We <span>Care For You</span></h2>
+					<p style="color: var(--text-soft); font-size:15px; max-width:600px; margin: 8px auto 0;">
+						A seamless and patient-focused journey designed to ensure accurate diagnosis,
+						effective treatment, and a smooth recovery experience.
+					</p>
+				</div>
+			</div>
+
+			<!-- Process Steps -->
+			<div class="row g-4 position-relative">
+
+				<!-- Step 1 -->
+				<div class="col-lg-3 col-md-6">
+					<div class="process-card">
+						<div class="process-step">01</div>
+						<div class="process-icon"><i class="fa-solid fa-user-doctor"></i></div>
+						<h6>Consultation</h6>
+						<p>Discuss your symptoms and concerns with our experienced specialists for proper guidance.</p>
+					</div>
+				</div>
+
+				<!-- Step 2 -->
+				<div class="col-lg-3 col-md-6">
+					<div class="process-card">
+						<div class="process-step">02</div>
+						<div class="process-icon"><i class="fa-solid fa-stethoscope"></i></div>
+						<h6>Diagnosis</h6>
+						<p>Accurate evaluation using advanced tests and medical expertise to identify the condition.</p>
+					</div>
+				</div>
+
+				<!-- Step 3 -->
+				<div class="col-lg-3 col-md-6">
+					<div class="process-card">
+						<div class="process-step">03</div>
+						<div class="process-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+						<h6>Treatment</h6>
+						<p>Personalized treatment plans with modern techniques focused on safety and effectiveness.</p>
+					</div>
+				</div>
+
+				<!-- Step 4 -->
+				<div class="col-lg-3 col-md-6">
+					<div class="process-card">
+						<div class="process-step">04</div>
+						<div class="process-icon"><i class="fa-solid fa-hands-holding-circle"></i></div>
+						<h6>Recovery</h6>
+						<p>Continuous monitoring and support to ensure faster healing and long-term well-being.</p>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</section>
+	<!-- ==================== /Patient Care Journey ==================== -->
+	<!-- ==================== /Why Trust Us ==================== -->
+
+
+	<!-- ==================== Doctors Listing ==================== -->
+	<section class="section" style="background: #fff; padding: 56px 0 80px;">
+		<div class="container">
+
+			<!-- Section Header -->
+			<div class="row mb-5">
+				<div class="col-12">
+					<div class="rk-eyebrow">Our Specialists</div>
+					<h2 class="rk-section-title">Explore the team <span>in their Success</span></h2>
+					<p style="color: var(--text-soft); font-size:15px; margin-top:6px;">
+						Showing <strong style="color:var(--red);">2</strong> highly experienced and trusted medical
+						specialists
+					</p>
+				</div>
+			</div>
+
+			<!-- Doctor Cards -->
+			<div class="row g-4 justify-content-center">
+
+				<!-- ── Doctor 1 ── -->
+				<div class="col-lg-6">
+					<div class="doc-card">
+
+						<div class="doc-banner">
+							<div class="deco-ring r1"></div>
+							<div class="deco-ring r2"></div>
+							<div class="doc-photo-wrap">
+								<img src="assets/img/doctor1.webp" alt="Dr. Priyanka Jain Agrawal">
+								<span class="doc-spec-badge">Gynecologist &amp; Obstetrician</span>
+							</div>
+						</div>
+
+						<div class="doc-body">
+							<div class="doc-name">Dr. Priyanka Jain Agrawal</div>
+							<div class="doc-degree">MBBS, MS – Obstetrics &amp; Gynecology</div>
+							<div class="doc-hr"></div>
+
+							<div class="doc-tags">
+								<span class="doc-tag">Pregnancy Care</span>
+								<span class="doc-tag">Normal Delivery</span>
+								<span class="doc-tag">C-Section</span>
+								<span class="doc-tag">Infertility</span>
+								<span class="doc-tag">Laparoscopy</span>
+								<span class="doc-tag">Hysteroscopy</span>
+							</div>
+
+							<p class="doc-bio">
+								Dr. Priyanka Jain Agrawal is a trusted Obstetrician-Gynecologist in Nagpur, specializing
+								in pregnancy care, infertility treatment, and women's health. She offers antenatal
+								checkups, normal and cesarean deliveries, menstrual and hormonal disorder management,
+								and advanced laparoscopic and hysteroscopy procedures.
+								<br><br>
+								Known for her patient-friendly approach, clear guidance, and ethical treatment, she
+								supports women through every stage — from planning a pregnancy to childbirth and
+								postpartum care.
+							</p>
+
+							<div class="doc-info-strip">
+								<div class="doc-info-item">
+									<i class="fa-solid fa-location-dot"></i>
+									<span>Central Avenue, Nagpur</span>
+								</div>
+								<div class="doc-info-item">
+									<i class="fa-solid fa-clock"></i>
+									<span><strong>Mon – Sat</strong> &nbsp;·&nbsp; 9 AM – 6 PM</span>
+								</div>
+							</div>
+
+							<div class="doc-actions">
+								<a href="gynecology-services.html" class="btn-rk-primary">
+									<i class="fa-solid fa-list-ul me-2"></i>Detailed Services
+								</a>
+								<a href="contact-us.html" class="btn-rk-outline">
+									<i class="fa-solid fa-calendar-plus"></i> Book
+								</a>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<!-- ── /Doctor 1 ── -->
+
+				<!-- ── Doctor 2 ── -->
+				<div class="col-lg-6">
+					<div class="doc-card">
+
+						<div class="doc-banner">
+							<div class="deco-ring r1"></div>
+							<div class="deco-ring r2"></div>
+							<div class="doc-photo-wrap">
+								<img src="assets/img/doctor3.webp" alt="Dr. Rahul R. Agrawal">
+								<span class="doc-spec-badge">Orthopedic Surgeon</span>
+							</div>
+						</div>
+
+						<div class="doc-body">
+							<div class="doc-name">Dr. Rahul R. Agrawal</div>
+							<div class="doc-degree">MBBS, MS – Orthopedics &amp; Traumatology</div>
+							<div class="doc-hr"></div>
+
+							<div class="doc-tags">
+								<span class="doc-tag">Robotic Knee</span>
+								<span class="doc-tag">Joint Replacement</span>
+								<span class="doc-tag">Spine Surgery</span>
+								<span class="doc-tag">Fracture Care</span>
+								<span class="doc-tag">Arthroscopy</span>
+								<span class="doc-tag">Sports Injuries</span>
+							</div>
+
+							<p class="doc-bio">
+								Dr. Rahul R. Agrawal is a trusted Orthopedic Surgeon in Nagpur, known for treating
+								fractures, joint problems, and sports injuries with a patient-first approach. He
+								specializes in joint replacement, robotic-assisted knee and hip surgery, spine
+								treatment, trauma care, arthroscopy, deformity correction, and pediatric orthopedics.
+								<br><br>
+								With experience across emergency care, rehabilitation, and advanced orthopedic
+								procedures, Dr. Rahul focuses on accurate diagnosis, transparent guidance, and safe
+								recovery plans for every patient.
+							</p>
+
+							<div class="doc-info-strip">
+								<div class="doc-info-item">
+									<i class="fa-solid fa-location-dot"></i>
+									<span>Central Avenue, Nagpur</span>
+								</div>
+								<div class="doc-info-item">
+									<i class="fa-solid fa-clock"></i>
+									<span><strong>Mon – Sat</strong> &nbsp;·&nbsp; 9 AM – 6 PM</span>
+								</div>
+							</div>
+
+							<div class="doc-actions">
+								<a href="orthopedic-services.html" class="btn-rk-primary">
+									<i class="fa-solid fa-list-ul me-2"></i>Detailed Services
+								</a>
+								<a href="contact-us.html" class="btn-rk-outline">
+									<i class="fa-solid fa-calendar-plus"></i> Book
+								</a>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<!-- ── /Doctor 2 ── -->
+
+			</div>
+		</div>
+	</section>
+	<!-- ==================== /Doctors Listing ==================== -->
+
+
+	<!-- ==================== Footer ==================== -->
+	<footer class="footer inner-footer">
+		<div class="footer-top">
+			<div class="container">
+				<div class="row align-items-start">
+
+					<div class="col-xl-2 col-lg-3 col-md-6">
+						<div class="footer-widget">
+							<div class="footer-logo mb-3">
+								<img src="assets/img/RK-Logo.png" alt="logo" class="img-fluid logo"
+									style="height: 80px;">
+							</div>
+							<p>Dr. Agrawal's R.K. Hospital provides quality healthcare services in Nagpur with advanced
+								medical facilities and compassionate care.</p>
+						</div>
+					</div>
+
+					<div class="col-xl-2 col-lg-3 col-md-6">
+						<div class="footer-widget footer-menu">
+							<h6 class="footer-title">Quick Links</h6>
+							<ul>
+								<li><a href="index-7.html">Home</a></li>
+								<li><a href="about-us.html">About Us</a></li>
+								<li><a href="two-doctor.html">Doctors</a></li>
+								<li><a href="contact-us.html">Contact Us</a></li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="col-xl-2 col-lg-3 col-md-6">
+						<div class="footer-widget footer-menu">
+							<h6 class="footer-title">Treatments</h6>
+							<ul>
+								<li><a href="orthopedic-services.html">Orthopedic Services</a></li>
+								<li><a href="gynecology-services.html">Gynecology Services</a></li>
+								<li><a href="hospital-services.html">Hospital Services</a></li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="col-xl-2 col-lg-3 col-md-6">
+						<div class="footer-widget footer-menu">
+							<h6 class="footer-title">Policies</h6>
+							<ul>
+								<li><a href="#">Legal Notice</a></li>
+								<li><a href="#">Privacy Policy</a></li>
+								<li><a href="#">Refund Policy</a></li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="col-xl-4 col-lg-12 col-md-12">
+						<div class="footer-widget">
+							<h6 class="footer-title">Reach Us</h6>
+							<p class="mb-2">
+								<strong>Dr. Agrawal's R.K. Hospital</strong><br>
+								Central Avenue, Ladpura<br>
+								Itwari, Nagpur
+							</p>
+							<p class="mb-1"><strong>Phone:</strong> 097660 57372</p>
+							<p class="mb-0"><strong>Email:</strong> info@rkhospital.com</p>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<div class="footer-bottom">
+			<div class="container">
+				<div class="copyright" style="text-align: center !important;">
+					<p class="mb-0" style="text-align: center !important;">
+						Copyright © 2026 Dr. Agrawal's R.K. Hospital, Nagpur. All Rights Reserved.
+					</p>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!-- ==================== /Footer ==================== -->
+
+	<!-- JS Scripts -->
+	<script src="assets/js/jquery-3.7.1.min.js"></script>
+	<script src="assets/js/bootstrap.bundle.min.js"></script>
+	<script src="assets/js/feather.min.js"></script>
+	<script src="assets/js/owl.carousel.min.js"></script>
+	<script src="assets/js/slick.js"></script>
+	<script src="assets/js/jquery.waypoints.min.js"></script>
+	<script src="assets/js/jquery.counterup.min.js"></script>
+	<script src="assets/js/moment.min.js"></script>
+	<script src="assets/js/bootstrap-datetimepicker.min.js"></script>
+	<script src="assets/js/circle-progress.min.js"></script>
+	<script src="assets/js/skrollr.min.js"></script>
+	<script src="assets/js/backToTop.js"></script>
+	<script src="assets/js/theme-script.js"></script>
+	<script src="assets/js/script.js"></script>
+	<!-- /JS Scripts -->
+
+</body>
+
+</html>

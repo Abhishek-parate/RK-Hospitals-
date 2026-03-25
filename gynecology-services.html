@@ -67,783 +67,432 @@
 	<!-- Main Wrapper -->
 	<div class="main-wrapper">
 
-		<div class="header-theme header-theme-two">
-			<button type="button" id="dark-mode-toggle" class="theme-toggle moon">
-				<i class="isax isax-moon5"></i>
-			</button>
-			<button type="button" id="light-mode-toggle" class="theme-toggle sun">
-				<i class="isax isax-sun-15"></i>
-			</button>
-		</div>
+		<!-- Page Header -->
+		<header class="header header-default inner-header">
+			<div class="container">
+				<nav class="navbar navbar-expand-lg header-nav">
+					<div class="navbar-header">
+						<a id="mobile_btn" href="javascript:void(0);">
+							<i class="fa-solid fa-bars"></i>
+						</a>
+						<a href="index-7.html" class="navbar-brand logo">
+							<img src="assets/img/RK-Logo.png" class="img-fluid" alt="Logo">
+						</a>
+					</div>
+					<div class="header-menu">
+						<div class="main-menu-wrapper">
+							<div class="menu-header">
+								<a href="index-7.html" class="menu-logo">
+									<img src="assets/img/RK-Logo.png" class="img-fluid" alt="Logo">
+								</a>
+								<a id="menu_close" class="menu-close" href="javascript:void(0);">
+									<i class="fas fa-times"></i>
+								</a>
+							</div>
+							<ul class="main-nav">
+								<li class="has-submenu megamenu">
+									<a href="index-7.html" class="main-menu">Home </a>
 
-		  <!-- Page Header -->
-	<header class="header header-default inner-header">
-		<div class="container">
-			<nav class="navbar navbar-expand-lg header-nav">
-				<div class="navbar-header">
-					<a id="mobile_btn" href="javascript:void(0);">
-						<i class="fa-solid fa-bars"></i>
-					</a>
-					<a href="index-7.html" class="navbar-brand logo">
-						<img src="assets/img/RK-Logo.png" class="img-fluid" alt="Logo">
-					</a>
-				</div>
-				<div class="header-menu">
-					<div class="main-menu-wrapper">
-						<div class="menu-header">
-							<a href="index-7.html" class="menu-logo">
-								<img src="assets/img/RK-Logo.png" class="img-fluid" alt="Logo">
-							</a>
-							<a id="menu_close" class="menu-close" href="javascript:void(0);">
-								<i class="fas fa-times"></i>
-							</a>
+								</li>
+								<li class="has-submenu">
+									<a href="two-doctor.html" class="main-menu">Doctors </a>
+
+								</li>
+								<li class="has-submenu">
+									<a href="about-us.html" class="main-menu">About Us </a>
+
+								</li>
+
+								<li class="has-submenu">
+									<a href="#" class="main-menu" onclick="toggleMobileSubmenu(this); return false;">
+										Service
+										<span><i class="fa-solid fa-chevron-down"></i></span>
+									</a>
+									<ul class="submenu sub-menu-one sub-menu-default">
+										<li><a href="hospital-services.html">Hospital Services</a></li>
+										<li><a href="gynecology-services.html">Gynecology services</a></li>
+										<li><a href="orthopedic-services.html">Orthopedic Services</a></li>
+									</ul>
+								</li>
+								<li class="has-submenu">
+									<a href="contact-us.html" class="main-menu">Contact Us </a>
+
+								</li>
+
+							</ul>
+
 						</div>
-						<ul class="main-nav">
-							<li class="has-submenu megamenu">
-								<a href="index-7.html" class="main-menu">Home </a>
-
-							</li>
-							<li class="has-submenu">
-								<a href="TwoDoctor.html" class="main-menu">Doctors </a>
-
-							</li>
-							<li class="has-submenu">
-								<a href="about-us.html" class="main-menu">About Us </a>
-
-							</li>
-
-							<li class="has-submenu">
-    <a href="#" class="main-menu" onclick="toggleMobileSubmenu(this); return false;">
-        Service 
-        <span><i class="fa-solid fa-chevron-down"></i></span>
-    </a>
-    <ul class="submenu sub-menu-one sub-menu-default">
-        <li><a href="hospital-services.html">Hospital Services</a></li>
-        <li><a href="gynecology-services.html">Gynecology services</a></li>
-        <li><a href="orthopedic-services.html">Orthopedic Services</a></li>
-    </ul>
-</li>
-							<li class="has-submenu">
-								<a href="contact-us.html" class="main-menu">Contact Us </a>
-
-							</li>
-
-						</ul>
 
 					</div>
 
-				</div>
+					<li>
+						<a href="contact-us.html" class="btn btn-md btn-primary-gradient d-none d-lg-inline-block">
+							<i class="isax isax-lock-1 me-2"></i><span>Book Now</span>
+						</a>
+					</li>
 
-				<li>
-					<a href="contact-us.html" class="btn btn-md btn-primary-gradient d-none d-lg-inline-block">
-    <i class="isax isax-lock-1 me-2"></i><span>Book Now</span>
-</a>
-				</li>
-
-			</nav>
-		</div>
-	</header>
+				</nav>
+			</div>
+		</header>
 		<!-- Breadcrumb -->
-		<section class="hospital-services container">
+		<style>
+			/* ===== THEME COLORS (MATCH LOGO RED) ===== */
+			:root {
+				--primary: #d32f2f;
+				--primary-light: #ffebee;
+				--primary-dark: #b71c1c;
+				--text-dark: #1f2937;
+				--text-light: #6b7280;
+				--white: #ffffff;
+			}
 
-			<h2 class="service-title">Gynaecology Services</h2>
+			/* ===== HERO ===== */
+			.service-hero {
+				background: linear-gradient(135deg, #610606 0%, #940202 45%, #c62828 100%);
+				padding: 70px 20px 60px;
+				color: #fff;
+				border-radius: 12px;
+				text-align: center;
+				margin-bottom: 40px;
+				position: relative;
+				overflow: hidden;
+			}
 
+			.service-hero h2 {
+				font-size: 36px;
+				font-weight: 700;
+				color: #e9dcdc;
+
+			}
+
+			.service-hero p {
+				color: #bcb4b4;
+
+				max-width: 700px;
+				margin: auto;
+				opacity: 0.9;
+			}
+
+			/* ===== TABS ===== */
+			.tabs-scroll-wrapper {
+				display: flex;
+				gap: 10px;
+				overflow-x: auto;
+				margin-bottom: 25px;
+			}
+
+			.tabs-scroll-wrapper label {
+				padding: 10px 18px;
+				background: var(--primary-light);
+				border-radius: 25px;
+				cursor: pointer;
+				font-weight: 500;
+				white-space: nowrap;
+				transition: 0.3s;
+			}
+
+			.tabs-scroll-wrapper label:hover {
+				background: var(--primary);
+				color: #fff;
+			}
+
+			/* ACTIVE TAB */
+			#tab1:checked~.tabs-scroll-wrapper label[for="tab1"],
+			#tab2:checked~.tabs-scroll-wrapper label[for="tab2"],
+			#tab3:checked~.tabs-scroll-wrapper label[for="tab3"],
+			#tab4:checked~.tabs-scroll-wrapper label[for="tab4"] {
+				background: var(--primary);
+				color: #fff;
+			}
+
+			/* ===== CARDS ===== */
+			.service-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+				gap: 20px;
+			}
+
+			.service-card {
+				background: #fff;
+				border-radius: 12px;
+				padding: 20px;
+				box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+				transition: 0.3s;
+				position: relative;
+				overflow: hidden;
+			}
+
+			.service-card:hover {
+				transform: translateY(-6px);
+			}
+
+			.service-card img {
+				width: 100%;
+				height: 160px;
+				object-fit: cover;
+				border-radius: 10px;
+				margin-bottom: 15px;
+			}
+
+			.service-card h5 {
+				color: var(--primary);
+				font-weight: 600;
+			}
+
+			.service-card p {
+				color: var(--text-light);
+				font-size: 14px;
+			}
+
+			/* ===== TAB CONTENT ===== */
+			.tab-content {
+				display: none;
+			}
+
+			#tab1:checked~.content1,
+			#tab2:checked~.content2,
+			#tab3:checked~.content3,
+			#tab4:checked~.content4 {
+				display: block;
+			}
+		</style>
+
+		<section class="container">
+
+			<!-- HERO -->
+			<div class="service-hero">
+				<h2>Gynecology & Women Care</h2>
+				<p>Comprehensive women’s healthcare services at R.K. Hospital with expert doctors, modern facilities,
+					and compassionate care.</p>
+			</div>
+
+			<!-- TABS -->
 			<div class="service-tabs">
 
 				<input type="radio" name="tab" id="tab1" checked>
-<input type="radio" name="tab" id="tab2">
-<input type="radio" name="tab" id="tab3">
-<input type="radio" name="tab" id="tab4">
+				<input type="radio" name="tab" id="tab2">
+				<input type="radio" name="tab" id="tab3">
+				<input type="radio" name="tab" id="tab4">
 
-<div class="tabs-scroll-wrapper">
-  <label for="tab1">Pregnancy & Obstetrics</label>
-  <label for="tab2">Women's Health</label>
-  <label for="tab3">Fertility & Teen Care</label>
-  <label for="tab4">Testing & Emergency</label>
-</div>
+				<div class="tabs-scroll-wrapper">
+					<label for="tab1">Pregnancy & Obstetrics</label>
+					<label for="tab2">Women's Health</label>
+					<label for="tab3">Fertility & Teen Care</label>
+					<label for="tab4">Testing & Emergency</label>
+				</div>
 
 				<!-- TAB 1 -->
 				<div class="tab-content content1">
+					<div class="service-grid">
 
-					<div class="service-card">
-						<h5>Obstetrics</h5>
-						<p>Obstetrics services support pregnancy care, childbirth, and post-delivery monitoring with
-							medical supervision at every stage. This service is available at Dr. Agrawal's R.K.
-							Hospital, with convenient access from Sadar</p>
+						<div class="service-card">
+							<img src="assets/img/service/cardnew.jpg">
+							<h5>Obstetrics </h5>
+							<p>Obstetrics services support pregnancy care, childbirth, and post-delivery monitoring with
+								medical supervision at every stage. This service is available at Dr. Agrawal's R.K.
+								Hospital, with convenient access from Sadar</p>
+						</div>
+
+						<div class="service-card">
+							<img src="assets/img/service/card2.jpg">
+							<h5>Pregnancy Testing</h5>
+							<p>Pregnancy testing services help confirm pregnancy through accurate and timely medical
+								testing. This service is available at Dr. Agrawal's R.K. Hospital, with convenient
+								access from Itwari.</p>
+						</div>
+
+						<div class="service-card">
+							<img src="assets/img/service/card3.png">
+							<h5>High-Risk Pregnancy Care</h5>
+							<p>High-risk pregnancy care focuses on close monitoring and medical support for pregnancies
+								that need extra attention due to health concerns. This service is available at Dr.
+								Agrawal's R.K. Hospital, with convenient access from Sitabuldi.</p>
+						</div>
+
+						<div class="service-card">
+							<img src="assets/img/service/card4.png">
+							<h5>Ultrasound</h5>
+							<p>Ultrasound services support safe and detailed imaging for pregnancy monitoring and
+								internal health assessment. This service is available at Dr. Agrawal's R.K. Hospital,
+								with convenient access from Gandhibagh..</p>
+						</div>
+
 					</div>
-
-					<div class="service-card">
-						<h5>Pregnancy Testing</h5>
-						<p>Pregnancy testing services help confirm pregnancy through accurate and timely medical
-							testing. This service is available at Dr. Agrawal's R.K. Hospital, with convenient access
-							from Itwari.</p>
-					</div>
-
-					<div class="service-card">
-						<h5>High-Risk Pregnancy Care</h5>
-						<p>High-risk pregnancy care focuses on close monitoring and medical support for pregnancies that
-							need extra attention due to health concerns. This service is available at Dr. Agrawal's R.K.
-							Hospital, with convenient access from Sitabuldi.</p>
-					</div>
-
-					<div class="service-card">
-						<h5>UltraSound</h5>
-						<p>Ultrasound services support safe and detailed imaging for pregnancy monitoring and internal
-							health assessment. This service is available at Dr. Agrawal's R.K. Hospital, with convenient
-							access from Gandhibagh.</p>
-					</div>
-
 				</div>
-
 
 				<!-- TAB 2 -->
 				<div class="tab-content content2">
+					<div class="service-grid">
 
-					<div class="service-card">
-						<h5>Gynaecology</h5>
-						<p>Gynaecology services support women's reproductive health through medical evaluation,
-							diagnosis, and ongoing care for common gynecological concerns. This service is available at
-							Dr. Agrawal's R.K. Hospital, with convenient access from Ladpura.</p>
+						<div class="service-card">
+							<img src="assets/img/service/card5.png">
+							<h5>Gynaecology</h5>
+							<p>Gynaecology services support women's reproductive health through medical evaluation,
+								diagnosis, and ongoing care for common gynecological concerns. This service is available
+								at Dr. Agrawal's R.K. Hospital, with convenient access from Ladpura..</p>
+						</div>
+
+						<div class="service-card">
+							<img src="assets/img/service/Women's wellness exam.jpg">
+							<h5>Women's wellness exam</h5>
+							<p>Women's wellness exams focus on routine health screening, preventive checks, and overall
+								reproductive well-being through medical evaluation. This service is available at Dr.
+								Agrawal's R.K. Hospital, with convenient access from Mahal.</p>
+						</div>
+
+						<div class="service-card">
+							<img src="assets/img/service/birth control.jpg">
+							<h5>Birth Control</h5>
+							<p>Birth control services offer medical guidance on safe and suitable contraceptive options
+								based on individual health needs. This service is available at Dr. Agrawal's R.K.
+								Hospital, with convenient access from Central Avenue.</p>
+						</div>
+
 					</div>
-
-					<div class="service-card">
-						<h5>Women's wellness exam</h5>
-						<p>Women's wellness exams focus on routine health screening, preventive checks, and overall
-							reproductive well-being through medical evaluation. This service is available at Dr.
-							Agrawal's R.K. Hospital, with convenient access from Mahal.</p>
-					</div>
-
-					<div class="service-card">
-						<h5>Birth Control</h5>
-						<p>Birth control services offer medical guidance on safe and suitable contraceptive options
-							based on individual health needs. This service is available at Dr. Agrawal's R.K. Hospital,
-							with convenient access from Central Avenue.</p>
-					</div>
-
-
 				</div>
-
 
 				<!-- TAB 3 -->
 				<div class="tab-content content3">
+					<div class="service-grid">
 
-					<div class="service-card">
-						<h5>Infertility Testing & Treatment</h5>
-						<p>Infertility testing and treatment focus on identifying causes of delayed conception and
-							offering medical guidance through proper evaluation and care. This service is available at
-							Dr. Agrawal's R.K. Hospital with convenient access from Civil Lines.
-						</p>
+						<div class="service-card">
+							<img
+								src="https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=800&q=80">
+							<h5>Infertility Testing & Treatment</h5>
+							<p>Infertility testing and treatment focus on identifying causes of delayed conception and
+								offering medical guidance through proper evaluation and care. This service is available
+								at Dr. Agrawal's R.K. Hospital with convenient access from Civil Lines.</p>
+						</div>
+
+						<div class="service-card">
+							<img
+								src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=800&q=80">
+							<h5>Teen Care</h5>
+							<p>Teen care services focus on the physical and reproductive health needs of adolescents
+								through age-appropriate medical guidance and evaluation. This service is available at
+								Dr. Agrawal's R.K. Hospital, with convenient access from Seminary Hills.</p>
+						</div>
+
 					</div>
-
-					<div class="service-card">
-						<h5>Teen Care</h5>
-						<p>Teen care services focus on the physical and reproductive health needs of adolescents through
-							age-appropriate medical guidance and evaluation. This service is available at Dr. Agrawal's
-							R.K. Hospital, with convenient access from Seminary Hills.</p>
-					</div>
-
 				</div>
-
 
 				<!-- TAB 4 -->
 				<div class="tab-content content4">
+					<div class="service-grid">
 
-					<div class="service-card">
-						<h5>STD Testing</h5>
-						<p>STD testing services support early detection of sexually transmitted infections through
-							confidential and reliable medical screening. This service is available at Dr. Agrawal's R.K.
-							Hospital, with convenient access from Medical Square.</p>
+						<div class="service-card">
+							<img
+								src="https://images.unsplash.com/photo-1580281657527-47f249e5a6c8?auto=format&fit=crop&w=800&q=80">
+							<h5>STD Testing</h5>
+							<p>STD testing services support early detection of sexually transmitted infections through
+								confidential and reliable medical screening. This service is available at Dr. Agrawal's
+								R.K. Hospital, with convenient access from Medical Square.</p>
+						</div>
+
+						<div class="service-card">
+							<img
+								src="https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=800&q=80">
+							<h5>Emergency Care</h5>
+							<p>24/7 emergency care in Nagpur for accidents, fractures, pregnancy complications, and
+								urgent medical conditions. Our emergency team provides quick assessment and immediate
+								treatment for orthopedic injuries and women's health emergencies.</p>
+						</div>
+
 					</div>
-
-					<div class="service-card">
-						<h5>Emergency Care</h5>
-						<p>24/7 emergency care in Nagpur for accidents, fractures, pregnancy complications, and urgent
-							medical conditions. Our emergency team provides quick assessment and immediate treatment for
-							orthopedic injuries and women's health emergencies.</p>
-					</div>
-
 				</div>
 
 			</div>
 
 		</section>
-
 		<!-- /Breadcrumb -->
 
 		<!-- Page Content -->
-		<!-- <div class="content">
-				<div class="container">
-
-					<div class="row">
-						<div class="col-md-5 col-lg-3 col-xl-3 theiaStickySidebar">
-							
-							Search Filter
-							<div class="card search-filter">
-								<div class="card-header">
-									<h4 class="card-title mb-0">Filter</h4>
-								</div>
-								<div class="card-body">
-								<div class="filter-widget">
-									<div class="cal-icon">
-										<input type="text" class="form-control datetimepicker" placeholder="Select Date">
-									</div>			
-								</div>
-								<div class="filter-widget">
-									<h4>Categories</h4>
-									<div>
-										<label class="custom_check">
-											<input type="checkbox" name="gender_type" checked>
-											<span class="checkmark"></span> Family Care
-										</label>
-									</div>
-									<div>
-										<label class="custom_check">
-											<input type="checkbox" name="gender_type">
-											<span class="checkmark"></span> Skin Care
-										</label>
-									</div>
-									<div>
-										<label class="custom_check">
-											<input type="checkbox" name="gender_type">
-											<span class="checkmark"></span> Hair Care
-										</label>
-									</div>
-									<div>
-										<label class="custom_check">
-											<input type="checkbox" name="gender_type">
-											<span class="checkmark"></span> Lip Care
-										</label>
-									</div>
-									<div>
-										<label class="custom_check">
-											<input type="checkbox" name="gender_type">
-											<span class="checkmark"></span> Men's Care
-										</label>
-									</div>
-									<div>
-										<label class="custom_check">
-											<input type="checkbox" name="gender_type">
-											<span class="checkmark"></span> Women's Care
-										</label>
-									</div>
-									<div>
-										<label class="custom_check">
-											<input type="checkbox" name="gender_type">
-											<span class="checkmark"></span> Baby care
-										</label>
-									</div>
-								</div>
-									<div class="btn-search">
-										<button type="button" class="btn w-100">Search</button>
-									</div>	
-								</div>
-							</div>
-							/Search Filter
-							
-						</div>
-						
-						<div class="col-md-7 col-lg-9 col-xl-9">
-
-							<div class="row align-items-center pb-3">	
-								<div class="col-md-4 col-12 d-md-block d-none custom-short-by">
-									<h3 class="title pharmacy-title fs-24 mb-2">Medlife Medical</h3>
-									<p class="doc-location mb-2 text-ellipse pharmacy-location"><i class="isax isax-location5 me-1"></i> 96 Red Hawk Road Cyrus, MN 56323 </p>
-									<span class="sort-title">Showing 6 of 98 products</span>
-								</div>
-								<div class="col-md-8 col-12 d-md-block d-none custom-short-by">
-									<div class="sort-by pb-3">
-										<span class="sort-title">Sort by</span>
-										<span class="sortby-fliter">
-											<select class="form-select">
-												<option>Select</option>
-												<option class="sorting">Rating</option>
-												<option class="sorting">Popular</option>
-												<option class="sorting">Latest</option>
-												<option class="sorting">Free</option>
-											</select>
-										</span>
-									</div>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-md-12 col-lg-4 col-xl-4 product-custom d-flex">
-	                                <div class="profile-widget w-100">
-										<div class="doc-img">
-											<a href="orthopedic-services.html" tabindex="-1">
-												<img class="img-fluid" alt="Product image" src="assets/img/products/product.jpg">
-											</a>
-											<a href="javascript:void(0)" class="fav-btn" tabindex="-1">
-												<i class="far fa-bookmark"></i>
-											</a>
-										</div>
-										<div class="pro-content">
-											<h3 class="title">
-												<a href="orthopedic-services.html" tabindex="-1">Benzaxapine Croplex</a> 
-											</h3>
-											<div class="row align-items-center">
-												<div class="col-lg-6 d-flex">
-													<span class="price me-2">$19.00</span>
-													<span class="price-strike">$45.00</span>
-												</div>
-												<div class="col-lg-6 text-end">
-													<a href="cart.html" class="cart-icon"><i class="fas fa-shopping-cart"></i></a>
-												</div>
-											</div>
-										</div>
-									</div>		
-                            	</div>
-                            	<div class="col-md-12 col-lg-4 col-xl-4 product-custom d-flex">
-	                                <div class="profile-widget w-100">
-										<div class="doc-img">
-											<a href="orthopedic-services.html" tabindex="-1">
-												<img class="img-fluid" alt="Product image" src="assets/img/products/product13.jpg">
-											</a>
-											<a href="javascript:void(0)" class="fav-btn" tabindex="-1">
-												<i class="far fa-bookmark"></i>
-											</a>
-										</div>
-										<div class="pro-content">
-											<h3 class="title">
-												<a href="orthopedic-services.html" tabindex="-1">Rapalac Neuronium</a> 
-											</h3>
-											<div class="row align-items-center">
-												<div class="col-lg-6">
-													<span class="price">$16.00</span>
-												</div>
-												<div class="col-lg-6 text-end">
-													<a href="cart.html" class="cart-icon"><i class="fas fa-shopping-cart"></i></a>
-												</div>
-											</div>
-										</div>
-									</div>		
-                            	</div>
-                             	<div class="col-md-12 col-lg-4 col-xl-4 product-custom d-flex">
-	                                <div class="profile-widget w-100">
-										<div class="doc-img">
-											<a href="orthopedic-services.html" tabindex="-1">
-												<img class="img-fluid" alt="Product image" src="assets/img/products/product1.jpg">
-											</a>
-											<a href="javascript:void(0)" class="fav-btn" tabindex="-1">
-												<i class="far fa-bookmark"></i>
-											</a>
-										</div>
-										<div class="pro-content">
-											<h3 class="title">
-												<a href="orthopedic-services.html" tabindex="-1">Ombinazol Bonibamol</a> 
-											</h3>
-											<div class="row align-items-center">
-												<div class="col-lg-6">
-													<span class="price">$22.00</span>
-												</div>
-												<div class="col-lg-6 text-end">
-													<a href="cart.html" class="cart-icon"><i class="fas fa-shopping-cart"></i></a>
-												</div>
-											</div>
-										</div>
-									</div>		
-                            	</div>
-                             	<div class="col-md-12 col-lg-4 col-xl-4 product-custom d-flex">
-	                                <div class="profile-widget w-100">
-										<div class="doc-img">
-											<a href="orthopedic-services.html" tabindex="-1">
-												<img class="img-fluid" alt="Product image" src="assets/img/products/product2.jpg">
-											</a>
-											<a href="javascript:void(0)" class="fav-btn" tabindex="-1">
-												<i class="far fa-bookmark"></i>
-											</a>
-										</div>
-										<div class="pro-content">
-											<h3 class="title">
-												<a href="orthopedic-services.html" tabindex="-1">Dantotate Dantodazole</a> 
-											</h3>
-											<div class="row align-items-center">
-												<div class="col-lg-6 d-flex">
-													<span class="price me-2">$10.00</span>
-													<span class="price-strike">$12.00</span>
-												</div>
-												<div class="col-lg-6 text-end">
-													<a href="cart.html" class="cart-icon"><i class="fas fa-shopping-cart"></i></a>
-												</div>
-											</div>
-										</div>
-									</div>		
-                            	</div>
-                            	<div class="col-md-12 col-lg-4 col-xl-4 product-custom d-flex">
-	                                <div class="profile-widget w-100">
-										<div class="doc-img">
-											<a href="orthopedic-services.html" tabindex="-1">
-												<img class="img-fluid" alt="Product image" src="assets/img/products/product12.jpg">
-											</a>
-											<a href="javascript:void(0)" class="fav-btn" tabindex="-1">
-												<i class="far fa-bookmark"></i>
-											</a>
-										</div>
-										<div class="pro-content">
-											<h3 class="title">
-												<a href="orthopedic-services.html" tabindex="-1">Acetrace Amionel</a> 
-											</h3>
-											<div class="row align-items-center">
-												<div class="col-lg-6">
-													<span class="price">$7.00</span>
-												</div>
-												<div class="col-lg-6 text-end">
-													<a href="cart.html" class="cart-icon"><i class="fas fa-shopping-cart"></i></a>
-												</div>
-											</div>
-										</div>
-									</div>		
-                            	</div>
-                            	<div class="col-md-12 col-lg-4 col-xl-4 product-custom d-flex">
-	                                <div class="profile-widget w-100">
-										<div class="doc-img">
-											<a href="orthopedic-services.html" tabindex="-1">
-												<img class="img-fluid" alt="Product image" src="assets/img/products/product11.jpg">
-											</a>
-											<a href="javascript:void(0)" class="fav-btn" tabindex="-1">
-												<i class="far fa-bookmark"></i>
-											</a>
-										</div>
-										<div class="pro-content">
-											<h3 class="title">
-												<a href="orthopedic-services.html" tabindex="-1">Ergorinex Caffeigestin</a> 
-											</h3>
-											<div class="row align-items-center">
-												<div class="col-lg-6">
-													<span class="price">$15.00</span>
-												</div>
-												<div class="col-lg-6 text-end">
-													<a href="cart.html" class="cart-icon"><i class="fas fa-shopping-cart"></i></a>
-												</div>
-											</div>
-										</div>
-									</div>		
-                            	</div>
-                           	 	<div class="col-md-12 col-lg-4 col-xl-4 product-custom d-flex">
-	                                <div class="profile-widget w-100">
-										<div class="doc-img">
-											<a href="orthopedic-services.html" tabindex="-1">
-												<img class="img-fluid" alt="Product image" src="assets/img/products/product3.jpg">
-											</a>
-											<a href="javascript:void(0)" class="fav-btn" tabindex="-1">
-												<i class="far fa-bookmark"></i>
-											</a>
-										</div>
-										<div class="pro-content">
-											<h3 class="title">
-												<a href="orthopedic-services.html" tabindex="-1">Alispirox Aerorenone</a> 
-											</h3>
-											<div class="row align-items-center">
-												<div class="col-lg-6">
-													<span class="price">$26.00</span>
-												</div>
-												<div class="col-lg-6 text-end">
-													<a href="cart.html" class="cart-icon"><i class="fas fa-shopping-cart"></i></a>
-												</div>
-											</div>
-										</div>
-									</div>		
-                            	</div>
-                            	<div class="col-md-12 col-lg-4 col-xl-4 product-custom d-flex">
-	                                <div class="profile-widget w-100">
-										<div class="doc-img">
-											<a href="orthopedic-services.html" tabindex="-1">
-												<img class="img-fluid" alt="Product image" src="assets/img/products/product10.jpg">
-											</a>
-											<a href="javascript:void(0)" class="fav-btn" tabindex="-1">
-												<i class="far fa-bookmark"></i>
-											</a>
-										</div>
-										<div class="pro-content">
-											<h3 class="title">
-												<a href="orthopedic-services.html" tabindex="-1">Lysofranil Dorzostin</a> 
-											</h3>
-											<div class="row align-items-center">
-												<div class="col-lg-6 d-flex">
-													<span class="price me-2">$10.00</span>
-													<span class="price-strike">$12.00</span>
-												</div>
-												<div class="col-lg-6 text-end">
-													<a href="cart.html" class="cart-icon"><i class="fas fa-shopping-cart"></i></a>
-												</div>
-											</div>
-										</div>
-									</div>		
-                            	</div>
-                            	<div class="col-md-12 col-lg-4 col-xl-4 product-custom d-flex">
-	                                <div class="profile-widget w-100">
-										<div class="doc-img">
-											<a href="orthopedic-services.html" tabindex="-1">
-												<img class="img-fluid" alt="Product image" src="assets/img/products/product4.jpg">
-											</a>
-											<a href="javascript:void(0)" class="fav-btn" tabindex="-1">
-												<i class="far fa-bookmark"></i>
-											</a>
-										</div>
-										<div class="pro-content">
-											<h3 class="title">
-												<a href="orthopedic-services.html" tabindex="-1">Nitrolozin Zithrotropin</a> 
-											</h3>
-											<div class="row align-items-center">
-												<div class="col-lg-6">
-													<span class="price">$12.00</span>
-												</div>
-												<div class="col-lg-6 text-end">
-													<a href="cart.html" class="cart-icon"><i class="fas fa-shopping-cart"></i></a>
-												</div>
-											</div>
-										</div>
-									</div>		
-                            	</div>
-                            	<div class="col-md-12 col-lg-4 col-xl-4 product-custom d-flex">
-	                                <div class="profile-widget w-100">
-										<div class="doc-img">
-											<a href="orthopedic-services.html" tabindex="-1">
-												<img class="img-fluid" alt="Product image" src="assets/img/products/product14.jpg">
-											</a>
-											<a href="javascript:void(0)" class="fav-btn" tabindex="-1">
-												<i class="far fa-bookmark"></i>
-											</a>
-										</div>
-										<div class="pro-content">
-											<h3 class="title">
-												<a href="orthopedic-services.html" tabindex="-1">Cordacriptine Mardipine</a> 
-											</h3>
-											<div class="row align-items-center">
-												<div class="col-lg-6">
-													<span class="price">$9.00</span>
-												</div>
-												<div class="col-lg-6 text-end">
-													<a href="cart.html" class="cart-icon"><i class="fas fa-shopping-cart"></i></a>
-												</div>
-											</div>
-										</div>
-									</div>		
-                            	</div>
-                            	<div class="col-md-12 col-lg-4 col-xl-4 product-custom d-flex">
-	                                <div class="profile-widget w-100">
-										<div class="doc-img">
-											<a href="orthopedic-services.html" tabindex="-1">
-												<img class="img-fluid" alt="Product image" src="assets/img/products/product5.jpg">
-											</a>
-											<a href="javascript:void(0)" class="fav-btn" tabindex="-1">
-												<i class="far fa-bookmark"></i>
-											</a>
-										</div>
-										<div class="pro-content">
-											<h3 class="title">
-												<a href="orthopedic-services.html" tabindex="-1">Iconevist Ampyplex</a> 
-											</h3>
-											<div class="row align-items-center">
-												<div class="col-lg-6">
-													<span class="price">$16.00</span>
-												</div>
-												<div class="col-lg-6 text-end">
-													<a href="cart.html" class="cart-icon"><i class="fas fa-shopping-cart"></i></a>
-												</div>
-											</div>
-										</div>
-									</div>		
-                            	</div>
-                            	<div class="col-md-12 col-lg-4 col-xl-4 product-custom d-flex">
-	                                <div class="profile-widget w-100">
-										<div class="doc-img">
-											<a href="orthopedic-services.html" tabindex="-1">
-												<img class="img-fluid" alt="Product image" src="assets/img/products/product6.jpg">
-											</a>
-											<a href="javascript:void(0)" class="fav-btn" tabindex="-1">
-												<i class="far fa-bookmark"></i>
-											</a>
-										</div>
-										<div class="pro-content">
-											<h3 class="title">
-												<a href="orthopedic-services.html" tabindex="-1">Alcafsteride Omebide</a> 
-											</h3>
-											<div class="row align-items-center">
-												<div class="col-lg-6">
-													<span class="price">$7.00</span>
-												</div>
-												<div class="col-lg-6 text-end">
-													<a href="cart.html" class="cart-icon"><i class="fas fa-shopping-cart"></i></a>
-												</div>
-											</div>
-										</div>
-									</div>		
-                            	</div>
-                            	<div class="col-md-12 col-lg-4 col-xl-4 product-custom d-flex">
-	                                <div class="profile-widget w-100">
-										<div class="doc-img">
-											<a href="orthopedic-services.html" tabindex="-1">
-												<img class="img-fluid" alt="Product image" src="assets/img/products/product15.jpg">
-											</a>
-											<a href="javascript:void(0)" class="fav-btn" tabindex="-1">
-												<i class="far fa-bookmark"></i>
-											</a>
-										</div>
-										<div class="pro-content">
-											<h3 class="title">
-												<a href="orthopedic-services.html" tabindex="-1">Neubide Aborase</a> 
-											</h3>
-											<div class="row align-items-center">
-												<div class="col-lg-6">
-													<span class="price">$30.00</span>
-												</div>
-												<div class="col-lg-6 text-end">
-													<a href="cart.html" class="cart-icon"><i class="fas fa-shopping-cart"></i></a>
-												</div>
-											</div>
-										</div>
-									</div>		
-                            	</div>
-                            	<div class="col-md-12 col-lg-4 col-xl-4 product-custom d-flex">
-	                                <div class="profile-widget w-100">
-										<div class="doc-img">
-											<a href="orthopedic-services.html" tabindex="-1">
-												<img class="img-fluid" alt="Product image" src="assets/img/products/product7.jpg">
-											</a>
-											<a href="javascript:void(0)" class="fav-btn" tabindex="-1">
-												<i class="far fa-bookmark"></i>
-											</a>
-										</div>
-										<div class="pro-content">
-											<h3 class="title">
-												<a href="orthopedic-services.html" tabindex="-1">ITONE eye drops 10ml</a> 
-											</h3>
-											<div class="row align-items-center">
-												<div class="col-lg-6">
-													<span class="price">$50.00</span>
-												</div>
-												<div class="col-lg-6 text-end">
-													<a href="cart.html" class="cart-icon"><i class="fas fa-shopping-cart"></i></a>
-												</div>
-											</div>
-										</div>
-									</div>		
-                            	</div>
-                            	<div class="col-md-12 col-lg-4 col-xl-4 product-custom d-flex">
-	                                <div class="profile-widget w-100">
-										<div class="doc-img">
-											<a href="orthopedic-services.html" tabindex="-1">
-												<img class="img-fluid" alt="Product image" src="assets/img/products/product8.jpg">
-											</a>
-											<a href="javascript:void(0)" class="fav-btn" tabindex="-1">
-												<i class="far fa-bookmark"></i>
-											</a>
-										</div>
-										<div class="pro-content">
-											<h3 class="title">
-												<a href="orthopedic-services.html" tabindex="-1">Antatriene Drospiletra</a> 
-											</h3>
-											<div class="row align-items-center">
-												<div class="col-lg-6 d-flex">
-													<span class="price me-2">$10.00</span>
-													<span class="price-strike">$20.00</span>
-												</div>
-												<div class="col-lg-6 text-end">
-													<a href="cart.html" class="cart-icon"><i class="fas fa-shopping-cart"></i></a>
-												</div>
-											</div>
-										</div>
-									</div>		
-                            	</div>
-
-                             </div>
-                             <div class="col-md-12 text-center">
-                             	<a href="gynecology-services.html#" class="btn book-btn1 mb-4">Load More</a>
-                         	</div>
-						</div>
-					</div>
-				</div>
-			</div> -->
-
 
 		<!-- Footer Section -->
-	<footer class="footer inner-footer">
-  <div class="footer-top">
-    <div class="container">
-      <div class="row align-items-start">
+		<footer class="footer inner-footer">
+			<div class="footer-top">
+				<div class="container">
+					<div class="row align-items-start">
 
-        <!-- Col 1 : Logo + Description -->
-        <div class="col-xl-2 col-lg-3 col-md-6">
-          <div class="footer-widget">
-            <div class="footer-logo mb-3">
-              <img src="assets/img/RK-Logo.png"
-                   alt="RK Hospital Logo"
-                   class="img-fluid logo">
-            </div>
-            <p>
-              Dr. Agrawal's R.K. Hospital provides quality
-              healthcare in Nagpur with advanced medical
-              facilities and compassionate care.
-            </p>
-          </div>
-        </div>
+						<!-- Col 1 : Logo + Description -->
+						<div class="col-xl-2 col-lg-3 col-md-6">
+							<div class="footer-widget">
+								<div class="footer-logo mb-3">
+									<img src="assets/img/RK-Logo.png" alt="RK Hospital Logo" class="img-fluid logo">
+								</div>
+								<p>
+									Dr. Agrawal's R.K. Hospital provides quality
+									healthcare in Nagpur with advanced medical
+									facilities and compassionate care.
+								</p>
+							</div>
+						</div>
 
-        <!-- Col 2 : Quick Links -->
-        <div class="col-xl-2 col-lg-3 col-md-6">
-          <div class="footer-widget footer-menu">
-            <h6 class="footer-title">Quick Links</h6>
-            <ul>
-              <li><a href="index-7.html">Home</a></li>
-              <li><a href="about-us.html">About Us</a></li>
-              <li><a href="TwoDoctor.html">Doctors</a></li>
-              <li><a href="contact-us.html">Contact Us</a></li>
-            </ul>
-          </div>
-        </div>
+						<!-- Col 2 : Quick Links -->
+						<div class="col-xl-2 col-lg-3 col-md-6">
+							<div class="footer-widget footer-menu">
+								<h6 class="footer-title">Quick Links</h6>
+								<ul>
+									<li><a href="index-7.html">Home</a></li>
+									<li><a href="about-us.html">About Us</a></li>
+									<li><a href="two-doctor.html">Doctors</a></li>
+									<li><a href="contact-us.html">Contact Us</a></li>
+								</ul>
+							</div>
+						</div>
 
-        <!-- Col 3 : Treatments -->
-        <div class="col-xl-2 col-lg-3 col-md-6">
-          <div class="footer-widget footer-menu">
-            <h6 class="footer-title">Treatments</h6>
-            <ul>
-              <li><a href="orthopedic-services.html">Orthopedic Services</a></li>
-              <li><a href="gynecology-services.html">Gynecology Services</a></li>
-              <li><a href="hospital-services.html">Hospital Services</a></li>
-            </ul>
-          </div>
-        </div>
+						<!-- Col 3 : Treatments -->
+						<div class="col-xl-2 col-lg-3 col-md-6">
+							<div class="footer-widget footer-menu">
+								<h6 class="footer-title">Treatments</h6>
+								<ul>
+									<li><a href="orthopedic-services.html">Orthopedic Services</a></li>
+									<li><a href="gynecology-services.html">Gynecology Services</a></li>
+									<li><a href="hospital-services.html">Hospital Services</a></li>
+								</ul>
+							</div>
+						</div>
 
-        <!-- Col 4 : Policies -->
-        <div class="col-xl-2 col-lg-3 col-md-6">
-          <div class="footer-widget footer-menu">
-            <h6 class="footer-title">Policies</h6>
-            <ul>
-              <li><a href="#">Legal Notice</a></li>
-              <li><a href="#">Privacy Policy</a></li>
-              <li><a href="#">Refund Policy</a></li>
-            </ul>
-          </div>
-        </div>
+						<!-- Col 4 : Policies -->
+						<div class="col-xl-2 col-lg-3 col-md-6">
+							<div class="footer-widget footer-menu">
+								<h6 class="footer-title">Policies</h6>
+								<ul>
+									<li><a href="#">Legal Notice</a></li>
+									<li><a href="#">Privacy Policy</a></li>
+									<li><a href="#">Refund Policy</a></li>
+								</ul>
+							</div>
+						</div>
 
-        <!-- Col 5 : Reach Us -->
-        <div class="col-xl-4 col-lg-12 col-md-12">
-          <div class="footer-widget">
-            <h6 class="footer-title">Reach Us</h6>
-            <p class="mb-2">
-              <strong>Dr. Agrawal's R.K. Hospital</strong><br>
-              Central Avenue, Ladpura<br>
-              Itwari, Nagpur
-            </p>
-            <p class="mb-1"><strong>Phone:</strong> 097660 57372</p>
-            <p class="mb-0"><strong>Email:</strong> info@rkhospital.com</p>
-          </div>
-        </div>
+						<!-- Col 5 : Reach Us -->
+						<div class="col-xl-4 col-lg-12 col-md-12">
+							<div class="footer-widget">
+								<h6 class="footer-title">Reach Us</h6>
+								<p class="mb-2">
+									<strong>Dr. Agrawal's R.K. Hospital</strong><br>
+									Central Avenue, Ladpura<br>
+									Itwari, Nagpur
+								</p>
+								<p class="mb-1"><strong>Phone:</strong> 097660 57372</p>
+								<p class="mb-0"><strong>Email:</strong> info@rkhospital.com</p>
+							</div>
+						</div>
 
-      </div>
-    </div>
-  </div>
+					</div>
+				</div>
+			</div>
 
-  <!-- Footer Bottom -->
-  <div class="footer-bottom">
-    <div class="container">
-      <p class="text-center mb-0">
-        Copyright &copy; 2026 Dr. Agrawal's R.K. Hospital,
-        Nagpur. All Rights Reserved.
-      </p>
-    </div>
-  </div>
-</footer>
+			<!-- Footer Bottom -->
+			<div class="footer-bottom">
+				<div class="container">
+					<p class="text-center mb-0">
+						Copyright &copy; 2026 Dr. Agrawal's R.K. Hospital,
+						Nagpur. All Rights Reserved.
+					</p>
+				</div>
+			</div>
+		</footer>
 		<!-- /Footer Section -->
 
 	</div>
@@ -852,7 +501,8 @@
 	<!-- start offcanvas -->
 	<div class="offcanvas offcanvas-offset offcanvas-end support_popup" tabindex="-1" id="support_item">
 		<div class="offcanvas-header">
-			<a href="index.html"><img src="assets/img/RK-Logo.png" alt="logo" class="img-fluid logo" style="height: 80px;"></a>
+			<a href="index.html"><img src="assets/img/RK-Logo.png" alt="logo" class="img-fluid logo"
+					style="height: 80px;"></a>
 			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"><i
 					class="isax isax-close-circle"></i></button>
 		</div>
@@ -916,40 +566,44 @@
 				<h3 class="title">Follow Us</h3>
 				<ul class="d-flex align-items-center gap-2 social-iyem">
 					<li>
-						<a href="gynecology-services.html#" class="social-icon"><i class="fa-brands fa-facebook"></i></a>
+						<a href="gynecology-services.html#" class="social-icon"><i
+								class="fa-brands fa-facebook"></i></a>
 					</li>
 					<li>
-						<a href="gynecology-services.html#" class="social-icon"><i class="fa-brands fa-x-twitter"></i></a>
+						<a href="gynecology-services.html#" class="social-icon"><i
+								class="fa-brands fa-x-twitter"></i></a>
 					</li>
 					<li>
-						<a href="gynecology-services.html#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+						<a href="gynecology-services.html#" class="social-icon"><i
+								class="fa-brands fa-instagram"></i></a>
 					</li>
 					<li>
-						<a href="gynecology-services.html#" class="social-icon"><i class="fa-brands fa-linkedin"></i></a>
+						<a href="gynecology-services.html#" class="social-icon"><i
+								class="fa-brands fa-linkedin"></i></a>
 					</li>
 				</ul>
 			</div>
 		</div>
 		<img src="assets/img/bg/offcanvas-bg.png" alt="element" class="element-01">
 	</div>
-		<!-- Footer End -->
-    <!-- ==================== /Footer ==================== -->
-       <!-- JS Scripts -->
-    <script src="assets/js/jquery-3.7.1.min.js"></script>
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/feather.min.js"></script>
-    <script src="assets/js/owl.carousel.min.js"></script>
-    <script src="assets/js/slick.js"></script>
-    <script src="assets/js/jquery.waypoints.min.js"></script>
-    <script src="assets/js/jquery.counterup.min.js"></script>
-    <script src="assets/js/moment.min.js"></script>
-    <script src="assets/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="assets/js/circle-progress.min.js"></script>
-    <script src="assets/js/skrollr.min.js"></script>
-    <script src="assets/js/backToTop.js"></script>
-    <script src="assets/js/theme-script.js"></script>
-    <script src="assets/js/script.js"></script>
-    <!-- /JS Scripts -->
+	<!-- Footer End -->
+	<!-- ==================== /Footer ==================== -->
+	<!-- JS Scripts -->
+	<script src="assets/js/jquery-3.7.1.min.js"></script>
+	<script src="assets/js/bootstrap.bundle.min.js"></script>
+	<script src="assets/js/feather.min.js"></script>
+	<script src="assets/js/owl.carousel.min.js"></script>
+	<script src="assets/js/slick.js"></script>
+	<script src="assets/js/jquery.waypoints.min.js"></script>
+	<script src="assets/js/jquery.counterup.min.js"></script>
+	<script src="assets/js/moment.min.js"></script>
+	<script src="assets/js/bootstrap-datetimepicker.min.js"></script>
+	<script src="assets/js/circle-progress.min.js"></script>
+	<script src="assets/js/skrollr.min.js"></script>
+	<script src="assets/js/backToTop.js"></script>
+	<script src="assets/js/theme-script.js"></script>
+	<script src="assets/js/script.js"></script>
+	<!-- /JS Scripts -->
 
 	<script src="../../cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js"
 		data-cf-settings="b55eb487ad61b25d4216f49d-|49" defer></script>
