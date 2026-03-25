@@ -61929,3 +61929,14 @@ p
 .choose-item-eleven .choose-icon:hover i {
     color: #ffffff !important;
 }
+.btn-primary-gradient {
+    background: #1a6ef5 !important;
+    border-color: #1a6ef5 !important;
+    color: #fff !important;
+}
+
+.btn-primary-gradient:hover {
+    background: #0d5dd4 !important;
+    border-color: #0d5dd4 !important;
+    color: #fff !important;
+}
