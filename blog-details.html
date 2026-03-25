@@ -1,866 +1,903 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
-<head>
-	<meta charset="utf-8">
-	<title>Blog Details - Dr. Agrawal's R.K. Hospital</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="description" content="Read detailed health articles from Dr. Agrawal's R.K. Hospital, Nagpur — orthopedics, gynecology, surgery, pregnancy and more.">
-	<meta name="keywords" content="joint replacement surgery, orthopedic blog, RK Hospital Nagpur, knee replacement, hip replacement, bone surgery">
-	<meta name="author" content="Dr. Agrawal's R.K. Hospital">
+	<head>
 
-	<!-- Favicon -->
-	<link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
-	<link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png">
+		<meta charset="utf-8">
+		<title>Doccure</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="The responsive professional Doccure template offers many features, like scheduling appointments with  top doctors, clinics, and hospitals via voice, video call & chat.">
+		<meta name="keywords" content="practo clone, doccure, doctor appointment, Practo clone html template, doctor booking template">
+		<meta name="author" content="Practo Clone HTML Template - Doctor Booking Template">
+		<meta property="og:url" content="https://doccure.dreamstechnologies.com/html/">
+		<meta property="og:type" content="website">
+		<meta property="og:title" content="Doctors Appointment HTML Website Templates | Doccure">
+		<meta property="og:description" content="The responsive professional Doccure template offers many features, like scheduling appointments with  top doctors, clinics, and hospitals via voice, video call & chat.">
+		<meta property="og:image" content="assets/img/preview-banner.jpg">
+		<meta name="twitter:card" content="summary_large_image">
+		<meta property="twitter:domain" content="https://doccure.dreamstechnologies.com/html/">
+		<meta property="twitter:url" content="https://doccure.dreamstechnologies.com/html/">
+		<meta name="twitter:title" content="Doctors Appointment HTML Website Templates | Doccure">
+		<meta name="twitter:description" content="The responsive professional Doccure template offers many features, like scheduling appointments with  top doctors, clinics, and hospitals via voice, video call & chat.">
+		<meta name="twitter:image" content="assets/img/preview-banner.jpg">	
+		
+		<!-- Favicon -->
+		<link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
 
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+		<!-- Apple Touch Icon -->
+		<link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png">
 
-	<!-- Fontawesome CSS -->
-	<link rel="stylesheet" href="assets/plugins/fontawesome/css/fontawesome.min.css">
-	<link rel="stylesheet" href="assets/plugins/fontawesome/css/all.min.css">
+		<!-- Theme Settings Js -->
+		<script src="assets/js/theme-script.js" type="7841a6ce69f235f6e4319751-text/javascript"></script>
+		
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+		
+		<!-- Fontawesome CSS -->
+		<link rel="stylesheet" href="assets/plugins/fontawesome/css/fontawesome.min.css">
+		<link rel="stylesheet" href="assets/plugins/fontawesome/css/all.min.css">
 
-	<!-- Iconsax CSS -->
-	<link rel="stylesheet" href="assets/css/iconsax.css">
+		<!-- Iconsax CSS-->
+		<link rel="stylesheet" href="assets/css/iconsax.css">
 
-	<!-- Feathericon CSS -->
-	<link rel="stylesheet" href="assets/css/feather.css">
+		<!-- Feathericon CSS -->
+    	<link rel="stylesheet" href="assets/css/feather.css">
+		
+		<!-- Fancybox CSS -->	
+    	<link rel="stylesheet" href="assets/plugins/fancybox/jquery.fancybox.min.css">
 
-	<!-- Fancybox CSS -->
-	<link rel="stylesheet" href="assets/plugins/fancybox/jquery.fancybox.min.css">
+		<!-- Main CSS -->
+		<link rel="stylesheet" href="assets/css/style.css">
+	
+	</head>
+	<body><a href="https://doccure.dreamstechnologies.com/cdn-cgi/content?id=nc5ZyMGBIFVPrmmWqXDtJZ4qSwn99Ak1iLVMf5SrwvE-1773164994.2677643-1.0.1.1-dxN3p6ypWfG_M9.3J_ME7U4xbLXU7WBX7RK0ICyc2r4" aria-hidden="true" rel="nofollow noopener" style="display: none !important; visibility: hidden !important"></a>
 
-	<!-- Main CSS -->
-	<link rel="stylesheet" href="assets/css/style.css">
-
-	<style>
-		/* ═══════════════════════════════════════
-		   RK HOSPITAL — THEME VARIABLES
-		═══════════════════════════════════════ */
-		:root {
-			--red:        #C71F37;
-			--red-dark:   #a01020;
-			--red-light:  #F4797D;
-			--red-bg:     #fff5f5;
-			--red-border: #fecaca;
-			--blue:       #1a6ef5;
-			--blue-dark:  #0a4fc4;
-			--blue-bg:    #eff6ff;
-			--blue-border:#bfdbfe;
-			--text-dark:  #1a1a2e;
-			--text-mid:   #374151;
-			--text-soft:  #6b7280;
-			--white:      #ffffff;
-			--off-white:  #f9fafb;
-			--border:     #e5e7eb;
-			--shadow-sm:  0 2px 12px rgba(199,31,55,0.08);
-			--shadow-md:  0 6px 28px rgba(199,31,55,0.14);
-		}
-
-		/* ── BOOK NOW BUTTON ── */
-		.btn-primary-gradient {
-			background: var(--blue) !important;
-			border-color: var(--blue) !important;
-			color: #fff !important;
-		}
-		.btn-primary-gradient:hover {
-			background: var(--blue-dark) !important;
-			border-color: var(--blue-dark) !important;
-			color: #fff !important;
-		}
-
-		/* ── PAGE BACKGROUND ── */
-		body { background: var(--off-white); }
-		.content { background: var(--off-white); }
-
-		/* ══════════════════════════════════════
-		   BLOG ARTICLE CARD
-		══════════════════════════════════════ */
-		.blog-view {
-			background: var(--white);
-			border-radius: 18px;
-			border: 1px solid var(--border);
-			box-shadow: var(--shadow-sm);
-			padding: 32px 32px 36px;
-			margin-bottom: 28px;
-		}
-
-		.blog-view h3 {
-			font-size: 1.55rem;
-			font-weight: 800;
-			color: var(--text-dark);
-			line-height: 1.3;
-			margin-bottom: 20px;
-			padding-bottom: 16px;
-			border-bottom: 3px solid var(--red);
-		}
-
-		/* ── Blog image ── */
-		.blog-image {
-			border-radius: 14px;
-			overflow: hidden;
-			margin-bottom: 22px;
-			border: 1px solid var(--border);
-		}
-		.blog-image img {
-			width: 100%;
-			display: block;
-			transition: transform 0.4s ease;
-		}
-		.blog-image:hover img { transform: scale(1.02); }
-
-		/* ── Blog meta row ── */
-		.blog-info {
-			background: var(--red-bg);
-			border: 1px solid var(--red-border);
-			border-radius: 10px;
-			padding: 12px 16px;
-			margin-bottom: 24px;
-		}
-		.blog-info .post-left ul {
-			list-style: none;
-			padding: 0; margin: 0;
-			display: flex;
-			flex-wrap: wrap;
-			align-items: center;
-			gap: 14px;
-		}
-		.blog-info .post-left ul li {
-			display: flex;
-			align-items: center;
-			gap: 6px;
-			font-size: 13px;
-			color: var(--text-mid);
-		}
-		.blog-info .post-left ul li i {
-			color: var(--red);
-			font-size: 14px;
-		}
-
-		/* Category badge */
-		.badge-dark {
-			background: var(--red) !important;
-			color: #fff !important;
-			border-radius: 100px;
-			font-size: 11.5px;
-			font-weight: 700;
-			padding: 5px 14px;
-			letter-spacing: 0.4px;
-		}
-
-		/* Author inline */
-		.post-author a {
-			display: flex;
-			align-items: center;
-			gap: 8px;
-			text-decoration: none;
-			color: var(--text-dark);
-			font-weight: 600;
-			font-size: 13px;
-		}
-		.post-author img {
-			width: 28px; height: 28px;
-			border-radius: 50%;
-			object-fit: cover;
-			border: 2px solid var(--red);
-		}
-
-		/* View / comment badges */
-		.badge-outline-dark,
-		.badge-outline-primary {
-			border-radius: 100px;
-			font-size: 12px;
-			font-weight: 600;
-			padding: 5px 12px;
-		}
-		.badge-outline-dark {
-			border: 1.5px solid var(--text-mid);
-			color: var(--text-mid);
-			background: transparent;
-		}
-		.badge-outline-primary {
-			border: 1.5px solid var(--blue);
-			color: var(--blue);
-			background: transparent;
-		}
-
-		/* ── Blog body content ── */
-		.blog-content p {
-			font-size: 15px;
-			color: var(--text-mid);
-			line-height: 1.85;
-			margin-bottom: 16px;
-		}
-		.blog-content h5 {
-			font-size: 1.05rem;
-			font-weight: 800;
-			color: var(--red-dark);
-			position: relative;
-			padding-left: 14px;
-		}
-		.blog-content h5::before {
-			content: '';
-			position: absolute;
-			left: 0; top: 3px; bottom: 3px;
-			width: 4px;
-			background: var(--red);
-			border-radius: 2px;
-		}
-
-		/* ══════════════════════════════════════
-		   ABOUT AUTHOR CARD
-		══════════════════════════════════════ */
-		.about-author {
-			display: flex;
-			gap: 20px;
-			background: var(--white);
-			border: 1px solid var(--red-border);
-			border-radius: 14px;
-			padding: 24px;
-			margin-bottom: 24px;
-			box-shadow: var(--shadow-sm);
-		}
-		.author-img-wrap img {
-			width: 80px; height: 80px;
-			border-radius: 50%;
-			object-fit: cover;
-			border: 3px solid var(--red);
-			box-shadow: 0 4px 14px rgba(199,31,55,0.2);
-		}
-		.author-details h5 {
-			font-size: 1rem;
-			font-weight: 800;
-			color: var(--text-dark);
-			margin-bottom: 4px;
-		}
-		.author-details p { font-size: 13.5px; color: var(--text-soft); line-height: 1.7; }
-		.author-details .text-muted { color: var(--red) !important; font-weight: 600; }
-
-		/* ══════════════════════════════════════
-		   TAGS
-		══════════════════════════════════════ */
-		.blog-tags .badge,
-		.blog-tags a {
-			background: var(--red-bg) !important;
-			color: var(--red-dark) !important;
-			border: 1px solid var(--red-border) !important;
-			border-radius: 100px;
-			font-size: 12px;
-			font-weight: 600;
-			padding: 6px 16px;
-			text-decoration: none;
-			transition: all 0.2s;
-		}
-		.blog-tags .badge:hover,
-		.blog-tags a:hover {
-			background: var(--red) !important;
-			color: #fff !important;
-		}
-
-		/* Section headings inside blog-view */
-		.blog-view > h4 {
-			font-size: 1.1rem;
-			font-weight: 800;
-			color: var(--text-dark);
-			border-left: 4px solid var(--red);
-			padding-left: 12px;
-			margin-bottom: 16px;
-		}
-
-		/* ══════════════════════════════════════
-		   SIDEBAR CARDS
-		══════════════════════════════════════ */
-		.sidebar-right .card {
-			border-radius: 14px;
-			border: 1px solid var(--border);
-			box-shadow: var(--shadow-sm);
-			margin-bottom: 24px;
-			overflow: hidden;
-		}
-		.sidebar-right .card-body { padding: 22px; }
-		.sidebar-right .card h5 {
-			font-size: 1rem;
-			font-weight: 800;
-			color: var(--text-dark);
-			border-left: 4px solid var(--red);
-			padding-left: 10px;
-			margin-bottom: 16px;
-		}
-
-		/* ── Search widget ── */
-		.search-widget .input-group .form-control {
-			border-color: var(--border);
-			font-size: 13.5px;
-			padding: 10px 14px;
-			border-radius: 8px 0 0 8px;
-		}
-		.search-widget .input-group .form-control:focus {
-			border-color: var(--red);
-			box-shadow: 0 0 0 3px rgba(199,31,55,0.1);
-		}
-		.search-widget .btn-primary {
-			background: var(--red) !important;
-			border-color: var(--red) !important;
-			border-radius: 0 8px 8px 0;
-			padding: 10px 16px;
-		}
-		.search-widget .btn-primary:hover {
-			background: var(--red-dark) !important;
-		}
-
-		/* ── Categories widget ── */
-		.categories {
-			list-style: none;
-			padding: 0; margin: 0;
-		}
-		.categories li {
-			border-bottom: 1px solid var(--border);
-			padding: 0;
-		}
-		.categories li:last-child { border-bottom: none; }
-		.categories li a {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			padding: 10px 4px;
-			font-size: 13.5px;
-			color: var(--text-mid);
-			text-decoration: none;
-			transition: color 0.2s, padding-left 0.2s;
-			font-weight: 500;
-		}
-		.categories li a:hover {
-			color: var(--red);
-			padding-left: 8px;
-		}
-		.categories li a span {
-			background: var(--red-bg);
-			color: var(--red);
-			border: 1px solid var(--red-border);
-			border-radius: 100px;
-			font-size: 11px;
-			font-weight: 700;
-			padding: 2px 10px;
-		}
-
-		/* ── Latest Posts widget ── */
-		.latest-posts {
-			list-style: none;
-			padding: 0; margin: 0;
-		}
-		.latest-posts li {
-			display: flex;
-			gap: 14px;
-			padding: 12px 0;
-			border-bottom: 1px solid var(--border);
-			align-items: flex-start;
-		}
-		.latest-posts li:last-child { border-bottom: none; padding-bottom: 0; }
-		.post-thumb {
-			flex-shrink: 0;
-			width: 70px; height: 60px;
-			border-radius: 8px;
-			overflow: hidden;
-			border: 1px solid var(--border);
-		}
-		.post-thumb img {
-			width: 100%; height: 100%;
-			object-fit: cover;
-			display: block;
-			transition: transform 0.3s;
-		}
-		.post-thumb:hover img { transform: scale(1.08); }
-		.post-info p {
-			font-size: 11.5px;
-			color: var(--red);
-			font-weight: 600;
-			margin: 0 0 4px;
-		}
-		.post-info h4 {
-			font-size: 13px;
-			font-weight: 700;
-			color: var(--text-dark);
-			line-height: 1.4;
-			margin: 0;
-		}
-		.post-info h4 a {
-			color: inherit;
-			text-decoration: none;
-			transition: color 0.2s;
-		}
-		.post-info h4 a:hover { color: var(--red); }
-
-		/* ── Tags widget ── */
-		.tags {
-			list-style: none;
-			padding: 0; margin: 0;
-			display: flex;
-			flex-wrap: wrap;
-			gap: 8px;
-		}
-		.tags .tag {
-			background: var(--red-bg);
-			color: var(--red-dark);
-			border: 1px solid var(--red-border);
-			border-radius: 100px;
-			font-size: 12px;
-			font-weight: 600;
-			padding: 5px 14px;
-			text-decoration: none;
-			transition: all 0.2s;
-		}
-		.tags .tag:hover {
-			background: var(--red);
-			color: #fff;
-			border-color: var(--red);
-		}
-
-		/* ── Book Appointment CTA card ── */
-		.cta-card {
-			background: linear-gradient(135deg, var(--red-dark) 0%, var(--red) 60%, var(--red-light) 100%) !important;
-			border: none !important;
-			border-radius: 14px !important;
-		}
-		.cta-card .card-body {
-			padding: 28px 22px !important;
-			text-align: center;
-		}
-		.cta-card .cta-icon {
-			width: 56px; height: 56px;
-			background: rgba(255,255,255,0.15);
-			border-radius: 50%;
-			display: flex; align-items: center; justify-content: center;
-			margin: 0 auto 14px;
-			font-size: 24px;
-			color: #fff;
-		}
-		.cta-card h5 {
-			color: #fff !important;
-			font-size: 1.05rem !important;
-			font-weight: 800 !important;
-			border-left: none !important;
-			padding-left: 0 !important;
-			margin-bottom: 8px !important;
-		}
-		.cta-card p {
-			font-size: 13.5px;
-			color: rgba(255,255,255,0.85) !important;
-			margin-bottom: 16px;
-		}
-		.cta-card .btn-light {
-			background: #fff !important;
-			color: var(--red-dark) !important;
-			font-weight: 700;
-			border-radius: 8px;
-			padding: 10px 0;
-			font-size: 13.5px;
-			border: none;
-			transition: all 0.2s;
-		}
-		.cta-card .btn-light:hover {
-			background: var(--red-bg) !important;
-			color: var(--red) !important;
-		}
-		.cta-card .cta-phone {
-			display: inline-flex;
-			align-items: center;
-			gap: 6px;
-			margin-top: 12px;
-			font-size: 13px;
-			color: rgba(255,255,255,0.9);
-			font-weight: 600;
-		}
-
-		/* ══════════════════════════════════════
-		   RESPONSIVE
-		══════════════════════════════════════ */
-		@media (max-width: 767px) {
-			.blog-view { padding: 20px 16px 24px; }
-			.blog-view h3 { font-size: 1.2rem; }
-			.about-author { flex-direction: column; gap: 14px; }
-			.author-img-wrap img { width: 64px; height: 64px; }
-		}
-	</style>
-</head>
-<body>
-
-<!-- Main Wrapper -->
-<div class="main-wrapper">
-
-	<!-- Header -->
-	<header class="header header-default inner-header">
-		<div class="container">
-			<nav class="navbar navbar-expand-lg header-nav">
-				<div class="navbar-header">
-					<a id="mobile_btn" href="javascript:void(0);">
-						<i class="fa-solid fa-bars"></i>
-					</a>
-					<a href="index-7.html" class="navbar-brand logo">
-						<img src="assets/img/RK-Logo.png" class="img-fluid" alt="Logo">
-					</a>
-				</div>
-				<div class="header-menu">
-					<div class="main-menu-wrapper">
-						<div class="menu-header">
-							<a href="index-7.html" class="menu-logo">
-								<img src="assets/img/RK-Logo.png" class="img-fluid" alt="Logo">
+		<!-- Main Wrapper -->
+		<div class="main-wrapper">
+		
+			<div class="header-theme header-theme-two">
+				<button type="button" id="dark-mode-toggle" class="theme-toggle moon">
+					<i class="isax isax-moon5"></i>
+				</button>
+				<button type="button" id="light-mode-toggle" class="theme-toggle sun">
+					<i class="isax isax-sun-15"></i>
+				</button>
+			</div>
+			
+			<!-- Header -->
+			<header class="header header-default">
+				<div class="container">
+					<nav class="navbar navbar-expand-lg header-nav">
+						<div class="navbar-header">
+							<a id="mobile_btn" href="blog-details.html#">
+								<i class="fa-solid fa-bars"></i>
 							</a>
-							<a id="menu_close" class="menu-close" href="javascript:void(0);">
-								<i class="fas fa-times"></i>
+							<a href="index.html" class="navbar-brand logo">
+								<img src="assets/img/logo.svg" class="img-fluid" alt="Logo">
 							</a>
 						</div>
-						<ul class="main-nav">
-							<li class="has-submenu megamenu">
-								<a href="index-7.html" class="main-menu">Home</a>
-							</li>
-							<li class="has-submenu">
-								<a href="two-doctor.html" class="main-menu">Doctors</a>
-							</li>
-							<li class="has-submenu">
-								<a href="about-us.html" class="main-menu">About Us</a>
-							</li>
-							<li class="has-submenu">
-								<a href="#" class="main-menu" onclick="toggleMobileSubmenu(this); return false;">
-									Service <span><i class="fa-solid fa-chevron-down"></i></span>
-								</a>
-								<ul class="submenu sub-menu-one sub-menu-default">
-									<li><a href="hospital-services.html">Hospital Services</a></li>
-									<li><a href="gynecology-services.html">Gynecology Services</a></li>
-									<li><a href="orthopedic-services.html">Orthopedic Services</a></li>
+						<div class="header-menu">
+							<div class="main-menu-wrapper">
+								<div class="menu-header">
+									<a href="index.html" class="menu-logo">
+										<img src="assets/img/logo.svg" class="img-fluid" alt="Logo">
+									</a>
+									<a id="menu_close" class="menu-close" href="blog-details.html#">
+										<i class="fas fa-times"></i>
+									</a>
+								</div>
+								<ul class="main-nav">
+									<li class="has-submenu megamenu">
+										<a href="blog-details.html#" class="main-menu">Home <span><i class="fa-solid fa-chevron-down"></i></span></a>
+										<ul class="submenu mega-submenu">
+											<li>
+												<div class="megamenu-wrapper">
+													<div class="row">
+														<div class="col">
+															<div class="single-demo">
+																<div class="demo-img">
+																	<a href="index.html" class="inner-demo-img"><img src="assets/img/home/home.jpg" class="img-fluid " alt="img"></a>
+																</div>
+																<div class="demo-info">
+																	<a href="index.html" class="inner-demo-img">General Home 1</a>
+																</div>
+															</div>
+														</div>
+														<div class="col">
+															<div class="single-demo ">
+																<div class="demo-img">
+																	<a href="index-2.html" class="inner-demo-img"><img src="assets/img/home/home-01.jpg" class="img-fluid " alt="img"></a>
+																</div>
+																<div class="demo-info">
+																	<a href="index-2.html" class="inner-demo-img">General Home 2</a>
+																</div>
+															</div>
+														</div>
+														<div class="col">
+															<div class="single-demo">
+																<div class="demo-img">
+																	<a href="index-3.html" class="inner-demo-img"><img src="assets/img/home/home-02.jpg" class="img-fluid " alt="img"></a>
+																</div>
+																<div class="demo-info">
+																	<a href="index-3.html" class="inner-demo-img">Dental</a>
+																</div>
+															</div>
+														</div>
+														<div class="col">
+															<div class="single-demo">
+																<div class="demo-img">
+																	<a href="index-4.html" class="inner-demo-img"><img src="assets/img/home/home-03.jpg" class="img-fluid " alt="img"></a>
+																</div>
+																<div class="demo-info">
+																	<a href="index-4.html" class="inner-demo-img">Pediatrics</a>
+																</div>
+															</div>
+														</div>
+														<div class="col">
+															<div class="single-demo">
+																<div class="demo-img">
+																	<a href="index-5.html" class="inner-demo-img"><img src="assets/img/home/home-04.jpg" class="img-fluid " alt="img"></a>
+																</div>
+																<div class="demo-info">
+																	<a href="index-5.html" class="inner-demo-img">ENT</a>
+																</div>
+															</div>
+														</div>
+														<div class="col">
+															<div class="single-demo">
+																<div class="demo-img">
+																	<a href="index-6.html" class="inner-demo-img"><img src="assets/img/home/home-05.jpg" class="img-fluid " alt="img"></a>
+																</div>
+																<div class="demo-info">
+																	<a href="index-6.html" class="inner-demo-img">Veterinary</a>
+																</div>
+															</div>
+														</div>
+														<div class="col">
+															<div class="single-demo ">
+																<div class="demo-img">
+																	<a href="index-7.html" class="inner-demo-img"><img src="assets/img/home/home-06.jpg" class="img-fluid " alt="img"></a>
+																</div>
+																<div class="demo-info">
+																	<a href="index-7.html" class="inner-demo-img">Cardiology</a>
+																</div>
+															</div>
+														</div>
+														<div class="col">
+															<div class="single-demo">
+																<div class="demo-img">
+																	<a href="index-8.html" class="inner-demo-img"><img src="assets/img/home/home-07.jpg" class="img-fluid " alt="img"></a>
+																</div>
+																<div class="demo-info">
+																	<a href="index-8.html" class="inner-demo-img">Eye Care</a>
+																</div>
+															</div>
+														</div>
+														<div class="col">
+															<div class="single-demo">
+																<div class="demo-img">
+																	<a href="index-9.html" class="inner-demo-img"><img src="assets/img/home/home-08.jpg" class="img-fluid " alt="img"></a>
+																</div>
+																<div class="demo-info">
+																	<a href="index-9.html" class="inner-demo-img">Home Care</a>
+																</div>
+															</div>
+														</div>
+														<div class="col">
+															<div class="single-demo">
+																<div class="demo-img">
+																	<a href="index-10.html" class="inner-demo-img"><img src="assets/img/home/home-09.jpg" class="img-fluid " alt="img"></a>
+																</div>
+																<div class="demo-info">
+																	<a href="index-10.html" class="inner-demo-img">Fertility</a>
+																</div>
+															</div>
+														</div>
+														<div class="col">
+															<div class="single-demo">
+																<div class="demo-img">
+																	<a href="index-11.html" class="inner-demo-img"><img src="assets/img/home/home-10.jpg" class="img-fluid " alt="img"></a>
+																</div>
+																<div class="demo-info">
+																	<a href="index-11.html" class="inner-demo-img">Cosmetic Surgery</a>
+																</div>
+															</div>
+														</div>
+														<div class="col">
+															<div class="single-demo">
+																<div class="demo-img">
+																	<a href="index-12.html" class="inner-demo-img"><img src="assets/img/home/home-11.jpg" class="img-fluid " alt="img"></a>
+																</div>
+																<div class="demo-info">
+																	<a href="index-12.html" class="inner-demo-img">Laboratory</a>
+																</div>
+															</div>
+														</div>
+														<div class="col">
+															<div class="single-demo">
+																<div class="demo-img">
+																	<a href="index-13.html" class="inner-demo-img"><img src="assets/img/home/home-12.jpg" class="img-fluid" alt="img"></a>
+																</div>
+																<div class="demo-info">
+																	<a href="index-13.html" class="inner-demo-img">Pharmacy</a>
+																</div>
+															</div>
+														</div>
+														<div class="col">
+															<div class="single-demo">
+																<div class="demo-img">
+																	<a href="blog-details.html#" class="inner-demo-img"><img src="assets/img/home/coming-soon.jpg" class="img-fluid " alt="img"></a>
+																</div>
+																<div class="demo-info">
+																	<a href="blog-details.html#" class="inner-demo-img">Coming Soon</a>
+																</div>
+															</div>
+														</div>
+														<div class="col">
+															<div class="single-demo">
+																<div class="demo-img">
+																	<a href="blog-details.html#" class="inner-demo-img"><img src="assets/img/home/coming-soon.jpg" class="img-fluid " alt="img"></a>
+																</div>
+																<div class="demo-info">
+																	<a href="blog-details.html#" class="inner-demo-img">Coming Soon</a>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</li>
+										</ul>
+									</li>
+									<li class="has-submenu">
+										<a href="blog-details.html#" class="main-menu">Doctors <span><i class="fa-solid fa-chevron-down"></i></span></a>
+										<ul class="submenu sub-menu-one">
+											<li>
+												<div class="row">
+													<div class="col-lg-6">
+														<ul class="sub-menu-list">
+															<li><a href="doctor-dashboard.html">Doctor Dashboard</a></li>
+															<li><a href="appointments.html">Appointments</a></li>
+															<li><a href="available-timings.html">Available Timing</a></li>
+															<li><a href="my-patients.html">Patients List</a></li>
+															<li><a href="chat-doctor.html">Chat</a></li>
+															<li><a href="invoices.html">Invoices</a></li>
+															<li><a href="doctor-profile-settings.html">Profile Settings</a></li>
+														</ul>
+													</div>
+													<div class="col-lg-6">
+														<div class="menu-img">
+															<img src="assets/img/home/menu-img-1.jpg" alt="listing" class="img-fluid">
+														</div>
+													</div>
+												</div>
+											</li>
+										</ul>
+									</li>
+									<li class="has-submenu">
+										<a href="blog-details.html#" class="main-menu">Patients <span><i class="fa-solid fa-chevron-down"></i></span></a>
+										<ul class="submenu sub-menu-one sub-menu-two">
+											<li>
+												<div class="row">
+													<div class="col-lg-4 sub-menu-left">
+														<ul class="sub-menu-list">
+															<li><a href="patient-dashboard.html">Patient Dashboard</a></li>
+															<li><a href="map-grid.html">Doctors Grid</a></li>
+															<li><a href="map-list.html">Doctors List</a></li>
+															<li><a href="map-list-availability.html">Doctors Availability</a></li>
+															<li><a href="booking.html">Booking</a></li>
+															<li><a href="booking-1.html">Booking 1</a></li>
+															<li><a href="booking-2.html">Booking 2</a></li>
+															<li><a href="booking-popup.html">Booking Popup</a></li>
+														</ul>
+													</div>
+													<div class="col-lg-4">
+														<ul class="sub-menu-list">
+															<li><a href="search.html">Search Doctor 1</a></li>
+															<li><a href="search-2.html">Search Doctor 2</a></li>
+															<li><a href="doctor-profile.html">Doctor Profile 1</a></li>
+															<li><a href="doctor-profile-2.html">Doctor Profile 2</a></li>
+															<li><a href="checkout.html">Checkout</a></li>
+															<li><a href="favourites.html">Favourites</a></li>
+															<li><a href="chat.html">Chat</a></li>
+															<li><a href="profile-settings.html">Profile Settings</a></li>
+														</ul>
+													</div>
+													<div class="col-lg-4">
+														<div class="menu-img">
+															<img src="assets/img/home/menu-img-2.jpg" alt="listing" class="img-fluid">
+														</div>
+													</div>
+												</div>
+											</li>
+										</ul>
+									</li>
+									<li class="has-submenu">
+										<a href="blog-details.html#" class="main-menu">Pharmacy <span><i class="fa-solid fa-chevron-down"></i></span></a>
+										<ul class="submenu sub-menu-one sub-menu-three">
+											<li>
+												<div class="row">
+													<div class="col-lg-6">
+														<ul class="sub-menu-list">
+															<li><a href="index-13.html">Pharmacy</a></li>
+															<li><a href="pharmacy-details.html">Pharmacy Details</a></li>
+															<li><a href="pharmacy-search.html">Pharmacy Search</a></li>
+															<li><a href="product-all.html">Product</a></li>
+															<li><a href="product-description.html">Product Description</a></li>
+															<li><a href="cart.html">Cart</a></li>
+															<li><a href="product-checkout.html">Product Checkout</a></li>
+															<li><a href="payment-success.html">Payment Success</a></li>
+															<li><a href="pharmacy-register.html">Pharmacy Register</a></li>
+														</ul>
+													</div>
+													<div class="col-lg-6">
+														<div class="menu-img">
+															<img src="assets/img/home/menu-img-3.jpg" alt="listing" class="img-fluid">
+														</div>
+													</div>
+												</div>
+											</li>
+										</ul>
+									</li>
+									<li class="has-submenu megamenu">
+										<a href="blog-details.html#" class="main-menu">Pages <span><i class="fa-solid fa-chevron-down"></i></span></a>
+										<ul class="submenu mega-submenu">
+											<li>
+												<div class="megamenu-wrapper megamenu-wrapper-one">
+													<div class="row">
+														<div class="col-lg-3 sub-menu-left">
+															<ul class="sub-menu-list">
+																<li><a href="about-us.html" class="active">About Us</a></li>
+																<li><a href="contact-us.html">Contact Us</a></li>
+																<li><a href="hospitals.html">Hospitals</a></li>
+																<li><a href="speciality.html">Speciality</a></li>
+																<li><a href="clinic.html">Clinic</a></li>
+																<li><a href="blank-page.html">Starter Page</a></li>
+																<li><a href="pricing.html">Pricing Plan</a></li>
+																<li><a href="faq.html">FAQ</a></li>
+															</ul>
+														</div>
+														<div class="col-lg-3 sub-menu-left">
+															<ul class="sub-menu-list">
+																<li><a href="login-email.html">Login Email</a></li>
+																<li><a href="login-phone.html">Login Phone</a></li>
+																<li><a href="doctor-signup.html">Doctor Signup</a></li>
+																<li><a href="patient-signup.html">Patient Signup</a></li>
+																<li><a href="forgot-password.html">Forgot Password 1</a></li>
+																<li><a href="forgot-password2.html">Forgot Password 2</a></li>
+																<li><a href="login-email-otp.html">Email OTP</a></li>
+																<li><a href="login-phone-otp.html">Phone OTP</a></li>
+															</ul>
+														</div>
+														<div class="col-lg-3 sub-menu-left">
+															<ul class="sub-menu-list">
+																<li><a href="maintenance.html">Maintenance</a></li>
+																<li><a href="coming-soon.html">Coming Soon</a></li>
+																<li><a href="terms-condition.html">Terms & Condition</a></li>
+																<li><a href="privacy-policy.html">Privacy Policy</a></li>
+																<li><a href="components.html">Components</a></li>
+																<li><a href="invoices.html">Invoices</a></li>
+																<li><a href="invoice-view.html">Invoice View</a></li>
+															</ul>
+														</div>
+														<div class="col-lg-3">
+															<ul class="sub-menu-list">
+																<li><a href="voice-call.html">Voice Call</a></li>
+																<li><a href="video-call.html">Video Call</a></li>
+																<li><a href="error-404.html">404 Error</a></li>
+																<li><a href="error-500.html">500 Error</a></li>
+															</ul>
+														</div>
+													</div>
+												</div>
+											</li>
+										</ul>
+									</li>
+									<li class="has-submenu active">
+										<a href="blog-details.html#" class="main-menu">Blog <span><i class="fa-solid fa-chevron-down"></i></span></a>
+										<ul class="submenu sub-menu-one sub-menu-default">
+											<li><a href="blog-list.html">Blog List</a></li>
+											<li><a href="blog-grid.html">Blog Grid</a></li>
+											<li class="active"><a href="blog-details.html">Blog Details</a></li>
+										</ul>
+									</li>
+									<li class="has-submenu">
+										<a href="blog-details.html#" class="main-menu">Admin <span><i class="fa-solid fa-chevron-down"></i></span></a>
+										<ul class="submenu sub-menu-one sub-menu-default">
+											<li><a href="admin/index.html" target="_blank">Admin</a></li>
+											<li><a href="pharmacy/index.html" target="_blank">Pharmacy Admin</a></li>
+										</ul>
+									</li>
 								</ul>
+								<div class="header-items">
+									<!-- Item 1 -->
+									<div class="about-popup-item border-0 pb-0">
+										<h3 class="title">Contact Information</h3>
+										<div class="support-item mb-3">
+											<div class="avatar avatar-lg bg-primary rounded-circle">
+												<i class="isax isax-messages-3"></i>
+											</div>
+											<div>
+												<p class="title">General Inquiries</p>
+												<h5 class="link"><a href="https://doccure.dreamstechnologies.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e48d8a828ba4819c8589948881ca878b89">[email&#160;protected]</a></h5>
+											</div>
+										</div>
+										<div class="support-item">
+											<div class="avatar avatar-lg bg-primary rounded-circle">
+												<i class="isax isax-call-calling"></i>
+											</div>
+											<div>
+												<p class="title">Emergency Cases</p>
+												<h5 class="link">+1 24565 89856</h5>
+											</div>
+										</div>
+									</div>
+									<!-- Item 2 -->
+									<div class="about-popup-item border-0 pb-0">
+										<h3 class="title">Follow Us</h3>
+										<ul class="d-flex align-items-center gap-2 social-iyem">
+											<li>
+												<a href="blog-details.html#" class="social-icon"><i class="fa-brands fa-facebook"></i></a>
+											</li>
+											<li>
+												<a href="blog-details.html#" class="social-icon"><i class="fa-brands fa-x-twitter"></i></a>
+											</li>
+											<li>
+												<a href="blog-details.html#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+											</li>
+											<li>
+												<a href="blog-details.html#" class="social-icon"><i class="fa-brands fa-linkedin"></i></a>
+											</li>
+										</ul>
+									</div>
+
+									<div class="header-items-button">
+										<a href="login.html" class="btn btn-primary btn-primary-gradient"><i class="isax isax-lock-1 me-2"></i>Sign In</a>
+										<a href="register.html" class="btn btn-dark"><i class="isax isax-user-tick4 me-2"></i>Sign Up</a>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<ul class="nav header-navbar-rht">
+							<li>
+								<a href="login.html" class="btn btn-md btn-primary-gradient">
+									<i class="isax isax-lock-1 me-2"></i><span>Sign Up</span> 
+								</a>
 							</li>
-							<li class="has-submenu active">
-								<a href="blog-grid.html" class="main-menu">Blogs</a>
+							<li>
+								<a href="register.html" class="btn btn-md btn-dark">
+									<i class="isax isax-user-tick me-2"></i><span>Register</span> 
+								</a>
 							</li>
-							<li class="has-submenu">
-								<a href="contact-us.html" class="main-menu">Contact Us</a>
+							<li>
+								<a href="blog-details.html#" class="details-btn" data-bs-toggle="offcanvas" data-bs-target="#support_item">
+									<i class="isax isax-menu5"></i>
+								</a>
 							</li>
 						</ul>
+					</nav>
+				</div>
+			</header>
+			<!-- /Header -->
+
+			<!-- Breadcrumb -->
+			<div class="breadcrumb-bar">
+				<div class="container">
+					<div class="row align-items-center inner-banner">
+						<div class="col-md-12 col-12 text-center">
+							<nav aria-label="breadcrumb" class="page-breadcrumb">
+								<ol class="breadcrumb">
+									<li class="breadcrumb-item"><a href="index.html"><i class="isax isax-home-15"></i></a></li>
+									<li class="breadcrumb-item">Blogs</li>
+									<li class="breadcrumb-item active">Blog Details</li>
+								</ol>
+								<h2 class="breadcrumb-title">Blog Details</h2>
+							</nav>
+						</div>
 					</div>
 				</div>
-
-				<div>
-					<a href="contact-us.html" class="btn btn-md btn-primary-gradient d-none d-lg-inline-block"
-					   style="background: #1a6ef5 !important; color: #fff !important; border-color: #1a6ef5 !important;">
-						<i class="isax isax-lock-1 me-2"></i><span>Book Now</span>
-					</a>
+				<div class="breadcrumb-bg">
+					<img src="assets/img/bg/breadcrumb-bg-01.png" alt="img" class="breadcrumb-bg-01">
+					<img src="assets/img/bg/breadcrumb-bg-02.png" alt="img" class="breadcrumb-bg-02">
+					<img src="assets/img/bg/breadcrumb-icon.png" alt="img" class="breadcrumb-bg-03">
+					<img src="assets/img/bg/breadcrumb-icon.png" alt="img" class="breadcrumb-bg-04">
 				</div>
-
-			</nav>
-		</div>
-	</header>
-	<!-- /Header -->
-
-	<!-- Page Content -->
-	<div class="content" style="padding-top: 40px; padding-bottom: 60px;">
-		<div class="container">
-			<div class="row">
-
-				<!-- ── Main Blog Column ── -->
-				<div class="col-lg-8 col-md-12">
-					<div class="blog-view">
-
-						<h3>Joint Replacement Surgery: What to Expect Before &amp; After</h3>
-
-						<div class="blog blog-single-post">
-
-							<!-- Blog Image -->
-							<div class="blog-image">
-								<a href="javascript:void(0);">
-									<img alt="Joint Replacement Surgery - RK Hospital Nagpur"
-										 src="assets/img/blog/blog-37.jpg" class="img-fluid">
-								</a>
+			</div>
+			<!-- /Breadcrumb -->
+			
+			<!-- Page Content -->
+			<div class="content">
+				<div class="container">
+				
+					<div class="row">
+						<div class="col-lg-8 col-md-12">
+							<div class="blog-view">
+								<h3 class="mb-3">10 Tips for Maintaining a Healthy Lifestyle Year-Round</h3>
+								<div class="blog blog-single-post">
+									<div class="blog-image">
+										<a href="javascript:void(0);"><img alt="blog-image" src="assets/img/blog/blog-list-01.jpg" class="img-fluid"></a>
+									</div>
+									<div class="blog-info d-md-flex align-items-center justify-content-between flex-wrap">
+										<div class="post-left">
+											<ul>
+												<li><span class="badge badge-dark fs-14 fw-medium">Health Tips</span></li>
+												<li><i class="isax isax-calendar"></i>4 Dec 2023</li>
+												<li>
+													<div class="post-author">
+														<a href="doctor-profile.html"><img src="assets/img/doctors/doctor-thumb-02.jpg" alt="Post Author"> <span>Dr. Darren Elder</span></a>
+													</div>
+												</li>
+											</ul>
+										</div>
+										<div class="blog-views d-flex align-items-center justify-content-md-end">
+											<span class="badge badge-outline-dark me-2"><i class="isax isax-message-text me-1"></i>25</span>
+											<span class="badge badge-outline-primary"><i class="isax isax-eye me-1"></i>90</span>
+										</div>
+									</div>
+									<div class="blog-content">
+										<p>Maintaining a healthy lifestyle year-round is achievable with consistent habits that support your physical and mental well-being. One of the key pillars is staying hydrated, as water is essential for digestion, nutrient absorption, and overall bodily functions. Aim to drink at least eight glasses of water daily, adjusting for factors like weather and physical activity. A balanced diet is equally important, as it fuels your body with the nutrients it needs for energy, growth, and repair. Incorporate a variety of fruits, vegetables, lean proteins, and whole grains to ensure you’re getting a range of vitamins and minerals.</p>
+										<p>Regular physical activity is another cornerstone of a healthy lifestyle. Engaging in at least 150 minutes of moderate exercise per week, such as walking or cycling, can boost your cardiovascular health, strengthen muscles, and improve mood. Equally important is prioritizing sleep. Getting 7-9 hours of quality sleep each night helps regulate your mood, enhances mental clarity, and supports physical health. With these tips in mind, you’ll be on your way to maintaining a healthy lifestyle all year long.</p>
+										<p class="content-block">An extra important note to remember is that consistency is key. Small, sustainable changes in your daily habits will have a more lasting impact than short-term, extreme efforts. Prioritize gradual improvements in your routine and be patient with yourself - lasting health is a marathon, not a sprint.</p>
+									</div>
+								</div>
+								<h4 class="mb-3">About Author</h4>
+								<div class="about-author">
+									<div class="about-author-img">
+										<div class="author-img-wrap">
+											<a href="doctor-profile.html"><img class="img-fluid" alt="Darren Elder" src="assets/img/doctors/doctor-thumb-02.jpg"></a>
+										</div>
+									</div>
+									<div class="author-details">
+										<p class="mb-0">As a certified nutritionist and wellness coach, I’m passionate about helping others achieve a balanced lifestyle and lasting health. My journey into health started with my own desire to feel better physically and mentally, and along the way, I’ve learned the importance of consistency and small, sustainable changes. I love exploring new ways to stay active, experimenting with healthy meals, and sharing tips that are practical and realistic for people with busy lives.</p>
+									</div>
+								</div>
+								<h4 class="mb-3">Tags</h4>
+								<div class="d-flex align-items-center flex-wrap blog-tags gap-3 mb-4">
+									<a href="javascript:void(0);" class="badge">Health Tips</a>
+									<a href="javascript:void(0);" class="badge">Awareness</a>
+									<a href="javascript:void(0);" class="badge">Health</a>
+									<a href="javascript:void(0);" class="badge">Wellness</a>
+								</div>
 							</div>
+						</div>
+					
+						<!-- Blog Sidebar -->
+						<div class="col-lg-4 col-md-12 sidebar-right theiaStickySidebar">
 
-							<!-- Blog Meta -->
-							<div class="blog-info d-md-flex align-items-center justify-content-between flex-wrap">
-								<div class="post-left">
-									<ul>
-										<li><span class="badge badge-dark fs-14 fw-medium">Orthopedics</span></li>
-										<li><i class="isax isax-calendar"></i>10 Jan 2026</li>
+							<!-- Search -->
+							<div class="card search-widget">
+								<div class="card-body">
+									<form class="search-form">
+										<div class="input-group">
+											<input type="text" placeholder="Search..." class="form-control">
+											<button type="submit" class="btn btn-primary"><i class="isax isax-search-normal"></i></button>
+										</div>
+									</form>
+								</div>
+							</div>
+							<!-- /Search -->
+
+							<!-- Categories -->
+							<div class="card category-widget">
+								<div class="card-body">
+									<h5 class="mb-3">Categories</h5>
+									<ul class="categories">
+										<li><a href="blog-details.html#">Health Care <span>(2)</span></a></li>
+										<li><a href="blog-details.html#">Nutritions <span>(4)</span></a></li>
+										<li><a href="blog-details.html#">Health Tips <span>(5)</span></a></li>
+										<li><a href="blog-details.html#">Medical Research <span>(4)</span></a></li>
+										<li><a href="blog-details.html#">Health Treatment <span>(6)</span></a></li>
+									</ul>
+								</div>
+							</div>
+							<!-- /Categories -->
+
+							<!-- Latest Posts -->
+							<div class="card post-widget">
+								<div class="card-body">
+									<h5 class="mb-3">Latest News</h5>
+									<ul class="latest-posts">
 										<li>
-											<div class="post-author">
-												<a href="doctor-profile.html">
-													<img src="assets/img/patients/patient21.jpg" alt="Dr. R.K. Agrawal">
-													<span>Dr. R.K. Agrawal</span>
+											<div class="post-thumb">
+												<a href="blog-details.html">
+													<img class="img-fluid" src="assets/img/blog/blog-thumb-11.jpg" alt="blog-image">
 												</a>
+											</div>
+											<div class="post-info">
+												<p>06 Nov 2024</p>
+												<h4>
+													<a href="blog-details.html">Managing Chronic Conditions: Expert Advice for Better Living</a>
+												</h4>
+											</div>
+										</li>
+										<li>
+											<div class="post-thumb">
+												<a href="blog-details.html">
+													<img class="img-fluid" src="assets/img/blog/blog-thumb-12.jpg" alt="blog-image">
+												</a>
+											</div>
+											<div class="post-info">
+												<p>15 Nov 2024</p>
+												<h4>
+													<a href="blog-details.html">Understanding Common Symptoms: When to See a Doctor</a>
+												</h4>
+											</div>
+										</li>
+										<li>
+											<div class="post-thumb">
+												<a href="blog-details.html">
+													<img class="img-fluid" src="assets/img/blog/blog-thumb-13.jpg" alt="blog-image">
+												</a>
+											</div>
+											<div class="post-info">
+												<p>08 Dec 2024</p>
+												<h4>
+													<a href="blog-details.html">Nutrition and Wellness: A Guide to Balanced Eating</a>
+												</h4>
+											</div>
+										</li>
+										<li>
+											<div class="post-thumb">
+												<a href="blog-details.html">
+													<img class="img-fluid" src="assets/img/blog/blog-thumb-14.jpg" alt="blog-image">
+												</a>
+											</div>
+											<div class="post-info">
+												<p>17 Dec 2024</p>
+												<h4>
+													<a href="blog-details.html">Top Preventive Health Measures Everyone Should Take</a>
+												</h4>
 											</div>
 										</li>
 									</ul>
 								</div>
-								<div class="blog-views d-flex align-items-center justify-content-md-end mt-2 mt-md-0">
-									<span class="badge-outline-dark me-2"><i class="isax isax-message-text me-1"></i>18</span>
-									<span class="badge-outline-primary"><i class="isax isax-eye me-1"></i>142</span>
+							</div>
+							<!-- /Latest Posts -->
+
+							<!-- Tags -->
+							<div class="card tags-widget">
+								<div class="card-body">
+									<h5 class="mb-3">Tags</h5>
+									<ul class="tags">
+										<li><a href="blog-details.html#" class="tag">Health Tips</a></li>
+										<li><a href="blog-details.html#" class="tag">Awareness</a></li>
+										<li><a href="blog-details.html#" class="tag">Health</a></li>
+										<li><a href="blog-details.html#" class="tag">Wellness</a></li>
+										<li><a href="blog-details.html#" class="tag">Treatments</a></li>
+										<li><a href="blog-details.html#" class="tag">Checkup</a></li>
+										<li><a href="blog-details.html#" class="tag">Prevention</a></li>
+									</ul>
 								</div>
 							</div>
-
-							<!-- Blog Content -->
-							<div class="blog-content">
-								<p>Joint replacement surgery is one of the most successful and life-changing orthopedic procedures available today. Whether it is a knee replacement or a hip replacement, the goal is the same — to relieve chronic pain, restore mobility, and help patients return to a comfortable, active life. At Dr. Agrawal's R.K. Hospital, Nagpur, our orthopedic team performs hundreds of joint replacement surgeries each year with excellent outcomes and high patient satisfaction.</p>
-
-								<h5 class="mt-4 mb-2">Who Needs Joint Replacement Surgery?</h5>
-								<p>Joint replacement is typically recommended when conservative treatments such as medications, physiotherapy, and lifestyle modifications no longer provide adequate relief. Common candidates include patients suffering from severe osteoarthritis, rheumatoid arthritis, avascular necrosis, or post-traumatic arthritis. If you experience persistent joint pain that interferes with daily activities like walking, climbing stairs, or even resting, it may be time to consult an orthopedic specialist.</p>
-
-								<h5 class="mt-4 mb-2">Before the Surgery — Preparation is Key</h5>
-								<p>A thorough pre-operative evaluation is carried out before scheduling your surgery. This includes blood tests, X-rays, ECG, and a fitness assessment to ensure you are in the best possible condition for the procedure. Our team will guide you through any necessary lifestyle changes — including weight management, stopping certain medications, and pre-operative physiotherapy exercises — that can significantly improve your surgical outcome and speed up recovery.</p>
-								<p>You will also be counselled about the type of implant being used. At R.K. Hospital, we use internationally certified implants from trusted manufacturers that are designed for longevity and natural joint movement. Our team will walk you through the entire process, answer your questions, and make sure you feel confident and informed before you go into the operation theatre.</p>
-
-								<h5 class="mt-4 mb-2">The Surgical Procedure</h5>
-								<p>Joint replacement surgery is typically performed under spinal or general anaesthesia and takes approximately 1.5 to 2 hours. During the procedure, the damaged bone and cartilage are carefully removed and replaced with a prosthetic implant made of metal alloy, high-grade plastic, or ceramic components. Our surgeons use minimally invasive techniques wherever possible to reduce tissue damage, minimize blood loss, and promote faster healing.</p>
-
-								<h5 class="mt-4 mb-2">After the Surgery — Recovery &amp; Rehabilitation</h5>
-								<p>Recovery begins almost immediately. In most cases, patients are encouraged to stand and take their first steps with the help of a physiotherapist within 24 hours of surgery. This early mobilization plays a crucial role in preventing blood clots and stiffness. A dedicated rehabilitation programme is designed for each patient, covering strengthening exercises, gait training, and gradual return to daily activities.</p>
-								<p>Most patients are discharged within 3 to 5 days and can resume light activities within 4 to 6 weeks. Full recovery, including return to regular walking without support, is typically achieved within 3 months. With the right implant and proper physiotherapy, a well-done joint replacement can last 15 to 20 years or more. Our team at R.K. Hospital remains with you every step of the way — from your first consultation to your long-term follow-up care.</p>
-							</div>
-
+							<!-- /Tags -->
+							
 						</div>
+						<!-- /Blog Sidebar -->
+						
+                </div>
+				</div>
 
-						<!-- About Author -->
-						<h4 class="mb-3 mt-4">About the Author</h4>
-						<div class="about-author">
-							<div class="about-author-img">
-								<div class="author-img-wrap">
-									<a href="doctor-profile.html">
-										<img class="img-fluid" alt="Dr. R.K. Agrawal" src="assets/img/patients/patient21.jpg">
-									</a>
+			</div>		
+			<!-- /Page Content -->
+   
+			<!-- Footer Section -->
+			<footer class="footer inner-footer">
+				<div class="footer-top">
+					<div class="container">
+						<div class="row">
+							<div class="col-xl-8">
+								<div class="row">
+									<div class="col-lg-3 col-md-3 col-sm-6">
+										<div class="footer-widget footer-menu">
+											<h6 class="footer-title">Company</h6>
+											<ul>
+												<li><a href="about-us.html">About</a></li>
+												<li><a href="search.html">Features</a></li>
+												<li><a href="blog-details.html#">Works</a></li>
+												<li><a href="blog-details.html#">Careers</a></li>
+												<li><a href="contact-us.html">Locations</a></li>
+											</ul>
+										</div>
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-6">
+										<div class="footer-widget footer-menu">
+											<h6 class="footer-title">Treatments</h6>
+											<ul>
+												<li><a href="search.html">Dental</a></li>
+												<li><a href="search.html">Cardiac</a></li>
+												<li><a href="search.html">Spinal Cord</a></li>
+												<li><a href="search.html">Hair Growth</a></li>
+												<li><a href="search.html">Anemia & Disorder</a></li>
+											</ul>
+										</div>
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-6">
+										<div class="footer-widget footer-menu">
+											<h6 class="footer-title">Specialities</h6>
+											<ul>
+												<li><a href="search.html">Transplant</a></li>
+												<li><a href="search.html">Cardiologist</a></li>
+												<li><a href="search.html">Oncology</a></li>
+												<li><a href="search.html">Pediatrics</a></li>
+												<li><a href="search.html">Gynacology</a></li>
+											</ul>
+										</div>
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-6">
+										<div class="footer-widget footer-menu">
+											<h6 class="footer-title">Utilites</h6>
+											<ul>
+												<li><a href="pricing.html">Pricing</a></li>
+												<li><a href="contact-us.html">Contact</a></li>
+												<li><a href="contact-us.html">Request A Quote</a></li>
+												<li><a href="blog-details.html#">Premium Membership</a></li>
+												<li><a href="blog-details.html#">Integrations</a></li>
+											</ul>
+										</div>
+									</div>
 								</div>
 							</div>
-							<div class="author-details">
-								<h5 class="mb-1">Dr. R.K. Agrawal</h5>
-								<p class="text-muted mb-2">MS (Ortho) | Senior Orthopedic Surgeon | R.K. Hospital, Nagpur</p>
-								<p class="mb-0">Dr. R.K. Agrawal is the founder and chief orthopedic surgeon at Dr. Agrawal's R.K. Hospital, Nagpur. With over two decades of experience in joint replacement, spine surgery, and sports injuries, he has transformed the lives of thousands of patients across Central India. He is known for his patient-first approach, precision in surgery, and commitment to the latest evidence-based orthopedic practices.</p>
-							</div>
-						</div>
-
-						<!-- Tags -->
-						<h4 class="mb-3 mt-4">Tags</h4>
-						<div class="d-flex align-items-center flex-wrap blog-tags gap-3 mb-2">
-							<a href="javascript:void(0);" class="badge">Orthopedics</a>
-							<a href="javascript:void(0);" class="badge">Joint Replacement</a>
-							<a href="javascript:void(0);" class="badge">Knee Surgery</a>
-							<a href="javascript:void(0);" class="badge">Hip Surgery</a>
-							<a href="javascript:void(0);" class="badge">Bone Health</a>
-							<a href="javascript:void(0);" class="badge">Physiotherapy</a>
-						</div>
-
-					</div>
-				</div>
-				<!-- /Main Blog Column -->
-
-				<!-- ── Sidebar ── -->
-				<div class="col-lg-4 col-md-12 sidebar-right theiaStickySidebar">
-
-					<!-- Search -->
-					<div class="card search-widget">
-						<div class="card-body">
-							<h5>Search Articles</h5>
-							<form class="search-form">
-								<div class="input-group">
-									<input type="text" placeholder="Search articles..." class="form-control">
-									<button type="submit" class="btn btn-primary">
-										<i class="isax isax-search-normal"></i>
-									</button>
+							<div class="col-xl-4 col-md-7">
+								<div class="footer-widget">
+									<h6 class="footer-title">Newsletter</h6>
+									<p class="mb-2 text-dark">Subscribe & Stay Updated from the Doccure</p>
+									<div class="subscribe-input">
+										<form action="blog-details.html#">
+											<input type="email" class="form-control" placeholder="Enter Email Address">
+											<button type="submit" class="btn btn-md btn-primary-gradient d-inline-flex align-items-center"><i class="isax isax-send-25 me-1"></i>Send</button>
+										</form>
+									</div>
+									<div class="social-icon">
+										<h6 class="mb-3 footer-title">Connect With Us</h6>
+										<ul>
+											<li>
+												<a href="blog-details.html#"><i class="fa-brands fa-facebook"></i></a>
+											</li>
+											<li>
+												<a href="blog-details.html#"><i class="fa-brands fa-x-twitter"></i></a>
+											</li>
+											<li>
+												<a href="blog-details.html#"><i class="fa-brands fa-instagram"></i></a>
+											</li>
+											<li>
+												<a href="blog-details.html#"><i class="fa-brands fa-linkedin"></i></a>
+											</li>
+											<li>
+												<a href="blog-details.html#"><i class="fa-brands fa-pinterest"></i></a>
+											</li>
+										</ul>
+									</div>
 								</div>
-							</form>
-						</div>
-					</div>
-					<!-- /Search -->
-
-					<!-- Categories -->
-					<div class="card category-widget">
-						<div class="card-body">
-							<h5>Categories</h5>
-							<ul class="categories">
-								<li><a href="blog-grid.html#">Orthopedics <span>5</span></a></li>
-								<li><a href="blog-grid.html#">Gynecology <span>4</span></a></li>
-								<li><a href="blog-grid.html#">Pregnancy Care <span>6</span></a></li>
-								<li><a href="blog-grid.html#">Surgery <span>3</span></a></li>
-								<li><a href="blog-grid.html#">Women's Health <span>5</span></a></li>
-							</ul>
-						</div>
-					</div>
-					<!-- /Categories -->
-
-					<!-- Latest Posts -->
-					<div class="card post-widget">
-						<div class="card-body">
-							<h5>Latest Articles</h5>
-							<ul class="latest-posts">
-								<li>
-									<div class="post-thumb">
-										<a href="blog-details.html">
-											<img class="img-fluid" src="assets/img/blog/blog-thumb-11.jpg" alt="blog-image">
-										</a>
-									</div>
-									<div class="post-info">
-										<p>15 Jan 2026</p>
-										<h4><a href="blog-details.html">Post-Surgery Recovery Tips: How to Heal Faster at Home</a></h4>
-									</div>
-								</li>
-								<li>
-									<div class="post-thumb">
-										<a href="blog-details.html">
-											<img class="img-fluid" src="assets/img/blog/blog-thumb-12.jpg" alt="blog-image">
-										</a>
-									</div>
-									<div class="post-info">
-										<p>22 Jan 2026</p>
-										<h4><a href="blog-details.html">High-Risk Pregnancy: Warning Signs Every Mother Should Know</a></h4>
-									</div>
-								</li>
-								<li>
-									<div class="post-thumb">
-										<a href="blog-details.html">
-											<img class="img-fluid" src="assets/img/blog/blog-thumb-13.jpg" alt="blog-image">
-										</a>
-									</div>
-									<div class="post-info">
-										<p>5 Feb 2026</p>
-										<h4><a href="blog-details.html">Physiotherapy After Orthopedic Surgery: Why It Matters</a></h4>
-									</div>
-								</li>
-								<li>
-									<div class="post-thumb">
-										<a href="blog-details.html">
-											<img class="img-fluid" src="assets/img/blog/blog-thumb-14.jpg" alt="blog-image">
-										</a>
-									</div>
-									<div class="post-info">
-										<p>14 Feb 2026</p>
-										<h4><a href="blog-details.html">Uterine Fibroids: Symptoms, Diagnosis and Treatment Options</a></h4>
-									</div>
-								</li>
-							</ul>
-						</div>
-					</div>
-					<!-- /Latest Posts -->
-
-					<!-- Tags -->
-					<div class="card tags-widget">
-						<div class="card-body">
-							<h5>Tags</h5>
-							<ul class="tags">
-								<li><a href="blog-grid.html#" class="tag">Orthopedics</a></li>
-								<li><a href="blog-grid.html#" class="tag">Pregnancy</a></li>
-								<li><a href="blog-grid.html#" class="tag">Gynecology</a></li>
-								<li><a href="blog-grid.html#" class="tag">Surgery</a></li>
-								<li><a href="blog-grid.html#" class="tag">Joint Replacement</a></li>
-								<li><a href="blog-grid.html#" class="tag">PCOS</a></li>
-								<li><a href="blog-grid.html#" class="tag">Laparoscopy</a></li>
-							</ul>
-						</div>
-					</div>
-					<!-- /Tags -->
-
-					<!-- Book Appointment CTA -->
-					<div class="card cta-card">
-						<div class="card-body">
-							<div class="cta-icon">
-								<i class="fa-solid fa-hospital"></i>
-							</div>
-							<h5>Need a Consultation?</h5>
-							<p>Book an appointment with our specialist doctors at R.K. Hospital, Nagpur.</p>
-							<a href="contact-us.html" class="btn btn-light w-100">
-								<i class="fa-solid fa-calendar-plus me-2"></i>Book Appointment
-							</a>
-							<div class="cta-phone">
-								<i class="fa-solid fa-phone"></i> 097660 57372
 							</div>
 						</div>
 					</div>
-					<!-- /Book Appointment CTA -->
-
 				</div>
-				<!-- /Sidebar -->
-
-			</div>
-		</div>
-	</div>
-	<!-- /Page Content -->
-
-	<!-- Footer -->
-	<footer class="footer inner-footer">
-		<div class="footer-top">
-			<div class="container">
-				<div class="row align-items-start">
-
-					<div class="col-xl-2 col-lg-3 col-md-6">
-						<div class="footer-widget">
-							<div class="footer-logo mb-3">
-								<img src="assets/img/RK-Logo.png" alt="RK Hospital Logo" class="img-fluid logo">
+				<div class="footer-bottom">
+					<div class="container">
+						<!-- Copyright -->
+						<div class="copyright">
+							<div class="copyright-text mb-0">
+								<p class="mb-0">Copyright © 2025 Doccure. All Rights Reserved</p>
 							</div>
-							<p>Dr. Agrawal's R.K. Hospital provides quality healthcare in Nagpur with advanced medical facilities and compassionate care.</p>
-						</div>
-					</div>
-
-					<div class="col-xl-2 col-lg-3 col-md-6">
-						<div class="footer-widget footer-menu">
-							<h6 class="footer-title">Quick Links</h6>
-							<ul>
-								<li><a href="index-7.html">Home</a></li>
-								<li><a href="about-us.html">About Us</a></li>
-								<li><a href="two-doctor.html">Doctors</a></li>
-								<li><a href="contact-us.html">Contact Us</a></li>
+							<!-- Copyright Menu -->
+							<div class="copyright-menu">
+								<ul class="policy-menu mb-0">
+									<li><a href="blog-details.html#">Legal Notice</a></li>
+									<li><a href="privacy-policy.html">Privacy Policy</a></li>
+									<li><a href="blog-details.html#">Refund Policy</a></li>
+								</ul>
+							</div>
+							<!-- /Copyright Menu -->
+							<ul class="payment-method">
+								<li><a href="blog-details.html#"><img src="assets/img/icons/card-01.svg" alt="Img"></a></li>
+								<li><a href="blog-details.html#"><img src="assets/img/icons/card-02.svg" alt="Img"></a></li>
+								<li><a href="blog-details.html#"><img src="assets/img/icons/card-03.svg" alt="Img"></a></li>
+								<li><a href="blog-details.html#"><img src="assets/img/icons/card-04.svg" alt="Img"></a></li>
+								<li><a href="blog-details.html#"><img src="assets/img/icons/card-05.svg" alt="Img"></a></li>
+								<li><a href="blog-details.html#"><img src="assets/img/icons/card-06.svg" alt="Img"></a></li>
 							</ul>
 						</div>
+						<!-- /Copyright -->					
 					</div>
+				</div>
+			</footer>
+			<!-- /Footer Section -->
+		   
+		</div>
+		<!-- /Main Wrapper -->
+		
+		<!-- start offcanvas -->
+		<div class="offcanvas offcanvas-offset offcanvas-end support_popup" tabindex="-1"  id="support_item">
+			<div class="offcanvas-header">
+				<a href="index.html"><img src="assets/img/logo.svg" alt="logo" class="img-fluid logo"></a>
+				<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"><i class="isax isax-close-circle"></i></button>
+			</div>
+			
+			<div class="offcanvas-body">
 
-					<div class="col-xl-2 col-lg-3 col-md-6">
-						<div class="footer-widget footer-menu">
-							<h6 class="footer-title">Treatments</h6>
-							<ul>
-								<li><a href="orthopedic-services.html">Orthopedic Services</a></li>
-								<li><a href="gynecology-services.html">Gynecology Services</a></li>
-								<li><a href="hospital-services.html">Hospital Services</a></li>
-							</ul>
+				<!-- Item 1 -->
+				<div class="about-popup-item">
+					<h3 class="title">About Doccure</h3>
+					<p>Modern healthcare platform designed to simplify the way patients connect with doctors, clinics & medical services.</p>
+					<div class="about-img d-flex align-items-center gap-2 justify-content-between">
+						<a href="assets/img/banner/about-img-1.jpg" data-fancybox="gallery"><img src="assets/img/banner/about-img-1.jpg" alt="about-img-1" class="img-fluid"></a>
+						<a href="assets/img/banner/about-img-2.jpg" data-fancybox="gallery"><img src="assets/img/banner/about-img-2.jpg" alt="about-img-1" class="img-fluid"></a>
+						<a href="assets/img/banner/about-img-3.jpg" data-fancybox="gallery"><img src="assets/img/banner/about-img-3.jpg" alt="about-img-1" class="img-fluid"></a>
+					</div>
+				</div>
+				<!-- Item 2 -->
+				<div class="about-popup-item">
+					<h3 class="title">Our Locations</h3>
+					<div class="loction-item mb-3">
+						<h4 class="title">California</h4>
+						<p class="location">1250 Sunset, Los Angeles, CA</p>
+					</div>
+					<div class="loction-item">
+						<h4 class="title">Los Angeles</h4>
+						<p class="location">669 Boulevard, Los Angeles</p>
+					</div>
+				</div>
+
+				<!-- Item 3 -->
+				<div class="about-popup-item">
+					<h3 class="title">Contact Information</h3>
+					<div class="support-item mb-3">
+						<div class="avatar avatar-lg bg-primary rounded-circle">
+							<i class="isax isax-messages-3"></i>
+						</div>
+						<div>
+							<p class="title">General Inquiries</p>
+							<h5 class="link"><a href="blog-details.html#"><span class="__cf_email__" data-cfemail="d6bfb8b0b996b3aeb7bba6bab3f8b5b9bb">[email&#160;protected]</span></a></h5>
 						</div>
 					</div>
-
-					<div class="col-xl-2 col-lg-3 col-md-6">
-						<div class="footer-widget footer-menu">
-							<h6 class="footer-title">Policies</h6>
-							<ul>
-								<li><a href="#">Legal Notice</a></li>
-								<li><a href="#">Privacy Policy</a></li>
-								<li><a href="#">Refund Policy</a></li>
-							</ul>
+					<div class="support-item">
+						<div class="avatar avatar-lg bg-primary rounded-circle">
+							<i class="isax isax-call-calling"></i>
+						</div>
+						<div>
+							<p class="title">Emergency Cases</p>
+							<h5 class="link"><a href="blog-details.html#">+1 24565 89856</a></h5>
 						</div>
 					</div>
+				</div>
 
-					<div class="col-xl-4 col-lg-12 col-md-12">
-						<div class="footer-widget">
-							<h6 class="footer-title">Reach Us</h6>
-							<p class="mb-2">
-								<strong>Dr. Agrawal's R.K. Hospital</strong><br>
-								Central Avenue, Ladpura<br>
-								Itwari, Nagpur
-							</p>
-							<p class="mb-1"><strong>Phone:</strong> 097660 57372</p>
-							<p class="mb-0"><strong>Email:</strong> info@rkhospital.com</p>
-						</div>
-					</div>
-
+				<!-- Item 3 -->
+				<div class="about-popup-item border-0">
+					<h3 class="title">Follow Us</h3>
+					<ul class="d-flex align-items-center gap-2 social-iyem">
+						<li>
+							<a href="blog-details.html#" class="social-icon"><i class="fa-brands fa-facebook"></i></a>
+						</li>
+						<li>
+							<a href="blog-details.html#" class="social-icon"><i class="fa-brands fa-x-twitter"></i></a>
+						</li>
+						<li>
+							<a href="blog-details.html#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+						</li>
+						<li>
+							<a href="blog-details.html#" class="social-icon"><i class="fa-brands fa-linkedin"></i></a>
+						</li>
+					</ul>
 				</div>
 			</div>
+			<img src="assets/img/bg/offcanvas-bg.png" alt="element" class="element-01">
 		</div>
-		<div class="footer-bottom">
-			<div class="container">
-				<p class="text-center mb-0">
-					Copyright &copy; 2026 Dr. Agrawal's R.K. Hospital, Nagpur. All Rights Reserved.
-				</p>
-			</div>
-		</div>
-	</footer>
-	<!-- /Footer -->
-
-</div>
-<!-- /Main Wrapper -->
-
-<!-- jQuery -->
-<script src="assets/js/jquery-3.7.1.min.js"></script>
-<script src="assets/js/bootstrap.bundle.min.js"></script>
-<script src="assets/plugins/theia-sticky-sidebar/ResizeSensor.js"></script>
-<script src="assets/plugins/theia-sticky-sidebar/theia-sticky-sidebar.js"></script>
-<script src="assets/plugins/fancybox/jquery.fancybox.min.js"></script>
-<script src="assets/js/script.js"></script>
-
-</body>
+		<!-- end offcanvas -->
+	  
+		<!-- jQuery -->
+		<script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="assets/js/jquery-3.7.1.min.js" type="7841a6ce69f235f6e4319751-text/javascript"></script>
+		
+		<!-- Bootstrap Core JS -->
+		<script src="assets/js/bootstrap.bundle.min.js" type="7841a6ce69f235f6e4319751-text/javascript"></script>
+		
+		<!-- Sticky Sidebar JS -->
+        <script src="assets/plugins/theia-sticky-sidebar/ResizeSensor.js" type="7841a6ce69f235f6e4319751-text/javascript"></script>
+        <script src="assets/plugins/theia-sticky-sidebar/theia-sticky-sidebar.js" type="7841a6ce69f235f6e4319751-text/javascript"></script>
+		
+		<!-- Fancybox JS -->
+		<script src="assets/plugins/fancybox/jquery.fancybox.min.js" type="7841a6ce69f235f6e4319751-text/javascript"></script>
+		
+		<!-- Custom JS -->
+		<script src="assets/js/script.js" type="7841a6ce69f235f6e4319751-text/javascript"></script>
+		
+	<script src="../../cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="7841a6ce69f235f6e4319751-|49" defer></script></body>
 </html>
