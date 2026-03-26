@@ -1,4 +1,5 @@
 <?php $base_url = "http://localhost/rkhospital/"; ?>
+ <?php include 'include/config.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -357,32 +358,32 @@
         color: #fff;
     }
 
-    /* FULL WIDTH BANNER */
-    .banner-section-full {
-        width: 100%;
-        height: 100vh;
-        overflow: hidden;
-        position: relative;
-    }
+.banner-section-full {
+    width: 100%;
+    height: auto !important;
+    overflow: hidden;
+    position: relative;
+    background: transparent !important;
+}
 
-    /* slider container */
-    .banner-carousel-full,
-    .banner-carousel-full .slick-list,
-    .banner-carousel-full .slick-track {
-        height: 100%;
-    }
+.banner-carousel-full,
+.banner-carousel-full .slick-list,
+.banner-carousel-full .slick-track {
+    height: auto !important;
+}
 
-    /* each slide */
-    .banner-slide {
-        width: 100%;
-        height: 100vh;
-    }
+.banner-slide {
+    width: 100%;
+    height: auto !important;
+}
 
-    .banner-slide img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
+.banner-slide img {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: unset !important;
+    display: block;
+    background: transparent !important;
+}
 
     /* remove gap issue */
     .banner-carousel-full .slick-slide {
@@ -422,6 +423,7 @@
             gap: 10px;
         }
     }
+
     </style>
 </head>
 
@@ -449,22 +451,22 @@
 
                 <!-- Slide 1 -->
                 <div class="banner-slide">
-                    <img src="https://images.unsplash.com/photo-1606813907291-d86efa9b94db" alt="doctor">
+                    <img src="assets/img/home/image-crousel1.webp" alt="doctor">
                 </div>
 
                 <!-- Slide 2 -->
                 <div class="banner-slide">
-                    <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54" alt="doctor">
+                    <img src="assets/img/home/image-crousel2.webp" alt="doctor">
                 </div>
 
                 <!-- Slide 3 -->
                 <div class="banner-slide">
-                    <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d" alt="doctor">
+                    <img src="assets/img/home/image-crousel3.webp" alt="doctor">
                 </div>
 
                 <!-- Slide 4 -->
                 <div class="banner-slide">
-                    <img src="https://images.unsplash.com/photo-1537368910025-700350fe46c7" alt="doctor">
+                    <img src="assets/img/home/image-crousel4.webp" alt="doctor">
                 </div>
 
             </div>
@@ -476,7 +478,7 @@
             <div class="container">
                 <div class="section-header section-header-one text-center wow fadeInUp" data-wow-duration="1s">
                     <div class="title">Top Specialties</div>
-                    <h2 class="section-title">Highlighting the <span class="text-primary">Care & Support</span></h2>
+                    <h2 class="section-title">Highlighting the <span class="text-danger">Care & Support</span></h2>
                 </div>
                 <div class="speciality-slider-info">
                     <div class="spciality-slider">
@@ -610,10 +612,10 @@
                                 <div class="col-md-6">
                                     <div class="about-inner-img">
                                         <div class="about-img">
-                                            <img src="assets/img/about-img1.jpg" class="img-fluid" alt="about-image">
+                                            <img src="assets/img/home/about-doctor1.webp" class="img-fluid" alt="about-image">
                                         </div>
                                         <div class="about-img">
-                                            <img src="assets/img/about-img2.jpg" class="img-fluid" alt="about-image">
+                                            <img src="assets/img/home/about-doctor3.webp" class="img-fluid" alt="about-image">
                                         </div>
                                     </div>
                                 </div>
@@ -623,7 +625,7 @@
                                             <h4>Over 25+ Years Experience</h4>
                                         </div>
                                         <div class="about-img">
-                                            <img src="assets/img/about-img3.jpg" class="img-fluid" alt="about-image">
+                                            <img src="assets/img/home/about-doctor2.webp" class="img-fluid" alt="about-image">
                                         </div>
                                     </div>
                                 </div>
@@ -669,12 +671,12 @@
                         <div class="section-header section-header-seven text-center">
                             <div class="section-sub-title" style="color:#004D8F;">Trusted Healthcare Since 2010</div>
                             <h2 class="section-title">We combine advanced robotic technology with
-                                compassionate care to <span>deliver the best orthopedic &amp;
+                                compassionate care to <span style="color:#AB1820 !important;">deliver the best orthopedic &amp;
                                     gynecology outcomes</span></h2>
                         </div>
                     </div>
                 </div>
-
+                 
                 <div class="row g-4">
 
                     <!-- Work Item 1 -->
@@ -900,7 +902,7 @@
                             <div class="section-sub-title" style="color:#004D8F;">Our Speciality Services</div>
                             <h2 class="section-title">Comprehensive orthopedic &amp; gynecology care with
                                 state-of-the-art
-                                technology and <span>expert medical professionals</span></h2>
+                                technology and <span style="color:#ED1C24;">expert medical professionals</span></h2>
                         </div>
                         <div class="col-xl-4">
                             <div class="text-xl-end">
@@ -918,7 +920,7 @@
                                     arrhythmias and early cardiac abnormalities.</p>
                             </div>
                             <div class="service-img">
-                                <img src="assets/img/ecg.webp" alt="service" class="img-fluid">
+                                <img src="assets/img/home/ecg.webp" alt="service" class="img-fluid">
                             </div>
                         </div>
                         <!-- Service Item End -->
@@ -934,7 +936,7 @@
                                     return to daily activities.</p>
                             </div>
                             <div class="service-img">
-                                <img src="assets/img/robotic.webp" alt="service" class="img-fluid">
+                                <img src="assets/img/home/robotic.webp" alt="service" class="img-fluid">
                             </div>
                         </div>
                         <!-- Service Item End -->
@@ -950,7 +952,7 @@
                                     invasive techniques.</p>
                             </div>
                             <div class="service-img">
-                                <img src="assets/img/spline.webp" alt="service" class="img-fluid">
+                                <img src="assets/img/home/spline.webp" alt="service" class="img-fluid">
                             </div>
                         </div>
                         <!-- Service Item End -->
@@ -966,7 +968,7 @@
                                     and hygienic environment.</p>
                             </div>
                             <div class="service-img">
-                                <img src="assets/img/delivery.webp" alt="service" class="img-fluid">
+                                <img src="assets/img/home/delivery.webp" alt="service" class="img-fluid">
                             </div>
                         </div>
                         <!-- Service Item End -->
@@ -981,7 +983,7 @@
                                     gynecological conditions.</p>
                             </div>
                             <div class="service-img">
-                                <img src="assets/img/laparoscopic.webp" alt="service" class="img-fluid">
+                                <img src="assets/img/home/laparoscopic.webp" alt="service" class="img-fluid">
                             </div>
                         </div>
                         <!-- Service Item End -->
@@ -1019,7 +1021,7 @@
                                 <div class="deco-ring r1"></div>
                                 <div class="deco-ring r2"></div>
                                 <div class="doc-photo-wrap">
-                                    <img src="assets/img/doctor1.webp" alt="Dr. Priyanka Jain Agrawal">
+                                    <img src="assets/img/home/doctor1.webp" alt="Dr. Priyanka Jain Agrawal">
                                     <span class="doc-spec-badge">Gynecologist &amp; Obstetrician</span>
                                 </div>
                             </div>
@@ -1084,7 +1086,7 @@
                                 <div class="deco-ring r1"></div>
                                 <div class="deco-ring r2"></div>
                                 <div class="doc-photo-wrap">
-                                    <img src="assets/img/doctor3.webp" alt="Dr. Rahul R. Agrawal">
+                                    <img src="assets/img/home/doctor3.webp" alt="Dr. Rahul R. Agrawal">
                                     <span class="doc-spec-badge">Orthopedic Surgeon</span>
                                 </div>
                             </div>
@@ -1152,7 +1154,7 @@
             <div class="container">
                 <div class="section-header section-header-one text-center wow fadeInUp" data-wow-duration="1s">
                     <div class="title">Testimonials</div>
-                    <h2 class="section-title"> 15k Users <span class="text-primary">Trust Doccure </span>Worldwide </h2>
+                    <h2 class="section-title"> 15k Users <span class="text-danger">Trust Doccure </span>Worldwide </h2>
                 </div>
 
                 <!-- Testimonial Slider -->
@@ -1295,10 +1297,7 @@
 
                 </div>
                 <!-- /Testimonial Slider -->
-
-
-
-            </div>
+                </div>
         </section>
         <!-- /Testimonial Section -->
 
@@ -1311,8 +1310,8 @@
                 <div class="row">
                     <div class="col-lg-5">
                         <div class="faq-support">
-                            <img src="assets/img/company/faq-img-3.jpg" alt="faq-img" class="img-fluid img-1">
-                            <img src="assets/img/company/faq-img-4.jpg" alt="faq-img" class="img-fluid img-2">
+                            <img src="assets/img/home/faq1.webp" alt="faq-img" class="img-fluid img-1">
+                            
                         </div>
                     </div>
                     <div class="col-lg-7">
@@ -1435,81 +1434,16 @@
 
                             </div>
                         </div>
-
+                                     
                     </div>
                 </div>
                 <!-- end row -->
             </div>
         </section>
         <!-- End Faq -->
-
-
-        <!-- Article Section -->
-        <section class="article-section section">
-            <div class="container">
-
-                <div class="section-header section-header-one text-center wow fadeInUp" data-wow-duration="1s">
-                    <div class="title">Recent Blogs</div>
-                    <h2 class="section-title"> Stay Updated With Our <span class="text-primary">Latest Articles </span>
-                    </h2>
-                </div>
-
-                <!-- start row -->
-                <div class="row g-4">
-
-                    <!-- start itme -->
-                    <div class="col-lg-6">
-                        <div class="article-item wow fadeInUp" data-wow-duration="1s">
-                            <div class="article-img">
-                                <a href="blog-details.html">
-                                    <img src="assets/img/blog/article-01.jpg" class="img-fluid" alt="img">
-                                </a>
-                                <div class="date-icon">
-                                    <span>15</span>May
-                                </div>
-                            </div>
-                            <div class="article-info">
-                                <span class="badge badge-cyan mb-2">Treatments</span>
-                                <h3 class="mb-1 custom-title"><a href="blog-details.html">Understanding and Preventing
-                                        Glaucoma: A Detailed Guide</a></h3>
-                                <p>Glaucoma is a leading cause of blind worldwide, yet many....</p>
-                                <a href="index.html#" class="link">Read More</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- start itme -->
-                    <div class="col-lg-6">
-                        <div class="article-item wow fadeInUp" data-wow-duration="2s">
-                            <div class="article-img">
-                                <a href="blog-details.html">
-                                    <img src="assets/img/blog/article-02.jpg" class="img-fluid" alt="img">
-                                </a>
-                                <div class="date-icon">
-                                    <span>18</span>May
-                                </div>
-                            </div>
-                            <div class="article-info">
-                                <span class="badge badge-cyan mb-2">Neurology</span>
-                                <h3 class="mb-1 custom-title"><a href="blog-details.html">Understanding and Preventing
-                                        Glaucoma: A Detailed Guide</a></h3>
-                                <p>Discover the intersection of technology and neurology, transforming....</p>
-                                <a href="index.html#" class="link">Read More</a>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <!-- end row -->
-
-                <div class="text-center load-item wow fadeInUp" data-wow-duration="1s">
-                    <a href="blog-grid.html" class="btn btn-dark d-inline-flex align-items-center">View All Articles<i
-                            class="isax isax-arrow-right-3 ms-2"></i></a>
-                </div>
-            </div>
-        </section>
         <!-- /Article Section -->
-
+         <?php include 'include/latest-blog.php'; ?>
+         
         <!-- Info Section -->
         <section class="info-section">
             <div class="container">
