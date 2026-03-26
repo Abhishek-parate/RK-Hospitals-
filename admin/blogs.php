@@ -23,8 +23,8 @@ if (isset($_GET['toggle']) && is_numeric($_GET['toggle'])) {
 
 $sql = "SELECT b.*, bc.name AS category_name, ba.name AS author_name
         FROM blogs b
-        LEFT JOIN blog_categories bc ON b.category_id = bc.id
-        LEFT JOIN blog_authors ba ON b.author_id = ba.id
+        LEFT JOIN categories bc ON b.category_id = bc.id
+        LEFT JOIN doctors ba ON b.author_id = ba.id
         WHERE b.title LIKE '$searchLike' OR ba.name LIKE '$searchLike' OR bc.name LIKE '$searchLike'
         ORDER BY b.created_at DESC
         LIMIT $limit OFFSET $offset";
@@ -34,8 +34,8 @@ $blogs  = [];
 if ($result) { while ($row = $result->fetch_assoc()) { $blogs[] = $row; } }
 
 $countResult = $conn->query("SELECT COUNT(*) AS total FROM blogs b
-    LEFT JOIN blog_categories bc ON b.category_id = bc.id
-    LEFT JOIN blog_authors ba ON b.author_id = ba.id
+    LEFT JOIN categories bc ON b.category_id = bc.id
+    LEFT JOIN doctors ba ON b.author_id = ba.id
     WHERE b.title LIKE '$searchLike' OR ba.name LIKE '$searchLike' OR bc.name LIKE '$searchLike'");
 $totalRecords = $countResult ? (int)$countResult->fetch_assoc()['total'] : 0;
 $totalPages   = $totalRecords > 0 ? (int)ceil($totalRecords / $limit) : 1;

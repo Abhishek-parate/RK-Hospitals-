@@ -20,7 +20,7 @@ if (!empty($search)) {
 
 // ─── Total blogs count (for pagination) ───────────────────────────────────────
 $count_sql = "SELECT COUNT(*) as total FROM blogs b 
-              LEFT JOIN blog_categories c ON b.category_id = c.id 
+              LEFT JOIN categories c ON b.category_id = c.id 
               $where";
 $count_res   = $conn->query($count_sql);
 $total_blogs = $count_res->fetch_assoc()['total'];
@@ -33,8 +33,8 @@ $blogs_sql = "SELECT
                 c.name  AS category_name, c.slug AS category_slug,
                 a.name  AS author_name,   a.photo AS author_photo, a.profile_url AS author_url
               FROM blogs b
-              LEFT JOIN blog_categories c ON b.category_id = c.id
-              LEFT JOIN blog_authors    a ON b.author_id   = a.id
+              LEFT JOIN categories c ON b.category_id = c.id
+              LEFT JOIN doctors    a ON b.doctor_id   = a.id
               $where
               ORDER BY b.published_at DESC
               LIMIT " . BLOGS_PER_PAGE . " OFFSET $offset";
@@ -42,7 +42,7 @@ $blogs_res = $conn->query($blogs_sql);
 
 // ─── Sidebar: Categories with count ──────────────────────────────────────────
 $categories_sql = "SELECT c.name, c.slug, COUNT(b.id) as blog_count 
-                   FROM blog_categories c 
+                   FROM categories c 
                    LEFT JOIN blogs b ON b.category_id = c.id AND b.is_published = 1
                    GROUP BY c.id ORDER BY blog_count DESC";
 $categories_res = $conn->query($categories_sql);

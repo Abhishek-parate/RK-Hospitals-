@@ -4,11 +4,11 @@ require_once '../include/config.php';
 $errors = [];
 
 $categories = [];
-$res = $conn->query("SELECT id, name FROM blog_categories ORDER BY name ASC");
+$res = $conn->query("SELECT id, name FROM categories ORDER BY name ASC");
 if ($res) { while ($r = $res->fetch_assoc()) { $categories[] = $r; } }
 
 $authors = [];
-$res = $conn->query("SELECT id, name FROM blog_authors ORDER BY name ASC");
+$res = $conn->query("SELECT id, name FROM doctors ORDER BY name ASC");
 if ($res) { while ($r = $res->fetch_assoc()) { $authors[] = $r; } }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
