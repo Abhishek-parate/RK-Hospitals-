@@ -169,7 +169,7 @@ while ($row = $tags_res->fetch_assoc()) {
                                 <div class="col-md-6 col-sm-12">
                                     <div class="blog grid-blog">
                                         <div class="blog-image">
-                                            <a href="blog-details.php?slug=<?= htmlspecialchars($blog['slug']) ?>">
+                                            <a href="blog/<?= htmlspecialchars($blog['slug']) ?>">
                                                 <img class="img-fluid"
                                                      src="<?= htmlspecialchars($blog['image']) ?>"
                                                      alt="<?= htmlspecialchars($blog['title']) ?>">
@@ -195,7 +195,7 @@ while ($row = $tags_res->fetch_assoc()) {
                                                 </li>
                                             </ul>
                                             <h3 class="blog-title">
-                                                <a href="blog-details.php?slug=<?= htmlspecialchars($blog['slug']) ?>">
+                                                <a href="blog/<?= htmlspecialchars($blog['slug']) ?>">
                                                     <?= htmlspecialchars($blog['title']) ?>
                                                 </a>
                                             </h3>
@@ -292,7 +292,7 @@ while ($row = $tags_res->fetch_assoc()) {
                                 ?>
                                     <li>
                                         <div class="post-thumb">
-                                            <a href="blog-details.php?slug=<?= htmlspecialchars($latest['slug']) ?>">
+                                            <a href="blog/<?= htmlspecialchars($latest['slug']) ?>">
                                                 <img class="img-fluid"
                                                      src="<?= htmlspecialchars($latest['image']) ?>"
                                                      alt="<?= htmlspecialchars($latest['title']) ?>">
@@ -301,7 +301,7 @@ while ($row = $tags_res->fetch_assoc()) {
                                         <div class="post-info">
                                             <p><?= formatDate($latest['published_at']) ?></p>
                                             <h4>
-                                                <a href="blog-details.php?slug=<?= htmlspecialchars($latest['slug']) ?>">
+                                                <a href="blog/<?= htmlspecialchars($latest['slug']) ?>">
                                                     <?= htmlspecialchars($latest['title']) ?>
                                                 </a>
                                             </h4>

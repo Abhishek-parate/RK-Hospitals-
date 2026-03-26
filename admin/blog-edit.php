@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $author_id    = !empty($_POST['author_id'])   ? (int)$_POST['author_id']   : null;
     $tags         = trim($_POST['tags'] ?? '');
     $is_published = isset($_POST['is_published']) ? 1 : 0;
-    $published_at = !empty($_POST['published_at']) ? $conn->real_escape_string($_POST['published_at']) : null;
+    $published_at = !empty($_POST['published_at']) ? $conn->real_escape_string($_POST['published_at']) : date('Y-m-d');
 
     if (empty($title))   $errors[] = 'Title is required.';
     if (empty($content) || $content === '<p><br></p>') $errors[] = 'Content is required.';
@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $contentEsc = $conn->real_escape_string($content);
         $imageEsc   = $conn->real_escape_string($imagePath);
         $tagsEsc    = $conn->real_escape_string($tags);
-        $pubAt      = $published_at ? "'$published_at'" : 'NULL';
+        $pubAt      = "'$published_at'";
         $catVal     = $category_id  ? $category_id  : 'NULL';
         $authVal    = $author_id    ? $author_id    : 'NULL';
 
@@ -214,6 +214,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </ul>
                     </div>
                     <div class="col-sm-6 text-end">
+                        <a href="../blog/<?= htmlspecialchars($blog['slug']) ?>" target="_blank" class="btn btn-outline-success btn-sm me-2">
+                            <i class="fe fe-eye me-1"></i> View on Site
+                        </a>
                         <a href="blogs.php" class="btn btn-outline-secondary btn-sm">
                             <i class="fe fe-arrow-left me-1"></i> Back to Blogs
                         </a>
@@ -255,7 +258,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             <i class="fa fa-refresh"></i> Generate
                                         </button>
                                     </div>
-                                    <small class="text-muted">Lowercase letters, numbers and hyphens only.</small>
+                                    <small class="text-muted">Lowercase letters, numbers and hyphens only. &nbsp;
+                                        <a href="../blog/<?= htmlspecialchars($blog['slug']) ?>" target="_blank" id="slugPreviewLink" style="color:#0d6efd;">
+                                            <i class="fa fa-external-link" style="font-size:10px;"></i> Preview URL: /blog/<?= htmlspecialchars($blog['slug']) ?>
+                                        </a>
+                                    </small>
                                 </div>
 
                                 <div class="mb-3">
@@ -435,6 +442,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     document.getElementById('blogSlug').addEventListener('input', function () {
         this.value = this.value.toLowerCase().replace(/[^a-z0-9-]/g, '-');
+        var link = document.getElementById('slugPreviewLink');
+        if (link) {
+            link.href = '../blog/' + this.value;
+            link.textContent = ' Preview URL: /blog/' + this.value;
+        }
     });
 
     document.getElementById('imageInput').addEventListener('change', function () {

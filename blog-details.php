@@ -25,8 +25,88 @@ $blog_sql = "SELECT
 $blog_res = $conn->query($blog_sql);
 
 if (!$blog_res || $blog_res->num_rows === 0) {
-    header("HTTP/1.0 404 Not Found");
-    include '404.php'; 
+    http_response_code(404);
+    ?>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <base href="/rkhospital/">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>404 - Blog Not Found | Dr. Agrawal's R.K. Hospital</title>
+        <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/plugins/fontawesome/css/fontawesome.min.css">
+        <link rel="stylesheet" href="assets/plugins/fontawesome/css/all.min.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+        <style>
+            .error-404-wrap {
+                min-height: 80vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                padding: 60px 20px;
+            }
+            .error-404-code {
+                font-size: 100px;
+                font-weight: 800;
+                color: #1a6ef5;
+                line-height: 1;
+                margin-bottom: 10px;
+            }
+            .error-404-title {
+                font-size: 26px;
+                font-weight: 700;
+                color: #1a1a2e;
+                margin-bottom: 12px;
+            }
+            .error-404-msg {
+                color: #6c757d;
+                font-size: 15px;
+                margin-bottom: 30px;
+                max-width: 440px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        </style>
+    </head>
+    <body>
+        <header class="header header-default inner-header">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg header-nav">
+                    <div class="navbar-header">
+                        <a href="index-7.html" class="navbar-brand logo">
+                            <img src="assets/img/RK-Logo.png" class="img-fluid" alt="Logo">
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </header>
+        <div class="main-wrapper">
+            <div class="error-404-wrap">
+                <div>
+                    <div class="error-404-code">404</div>
+                    <div class="error-404-title">Blog Post Not Found</div>
+                    <p class="error-404-msg">
+                        The blog post you're looking for doesn't exist or may have been removed.
+                        Please check the URL or browse our latest articles.
+                    </p>
+                    <a href="index-7.html" class="btn btn-primary me-2">
+                        <i class="fa fa-home me-1"></i> Go to Home
+                    </a>
+                    <a href="blog-grid.php" class="btn btn-outline-primary">
+                        <i class="fa fa-newspaper-o me-1"></i> Browse Blogs
+                    </a>
+                </div>
+            </div>
+        </div>
+        <script src="assets/js/jquery-3.7.1.min.js"></script>
+        <script src="assets/js/bootstrap.bundle.min.js"></script>
+        <script src="assets/js/script.js"></script>
+    </body>
+    </html>
+    <?php
     exit;
 }
 
@@ -61,6 +141,7 @@ $meta_desc = truncate(strip_tags($blog['content']), 160);
 <html lang="en">
 <head>
     <meta charset="utf-8">
+    <base href="/rkhospital/">
     <title><?= htmlspecialchars($blog['title']) ?> - Dr. Agrawal's R.K. Hospital</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="<?= htmlspecialchars($meta_desc) ?>">
@@ -73,7 +154,7 @@ $meta_desc = truncate(strip_tags($blog['content']), 160);
     <meta property="og:title"       content="<?= htmlspecialchars($blog['title']) ?>">
     <meta property="og:description" content="<?= htmlspecialchars($meta_desc) ?>">
     <meta property="og:image"       content="<?= SITE_URL . '/' . htmlspecialchars($blog['image']) ?>">
-    <meta property="og:url"         content="<?= SITE_URL ?>/blog-details.php?slug=<?= urlencode($blog['slug']) ?>">
+    <meta property="og:url"         content="<?= SITE_URL ?>/blog/<?= urlencode($blog['slug']) ?>">
     <meta property="og:type"        content="article">
 
     <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
@@ -304,7 +385,7 @@ $meta_desc = truncate(strip_tags($blog['content']), 160);
                                 <?php while ($latest = $latest_res->fetch_assoc()): ?>
                                     <li>
                                         <div class="post-thumb">
-                                            <a href="blog-details.php?slug=<?= htmlspecialchars($latest['slug']) ?>">
+                                            <a href="blog/<?= htmlspecialchars($latest['slug']) ?>">
                                                 <img class="img-fluid"
                                                      src="<?= htmlspecialchars($latest['image']) ?>"
                                                      alt="<?= htmlspecialchars($latest['title']) ?>">
@@ -313,7 +394,7 @@ $meta_desc = truncate(strip_tags($blog['content']), 160);
                                         <div class="post-info">
                                             <p><?= formatDate($latest['published_at']) ?></p>
                                             <h4>
-                                                <a href="blog-details.php?slug=<?= htmlspecialchars($latest['slug']) ?>">
+                                                <a href="blog/<?= htmlspecialchars($latest['slug']) ?>">
                                                     <?= htmlspecialchars($latest['title']) ?>
                                                 </a>
                                             </h4>

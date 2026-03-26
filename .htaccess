@@ -1,0 +1,32 @@
+Options -Indexes
+RewriteEngine On
+
+# ─────────────────────────────────────────────
+# 1. REMOVE .php EXTENSION FROM URL
+# Example: /about → /about.php
+# ─────────────────────────────────────────────
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^([^/]+)$ $1.php [L]
+
+# ─────────────────────────────────────────────
+# 2. REDIRECT .php URLs TO CLEAN URL
+# Example: /about.php → /about
+# ─────────────────────────────────────────────
+RewriteCond %{THE_REQUEST} \s/([^.]+)\.php[\s?]
+RewriteRule ^ /%1 [R=301,L]
+
+# ─────────────────────────────────────────────
+# 3. BLOG CLEAN URL (Slug Based)
+# /blog/my-post → blog-details.php?slug=my-post
+# ─────────────────────────────────────────────
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^blog/([a-zA-Z0-9_-]+)/?$ blog-details.php?slug=$1 [L,QSA]
+
+# ─────────────────────────────────────────────
+# 4. OPTIONAL: REMOVE TRAILING SLASH
+# /about/ → /about
+# ─────────────────────────────────────────────
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.+)/$ /$1 [R=301,L]

@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $author_id    = !empty($_POST['author_id'])   ? (int)$_POST['author_id']   : null;
     $tags         = trim($_POST['tags'] ?? '');
     $is_published = isset($_POST['is_published']) ? 1 : 0;
-    $published_at = !empty($_POST['published_at']) ? trim($_POST['published_at']) : null;
+    $published_at = !empty($_POST['published_at']) ? trim($_POST['published_at']) : date('Y-m-d');
 
     // ── SEO Fields ───────────────────────────────────────────────
     $meta_title       = trim($_POST['meta_title'] ?? '');
@@ -128,7 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $s = fn($v) => $conn->real_escape_string($v);
 
         $robots_meta = $robots_index . ',' . $robots_follow;
-        $pubAt   = $published_at ? "'" . $s($published_at) . "'" : 'NULL';
+        $pubAt   = "'" . $s($published_at) . "'";
         $catVal  = $category_id  ? (int)$category_id : 'NULL';
         $authVal = $author_id    ? (int)$author_id   : 'NULL';
         $rtVal   = $reading_time ? (int)$reading_time : 'NULL';
@@ -825,7 +825,7 @@ $p = fn($k) => htmlspecialchars($_POST[$k] ?? '');
                                     <!-- SERP Preview -->
                                     <label class="form-label" style="margin-bottom:8px;">🔍 Google SERP Preview</label>
                                     <div class="serp-preview">
-                                        <div class="serp-url" id="serpUrl">https://yourdomain.com › blog › <span id="serpSlug">your-post-slug</span></div>
+                                        <div class="serp-url" id="serpUrl">rkhospital.com › blog › <span id="serpSlug">your-post-slug</span></div>
                                         <div class="serp-title" id="serpTitle"><span class="serp-placeholder">Your meta title will appear here...</span></div>
                                         <div class="serp-date" id="serpDate" style="color:#70757a;font-family:Arial,sans-serif;font-size:12px;">Mar 25, 2026 — </div>
                                         <div class="serp-desc" id="serpDesc"><span class="serp-placeholder">Your meta description will appear here. Make it compelling to improve click-through rate.</span></div>
@@ -1173,10 +1173,18 @@ document.getElementById('blogTitle').addEventListener('input', function() {
     updateSerpPreview();
 });
 
+function autoFillCanonical(slug) {
+    var canon = document.getElementById('canonicalUrl');
+    if (canon && canon.value === '') {
+        canon.value = window.location.origin + '/rkhospital/blog/' + slug;
+    }
+}
+
 document.getElementById('blogSlug').addEventListener('input', function() {
     this.dataset.manual = 'true';
     this.value = this.value.toLowerCase().replace(/[^a-z0-9-]/g,'-');
     updateSerpPreview();
+    autoFillCanonical(this.value);
 });
 
 document.getElementById('generateSlug').addEventListener('click', function() {
@@ -1184,6 +1192,7 @@ document.getElementById('generateSlug').addEventListener('click', function() {
     s.value = toSlug(document.getElementById('blogTitle').value);
     delete s.dataset.manual;
     updateSerpPreview();
+    autoFillCanonical(s.value);
 });
 
 /* ═══════════════════════════════════════════════════════════════

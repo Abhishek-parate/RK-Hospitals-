@@ -143,7 +143,101 @@
     }
     </script>
 
+
+    <style>
+    /* Calendar icon */
+    .date-icon {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #0d6efd;
+        pointer-events: none;
+    }
+
+    /* Flatpickr theme upgrade */
+    .flatpickr-calendar {
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        font-family: inherit;
+    }
+
+    .flatpickr-day.selected {
+        background: #0d6efd;
+        border-color: #0d6efd;
+    }
+
+    .flatpickr-day:hover {
+        background: #e7f1ff;
+        color: #0d6efd;
+    }
+
+    .aboutsection {
+        padding: 40px 0px 0px 0px;
+    }
+
+    .icon-style {
+        width: 60px;
+        height: 60px;
+        background: #6f42c1;
+        /* change as per your theme */
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .icon-style i {
+        color: #fff;
+        font-size: 24px;
+    }
+
+    /* Container feel */
+    .custom-point {
+        position: relative;
+        padding: 16px 16px 16px 45px;
+        background: #ffffff;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        border: 1px solid #f1f1f1;
+    }
+
+    /* Hover effect */
+    .custom-point:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Attractive gradient pointer */
+    .custom-point::before {
+        content: "";
+        position: absolute;
+        left: 15px;
+        top: 20px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #0d6efd, #00c6ff);
+        box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.15);
+    }
+
+    /* Heading */
+    .custom-point h6 {
+        margin-bottom: 5px;
+        font-weight: 600;
+        color: #0b1c39;
+    }
+
+    /* Text */
+    .custom-point p {
+        margin: 0;
+        font-size: 14px;
+        color: #6c757d;
+    }
+    </style>
     <!-- Favicon -->
+
+
     <link rel="shortcut icon" href="<?php echo $base_url; ?>assets/img/favicon.png" type="image/x-icon">
     <link rel="apple-touch-icon" sizes="180x180" href="<?php echo $base_url; ?>assets/img/apple-touch-icon.png">
 
@@ -151,6 +245,7 @@
     <script src="<?php echo $base_url; ?>assets/js/theme-script.js"></script>
 
     <!-- CSS Files -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="<?php echo $base_url; ?>assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="<?php echo $base_url; ?>assets/css/animate.css">
     <link rel="stylesheet" href="<?php echo $base_url; ?>assets/plugins/fontawesome/css/fontawesome.min.css">
@@ -186,44 +281,47 @@
         <!-- Breadcrumb -->
         <!-- Breadcrumb -->
         <!-- Breadcrumb -->
-  <!-- Breadcrumb -->
-<div class="breadcrumb-bar" style="
+        <!-- Breadcrumb -->
+        <div class="breadcrumb-bar" style="
     min-height: 700px; 
     display: flex; 
     align-items: center;
     position: relative;
     background: url('<?php echo $base_url; ?>assets/img/service/service-01.jpg') center center / cover no-repeat;">
 
-    <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.45);"></div>
+            <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.45);"></div>
 
-    <div class="container" style="position: relative; z-index: 2;">
-        <div class="row align-items-center inner-banner">
-            <div class="col-md-12 col-12 text-center">
-                <nav aria-label="breadcrumb" class="page-breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a href="<?php echo $base_url; ?>index.php">
-                                <i class="isax isax-home-15"></i>
-                            </a>
-                        </li>
-                        <li class="breadcrumb-item">
-                            <a href="<?php echo $base_url; ?>services.php">Services</a>
-                        </li>
-                        <li class="breadcrumb-item active" aria-current="page">PCOD Treatment</li>
-                    </ol>
-                    <h1 class="breadcrumb-title">PCOD / PCOS Treatment in Nagpur</h1>
-                </nav>
+            <div class="container" style="position: relative; z-index: 2;">
+                <div class="row align-items-center inner-banner">
+                    <div class="col-md-12 col-12 text-center">
+                        <nav aria-label="breadcrumb" class="page-breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="<?php echo $base_url; ?>index.php">
+                                        <i class="isax isax-home-15"></i>
+                                    </a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a href="<?php echo $base_url; ?>services.php">Services</a>
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">PCOD Treatment</li>
+                            </ol>
+                            <h1 class="breadcrumb-title">PCOD / PCOS Treatment in Nagpur</h1>
+                        </nav>
+                    </div>
+                </div>
             </div>
+
         </div>
-    </div>
 
-</div>
+        <!-- /Breadcrumb -->
 
-<!-- /Breadcrumb -->
 
+        <!-- Add this in <head> if not already added -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
         <!-- About / Hero Section - PCOD -->
-        <div class="about-sec section">
+        <div class="about-sec aboutsection">
             <div class="container">
                 <div class="row align-items-center">
 
@@ -231,7 +329,7 @@
                     <div class="col-lg-6">
                         <div class="about-img-ten">
                             <div class="about-img-01">
-                                <img src="<?php echo $base_url; ?>assets/img/about/about-05.png" class="img-fluid"
+                                <img src="<?php echo $base_url; ?>assets/img/doctors/doctor-05.jpg" class="img-fluid"
                                     alt="PCOD PCOS Treatment in Nagpur - RK Hospital">
                             </div>
                         </div>
@@ -259,9 +357,8 @@
                             <!-- Point 1 -->
                             <div class="mission-item-ten wow fadeInUp" data-wow-delay="0.2s" data-wow-duration="1s">
                                 <div class="mission-icon">
-                                    <div class="mission-inner">
-                                        <img src="<?php echo $base_url; ?>assets/img/icons/mission-03.svg"
-                                            alt="Experienced PCOD Specialist Nagpur" class="img-fluid">
+                                    <div class="mission-inner icon-style">
+                                        <i class="fa-solid fa-user-doctor"></i>
                                     </div>
                                 </div>
                                 <div>
@@ -276,9 +373,8 @@
                             <!-- Point 2 -->
                             <div class="mission-item-ten wow fadeInUp" data-wow-delay="0.4s" data-wow-duration="1s">
                                 <div class="mission-icon">
-                                    <div class="mission-inner">
-                                        <img src="<?php echo $base_url; ?>assets/img/icons/mission-04.svg"
-                                            alt="Holistic PCOD Treatment RK Hospital" class="img-fluid">
+                                    <div class="mission-inner icon-style">
+                                        <i class="fa-solid fa-heart-pulse"></i>
                                     </div>
                                 </div>
                                 <div>
@@ -528,7 +624,6 @@
                                             <div class="row g-3 mt-1">
                                                 <div class="col-md-4 text-center">
                                                     <div class="card border-primary p-3">
-                                                        <i class="isax isax-health-icon text-primary fs-2 mb-2"></i>
                                                         <h6>Pelvic Ultrasound</h6>
                                                         <p class="small text-muted mb-0">Detects enlarged ovaries and
                                                             presence of cysts</p>
@@ -536,7 +631,6 @@
                                                 </div>
                                                 <div class="col-md-4 text-center">
                                                     <div class="card border-primary p-3">
-                                                        <i class="isax isax-drop text-primary fs-2 mb-2"></i>
                                                         <h6>Blood Hormone Tests</h6>
                                                         <p class="small text-muted mb-0">LH, FSH, testosterone, insulin
                                                             &amp; thyroid levels</p>
@@ -544,7 +638,6 @@
                                                 </div>
                                                 <div class="col-md-4 text-center">
                                                     <div class="card border-primary p-3">
-                                                        <i class="isax isax-clipboard-text text-primary fs-2 mb-2"></i>
                                                         <h6>Clinical Evaluation</h6>
                                                         <p class="small text-muted mb-0">Review of symptoms, BMI, cycle
                                                             history &amp; physical exam</p>
@@ -566,7 +659,6 @@
                                                         <a href="javascript:void(0);" class="accordion-button"
                                                             data-bs-toggle="collapse" data-bs-target="#t1"
                                                             aria-expanded="true">
-                                                            <i class="isax isax-medicine me-2 text-primary"></i>
                                                             Hormonal Therapy &amp; Medications
                                                         </a>
                                                     </h4>
@@ -588,7 +680,6 @@
                                                         <a href="javascript:void(0);" class="accordion-button collapsed"
                                                             data-bs-toggle="collapse" data-bs-target="#t2"
                                                             aria-expanded="false">
-                                                            <i class="isax isax-weight me-2 text-primary"></i>
                                                             Diet, Nutrition &amp; Lifestyle Management
                                                         </a>
                                                     </h4>
@@ -610,7 +701,6 @@
                                                         <a href="javascript:void(0);" class="accordion-button collapsed"
                                                             data-bs-toggle="collapse" data-bs-target="#t3"
                                                             aria-expanded="false">
-                                                            <i class="isax isax-baby me-2 text-primary"></i>
                                                             Ovulation Induction (For Fertility)
                                                         </a>
                                                     </h4>
@@ -632,7 +722,6 @@
                                                         <a href="javascript:void(0);" class="accordion-button collapsed"
                                                             data-bs-toggle="collapse" data-bs-target="#t4"
                                                             aria-expanded="false">
-                                                            <i class="isax isax-scissor me-2 text-primary"></i>
                                                             Laparoscopic Ovarian Drilling (LOD)
                                                         </a>
                                                     </h4>
@@ -651,68 +740,46 @@
 
                                             </div>
                                         </div>
-
                                         <!-- Why Choose Us -->
                                         <div class="widget about-widget">
-                                            <h3 class="widget-title">Why Choose RK Hospital for PCOD Treatment in
-                                                Nagpur?</h3>
-                                            <div class="row g-3 mt-1">
+                                            <h3 class="widget-title">
+                                                Why Choose RK Hospital for PCOD Treatment in Nagpur?
+                                            </h3>
+
+                                            <div class="row g-4 mt-2">
+
                                                 <div class="col-md-6">
-                                                    <div class="d-flex align-items-start gap-3">
-                                                        <div
-                                                            class="avatar avatar-sm bg-primary rounded-circle flex-shrink-0">
-                                                            <i class="isax isax-verify text-white"></i>
-                                                        </div>
-                                                        <div>
-                                                            <h6 class="mb-1">Experienced Gynecologists</h6>
-                                                            <p class="text-muted small mb-0">Team of specialized
-                                                                gynecologists with 15+ years of experience treating PCOD
-                                                                &amp; PCOS.</p>
-                                                        </div>
+                                                    <div class="custom-point">
+                                                        <h6>Experienced Gynecologists</h6>
+                                                        <p>Team of specialized gynecologists with 15+ years of
+                                                            experience treating PCOD & PCOS.</p>
                                                     </div>
                                                 </div>
+
                                                 <div class="col-md-6">
-                                                    <div class="d-flex align-items-start gap-3">
-                                                        <div
-                                                            class="avatar avatar-sm bg-primary rounded-circle flex-shrink-0">
-                                                            <i class="isax isax-hospital text-white"></i>
-                                                        </div>
-                                                        <div>
-                                                            <h6 class="mb-1">Advanced Diagnostic Equipment</h6>
-                                                            <p class="text-muted small mb-0">State-of-the-art
-                                                                ultrasound, hormonal labs and fertility monitoring
-                                                                equipment.</p>
-                                                        </div>
+                                                    <div class="custom-point">
+                                                        <h6>Advanced Diagnostic Equipment</h6>
+                                                        <p>State-of-the-art ultrasound, hormonal labs and fertility
+                                                            monitoring equipment.</p>
                                                     </div>
                                                 </div>
+
                                                 <div class="col-md-6">
-                                                    <div class="d-flex align-items-start gap-3">
-                                                        <div
-                                                            class="avatar avatar-sm bg-primary rounded-circle flex-shrink-0">
-                                                            <i class="isax isax-people text-white"></i>
-                                                        </div>
-                                                        <div>
-                                                            <h6 class="mb-1">Holistic &amp; Personalized Care</h6>
-                                                            <p class="text-muted small mb-0">Comprehensive care
-                                                                including gynecologist, nutritionist, and mental health
-                                                                support all under one roof.</p>
-                                                        </div>
+                                                    <div class="custom-point">
+                                                        <h6>Holistic & Personalized Care</h6>
+                                                        <p>Comprehensive care including gynecologist, nutritionist, and
+                                                            mental health support all under one roof.</p>
                                                     </div>
                                                 </div>
+
                                                 <div class="col-md-6">
-                                                    <div class="d-flex align-items-start gap-3">
-                                                        <div
-                                                            class="avatar avatar-sm bg-primary rounded-circle flex-shrink-0">
-                                                            <i class="isax isax-calendar text-white"></i>
-                                                        </div>
-                                                        <div>
-                                                            <h6 class="mb-1">Easy Appointment Booking</h6>
-                                                            <p class="text-muted small mb-0">Book online or call us.
-                                                                Flexible slots including evenings and weekends
-                                                                available.</p>
-                                                        </div>
+                                                    <div class="custom-point">
+                                                        <h6>Easy Appointment Booking</h6>
+                                                        <p>Book online or call us. Flexible slots including evenings and
+                                                            weekends available.</p>
                                                     </div>
                                                 </div>
+
                                             </div>
                                         </div>
 
@@ -847,33 +914,65 @@
                                 <h4 class="card-title mb-3">
                                     <i class="isax isax-calendar-add me-2 text-primary"></i>Book an Appointment
                                 </h4>
-                                <form action="<?php echo $base_url; ?>booking.php" method="POST">
+                                <form action="<?php echo $baseurl ?>booking.php" method="POST" id="appointmentForm"
+                                    novalidate>
                                     <input type="hidden" name="department" value="gynecology">
+
+                                    <!-- Full Name -->
                                     <div class="mb-3">
-                                        <label class="form-label">Full Name <span class="text-danger">*</span></label>
-                                        <input type="text" name="name" class="form-control"
-                                            placeholder="Enter your name" required>
+                                        <label class="form-label" for="apptName">
+                                            Full Name <span class="text-danger">*</span>
+                                        </label>
+                                        <input type="text" name="name" id="apptName" class="form-control"
+                                            placeholder="Enter your full name" autocomplete="name">
+                                        <div class="invalid-feedback">
+                                            Please enter your full name (letters only, min 3 characters).
+                                        </div>
                                     </div>
+
+                                    <!-- Phone Number -->
                                     <div class="mb-3">
-                                        <label class="form-label">Phone Number <span
-                                                class="text-danger">*</span></label>
-                                        <input type="tel" name="phone" class="form-control"
-                                            placeholder="+91 XXXXX XXXXX" required>
+                                        <label class="form-label" for="apptPhone">
+                                            Phone Number <span class="text-danger">*</span>
+                                        </label>
+                                        <input type="tel" name="phone" id="apptPhone" class="form-control"
+                                            placeholder="+91 XXXXX XXXXX" maxlength="13" autocomplete="tel">
+                                        <div class="invalid-feedback">
+                                            Enter a valid 10-digit Indian mobile number (e.g. 9876543210 or +91...).
+                                        </div>
                                     </div>
+
+                                    <!-- Preferred Date -->
                                     <div class="mb-3">
-                                        <label class="form-label">Preferred Date</label>
-                                        <input type="date" name="date" class="form-control"
-                                            min="<?php echo date('Y-m-d'); ?>">
+                                        <label class="form-label" for="appointmentDate">
+                                            Preferred Date <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="position-relative">
+                                            <input type="text" name="date" id="appointmentDate" class="form-control"
+                                                placeholder="Select Date" readonly>
+                                            <span class="date-icon"><i class="isax isax-calendar"></i></span>
+                                        </div>
+                                        <div class="text-danger small mt-1" id="dateError" style="display:none;">
+                                            Please select a preferred appointment date.
+                                        </div>
                                     </div>
+
+                                    <!-- Service -->
                                     <div class="mb-3">
-                                        <label class="form-label">Service</label>
-                                        <select name="service" class="form-control select">
-                                            <option value="pcod" selected>PCOD / PCOS Treatment</option>
+                                        <label class="form-label" for="apptService">
+                                            Service <span class="text-danger">*</span>
+                                        </label>
+                                        <select name="service" id="apptService" class="form-control select">
+                                            <option value="">-- Select a Service --</option>
+                                            <option value="pcod">PCOD / PCOS Treatment</option>
                                             <option value="infertility">Infertility Consultation</option>
                                             <option value="gynecology">General Gynecology</option>
                                             <option value="hormonal">Hormonal Imbalance</option>
                                         </select>
+                                        <div class="invalid-feedback">Please select a service.</div>
                                     </div>
+
+                                    <!-- Submit Button -->
                                     <div class="clinic-booking mt-3">
                                         <button type="submit" class="btn btn-primary btn-primary-gradient w-100">
                                             <i class="isax isax-calendar-add me-2"></i>Book Appointment
@@ -882,57 +981,63 @@
                                 </form>
                             </div>
                         </div>
-                        <!-- /Book Appointment Card -->
+
 
                         <!-- Quick Contact Card -->
                         <div class="card search-filter">
                             <div class="card-body">
                                 <h4 class="card-title mb-3">Quick Contact</h4>
+
                                 <ul class="list-group list-group-flush">
+
                                     <li class="list-group-item px-0">
-                                        <div class="d-flex align-items-center gap-2">
-                                            <div class="avatar avatar-sm bg-primary rounded-circle">
-                                                <i class="isax isax-call-calling text-white"></i>
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="contact-icon">
+                                                <i class="isax isax-call-calling"></i>
                                             </div>
                                             <div>
-                                                <p class="mb-0 text-muted" style="font-size:12px">Emergency / OPD</p>
+                                                <p class="mb-0 text-muted small">Emergency / OPD</p>
                                                 <a href="tel:+91XXXXXXXXXX"><b>+91 XXXXX XXXXX</b></a>
                                             </div>
                                         </div>
                                     </li>
+
                                     <li class="list-group-item px-0">
-                                        <div class="d-flex align-items-center gap-2">
-                                            <div class="avatar avatar-sm bg-primary rounded-circle">
-                                                <i class="isax isax-messages-3 text-white"></i>
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="contact-icon">
+                                                <i class="isax isax-messages-3"></i>
                                             </div>
                                             <div>
-                                                <p class="mb-0 text-muted" style="font-size:12px">Email Us</p>
+                                                <p class="mb-0 text-muted small">Email Us</p>
                                                 <a href="mailto:info@rkhospital.com"><b>info@rkhospital.com</b></a>
                                             </div>
                                         </div>
                                     </li>
+
                                     <li class="list-group-item px-0">
-                                        <div class="d-flex align-items-center gap-2">
-                                            <div class="avatar avatar-sm bg-primary rounded-circle">
-                                                <i class="isax isax-location text-white"></i>
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="contact-icon">
+                                                <i class="isax isax-location"></i>
                                             </div>
                                             <div>
-                                                <p class="mb-0 text-muted" style="font-size:12px">Location</p>
+                                                <p class="mb-0 text-muted small">Location</p>
                                                 <b>Nagpur, Maharashtra</b>
                                             </div>
                                         </div>
                                     </li>
+
                                     <li class="list-group-item px-0 border-0">
-                                        <div class="d-flex align-items-center gap-2">
-                                            <div class="avatar avatar-sm bg-primary rounded-circle">
-                                                <i class="isax isax-clock text-white"></i>
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="contact-icon">
+                                                <i class="isax isax-clock"></i>
                                             </div>
                                             <div>
-                                                <p class="mb-0 text-muted" style="font-size:12px">Working Hours</p>
+                                                <p class="mb-0 text-muted small">Working Hours</p>
                                                 <b>Mon–Sat: 9AM – 7PM</b>
                                             </div>
                                         </div>
                                     </li>
+
                                 </ul>
                             </div>
                         </div>
@@ -1118,9 +1223,180 @@
 
     <!-- Custom JS -->
     <script src="<?php echo $base_url; ?>assets/js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     <script src="../../cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js"
         data-cf-settings="d007907878785aba4b025926-|49" defer></script>
+
+    <script>
+    flatpickr("#appointmentDate", {
+        minDate: "today",
+        dateFormat: "d M Y", // 26 Mar 2026 format
+        disableMobile: true,
+        animate: true,
+    });
+    </script>
+    <!-- Appointment Form Validation -->
+    <script>
+    (function() {
+        'use strict';
+
+        var form = document.getElementById('appointmentForm');
+        if (!form) return;
+
+        var nameEl = document.getElementById('apptName');
+        var phoneEl = document.getElementById('apptPhone');
+        var dateEl = document.getElementById('appointmentDate');
+        var serviceEl = document.getElementById('apptService');
+        var dateError = document.getElementById('dateError');
+
+        // ── Validators ─────────────────────────────────────────────────────────
+        function isValidName(v) {
+            return v.trim().length >= 3 && /^[a-zA-Z\s'.]+$/.test(v.trim());
+        }
+
+        function isValidPhone(v) {
+            var c = v.replace(/[\s\-]/g, '');
+            return /^(\+91|91)?[6-9]\d{9}$/.test(c);
+        }
+
+        function isValidDate(v) {
+            return v.trim() !== '';
+        }
+
+        function isValidService(v) {
+            return v !== '';
+        }
+
+        // ── State Helpers ───────────────────────────────────────────────────────
+        function markValid(el) {
+            el.classList.remove('is-invalid');
+            el.classList.add('is-valid');
+        }
+
+        function markInvalid(el) {
+            el.classList.remove('is-valid');
+            el.classList.add('is-invalid');
+        }
+
+        function clearMark(el) {
+            el.classList.remove('is-valid', 'is-invalid');
+        }
+
+        function markDateValid() {
+            dateEl.classList.remove('is-invalid');
+            dateEl.classList.add('is-valid');
+            dateError.style.display = 'none';
+        }
+
+        function markDateInvalid() {
+            dateEl.classList.remove('is-valid');
+            dateEl.classList.add('is-invalid');
+            dateError.style.display = 'block';
+        }
+
+        // ── Real-time: Name ─────────────────────────────────────────────────────
+        nameEl.addEventListener('blur', function() {
+            isValidName(this.value) ? markValid(this) : markInvalid(this);
+        });
+
+        nameEl.addEventListener('input', function() {
+            if (this.classList.contains('is-invalid')) {
+                isValidName(this.value) ? markValid(this) : markInvalid(this);
+            }
+        });
+
+        // ── Real-time: Phone ────────────────────────────────────────────────────
+        phoneEl.addEventListener('input', function() {
+            // Strip anything that's not a digit, +, or space
+            this.value = this.value.replace(/[^0-9+\s]/g, '');
+            if (this.value.trim()) {
+                isValidPhone(this.value) ? markValid(this) : markInvalid(this);
+            } else {
+                clearMark(this);
+            }
+        });
+
+        phoneEl.addEventListener('blur', function() {
+            if (!this.value.trim()) {
+                markInvalid(this);
+                return;
+            }
+            isValidPhone(this.value) ? markValid(this) : markInvalid(this);
+        });
+
+        // ── Real-time: Service ──────────────────────────────────────────────────
+        serviceEl.addEventListener('change', function() {
+            isValidService(this.value) ? markValid(this) : markInvalid(this);
+        });
+
+        // ── Flatpickr Re-init with onChange hook ────────────────────────────────
+        if (typeof flatpickr !== 'undefined') {
+            flatpickr('#appointmentDate', {
+                minDate: 'today',
+                dateFormat: 'j M Y',
+                disableMobile: true,
+                animate: true,
+                onChange: function(selectedDates) {
+                    selectedDates.length > 0 ? markDateValid() : markDateInvalid();
+                }
+            });
+        }
+
+        // ── Submit Validation ───────────────────────────────────────────────────
+        form.addEventListener('submit', function(e) {
+            var valid = true;
+
+            // Name
+            if (!isValidName(nameEl.value)) {
+                markInvalid(nameEl);
+                valid = false;
+            } else {
+                markValid(nameEl);
+            }
+
+            // Phone
+            if (!isValidPhone(phoneEl.value)) {
+                markInvalid(phoneEl);
+                valid = false;
+            } else {
+                markValid(phoneEl);
+            }
+
+            // Date
+            if (!isValidDate(dateEl.value)) {
+                markDateInvalid();
+                valid = false;
+            } else {
+                markDateValid();
+            }
+
+            // Service
+            if (!isValidService(serviceEl.value)) {
+                markInvalid(serviceEl);
+                valid = false;
+            } else {
+                markValid(serviceEl);
+            }
+
+            // Block submit + scroll to first error
+            if (!valid) {
+                e.preventDefault();
+                e.stopPropagation();
+                var firstError = form.querySelector('.is-invalid');
+                if (firstError) {
+                    firstError.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                    firstError.focus();
+                }
+            }
+        });
+
+    })();
+    </script>
+
 </body>
 
 </html>
