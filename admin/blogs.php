@@ -23,8 +23,8 @@ if (isset($_GET['toggle']) && is_numeric($_GET['toggle'])) {
 
 $sql = "SELECT b.*, bc.name AS category_name, ba.name AS author_name
         FROM blogs b
-        LEFT JOIN blog_categories bc ON b.category_id = bc.id
-        LEFT JOIN blog_authors ba ON b.author_id = ba.id
+        LEFT JOIN categories bc ON b.category_id = bc.id
+        LEFT JOIN doctors ba ON b.author_id = ba.id
         WHERE b.title LIKE '$searchLike' OR ba.name LIKE '$searchLike' OR bc.name LIKE '$searchLike'
         ORDER BY b.created_at DESC
         LIMIT $limit OFFSET $offset";
@@ -34,8 +34,8 @@ $blogs  = [];
 if ($result) { while ($row = $result->fetch_assoc()) { $blogs[] = $row; } }
 
 $countResult = $conn->query("SELECT COUNT(*) AS total FROM blogs b
-    LEFT JOIN blog_categories bc ON b.category_id = bc.id
-    LEFT JOIN blog_authors ba ON b.author_id = ba.id
+    LEFT JOIN categories bc ON b.category_id = bc.id
+    LEFT JOIN doctors ba ON b.author_id = ba.id
     WHERE b.title LIKE '$searchLike' OR ba.name LIKE '$searchLike' OR bc.name LIKE '$searchLike'");
 $totalRecords = $countResult ? (int)$countResult->fetch_assoc()['total'] : 0;
 $totalPages   = $totalRecords > 0 ? (int)ceil($totalRecords / $limit) : 1;
@@ -773,6 +773,9 @@ function seoGrade($score) {
                                     <!-- Actions -->
                                     <td>
                                         <div class="action-btns">
+                                            <a href="../blog/<?= htmlspecialchars($blog['slug']) ?>" class="btn-act btn-act-view" title="View on Site" target="_blank" style="background:rgba(34,197,94,.12);color:#22c55e;border-color:rgba(34,197,94,.25);">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
                                             <a href="blog-edit.php?id=<?= $blog['id'] ?>" class="btn-act btn-act-edit" title="Edit">
                                                 <i class="fa fa-pencil"></i>
                                             </a>
@@ -804,7 +807,8 @@ function seoGrade($score) {
                                     robots: <?= json_encode($blog['robots_meta'] ?? '') ?>,
                                     readingTime: <?= (int)($blog['reading_time'] ?? 0) ?>,
                                     views: <?= (int)$blog['views'] ?>,
-                                    editUrl: 'blog-edit.php?id=<?= $blog['id'] ?>'
+                                    editUrl: 'blog-edit.php?id=<?= $blog['id'] ?>',
+                                    viewUrl: '../blog/<?= htmlspecialchars($blog['slug']) ?>'
                                 };
                                 </script>
                                 <?php endforeach; ?>
@@ -959,7 +963,10 @@ function openSeoModal(id) {
         tipsHtml +
 
         // CTA
-        '<a href="' + d.editUrl + '" style="display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;padding:11px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px;margin-top:4px;">Fix SEO Issues - Edit Blog</a>';
+        '<div style="display:flex;gap:8px;margin-top:4px;">' +
+            '<a href="' + d.editUrl + '" style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;padding:11px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px;">✏️ Edit Blog</a>' +
+            '<a href="' + d.viewUrl + '" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:6px;background:rgba(34,197,94,.12);color:#22c55e;border:1px solid rgba(34,197,94,.3);padding:11px 14px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px;">👁 View</a>' +
+        '</div>';
 
     document.getElementById('seoModalOverlay').classList.add('show');
     document.body.style.overflow = 'hidden';

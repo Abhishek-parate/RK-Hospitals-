@@ -99,10 +99,10 @@ INSERT INTO `blogs` (`id`, `title`, `slug`, `excerpt`, `content`, `image`, `cate
 -- --------------------------------------------------------
 
 --
--- Table structure for table `blog_authors`
+-- Table structure for table `doctors`
 --
 
-CREATE TABLE `blog_authors` (
+CREATE TABLE `doctors` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(150) NOT NULL,
   `designation` varchar(200) DEFAULT NULL,
@@ -112,10 +112,10 @@ CREATE TABLE `blog_authors` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `blog_authors`
+-- Dumping data for table `doctors`
 --
 
-INSERT INTO `blog_authors` (`id`, `name`, `designation`, `bio`, `photo`, `profile_url`) VALUES
+INSERT INTO `doctors` (`id`, `name`, `designation`, `bio`, `photo`, `profile_url`) VALUES
 (1, 'Dr. R.K. Agrawal', 'MS (Ortho) | Senior Orthopedic Surgeon | R.K. Hospital, Nagpur', 'Dr. R.K. Agrawal is the founder and chief orthopedic surgeon at Dr. Agrawal\'s R.K. Hospital, Nagpur. With over two decades of experience in joint replacement, spine surgery, and sports injuries, he has transformed the lives of thousands of patients across Central India.', 'assets/img/patients/patient21.jpg', 'doctor-profile.html'),
 (2, 'Dr. Priya Sharma', 'MD (Gynecology) | Senior Gynecologist | R.K. Hospital, Nagpur', 'Dr. Priya Sharma is a senior gynecologist and obstetrician with over 15 years of experience in managing high-risk pregnancies, PCOS, and minimally invasive gynecologic procedures.', 'assets/img/patients/patient20.jpg', 'doctor-profile.html'),
 (3, 'Dr. Neha Joshi', 'MS (OBG) | Obstetrician | R.K. Hospital, Nagpur', 'Dr. Neha Joshi specializes in maternal-fetal medicine and prenatal care, helping expecting mothers navigate pregnancy with confidence and safety.', 'assets/img/patients/patient23.jpg', 'doctor-profile.html'),
@@ -124,10 +124,10 @@ INSERT INTO `blog_authors` (`id`, `name`, `designation`, `bio`, `photo`, `profil
 -- --------------------------------------------------------
 
 --
--- Table structure for table `blog_categories`
+-- Table structure for table `categories`
 --
 
-CREATE TABLE `blog_categories` (
+CREATE TABLE `categories` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(100) NOT NULL,
   `slug` varchar(120) NOT NULL,
@@ -135,10 +135,10 @@ CREATE TABLE `blog_categories` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `blog_categories`
+-- Dumping data for table `categories`
 --
 
-INSERT INTO `blog_categories` (`id`, `name`, `slug`, `created_at`) VALUES
+INSERT INTO `categories` (`id`, `name`, `slug`, `created_at`) VALUES
 (1, 'Orthopedics', 'orthopedics', '2026-03-25 08:56:47'),
 (2, 'Gynecology', 'gynecology', '2026-03-25 08:56:47'),
 (3, 'Pregnancy Care', 'pregnancy-care', '2026-03-25 08:56:47'),
@@ -167,15 +167,15 @@ ALTER TABLE `blogs`
   ADD KEY `author_id` (`author_id`);
 
 --
--- Indexes for table `blog_authors`
+-- Indexes for table `doctors`
 --
-ALTER TABLE `blog_authors`
+ALTER TABLE `doctors`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `blog_categories`
+-- Indexes for table `categories`
 --
-ALTER TABLE `blog_categories`
+ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `slug` (`slug`);
 
@@ -196,15 +196,15 @@ ALTER TABLE `blogs`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT for table `blog_authors`
+-- AUTO_INCREMENT for table `doctors`
 --
-ALTER TABLE `blog_authors`
+ALTER TABLE `doctors`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `blog_categories`
+-- AUTO_INCREMENT for table `categories`
 --
-ALTER TABLE `blog_categories`
+ALTER TABLE `categories`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
@@ -215,8 +215,8 @@ ALTER TABLE `blog_categories`
 -- Constraints for table `blogs`
 --
 ALTER TABLE `blogs`
-  ADD CONSTRAINT `blogs_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `blog_categories` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `blogs_ibfk_2` FOREIGN KEY (`author_id`) REFERENCES `blog_authors` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `blogs_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `blogs_ibfk_2` FOREIGN KEY (`author_id`) REFERENCES `doctors` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

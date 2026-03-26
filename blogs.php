@@ -20,7 +20,7 @@ if (!empty($search)) {
 
 // ─── Total blogs count (for pagination) ───────────────────────────────────────
 $count_sql = "SELECT COUNT(*) as total FROM blogs b 
-              LEFT JOIN blog_categories c ON b.category_id = c.id 
+              LEFT JOIN categories c ON b.category_id = c.id 
               $where";
 $count_res   = $conn->query($count_sql);
 $total_blogs = $count_res->fetch_assoc()['total'];
@@ -33,8 +33,8 @@ $blogs_sql = "SELECT
                 c.name  AS category_name, c.slug AS category_slug,
                 a.name  AS author_name,   a.photo AS author_photo, a.profile_url AS author_url
               FROM blogs b
-              LEFT JOIN blog_categories c ON b.category_id = c.id
-              LEFT JOIN blog_authors    a ON b.author_id   = a.id
+              LEFT JOIN categories c ON b.category_id = c.id
+              LEFT JOIN doctors    a ON b.doctor_id   = a.id
               $where
               ORDER BY b.published_at DESC
               LIMIT " . BLOGS_PER_PAGE . " OFFSET $offset";
@@ -42,7 +42,7 @@ $blogs_res = $conn->query($blogs_sql);
 
 // ─── Sidebar: Categories with count ──────────────────────────────────────────
 $categories_sql = "SELECT c.name, c.slug, COUNT(b.id) as blog_count 
-                   FROM blog_categories c 
+                   FROM categories c 
                    LEFT JOIN blogs b ON b.category_id = c.id AND b.is_published = 1
                    GROUP BY c.id ORDER BY blog_count DESC";
 $categories_res = $conn->query($categories_sql);
@@ -169,7 +169,7 @@ while ($row = $tags_res->fetch_assoc()) {
                                 <div class="col-md-6 col-sm-12">
                                     <div class="blog grid-blog">
                                         <div class="blog-image">
-                                            <a href="blog-details.php?slug=<?= htmlspecialchars($blog['slug']) ?>">
+                                            <a href="blog/<?= htmlspecialchars($blog['slug']) ?>">
                                                 <img class="img-fluid"
                                                      src="<?= htmlspecialchars($blog['image']) ?>"
                                                      alt="<?= htmlspecialchars($blog['title']) ?>">
@@ -195,7 +195,7 @@ while ($row = $tags_res->fetch_assoc()) {
                                                 </li>
                                             </ul>
                                             <h3 class="blog-title">
-                                                <a href="blog-details.php?slug=<?= htmlspecialchars($blog['slug']) ?>">
+                                                <a href="blog/<?= htmlspecialchars($blog['slug']) ?>">
                                                     <?= htmlspecialchars($blog['title']) ?>
                                                 </a>
                                             </h3>
@@ -292,7 +292,7 @@ while ($row = $tags_res->fetch_assoc()) {
                                 ?>
                                     <li>
                                         <div class="post-thumb">
-                                            <a href="blog-details.php?slug=<?= htmlspecialchars($latest['slug']) ?>">
+                                            <a href="blog/<?= htmlspecialchars($latest['slug']) ?>">
                                                 <img class="img-fluid"
                                                      src="<?= htmlspecialchars($latest['image']) ?>"
                                                      alt="<?= htmlspecialchars($latest['title']) ?>">
@@ -301,7 +301,7 @@ while ($row = $tags_res->fetch_assoc()) {
                                         <div class="post-info">
                                             <p><?= formatDate($latest['published_at']) ?></p>
                                             <h4>
-                                                <a href="blog-details.php?slug=<?= htmlspecialchars($latest['slug']) ?>">
+                                                <a href="blog/<?= htmlspecialchars($latest['slug']) ?>">
                                                     <?= htmlspecialchars($latest['title']) ?>
                                                 </a>
                                             </h4>
