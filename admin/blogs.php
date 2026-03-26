@@ -40,7 +40,7 @@ $countResult = $conn->query("SELECT COUNT(*) AS total FROM blogs b
 $totalRecords = $countResult ? (int)$countResult->fetch_assoc()['total'] : 0;
 $totalPages   = $totalRecords > 0 ? (int)ceil($totalRecords / $limit) : 1;
 
-// ── Stats ────────────────────────────────────────────────────────
+//  Stats 
 $statsRes = $conn->query("SELECT 
     COUNT(*) as total,
     SUM(is_published) as published,
@@ -51,7 +51,7 @@ $statsRes = $conn->query("SELECT
     FROM blogs");
 $stats = $statsRes ? $statsRes->fetch_assoc() : [];
 
-// ── SEO Score Calculator (PHP) ───────────────────────────────────
+//  SEO Score Calculator (PHP) 
 function calcSeoScore($blog) {
     $score = 0;
     $issues = [];
@@ -158,7 +158,7 @@ function seoGrade($score) {
         *, *::before, *::after { box-sizing: border-box; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg-base); color: var(--text-1); font-size: 14px; }
 
-        /* ── Stats Cards ── */
+        /*  Stats Cards  */
         .stat-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 24px; }
         @media(max-width:1200px){ .stat-grid { grid-template-columns: repeat(3,1fr); } }
         @media(max-width:768px) { .stat-grid { grid-template-columns: repeat(2,1fr); } }
@@ -190,7 +190,7 @@ function seoGrade($score) {
         .stat-sub   { font-size: 11px; color: var(--text-3); margin-top: 4px; }
         .stat-icon  { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); font-size: 28px; opacity: .08; }
 
-        /* ── Main Card ── */
+        /*  Main Card  */
         .main-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -205,7 +205,7 @@ function seoGrade($score) {
         }
         .main-card-header h5 { font-size: 14px; font-weight: 700; margin: 0; display: flex; align-items: center; gap: 8px; }
 
-        /* ── Search ── */
+        /*  Search  */
         .search-box {
             display: flex; gap: 8px; align-items: center;
         }
@@ -234,7 +234,7 @@ function seoGrade($score) {
         }
         .btn-clear:hover { border-color: var(--danger); color: var(--danger); }
 
-        /* ── Table ── */
+        /*  Table  */
         .seo-table { width: 100%; border-collapse: collapse; }
         .seo-table thead th {
             background: var(--bg-card2);
@@ -255,7 +255,7 @@ function seoGrade($score) {
         .seo-table tbody tr:last-child { border-bottom: none; }
         .seo-table td { padding: 12px 14px; vertical-align: middle; }
 
-        /* ── Blog thumb ── */
+        /*  Blog thumb  */
         .blog-thumb {
             width: 46px; height: 46px; object-fit: cover;
             border-radius: 8px; border: 1px solid var(--border);
@@ -267,7 +267,7 @@ function seoGrade($score) {
             color: var(--text-3); font-size: 18px;
         }
 
-        /* ── Blog title cell ── */
+        /*  Blog title cell  */
         .blog-title-main {
             font-weight: 600; font-size: 13.5px; color: var(--text-1);
             display: block; margin-bottom: 2px;
@@ -276,7 +276,7 @@ function seoGrade($score) {
         }
         .blog-slug { font-size: 11px; color: var(--text-3); font-family: 'JetBrains Mono', monospace; }
 
-        /* ── Category badge ── */
+        /*  Category badge  */
         .cat-badge {
             display: inline-flex; align-items: center; gap: 4px;
             background: var(--accent-glow); color: var(--accent);
@@ -284,7 +284,7 @@ function seoGrade($score) {
             padding: 3px 9px; font-size: 11px; font-weight: 600;
         }
 
-        /* ── Status badge ── */
+        /*  Status badge  */
         .badge-pub {
             display: inline-flex; align-items: center; gap: 5px;
             background: #22c55e15; color: var(--success);
@@ -301,7 +301,7 @@ function seoGrade($score) {
         }
         .badge-pub:hover, .badge-draft:hover { opacity: .8; }
 
-        /* ── SEO Score Cell ── */
+        /*  SEO Score Cell  */
         .seo-score-cell { display: flex; align-items: center; gap: 10px; }
         .seo-ring { position: relative; flex-shrink: 0; }
         .seo-ring svg { transform: rotate(-90deg); }
@@ -318,7 +318,7 @@ function seoGrade($score) {
         }
         .seo-score-label { font-size: 10px; color: var(--text-3); }
 
-        /* ── SEO Issues Tooltip ── */
+        /*  SEO Issues Tooltip  */
         .seo-issues-btn {
             background: transparent; border: 1px solid var(--border-2);
             color: var(--text-3); border-radius: 6px;
@@ -328,11 +328,11 @@ function seoGrade($score) {
         .seo-issues-btn:hover { border-color: var(--warning); color: var(--warning); }
         .seo-issues-btn.no-issues { border-color: #22c55e30; color: var(--success); }
 
-        /* ── Prediction bar ── */
+        /*  Prediction bar  */
         .predict-bar { width: 80px; height: 6px; background: var(--border); border-radius: 4px; overflow: hidden; }
         .predict-fill { height: 100%; border-radius: 4px; transition: width .4s; }
 
-        /* ── Actions ── */
+        /*  Actions  */
         .action-btns { display: flex; gap: 6px; justify-content: flex-end; }
         .btn-act {
             width: 32px; height: 32px; border-radius: 8px;
@@ -345,7 +345,7 @@ function seoGrade($score) {
         .btn-act-del    { border-color: #ef444430; color: var(--danger); background: #ef444410; }
         .btn-act-del:hover { background: var(--danger); color: #fff; border-color: var(--danger); }
 
-        /* ── SEO Modal ── */
+        /*  SEO Modal  */
         .seo-modal-overlay {
             display: none; position: fixed; inset: 0;
             background: rgba(0,0,0,.7); z-index: 9999;
@@ -380,7 +380,7 @@ function seoGrade($score) {
         .modal-close:hover { color: var(--danger); }
         .modal-body { padding: 20px; }
 
-        /* ── Score ring in modal ── */
+        /*  Score ring in modal  */
         .modal-score-area {
             display: flex; align-items: center; gap: 20px;
             padding: 16px; background: var(--bg-card2);
@@ -401,7 +401,7 @@ function seoGrade($score) {
         .score-grade-big { font-size: 42px; font-weight: 900; font-family: 'JetBrains Mono', monospace; line-height: 1; }
         .score-verdict { font-size: 13px; color: var(--text-2); margin-top: 4px; }
 
-        /* ── Checklist ── */
+        /*  Checklist  */
         .check-section { margin-bottom: 14px; }
         .check-section-title {
             font-size: 11px; font-weight: 700; text-transform: uppercase;
@@ -417,7 +417,7 @@ function seoGrade($score) {
         .check-item.warn  { background: #f59e0b0d; color: #fcd34d; }
         .check-dot { font-size: 14px; flex-shrink: 0; margin-top: -1px; }
 
-        /* ── Prediction ── */
+        /*  Prediction  */
         .predict-section {
             background: var(--bg-card2); border: 1px solid var(--border);
             border-radius: 10px; padding: 14px; margin-bottom: 14px;
@@ -429,7 +429,7 @@ function seoGrade($score) {
         .predict-bar-full { width: 100%; height: 5px; background: var(--border); border-radius: 4px; overflow: hidden; margin-top: 3px; }
         .predict-bar-inner { height: 100%; border-radius: 4px; }
 
-        /* ── Add Blog Button ── */
+        /*  Add Blog Button  */
         .btn-add-blog {
             display: inline-flex; align-items: center; gap: 7px;
             background: linear-gradient(135deg, var(--accent), var(--accent2));
@@ -439,7 +439,7 @@ function seoGrade($score) {
         }
         .btn-add-blog:hover { opacity: .88; transform: translateY(-1px); color: #fff; }
 
-        /* ── Pagination ── */
+        /*  Pagination  */
         .pagination-area {
             display: flex; justify-content: space-between; align-items: center;
             padding: 14px 20px; border-top: 1px solid var(--border);
@@ -457,12 +457,12 @@ function seoGrade($score) {
         .pag-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
         .pag-btn.disabled { opacity: .35; pointer-events: none; }
 
-        /* ── Empty state ── */
+        /*  Empty state  */
         .empty-state { text-align: center; padding: 60px 20px; color: var(--text-3); }
         .empty-state i { font-size: 48px; margin-bottom: 12px; display: block; }
         .empty-state p { font-size: 14px; }
 
-        /* ── Alert ── */
+        /*  Alert  */
         .alert-custom {
             border-radius: 8px; padding: 12px 16px; margin-bottom: 18px;
             font-size: 13px; display: flex; align-items: center; gap: 10px;
@@ -470,7 +470,7 @@ function seoGrade($score) {
         .alert-success { background: #22c55e15; border: 1px solid #22c55e30; color: #86efac; }
         .alert-danger  { background: #ef444415; border: 1px solid #ef444430; color: #fca5a5; }
 
-        /* ── Views sparkline ── */
+        /*  Views sparkline  */
         .views-cell { display: flex; align-items: center; gap: 6px; }
         .views-num { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; }
         .views-bar-wrap { width: 40px; }
@@ -539,7 +539,7 @@ function seoGrade($score) {
 
             <div class="page-title-area">
                 <div>
-                    <h3>📊 Blog SEO Dashboard</h3>
+                    <h3>Blog SEO Dashboard</h3>
                     <div class="breadcrumb-area">
                         <a href="index.php">Dashboard</a> /
                         <span>Blogs & SEO Analytics</span>
@@ -553,9 +553,9 @@ function seoGrade($score) {
             <!-- ALERTS -->
             <?php if (isset($_GET['msg'])):
                 $msgMap = [
-                    'deleted' => ['danger',  '🗑️ Blog deleted successfully.'],
-                    'added'   => ['success', '✅ Blog added successfully.'],
-                    'updated' => ['success', '✅ Blog updated successfully.'],
+                    'deleted' => ['danger',  'Blog deleted successfully.'],
+                    'added'   => ['success', 'Blog added successfully.'],
+                    'updated' => ['success', 'Blog updated successfully.'],
                 ];
                 [$msgType, $msgText] = $msgMap[$_GET['msg']] ?? ['success', 'Action completed.'];
             ?>
@@ -610,7 +610,7 @@ function seoGrade($score) {
                     </h5>
                     <form method="GET" class="search-box">
                         <input type="text" name="search" class="search-input form-control"
-                               placeholder="🔍 Search title, author, category..."
+                               placeholder=" Search title, author, category..."
                                value="<?= htmlspecialchars($search) ?>">
                         <button class="btn-search" type="submit"><i class="fa fa-search"></i></button>
                         <?php if ($search): ?>
@@ -726,9 +726,9 @@ function seoGrade($score) {
                                                 onclick="openSeoModal(<?= $blog['id'] ?>)"
                                                 data-id="<?= $blog['id'] ?>">
                                             <?php if ($issueCount === 0): ?>
-                                                ✅ Perfect
+                                                Perfect
                                             <?php else: ?>
-                                                ⚠️ <?= $issueCount ?> issue<?= $issueCount > 1 ? 's' : '' ?>
+                                                Warning: <?= $issueCount ?> issue<?= $issueCount > 1 ? 's' : '' ?>
                                             <?php endif; ?>
                                         </button>
                                     </td>
@@ -841,12 +841,12 @@ function seoGrade($score) {
     </div>
 </div>
 
-<!-- ════════ SEO MODAL ════════ -->
+<!--  SEO MODAL  -->
 <div class="seo-modal-overlay" id="seoModalOverlay" onclick="if(event.target===this)closeSeoModal()">
     <div class="seo-modal">
         <div class="modal-head">
             <h5 id="modalTitle">SEO Analysis</h5>
-            <button class="modal-close" onclick="closeSeoModal()">✕</button>
+            <button class="modal-close" onclick="closeSeoModal()"></button>
         </div>
         <div class="modal-body" id="modalBody">
             <!-- JS renders here -->
@@ -864,23 +864,23 @@ function openSeoModal(id) {
     var d = window._seoData[id];
     if (!d) return;
 
-    document.getElementById('modalTitle').textContent = '🔍 SEO Report — ' + d.title.substring(0, 40) + (d.title.length > 40 ? '…' : '');
+    document.getElementById('modalTitle').textContent = 'SEO Report: ' + d.title.substring(0, 40) + (d.title.length > 40 ? '…' : '');
 
     var circ = 226.2;
     var off  = circ - (d.score / 100 * circ);
     var verdicts = {
-        'A': '🏆 Excellent! This post is highly SEO optimized.',
-        'B': '✅ Good SEO. A few tweaks will push it higher.',
-        'C': '⚠️ Average. Fix the issues below for better ranking.',
-        'D': '🔴 Needs work. Multiple SEO problems detected.',
-        'F': '❌ Poor SEO. This post needs significant improvements.'
+        'A': 'Excellent! This post is highly SEO optimized.',
+        'B': 'Good SEO. A few tweaks will push it higher.',
+        'C': 'Average. Fix the issues below for better ranking.',
+        'D': 'Needs work. Multiple SEO problems detected.',
+        'F': 'Poor SEO. This post needs significant improvements.'
     };
 
     var goodHtml = d.good.map(function(g) {
-        return '<div class="check-item good"><span class="check-dot">✅</span><span>' + g + '</span></div>';
+        return '<div class="check-item good"><span class="check-dot"></span><span>' + g + '</span></div>';
     }).join('');
     var issueHtml = d.issues.map(function(iss) {
-        return '<div class="check-item issue"><span class="check-dot">❌</span><span>' + iss + '</span></div>';
+        return '<div class="check-item issue"><span class="check-dot"></span><span>' + iss + '</span></div>';
     }).join('');
 
     // Predictions
@@ -902,14 +902,14 @@ function openSeoModal(id) {
 
     // Improvement tips
     var tips = [];
-    if (!d.keyword) tips.push('🔑 Set a focus keyword to unlock keyword analysis');
-    if (!d.metaTitle) tips.push('🏷️ Add a meta title (50–60 chars) for Google visibility');
-    if (!d.metaDesc) tips.push('📋 Write a meta description (120–160 chars) to improve CTR');
-    if (d.schema === '') tips.push('🔖 Add Schema markup — use MedicalWebPage for healthcare blogs');
-    if (d.readingTime === 0) tips.push('⏱️ Content seems short — aim for 600+ words');
+    if (!d.keyword) tips.push(' Set a focus keyword to unlock keyword analysis');
+    if (!d.metaTitle) tips.push(' Add a meta title (50–60 chars) for Google visibility');
+    if (!d.metaDesc) tips.push(' Write a meta description (120–160 chars) to improve CTR');
+    if (d.schema === '') tips.push(' Add Schema markup — use MedicalWebPage for healthcare blogs');
+    if (d.readingTime === 0) tips.push('⏱ Content seems short — aim for 600+ words');
 
-    var tipsHtml = tips.length > 0 ? '<div class="check-section"><div class="check-section-title">💡 Quick Wins</div>' +
-        tips.map(function(t){ return '<div class="check-item warn"><span class="check-dot">💡</span><span>' + t + '</span></div>'; }).join('') + '</div>' : '';
+    var tipsHtml = tips.length > 0 ? '<div class="check-section"><div class="check-section-title">Quick Wins</div>' +
+        tips.map(function(t){ return '<div class="check-item warn"><span class="check-dot"></span><span>' + t + '</span></div>'; }).join('') + '</div>' : '';
 
     document.getElementById('modalBody').innerHTML =
         // Score area
@@ -936,11 +936,11 @@ function openSeoModal(id) {
         '</div>' +
 
         // SERP Preview
-        (metaHtml ? '<div class="check-section"><div class="check-section-title">🔍 Google SERP Preview</div>' + metaHtml + '</div>' : '') +
+        (metaHtml ? '<div class="check-section"><div class="check-section-title">Google SERP Preview</div>' + metaHtml + '</div>' : '') +
 
         // Predictions
         '<div class="predict-section">' +
-            '<div class="predict-title">📈 SEO Predictions</div>' +
+            '<div class="predict-title">SEO Predictions</div>' +
             '<div class="predict-row"><span class="predict-label">Estimated CTR</span><span class="predict-val" style="color:' + ctrColor + '">~' + d.ctr + '%</span></div>' +
             '<div class="predict-bar-full"><div class="predict-bar-inner" style="width:' + ctrPct + '%;background:' + ctrColor + '"></div></div>' +
             '<div class="predict-row" style="margin-top:10px;"><span class="predict-label">Ranking Potential</span><span class="predict-val" style="color:' + rankColor + '">' + d.rank + '</span></div>' +
@@ -950,16 +950,16 @@ function openSeoModal(id) {
         '</div>' +
 
         // Good checks
-        (goodHtml ? '<div class="check-section"><div class="check-section-title">✅ What\'s Working (' + d.good.length + ')</div>' + goodHtml + '</div>' : '') +
+        (goodHtml ? '<div class="check-section"><div class="check-section-title"> What\'s Working (' + d.good.length + ')</div>' + goodHtml + '</div>' : '') +
 
         // Issues
-        (issueHtml ? '<div class="check-section"><div class="check-section-title">❌ Issues Found (' + d.issues.length + ')</div>' + issueHtml + '</div>' : '') +
+        (issueHtml ? '<div class="check-section"><div class="check-section-title">Issues Found (' + d.issues.length + ')</div>' + issueHtml + '</div>' : '') +
 
         // Quick wins
         tipsHtml +
 
         // CTA
-        '<a href="' + d.editUrl + '" style="display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;padding:11px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px;margin-top:4px;">✏️ Fix SEO Issues — Edit Blog</a>';
+        '<a href="' + d.editUrl + '" style="display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;padding:11px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px;margin-top:4px;">Fix SEO Issues - Edit Blog</a>';
 
     document.getElementById('seoModalOverlay').classList.add('show');
     document.body.style.overflow = 'hidden';

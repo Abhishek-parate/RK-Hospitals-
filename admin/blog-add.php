@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $robots_follow    = trim($_POST['robots_follow'] ?? 'follow');
     $schema_type      = trim($_POST['schema_type'] ?? 'BlogPosting');
     $reading_time     = !empty($_POST['reading_time']) ? (int)$_POST['reading_time'] : null;
-
+    
     // ── Validation ───────────────────────────────────────────────
     if (empty($title))   $errors[] = 'Title is required.';
     if (empty($content) || $content === '<p><br></p>') $errors[] = 'Content is required.';

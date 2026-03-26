@@ -35728,7 +35728,7 @@ ul.benifits-col li i {
   border-radius: 8px;
 }
 .about-section .about-img-info .about-box {
-  background: var(--primary);
+  background: var(--danger);
   border-radius: 8px;
   margin: 15px 0 25px;
   padding: 45px 10px;
@@ -49141,6 +49141,40 @@ ul li {
     display: none;
   }
 }
+@media (max-width: 767.98px) {
+
+    .services-section-seven .section-header .row {
+        flex-direction: column;
+    }
+
+    .services-item-seven {
+        flex-direction: column !important;
+        padding: 16px !important;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .services-item-seven .service-header {
+        width: 100% !important;
+        margin-bottom: 8px !important;
+    }
+
+    .services-item-seven .service-content {
+        width: 100% !important;
+    }
+
+    .services-item-seven .service-img {
+        display: none !important;
+    }
+
+    .services-item-seven .service-header .custom-title {
+        font-size: 16px !important;
+    }
+
+    .services-item-seven .service-content p {
+        font-size: 14px !important;
+    }
+}
 .services-section-eight {
   position: relative;
 }
@@ -49740,7 +49774,7 @@ ul li {
   top: 0;
   left: -100%;
   right: -100%;
-  background: url("../img/bg/service-01.png") var(--primary);
+  background: url("../img/bg/service-01.png") ;
   background-repeat: repeat-x;
   background-size: cover;
   height: 100%;
@@ -49819,6 +49853,7 @@ ul li {
 }
 .services-item-seven:hover::before, .services-item-seven.active::before {
   opacity: 1;
+    background: #ED1C24 !important;
 }
 .services-item-seven:hover .service-img, .services-item-seven.active .service-img {
   opacity: 1;
@@ -50997,6 +51032,25 @@ ul li {
 .work-item-two:hover .count-number {
   color: var(--primary);
 }
+/* Border top red - by default */
+.work-item-two {
+    border-color: #e8002d !important;
+}
+
+/* Icon - red background by default */
+.work-item-two .work-info .work-icon {
+    background: #e8002d !important;
+}
+
+/* Icon - white by default */
+.work-item-two .work-info .work-icon img {
+    filter: brightness(0) invert(1) !important;
+}
+
+/* Count number - red by default */
+.work-item-two .work-info .count-number {
+    color: #e8002d !important;
+}
 .work-item-ten {
   text-align: center;
   position: relative;
@@ -51818,7 +51872,7 @@ ul li {
   margin: 40px auto 0;
 }
 .connect-badge span {
-  color: var(--primary);
+  color: var(--danger);
   text-decoration: underline;
 }
 
@@ -52089,6 +52143,9 @@ ul li {
 .speciality-item-two:hover .speciality-info .speciality-icon img {
   filter: brightness(0) invert(1);
   transform: rotateY(360deg);
+}
+.speciality-section .spaciality-item:hover .spaciality-img .spaciality-icon {
+    background: #ED1C24 !important;
 }
 
 .speciality-section-two {
@@ -58911,8 +58968,10 @@ ul li {
   border-radius: 12px 12px 0px 12px;
 }
 .faq-section-eight .faq-support .img-1 {
-  transform: rotate(-3deg);
+    transform: rotate(0deg) !important;
+    margin-left: 20px !important;
 }
+
 .faq-section-eight .faq-support .img-2 {
   position: absolute;
   right: 20px;
