@@ -1,0 +1,24 @@
+Options -Indexes
+RewriteEngine On
+RewriteBase /rkhospital/admin/
+
+# ─────────────────────────────────────────────
+# 1. REMOVE .php EXTENSION
+# /admin/login → /admin/login.php
+# ─────────────────────────────────────────────
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^([^/]+)$ $1.php [L]
+
+# ─────────────────────────────────────────────
+# 2. REDIRECT .php TO CLEAN URL
+# /admin/login.php → /admin/login
+# ─────────────────────────────────────────────
+RewriteCond %{THE_REQUEST} \s/rkhospital/admin/([^.]+)\.php[\s?]
+RewriteRule ^ /rkhospital/admin/%1 [R=301,L]
+
+# ─────────────────────────────────────────────
+# 3. REMOVE TRAILING SLASH
+# ─────────────────────────────────────────────
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.+)/$ /rkhospital/admin/$1 [R=301,L]

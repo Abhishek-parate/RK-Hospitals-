@@ -423,6 +423,20 @@
             gap: 10px;
         }
     }
+.speciality-section .spaciality-item .custom-title {
+    font-size: 21px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    width: 100% !important;
+}
+
+.speciality-section .spaciality-item p {
+    font-size: 16px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
 
     </style>
 </head>
@@ -474,133 +488,127 @@
         </section>
 
         <!-- Speciality Section -->
-        <section class="speciality-section section overflow-hidden">
-            <div class="container">
-                <div class="section-header section-header-one text-center wow fadeInUp" data-wow-duration="1s">
-                    <div class="title">Top Specialties</div>
-                    <h2 class="section-title">Highlighting the <span class="text-danger">Care & Support</span></h2>
-                </div>
-                <div class="speciality-slider-info">
-                    <div class="spciality-slider">
-                        <div class="slide-item wow fadeInUp" data-wow-duration="1s">
-                            <div class="spaciality-item">
-                                <div class="spaciality-img">
-                                    <img src="assets/img/specialities/speciality-01.jpg" alt="img">
-                                    <span class="spaciality-icon">
-                                        <img src="assets/img/specialities/speciality-icon-01.svg" alt="img">
-                                    </span>
-                                </div>
-                                <h3 class="custom-title"><a href="doctor-grid.html">Cardiology</a></h3>
-                                <p class="mb-0">254 Doctors</p>
-                            </div>
+<section class="speciality-section section overflow-hidden">
+    <div class="container">
+        <div class="section-header section-header-one text-center wow fadeInUp" data-wow-duration="1s">
+            <div class="title">Top Specialties</div>
+            <h2 class="section-title">Highlighting the <span class="text-danger">Care & Support</span></h2>
+        </div>
+        <div class="speciality-slider-info">
+            <div class="spciality-slider">
+                <div class="slide-item wow fadeInUp" data-wow-duration="1s">
+                    <div class="spaciality-item">
+                        <div class="spaciality-img">
+                            <img src="assets/img/home/Menstrual-Hormonal-Disorder-Treatment.webp" alt="img">
+                            <span class="spaciality-icon">
+                                <img src="assets/img/home/hormonal.svg" alt="img">
+                            </span>
                         </div>
-                        <div class="slide-item wow fadeInUp" data-wow-duration="1s">
-                            <div class="spaciality-item">
-                                <div class="spaciality-img">
-                                    <img src="assets/img/specialities/speciality-02.jpg" alt="img">
-                                    <span class="spaciality-icon">
-                                        <img src="assets/img/specialities/speciality-icon-02.svg" alt="img">
-                                    </span>
-                                </div>
-                                <h3 class="custom-title"><a href="doctor-grid.html">Orthopedics</a></h3>
-                                <p class="mb-0">151 Doctors</p>
-                            </div>
-                        </div>
-                        <div class="slide-item wow fadeInUp" data-wow-duration="1s">
-                            <div class="spaciality-item">
-                                <div class="spaciality-img">
-                                    <img src="assets/img/specialities/speciality-03.jpg" alt="img">
-                                    <span class="spaciality-icon">
-                                        <img src="assets/img/specialities/speciality-icon-03.svg" alt="img">
-                                    </span>
-                                </div>
-                                <h3 class="custom-title"><a href="doctor-grid.html">Neurology</a></h3>
-                                <p class="mb-0">176 Doctors</p>
-                            </div>
-                        </div>
-                        <div class="slide-item wow fadeInUp" data-wow-duration="1s">
-                            <div class="spaciality-item">
-                                <div class="spaciality-img">
-                                    <img src="assets/img/specialities/speciality-04.jpg" alt="img">
-                                    <span class="spaciality-icon">
-                                        <img src="assets/img/specialities/speciality-icon-04.svg" alt="img">
-                                    </span>
-                                </div>
-                                <h3 class="custom-title"><a href="doctor-grid.html">Pediatrics</a></h3>
-                                <p class="mb-0">124 Doctors</p>
-                            </div>
-                        </div>
-                        <div class="slide-item wow fadeInUp" data-wow-duration="1s">
-                            <div class="spaciality-item">
-                                <div class="spaciality-img">
-                                    <img src="assets/img/specialities/speciality-05.jpg" alt="img">
-                                    <span class="spaciality-icon">
-                                        <img src="assets/img/specialities/speciality-icon-05.svg" alt="img">
-                                    </span>
-                                </div>
-                                <h3 class="custom-title"><a href="doctor-grid.html">Psychiatry</a></h3>
-                                <p class="mb-0">112 Doctors</p>
-                            </div>
-                        </div>
-                        <div class="slide-item wow fadeInUp" data-wow-duration="1s">
-                            <div class="spaciality-item">
-                                <div class="spaciality-img">
-                                    <img src="assets/img/specialities/speciality-06.jpg" alt="img">
-                                    <span class="spaciality-icon">
-                                        <img src="assets/img/specialities/speciality-icon-06.svg" alt="img">
-                                    </span>
-                                </div>
-                                <h3 class="custom-title"><a href="doctor-grid.html">Endocrinology</a></h3>
-                                <p class="mb-0">104 Doctors</p>
-                            </div>
-                        </div>
-                        <div class="slide-item wow fadeInUp" data-wow-duration="1s">
-                            <div class="spaciality-item">
-                                <div class="spaciality-img">
-                                    <img src="assets/img/specialities/speciality-07.jpg" alt="img">
-                                    <span class="spaciality-icon">
-                                        <img src="assets/img/specialities/speciality-icon-07.svg" alt="img">
-                                    </span>
-                                </div>
-                                <h3 class="custom-title"><a href="doctor-grid.html">Pulmonology</a></h3>
-                                <p class="mb-0">41 Doctors</p>
-                            </div>
-                        </div>
-                        <div class="slide-item wow fadeInUp" data-wow-duration="1s">
-                            <div class="spaciality-item">
-                                <div class="spaciality-img">
-                                    <img src="assets/img/specialities/speciality-08.jpg" alt="img">
-                                    <span class="spaciality-icon">
-                                        <img src="assets/img/specialities/speciality-icon-08.svg" alt="img">
-                                    </span>
-                                </div>
-                                <h3 class="custom-title"><a href="doctor-grid.html">Urology</a></h3>
-                                <p class="mb-0">39 Doctors</p>
-                            </div>
-                        </div>
-                        <div class="slide-item wow fadeInUp" data-wow-duration="1s">
-                            <div class="spaciality-item">
-                                <div class="spaciality-img">
-                                    <img src="assets/img/specialities/speciality-03.jpg" alt="img">
-                                    <span class="spaciality-icon">
-                                        <img src="assets/img/specialities/speciality-icon-03.svg" alt="img">
-                                    </span>
-                                </div>
-                                <h3 class="custom-title"><a href="doctor-grid.html">Neurology</a></h3>
-                                <p class="mb-0">176 Doctors</p>
-                            </div>
-                        </div>
+                        <h3 class="custom-title"><a href="#">Hormonal Disorders</a></h3>
+                        <p class="mb-0">Menstrual Treatment</p>
                     </div>
+                </div>
 
-                    <div class="slide-btn">
-                        <button type="button" class="slick-arrow spciality-prev"><i
-                                class="isax isax-arrow-left"></i></button>
-                        <button type="button" class="slick-arrow spciality-next"><i
-                                class="isax isax-arrow-right-1"></i></button>
+                <div class="slide-item wow fadeInUp" data-wow-duration="1s">
+                    <div class="spaciality-item">
+                        <div class="spaciality-img">
+                            <img src="assets/img/home/Pregnancy-Care-Antenatal-Delivery.webp" alt="img">
+                            <span class="spaciality-icon">
+                                <img src="assets/img/home/pregnant.svg" alt="img">
+                            </span>
+                        </div>
+                        <h3 class="custom-title"><a href="#">Pregnancy Care</a></h3>
+                        <p class="mb-0">Antenatal & Delivery</p>
                     </div>
                 </div>
+
+                <div class="slide-item wow fadeInUp" data-wow-duration="1s">
+                    <div class="spaciality-item">
+                        <div class="spaciality-img">
+                            <img src="assets/img/home/Fracture-Trauma-Care.webp" alt="img">
+                            <span class="spaciality-icon">
+                                <img src="assets/img/home/broken-bone.svg" alt="img">
+                            </span>
+                        </div>
+                        <h3 class="custom-title"><a href="#">Fracture & Trauma</a></h3>
+                        <p class="mb-0">Emergency Treatment</p>
+                    </div>
+                </div>
+
+                <div class="slide-item wow fadeInUp" data-wow-duration="1s">
+                    <div class="spaciality-item">
+                        <div class="spaciality-img">
+                            <img src="assets/img/home/Hip-replacement.webp" alt="img">
+                            <span class="spaciality-icon">
+                                <img src="assets/img/home/hip-replacement.svg" alt="img">
+                            </span>
+                        </div>
+                        <h3 class="custom-title"><a href="#">Hip Replacement</a></h3>
+                        <p class="mb-0">Joint Surgery</p>
+                    </div>
+                </div>
+
+                <div class="slide-item wow fadeInUp" data-wow-duration="1s">
+                    <div class="spaciality-item">
+                        <div class="spaciality-img">
+                            <img src="assets/img/home/Robotic-Joint-Replacement-Surgery.webp" alt="img">
+                            <span class="spaciality-icon">
+                                <img src="assets/img/home/robotic-surgery.svg" alt="img">
+                            </span>
+                        </div>
+                        <h3 class="custom-title"><a href="#">Robotic Surgery</a></h3>
+                        <p class="mb-0">Joint Replacement</p>
+                    </div>
+                </div>
+
+                <div class="slide-item wow fadeInUp" data-wow-duration="1s">
+                    <div class="spaciality-item">
+                        <div class="spaciality-img">
+                            <img src="assets/img/home/Spine-Back-Pain-Treatment.webp" alt="img">
+                            <span class="spaciality-icon">
+                                <img src="assets/img/home/spine.svg" alt="img">
+                            </span>
+                        </div>
+                        <h3 class="custom-title"><a href="#">Spine & Back Pain</a></h3>
+                        <p class="mb-0">Pain Treatment</p>
+                    </div>
+                </div>
+
+                <div class="slide-item wow fadeInUp" data-wow-duration="1s">
+                    <div class="spaciality-item">
+                        <div class="spaciality-img">
+                            <img src="assets/img/home/Infertility-&-FamilyPlanning(2).webp" alt="img">
+                            <span class="spaciality-icon">
+                                <img src="assets/img/home/infertility.svg" alt="img">
+                            </span>
+                        </div>
+                        <h3 class="custom-title"><a href="#">Infertility Treatment</a></h3>
+                        <p class="mb-0">Advanced Care</p>
+                    </div>
+                </div>
+
+                <div class="slide-item wow fadeInUp" data-wow-duration="1s">
+                    <div class="spaciality-item">
+                        <div class="spaciality-img">
+                            <img src="assets/img/home/RoutineCheckups-&-PreventiveCare.webp" alt="img">
+                            <span class="spaciality-icon">
+                                <img src="assets/img/home/medical-checkup.svg" alt="img">
+                            </span>
+                        </div>
+                        <h3 class="custom-title"><a href="#">Routine Checkups</a></h3>
+                        <p class="mb-0">Preventive Care</p>
+                    </div>
+                </div>
+
             </div>
-        </section>
+
+            <div class="slide-btn">
+                <button type="button" class="slick-arrow spciality-prev"><i class="isax isax-arrow-left"></i></button>
+                <button type="button" class="slick-arrow spciality-next"><i class="isax isax-arrow-right-1"></i></button>
+            </div>
+        </div>
+    </div>
+</section>
         <!-- /Speciality Section -->
         <!-- About Us -->
         <section class="about-section">

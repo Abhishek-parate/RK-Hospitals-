@@ -46217,6 +46217,7 @@ ul li {
 .speciality-section .spaciality-item .spaciality-img .spaciality-icon img {
   width: auto;
   height: auto;
+    filter: brightness(0) !important;
 }
 .speciality-section .spaciality-item .spaciality-img::before {
   content: "";
