@@ -379,8 +379,7 @@ require_once '../include/head.php';
                                         </span>
                                     </label>
                                     <div id="quillEditor" class="bg-white"></div>
-                                    <textarea name="content" id="blogContent" class="d-none"><?= $p('content') ?></textarea>
-                                    <input type="hidden" name="reading_time" id="readingTimeInput">
+<textarea name="content" id="blogContent" class="d-none"><?= htmlspecialchars($blog['content'] ?? '') ?></textarea>                                    <input type="hidden" name="reading_time" id="readingTimeInput">
                                 </div>
 
                             </div>
@@ -776,7 +775,7 @@ var quill = new Quill("#quillEditor", {
     }
 });
 
-' . (!empty($p('content')) ? 'quill.root.innerHTML = ' . json_encode($p('content')) . ';' : '') . '
+' . (!empty($blog['content']) ? 'quill.clipboard.dangerouslyPasteHTML(' . json_encode(html_entity_decode($blog['content'])) . ');' : '') . '
 
 quill.on("text-change", function() {
     var html = quill.root.innerHTML;
@@ -800,6 +799,9 @@ document.getElementById("blogForm").addEventListener("submit", function(e) {
     }
     return true;
 });
+
+
+
 
 /* ═══════════════════════════════════════════════════════════════
    SLUG & CANONICAL
