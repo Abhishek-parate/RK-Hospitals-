@@ -338,7 +338,7 @@ require_once '../include/head.php';
                     </nav>
                 </div>
                 <div class="mt-3 mt-md-0 d-flex gap-2">
-                    <a href="../blog/<?= htmlspecialchars($blog['slug']) ?>" target="_blank" class="btn btn-outline-primary rounded-pill px-4 py-2 shadow-sm fw-semibold d-inline-flex align-items-center gap-2 bg-white">
+                    <a href="<?= SITE_URL ?>/blog/<?= htmlspecialchars($blog['slug']) ?>" target="_blank" class="btn btn-outline-primary rounded-pill px-4 py-2 shadow-sm fw-semibold d-inline-flex align-items-center gap-2 bg-white">
                         <i class="fa fa-external-link-alt"></i> View on Site
                     </a>
                     <a href="index.php" class="btn btn-light rounded-pill px-4 py-2 shadow-sm fw-semibold border d-inline-flex align-items-center gap-2">
@@ -398,7 +398,7 @@ require_once '../include/head.php';
                                     </div>
                                     <small class="text-muted mt-1 d-block" style="font-size: 0.75rem;">
                                         Lowercase letters, numbers and hyphens only.
-                                        <a href="../blog/<?= htmlspecialchars($blog['slug']) ?>" target="_blank" class="text-decoration-none ms-2 text-primary">
+                                        <a href="<?= SITE_URL ?>/blog/<?= htmlspecialchars($blog['slug']) ?>" target="_blank" class="text-decoration-none ms-2 text-primary">
                                             <i class="fa fa-link"></i> Preview URL
                                         </a>
                                     </small>
@@ -866,7 +866,8 @@ document.getElementById("blogTitle").addEventListener("input", function() {
 function autoFillCanonical(slug) {
     var canon = document.getElementById("canonicalUrl");
     if (canon && canon.value === "") {
-        canon.value = window.location.origin + "/rkhospital/blog/" + slug;
+        // FIX: Using PHP SITE_URL constant to form correct base canonical URL
+        canon.value = "<?= SITE_URL ?>/blog/" + slug;
     }
 }
 
