@@ -611,64 +611,82 @@
 </section>
         <!-- /Speciality Section -->
         <!-- About Us -->
-        <section class="about-section">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-6 col-md-12">
-                        <div class="about-img-info">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="about-inner-img">
-                                        <div class="about-img">
-                                            <img src="assets/img/home/about-doctor1.webp" class="img-fluid" alt="about-image">
-                                        </div>
-                                        <div class="about-img">
-                                            <img src="assets/img/home/about-doctor3.webp" class="img-fluid" alt="about-image">
-                                        </div>
-                                    </div>
+      <section class="about-section">
+    <div class="container">
+        <div class="row align-items-center">
+            
+            <!-- Images (same as your code, just improve alt text) -->
+            <div class="col-lg-6 col-md-12">
+                <div class="about-img-info">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="about-inner-img">
+                                <div class="about-img">
+                                    <img src="assets/img/home/about-doctor1.webp" class="img-fluid" alt="Orthopedic Surgeon in Nagpur RK Hospital">
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="about-inner-img">
-                                        <div class="about-box">
-                                            <h4>Over 25+ Years Experience</h4>
-                                        </div>
-                                        <div class="about-img">
-                                            <img src="assets/img/home/about-doctor2.webp" class="img-fluid" alt="about-image">
-                                        </div>
-                                    </div>
+                                <div class="about-img">
+                                    <img src="assets/img/home/about-doctor3.webp" class="img-fluid" alt="Gynecology Treatment RK Hospital Nagpur">
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6 col-md-12">
-                        <div class="section-inner-header about-inner-header">
-                            <h6>About Our Company</h6>
-                            <h2>We Are Always Ensure Best Medical Treatment For Your Health</h2>
-                        </div>
-                        <div class="about-content">
-                            <div class="about-content-details">
-                                <p>At Doccure, we understand the importance of accessible and convenient healthcare. Our
-                                    mission is to simplify the process of finding and booking appointments with
-                                    qualified healthcare professionals, ensuring that you receive the care you need when
-                                    you need it.</p>
-                                <p>We envision a world where healthcare is easily accessible to everyone. Whether you're
-                                    seeking routine check-ups, specialized consultations, or emergency care, we strive
-                                    to connect you with the right medical professionals effortlessly.</p>
-                            </div>
-                            <div class="about-contact">
-                                <div class="about-contact-icon">
-                                    <span><i class="isax isax-call-calling5"></i></span>
+                        <div class="col-md-6">
+                            <div class="about-inner-img">
+                                <div class="about-box">
+                                    <h4>25+ Years of Medical Excellence in Nagpur</h4>
                                 </div>
-                                <div class="about-contact-text">
-                                    <p>Need Emergency?</p>
-                                    <h4>+1 315 369 5943</h4>
+                                <div class="about-img">
+                                    <img src="assets/img/home/about-doctor2.webp" class="img-fluid" alt="Robotic Knee Replacement Surgery Nagpur">
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+
+            <!-- Content -->
+            <div class="col-lg-6 col-md-12">
+                <div class="section-inner-header about-inner-header">
+                    <h6>About Dr. Agrawal's R.K. Hospital</h6>
+                    <h2>
+                        Leading Orthopedic & Gynecology Hospital in 
+                        <span class="text-danger">Nagpur</span>
+                    </h2>
+                </div>
+
+                <div class="about-content">
+                    <div class="about-content-details">
+
+                        <p>
+                            Dr. Agrawal's R.K. Hospital is one of the most trusted and advanced healthcare centers in Nagpur, specializing in Orthopedics and Gynecology. Known for its excellence in robotic knee replacement, hip replacement, spine surgery, and trauma care, the hospital provides world-class treatment using modern technology and highly experienced specialists.
+                        </p>
+
+                        <p>
+                            Our gynecology and obstetrics department offers comprehensive pregnancy care, high-risk pregnancy management, and advanced laparoscopic surgeries. With a strong focus on patient safety, hygiene, and personalized care, we ensure the best outcomes for both mother and baby.
+                        </p>
+
+                        <p>
+                            With a 5-star patient rating and a reputation for successful surgeries, expert doctors, and supportive staff, R.K. Hospital stands as a leading choice for quality healthcare in Nagpur. We are available 24/7 for emergency services, ensuring timely and reliable medical care when you need it most.
+                        </p>
+
+                    </div>
+
+                    <!-- Contact -->
+                    <div class="about-contact">
+                        <div class="about-contact-icon">
+                            <span><i class="isax isax-call-calling5"></i></span>
+                        </div>
+                        <div class="about-contact-text">
+                            <p>24/7 Emergency & Appointment</p>
+                            <h4>+91 97660 57372</h4>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
         <!-- /About Us -->
 
         <section class="work-section-seven section">
@@ -719,7 +737,7 @@
                         </div>
                     </div>
                     <!-- Work Item 2 End -->
-
+                  
                     <!-- Work Item 3 -->
                     <div class="col-xl-3 col-md-6 d-flex wow fadeInUp" data-wow-delay="0.2s" data-wow-duration="3s">
                         <div class="work-item-two flex-fill">
@@ -763,10 +781,6 @@
                 </div>
             </div>
         </section>
-
-
-
-
         <!-- Why Choose Section Start -->
         <section class="whychoose-section-nine section">
             <div class="container">
