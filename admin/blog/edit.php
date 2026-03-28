@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $excerpt      = trim($_POST['excerpt'] ?? '');
     $content      = $_POST['content'] ?? '';
     $category_id  = !empty($_POST['category_id']) ? (int)$_POST['category_id'] : null;
-    $id    = !empty($_POST['id'])   ? (int)$_POST['id']   : null;
+    $doctor_id = !empty($_POST['doctor_id']) ? (int)$_POST['doctor_id'] : 'NULL';
     $tags         = trim($_POST['tags'] ?? '');
     $is_published = isset($_POST['is_published']) ? 1 : 0;
     $published_at = !empty($_POST['published_at']) ? trim($_POST['published_at']) : date('Y-m-d');
@@ -139,7 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $robots_meta = $robots_index . ',' . $robots_follow;
         $pubAt   = "'" . $s($published_at) . "'";
         $catVal  = $category_id  ? (int)$category_id : 'NULL';
-        $authVal = $id    ? (int)$id   : 'NULL';
+        $authVal = $doctor_id ? (int)$doctor_id : 'NULL';
         $rtVal   = $reading_time ? (int)$reading_time : 'NULL';
 
         $sql = "UPDATE blogs SET
@@ -149,7 +149,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     content = '{$s($content)}',
                     image = '{$s($imagePath)}',
                     category_id = $catVal,
-                    id = $authVal,
+doctor_id = $doctor_id,
                     tags = '{$s($tags)}',
                     is_published = $is_published,
                     published_at = $pubAt,
@@ -727,10 +727,10 @@ require_once '../include/head.php';
                                 </div>
                                 <div class="mb-4">
                                     <label class="form-label">Doctor (Author)</label>
-                                    <select name="id" class="form-select rounded-3">
+                                    <select name="doctor_id" class="form-select rounded-3">
                                         <option value="">— Select Author —</option>
                                         <?php foreach ($doctors as $doctor): ?>
-                                            <option value="<?= $doctor['id'] ?>" <?= $p('id') == $doctor['id'] ? 'selected' : '' ?>>
+                                            <option value="<?= $doctor['id'] ?>" <?= $p('doctor_id') == $doctor['id'] ? 'selected' : '' ?>>
                                                 <?= htmlspecialchars($doctor['name']) ?>
                                             </option>
                                         <?php endforeach; ?>
