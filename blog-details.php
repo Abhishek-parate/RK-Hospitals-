@@ -9,7 +9,7 @@ if (empty($slug)) {
     exit;
 }
 
-// ─── Fetch the blog post ──────────────────────────────────────────────────────
+// ─── Fetch the blog post (Secure Prepared Statement) ──────────────────────────
 $blog_sql = "SELECT 
                b.id, b.title, b.slug, b.content, b.image,
                b.views, b.comments, b.published_at, b.tags,
@@ -20,9 +20,13 @@ $blog_sql = "SELECT
              FROM blogs b
              LEFT JOIN categories c ON b.category_id = c.id
              LEFT JOIN doctors    a ON b.doctor_id   = a.id
-             WHERE b.slug = '$slug' AND b.is_published = 1
+             WHERE b.slug = ? AND b.is_published = 1
              LIMIT 1";
-$blog_res = $conn->query($blog_sql);
+
+$stmt = $conn->prepare($blog_sql);
+$stmt->bind_param("s", $slug);
+$stmt->execute();
+$blog_res = $stmt->get_result();
 
 if (!$blog_res || $blog_res->num_rows === 0) {
     http_response_code(404);
@@ -32,46 +36,27 @@ if (!$blog_res || $blog_res->num_rows === 0) {
 
 <head>
     <meta charset="utf-8">
-    <base href="/rkhospital/">
+    <base href="<?= SITE_URL ?>/">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 - Blog Not Found | Dr. Agrawal's R.K. Hospital</title>
-    <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/plugins/fontawesome/css/fontawesome.min.css">
-    <link rel="stylesheet" href="assets/plugins/fontawesome/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="shortcut icon" href="<?= asset('assets/img/favicon.png') ?>" type="image/x-icon">
+    <link rel="stylesheet" href="<?= asset('assets/css/bootstrap.min.css') ?>">
+    <link rel="stylesheet" href="<?= asset('assets/plugins/fontawesome/css/fontawesome.min.css') ?>">
+    <link rel="stylesheet" href="<?= asset('assets/plugins/fontawesome/css/all.min.css') ?>">
+    <link rel="stylesheet" href="<?= asset('assets/css/style.css') ?>">
     <style>
     .error-404-wrap {
-        min-height: 80vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        padding: 60px 20px;
+        min-height: 80vh; display: flex; align-items: center; justify-content: center;
+        text-align: center; padding: 60px 20px;
     }
-
     .error-404-code {
-        font-size: 100px;
-        font-weight: 800;
-        color: #1a6ef5;
-        line-height: 1;
-        margin-bottom: 10px;
+        font-size: 100px; font-weight: 800; color: #1a6ef5; line-height: 1; margin-bottom: 10px;
     }
-
     .error-404-title {
-        font-size: 26px;
-        font-weight: 700;
-        color: #1a1a2e;
-        margin-bottom: 12px;
+        font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 12px;
     }
-
     .error-404-msg {
-        color: #6c757d;
-        font-size: 15px;
-        margin-bottom: 30px;
-        max-width: 440px;
-        margin-left: auto;
-        margin-right: auto;
+        color: #6c757d; font-size: 15px; margin-bottom: 30px; max-width: 440px; margin-left: auto; margin-right: auto;
     }
     </style>
 </head>
@@ -81,8 +66,8 @@ if (!$blog_res || $blog_res->num_rows === 0) {
         <div class="container">
             <nav class="navbar navbar-expand-lg header-nav">
                 <div class="navbar-header">
-                    <a href="index-7.html" class="navbar-brand logo">
-                        <img src="assets/img/RK-Logo.png" class="img-fluid" alt="Logo">
+                    <a href="index.php" class="navbar-brand logo">
+                        <img src="<?= asset('assets/img/RK-Logo.png') ?>" class="img-fluid" alt="Logo">
                     </a>
                 </div>
             </nav>
@@ -97,7 +82,7 @@ if (!$blog_res || $blog_res->num_rows === 0) {
                     The blog post you're looking for doesn't exist or may have been removed.
                     Please check the URL or browse our latest articles.
                 </p>
-                <a href="index-7.html" class="btn btn-primary me-2">
+                <a href="index.php" class="btn btn-primary me-2">
                     <i class="fa fa-home me-1"></i> Go to Home
                 </a>
                 <a href="blog-grid.php" class="btn btn-outline-primary">
@@ -106,9 +91,9 @@ if (!$blog_res || $blog_res->num_rows === 0) {
             </div>
         </div>
     </div>
-    <script src="assets/js/jquery-3.7.1.min.js"></script>
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/script.js"></script>
+    <script src="<?= asset('assets/js/jquery-3.7.1.min.js') ?>"></script>
+    <script src="<?= asset('assets/js/bootstrap.bundle.min.js') ?>"></script>
+    <script src="<?= asset('assets/js/script.js') ?>"></script>
 </body>
 
 </html>
@@ -118,8 +103,10 @@ if (!$blog_res || $blog_res->num_rows === 0) {
 
 $blog = $blog_res->fetch_assoc();
 
-// ─── Increment view count ─────────────────────────────────────────────────────
-$conn->query("UPDATE blogs SET views = views + 1 WHERE slug = '$slug'");
+// ─── Increment view count (Secure) ────────────────────────────────────────────
+$view_stmt = $conn->prepare("UPDATE blogs SET views = views + 1 WHERE slug = ?");
+$view_stmt->bind_param("s", $slug);
+$view_stmt->execute();
 
 // ─── Build tags array ─────────────────────────────────────────────────────────
 $tags = !empty($blog['tags'])
@@ -133,12 +120,15 @@ $categories_sql = "SELECT c.name, c.slug, COUNT(b.id) as blog_count
                    GROUP BY c.id ORDER BY blog_count DESC";
 $categories_res = $conn->query($categories_sql);
 
-// ─── Sidebar: Latest 4 posts (excluding current) ─────────────────────────────
+// ─── Sidebar: Latest 4 posts (excluding current - Secure) ────────────────────
 $latest_sql = "SELECT b.title, b.slug, b.image, b.published_at 
                FROM blogs b 
-               WHERE b.is_published = 1 AND b.slug != '$slug'
+               WHERE b.is_published = 1 AND b.slug != ?
                ORDER BY b.published_at DESC LIMIT 4";
-$latest_res = $conn->query($latest_sql);
+$latest_stmt = $conn->prepare($latest_sql);
+$latest_stmt->bind_param("s", $slug);
+$latest_stmt->execute();
+$latest_res = $latest_stmt->get_result();
 
 // ─── SEO: meta description from content ──────────────────────────────────────
 $meta_desc = truncate(strip_tags($blog['content']), 160);
@@ -148,7 +138,7 @@ $meta_desc = truncate(strip_tags($blog['content']), 160);
 
 <head>
     <meta charset="utf-8">
-    <base href="/rkhospital/">
+    <base href="<?= SITE_URL ?>/">
     <title><?= htmlspecialchars($blog['title']) ?> - Dr. Agrawal's R.K. Hospital</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="<?= htmlspecialchars($meta_desc) ?>">
@@ -157,30 +147,28 @@ $meta_desc = truncate(strip_tags($blog['content']), 160);
     <?php endif; ?>
     <meta name="author" content="Dr. Agrawal's R.K. Hospital">
 
-    <!-- Open Graph (Facebook/WhatsApp share) -->
     <meta property="og:title" content="<?= htmlspecialchars($blog['title']) ?>">
     <meta property="og:description" content="<?= htmlspecialchars($meta_desc) ?>">
-    <meta property="og:image" content="<?= SITE_URL . '/' . htmlspecialchars($blog['image']) ?>">
+    <meta property="og:image" content="<?= asset($blog['image']) ?>">
     <meta property="og:url" content="<?= SITE_URL ?>/blog/<?= urlencode($blog['slug']) ?>">
     <meta property="og:type" content="article">
 
-    <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png">
-    <script src="assets/js/theme-script.js"></script>
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/plugins/fontawesome/css/fontawesome.min.css">
-    <link rel="stylesheet" href="assets/plugins/fontawesome/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/iconsax.css">
-    <link rel="stylesheet" href="assets/css/feather.css">
-    <link rel="stylesheet" href="assets/plugins/fancybox/jquery.fancybox.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="shortcut icon" href="<?= asset('assets/img/favicon.png') ?>" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="<?= asset('assets/img/apple-touch-icon.png') ?>">
+    <script src="<?= asset('assets/js/theme-script.js') ?>"></script>
+    <link rel="stylesheet" href="<?= asset('assets/css/bootstrap.min.css') ?>">
+    <link rel="stylesheet" href="<?= asset('assets/plugins/fontawesome/css/fontawesome.min.css') ?>">
+    <link rel="stylesheet" href="<?= asset('assets/plugins/fontawesome/css/all.min.css') ?>">
+    <link rel="stylesheet" href="<?= asset('assets/css/iconsax.css') ?>">
+    <link rel="stylesheet" href="<?= asset('assets/css/feather.css') ?>">
+    <link rel="stylesheet" href="<?= asset('assets/plugins/fancybox/jquery.fancybox.min.css') ?>">
+    <link rel="stylesheet" href="<?= asset('assets/css/style.css') ?>">
 </head>
 
 <body>
 
     <div class="main-wrapper">
 
-        <!-- Header -->
         <header class="header header-default inner-header">
             <div class="container">
                 <nav class="navbar navbar-expand-lg header-nav">
@@ -188,15 +176,15 @@ $meta_desc = truncate(strip_tags($blog['content']), 160);
                         <a id="mobile_btn" href="javascript:void(0);">
                             <i class="fa-solid fa-bars"></i>
                         </a>
-                        <a href="index-7.html" class="navbar-brand logo">
-                            <img src="assets/img/RK-Logo.png" class="img-fluid" alt="Logo">
+                        <a href="index.php" class="navbar-brand logo">
+                            <img src="<?= asset('assets/img/RK-Logo.png') ?>" class="img-fluid" alt="Logo">
                         </a>
                     </div>
                     <div class="header-menu">
                         <div class="main-menu-wrapper">
                             <div class="menu-header">
-                                <a href="index-7.html" class="menu-logo">
-                                    <img src="assets/img/RK-Logo.png" class="img-fluid" alt="Logo">
+                                <a href="index.php" class="menu-logo">
+                                    <img src="<?= asset('assets/img/RK-Logo.png') ?>" class="img-fluid" alt="Logo">
                                 </a>
                                 <a id="menu_close" class="menu-close" href="javascript:void(0);">
                                     <i class="fas fa-times"></i>
@@ -204,7 +192,7 @@ $meta_desc = truncate(strip_tags($blog['content']), 160);
                             </div>
                             <ul class="main-nav">
                                 <li class="has-submenu megamenu">
-                                    <a href="index-7.html" class="main-menu">Home</a>
+                                    <a href="index.php" class="main-menu">Home</a>
                                 </li>
                                 <li class="has-submenu">
                                     <a href="two-doctor.html" class="main-menu">Doctors</a>
@@ -232,37 +220,33 @@ $meta_desc = truncate(strip_tags($blog['content']), 160);
                             </ul>
                         </div>
                     </div>
-                    <li>
-                        <a href="contact-us.html" class="btn btn-md btn-primary-gradient d-none d-lg-inline-block"
-                            style="background: #1a6ef5 !important; color: #fff !important; border-color: #1a6ef5 !important;">
-                            <i class="isax isax-lock-1 me-2"></i><span>Book Now</span>
-                        </a>
-                    </li>
+                    <ul class="nav header-navbar-rht">
+                        <li>
+                            <a href="contact-us.html" class="btn btn-md btn-primary-gradient d-none d-lg-inline-block"
+                                style="background: #1a6ef5 !important; color: #fff !important; border-color: #1a6ef5 !important;">
+                                <i class="isax isax-lock-1 me-2"></i><span>Book Now</span>
+                            </a>
+                        </li>
+                    </ul>
                 </nav>
             </div>
         </header>
-        <!-- /Header -->
-
-        <!-- Page Content -->
         <div class="content" style="padding-top: 40px;">
             <div class="container">
                 <div class="row">
 
-                    <!-- ─── Blog Detail ────────────────────────────────────────── -->
                     <div class="col-lg-8 col-md-12">
                         <div class="blog-view">
                             <h3 class="mb-3"><?= htmlspecialchars($blog['title']) ?></h3>
                             <div class="blog blog-single-post">
 
-                                <!-- Blog Image -->
                                 <div class="blog-image">
                                     <a href="javascript:void(0);">
                                         <img alt="<?= htmlspecialchars($blog['title']) ?>"
-                                            src="<?= htmlspecialchars($blog['image']) ?>" class="img-fluid">
+                                            src="<?= asset($blog['image']) ?>" class="img-fluid">
                                     </a>
                                 </div>
 
-                                <!-- Blog Meta -->
                                 <div class="blog-info d-md-flex align-items-center justify-content-between flex-wrap">
                                     <div class="post-left">
                                         <ul>
@@ -278,7 +262,7 @@ $meta_desc = truncate(strip_tags($blog['content']), 160);
                                             <li>
                                                 <div class="post-author">
                                                     <a href="<?= htmlspecialchars($blog['author_url']) ?>">
-                                                        <img src="<?= htmlspecialchars($blog['author_photo']) ?>"
+                                                        <img src="<?= asset($blog['author_photo']) ?>"
                                                             alt="<?= htmlspecialchars($blog['author_name']) ?>">
                                                         <span><?= htmlspecialchars($blog['author_name']) ?></span>
                                                     </a>
@@ -298,21 +282,19 @@ $meta_desc = truncate(strip_tags($blog['content']), 160);
                                     </div>
                                 </div>
 
-                                <!-- Blog Content (stored as HTML in DB) -->
                                 <div class="blog-content">
                                     <?= $blog['content'] /* HTML content - stored safely from admin */ ?>
                                 </div>
 
                             </div>
 
-                            <!-- About Author -->
                             <h4 class="mb-3">About the Author</h4>
                             <div class="about-author">
                                 <div class="about-author-img">
                                     <div class="author-img-wrap">
                                         <a href="<?= htmlspecialchars($blog['author_url']) ?>">
                                             <img class="img-fluid" alt="<?= htmlspecialchars($blog['author_name']) ?>"
-                                                src="<?= htmlspecialchars($blog['author_photo']) ?>">
+                                                src="<?= asset($blog['author_photo']) ?>">
                                         </a>
                                     </div>
                                 </div>
@@ -325,7 +307,6 @@ $meta_desc = truncate(strip_tags($blog['content']), 160);
                                 </div>
                             </div>
 
-                            <!-- Tags -->
                             <?php if (!empty($tags)): ?>
                             <h4 class="mb-3 mt-4">Tags</h4>
                             <div class="d-flex align-items-center flex-wrap blog-tags gap-3 mb-4">
@@ -339,12 +320,8 @@ $meta_desc = truncate(strip_tags($blog['content']), 160);
 
                         </div>
                     </div>
-                    <!-- /Blog Detail -->
-
-                    <!-- ─── Sidebar ────────────────────────────────────────────── -->
                     <div class="col-lg-4 col-md-12 sidebar-right theiaStickySidebar">
 
-                        <!-- Search -->
                         <div class="card search-widget">
                             <div class="card-body">
                                 <form class="search-form" method="GET" action="blog-grid.php">
@@ -358,40 +335,35 @@ $meta_desc = truncate(strip_tags($blog['content']), 160);
                                 </form>
                             </div>
                         </div>
-                        <!-- /Search -->
-
-                        <!-- Categories -->
                         <div class="card category-widget">
                             <div class="card-body">
                                 <h5 class="mb-3">Categories</h5>
                                 <ul class="categories">
                                     <?php
-                                $categories_res->data_seek(0);
-                                while ($cat = $categories_res->fetch_assoc()):
-                                    $active = ($blog['category_slug'] === $cat['slug']) ? 'style="font-weight:600;"' : '';
-                                ?>
+                                if ($categories_res) {
+                                    $categories_res->data_seek(0);
+                                    while ($cat = $categories_res->fetch_assoc()):
+                                        $active = ($blog['category_slug'] === $cat['slug']) ? 'style="font-weight:600;"' : '';
+                                    ?>
                                     <li>
                                         <a href="blog-grid.php?category=<?= urlencode($cat['slug']) ?>" <?= $active ?>>
                                             <?= htmlspecialchars($cat['name']) ?>
                                             <span>(<?= $cat['blog_count'] ?>)</span>
                                         </a>
                                     </li>
-                                    <?php endwhile; ?>
+                                    <?php endwhile; } ?>
                                 </ul>
                             </div>
                         </div>
-                        <!-- /Categories -->
-
-                        <!-- Latest Articles -->
                         <div class="card post-widget">
                             <div class="card-body">
                                 <h5 class="mb-3">Latest Articles</h5>
                                 <ul class="latest-posts">
-                                    <?php while ($latest = $latest_res->fetch_assoc()): ?>
+                                    <?php if ($latest_res) { while ($latest = $latest_res->fetch_assoc()): ?>
                                     <li>
                                         <div class="post-thumb">
                                             <a href="blog/<?= htmlspecialchars($latest['slug']) ?>">
-                                                <img class="img-fluid" src="<?= htmlspecialchars($latest['image']) ?>"
+                                                <img class="img-fluid" src="<?= asset($latest['image']) ?>"
                                                     alt="<?= htmlspecialchars($latest['title']) ?>">
                                             </a>
                                         </div>
@@ -404,13 +376,10 @@ $meta_desc = truncate(strip_tags($blog['content']), 160);
                                             </h4>
                                         </div>
                                     </li>
-                                    <?php endwhile; ?>
+                                    <?php endwhile; } ?>
                                 </ul>
                             </div>
                         </div>
-                        <!-- /Latest Articles -->
-
-                        <!-- Tags Widget -->
                         <?php if (!empty($tags)): ?>
                         <div class="card tags-widget">
                             <div class="card-body">
@@ -427,9 +396,6 @@ $meta_desc = truncate(strip_tags($blog['content']), 160);
                             </div>
                         </div>
                         <?php endif; ?>
-                        <!-- /Tags Widget -->
-
-                        <!-- Book Appointment CTA -->
                         <div class="card" style="background: linear-gradient(135deg, #1a6ef5, #0a4fc4); border: none;">
                             <div class="card-body text-center text-white p-4">
                                 <i class="isax isax-hospital"
@@ -446,17 +412,10 @@ $meta_desc = truncate(strip_tags($blog['content']), 160);
                                 </p>
                             </div>
                         </div>
-                        <!-- /Book Appointment CTA -->
-
+                        </div>
                     </div>
-                    <!-- /Sidebar -->
-
-                </div>
             </div>
         </div>
-        <!-- /Page Content -->
-
-        <!-- Footer -->
         <footer class="footer inner-footer">
             <div class="footer-top">
                 <div class="container">
@@ -464,7 +423,7 @@ $meta_desc = truncate(strip_tags($blog['content']), 160);
                         <div class="col-xl-2 col-lg-3 col-md-6">
                             <div class="footer-widget">
                                 <div class="footer-logo mb-3">
-                                    <img src="assets/img/RK-Logo.png" alt="RK Hospital Logo" class="img-fluid logo">
+                                    <img src="<?= asset('assets/img/RK-Logo.png') ?>" alt="RK Hospital Logo" class="img-fluid logo">
                                 </div>
                                 <p>Dr. Agrawal's R.K. Hospital provides quality healthcare in Nagpur with advanced
                                     medical facilities and compassionate care.</p>
@@ -474,7 +433,7 @@ $meta_desc = truncate(strip_tags($blog['content']), 160);
                             <div class="footer-widget footer-menu">
                                 <h6 class="footer-title">Quick Links</h6>
                                 <ul>
-                                    <li><a href="index-7.html">Home</a></li>
+                                    <li><a href="index.php">Home</a></li>
                                     <li><a href="about-us.html">About Us</a></li>
                                     <li><a href="two-doctor.html">Doctors</a></li>
                                     <li><a href="contact-us.html">Contact Us</a></li>
@@ -520,17 +479,13 @@ $meta_desc = truncate(strip_tags($blog['content']), 160);
                 </div>
             </div>
         </footer>
-        <!-- /Footer -->
-
-    </div>
-    <!-- /Main Wrapper -->
-
-    <script src="assets/js/jquery-3.7.1.min.js"></script>
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/plugins/theia-sticky-sidebar/ResizeSensor.js"></script>
-    <script src="assets/plugins/theia-sticky-sidebar/theia-sticky-sidebar.js"></script>
-    <script src="assets/plugins/fancybox/jquery.fancybox.min.js"></script>
-    <script src="assets/js/script.js"></script>
+        </div>
+    <script src="<?= asset('assets/js/jquery-3.7.1.min.js') ?>"></script>
+    <script src="<?= asset('assets/js/bootstrap.bundle.min.js') ?>"></script>
+    <script src="<?= asset('assets/plugins/theia-sticky-sidebar/ResizeSensor.js') ?>"></script>
+    <script src="<?= asset('assets/plugins/theia-sticky-sidebar/theia-sticky-sidebar.js') ?>"></script>
+    <script src="<?= asset('assets/plugins/fancybox/jquery.fancybox.min.js') ?>"></script>
+    <script src="<?= asset('assets/js/script.js') ?>"></script>
 </body>
 
 </html>

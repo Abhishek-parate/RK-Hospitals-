@@ -8,8 +8,8 @@ $lbRes = $conn->query("
         bc.name AS category_name,
         ba.name AS author_name
     FROM blogs b
-    LEFT JOIN blog_categories bc ON b.category_id = bc.id
-    LEFT JOIN blog_authors ba ON b.author_id = ba.id
+    LEFT JOIN categories bc ON b.category_id = bc.id
+    LEFT JOIN doctors ba ON b.id = ba.id
     WHERE b.is_published = 1
     ORDER BY b.published_at DESC
     LIMIT 3

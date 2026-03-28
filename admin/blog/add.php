@@ -1,5 +1,6 @@
+<!-- C:\xamppnew\htdocs\rkhospital\admin\blog\add.php -->
 <?php
-require_once '../include/config.php';
+require_once './../../include/config.php';
 
 $errors = [];
 

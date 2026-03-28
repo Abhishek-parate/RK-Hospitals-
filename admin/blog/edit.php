@@ -1,3 +1,4 @@
+<!-- C:\xamppnew\htdocs\rkhospital\admin\blog\edit.php -->
 <?php
 require_once '../include/config.php';
 
