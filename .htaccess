@@ -2,31 +2,35 @@ Options -Indexes
 RewriteEngine On
 
 # ─────────────────────────────────────────────
-# 1. REMOVE .php EXTENSION FROM URL
-# Example: /about → /about.php
+# 1. FORCE REMOVE TRAILING SLASH
+# /about/ → /about
+# ─────────────────────────────────────────────
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.+)/$ /$1 [R=301,L]
+
+# ─────────────────────────────────────────────
+# 2. BLOG CLEAN URL (HIGH PRIORITY)
+# /blog/my-post → blog-details.php?slug=my-post
+# ─────────────────────────────────────────────
+RewriteRule ^blog/([a-zA-Z0-9_-]+)$ blog-details.php?slug=$1 [L,QSA]
+
+# ─────────────────────────────────────────────
+# 3. SERVICE CLEAN URL (HIGH PRIORITY)
+# /service/my-service → single-service.php?slug=my-service
+# ─────────────────────────────────────────────
+RewriteRule ^service/([a-zA-Z0-9_-]+)$ single-service.php?slug=$1 [L,QSA]
+
+# ─────────────────────────────────────────────
+# 4. REMOVE .php FROM URL (INTERNAL)
+# /about → about.php
 # ─────────────────────────────────────────────
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.php -f
 RewriteRule ^([^/]+)$ $1.php [L]
 
 # ─────────────────────────────────────────────
-# 2. REDIRECT .php URLs TO CLEAN URL
-# Example: /about.php → /about
+# 5. REDIRECT .php TO CLEAN URL (SEO)
+# /about.php → /about
 # ─────────────────────────────────────────────
 RewriteCond %{THE_REQUEST} \s/([^.]+)\.php[\s?]
 RewriteRule ^ /%1 [R=301,L]
-
-# ─────────────────────────────────────────────
-# 3. BLOG CLEAN URL (Slug Based)
-# /blog/my-post → blog-details.php?slug=my-post
-# ─────────────────────────────────────────────
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^blog/([a-zA-Z0-9_-]+)/?$ blog-details.php?slug=$1 [L,QSA]
-
-# ─────────────────────────────────────────────
-# 4. OPTIONAL: REMOVE TRAILING SLASH
-# /about/ → /about
-# ─────────────────────────────────────────────
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.+)/$ /$1 [R=301,L]
