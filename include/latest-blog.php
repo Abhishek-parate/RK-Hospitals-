@@ -29,7 +29,6 @@ if ($lbRes) {
             <div class="title">Recent Blogs</div>
             <h2 class="section-title">Stay Updated With Our <span class="text-danger">Latest Blogs</span></h2>
         </div>
-
         <div class="row g-4">
 
             <?php foreach ($latestBlogs as $index => $lb): ?>
