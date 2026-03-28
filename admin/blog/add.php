@@ -21,6 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $excerpt      = trim($_POST['excerpt'] ?? '');
     $content      = $_POST['content'] ?? '';
     $category_id  = !empty($_POST['category_id']) ? (int)$_POST['category_id'] : null;
+    $doctor_id_post = !empty($_POST['doctor_id']) ? (int)$_POST['doctor_id'] : null;
     $tags         = trim($_POST['tags'] ?? '');
     $is_published = isset($_POST['is_published']) ? 1 : 0;
     $published_at = !empty($_POST['published_at']) ? trim($_POST['published_at']) : date('Y-m-d');
@@ -43,6 +44,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // ── Validation ───────────────────────────────────────────────
     if (empty($title))   $errors[] = 'Title is required.';
     if (empty($content) || $content === '<p><br></p>') $errors[] = 'Content is required.';
+    if (empty($category_id)) $errors[] = 'Category is required. Please select a category.';
+    if (empty($doctor_id_post)) $errors[] = 'Doctor is required. Please select a doctor.';
     if (!empty($meta_title) && mb_strlen($meta_title) > 60)
         $errors[] = 'Meta title should not exceed 60 characters.';
     if (!empty($meta_description) && mb_strlen($meta_description) > 160)
@@ -130,8 +133,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $robots_meta = $robots_index . ',' . $robots_follow;
         $pubAt   = "'" . $s($published_at) . "'";
-        $catVal  = $category_id  ? (int)$category_id : 'NULL';
-        $doctor_id = !empty($_POST['id']) ? (int)$_POST['id'] : 'NULL';
+        $catVal  = (int)$category_id;
+        $doctor_id = (int)$doctor_id_post;
         $rtVal   = $reading_time ? (int)$reading_time : 'NULL';
 
         $sql = "INSERT INTO blogs (
@@ -660,8 +663,8 @@ require_once '../include/head.php';
                             </div>
                             <div class="card-body p-4">
                                 <div class="mb-4">
-                                    <label class="form-label">Category</label>
-                                    <select name="category_id" class="form-select rounded-3">
+                                    <label class="form-label">Category <span class="text-danger">*</span></label>
+                                    <select name="category_id" id="categorySelect" class="form-select rounded-3">
                                         <option value="">— Select Category —</option>
                                         <?php foreach ($categories as $cat): ?>
                                             <option value="<?= $cat['id'] ?>" <?= (isset($_POST['category_id']) && $_POST['category_id'] == $cat['id']) ? 'selected' : '' ?>>
@@ -669,17 +672,19 @@ require_once '../include/head.php';
                                             </option>
                                         <?php endforeach; ?>
                                     </select>
+                                    <div class="invalid-feedback">Please select a category.</div>
                                 </div>
                                 <div class="mb-4">
-                                    <label class="form-label">Doctor (Doctor)</label>
-                                    <select name="id" class="form-select rounded-3">
-                                        <option value="">— Select doctor —</option>
+                                    <label class="form-label">Doctor <span class="text-danger">*</span></label>
+                                    <select name="doctor_id" id="doctorSelect" class="form-select rounded-3">
+                                        <option value="">— Select Doctor —</option>
                                         <?php foreach ($doctors as $doctor): ?>
-                                            <option value="<?= $doctor['id'] ?>" <?= (isset($_POST['id']) && $_POST['id'] == $doctor['id']) ? 'selected' : '' ?>>
+                                            <option value="<?= $doctor['id'] ?>" <?= (isset($_POST['doctor_id']) && $_POST['doctor_id'] == $doctor['id']) ? 'selected' : '' ?>>
                                                 <?= htmlspecialchars($doctor['name']) ?>
                                             </option>
                                         <?php endforeach; ?>
                                     </select>
+                                    <div class="invalid-feedback">Please select a doctor.</div>
                                 </div>
                                 <div>
                                     <label class="form-label">Tags</label>
@@ -737,12 +742,41 @@ document.getElementById("blogForm").addEventListener("submit", function(e) {
     document.getElementById("blogContent").value = content;
     
     var textContent = quill.getText().trim();
+    var hasError = false;
+
+    // Validate content
     if (!textContent || textContent === "" || content === "<p><br></p>") {
         e.preventDefault();
         alert("Content is required! Please write something.");
         quill.focus();
         return false;
     }
+
+    // Validate category
+    var catSelect = document.getElementById("categorySelect");
+    if (!catSelect.value) {
+        catSelect.classList.add("is-invalid");
+        hasError = true;
+    } else {
+        catSelect.classList.remove("is-invalid");
+    }
+
+    // Validate doctor
+    var docSelect = document.getElementById("doctorSelect");
+    if (!docSelect.value) {
+        docSelect.classList.add("is-invalid");
+        hasError = true;
+    } else {
+        docSelect.classList.remove("is-invalid");
+    }
+
+    if (hasError) {
+        e.preventDefault();
+        // Scroll to the taxonomy card
+        catSelect.scrollIntoView({ behavior: "smooth", block: "center" });
+        return false;
+    }
+
     return true;
 });
 
@@ -993,6 +1027,16 @@ function setSchema(val, btn) {
 document.getElementById("tagsInput").addEventListener("input", function() {
     var tags = this.value.split(",").map(function(t) { return t.trim(); }).filter(Boolean);
     document.getElementById("tagPreview").innerHTML = tags.map(function(t) { return "<span class=\"keyword-tag shadow-sm\">" + t + "</span>"; }).join("");
+});
+
+// Clear invalid state on change
+["categorySelect", "doctorSelect"].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) {
+        el.addEventListener("change", function() {
+            if (this.value) { this.classList.remove("is-invalid"); }
+        });
+    }
 });
 
 function updatePublishBadge(cb) {

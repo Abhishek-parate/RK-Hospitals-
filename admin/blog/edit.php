@@ -86,12 +86,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } elseif ($_FILES['image']['size'] > 2 * 1024 * 1024) {
             $errors[] = 'Main image size must be under 2MB.';
         } else {
-            $uploadDir = '../assets/img/blog/';
+            // FIX: Use ../../ to go up two directories to the root frontend assets folder
+            $uploadDir = '../../assets/img/blog/';
             if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
             $ext      = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
             $fileName = 'blog-' . time() . '-' . uniqid() . '.' . $ext;
             if (move_uploaded_file($_FILES['image']['tmp_name'], $uploadDir . $fileName)) {
-                if (!empty($blog['image']) && file_exists('../' . $blog['image'])) @unlink('../' . $blog['image']);
+                // FIX: Unlink from root frontend folder
+                if (!empty($blog['image']) && file_exists('../../' . $blog['image'])) @unlink('../../' . $blog['image']);
                 $imagePath = 'assets/img/blog/' . $fileName;
                 // Auto-set OG if missing
                 if (empty($ogImagePath)) $ogImagePath = $imagePath;
@@ -103,13 +105,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!empty($_FILES['og_image']['name'])) {
         $fileType2 = mime_content_type($_FILES['og_image']['tmp_name']);
         if (in_array($fileType2, ['image/jpeg','image/png','image/webp'])) {
-            $uploadDir = '../assets/img/blog/og/';
+            // FIX: Use ../../ to go up two directories to the root frontend assets folder
+            $uploadDir = '../../assets/img/blog/og/';
             if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
             $ext2     = strtolower(pathinfo($_FILES['og_image']['name'], PATHINFO_EXTENSION));
             $ogFile   = 'og-' . time() . '-' . uniqid() . '.' . $ext2;
             if (move_uploaded_file($_FILES['og_image']['tmp_name'], $uploadDir . $ogFile)) {
-                if (!empty($blog['og_image']) && file_exists('../' . $blog['og_image']) && $blog['og_image'] !== $blog['image']) {
-                    @unlink('../' . $blog['og_image']);
+                // FIX: Unlink from root frontend folder
+                if (!empty($blog['og_image']) && file_exists('../../' . $blog['og_image']) && $blog['og_image'] !== $blog['image']) {
+                    @unlink('../../' . $blog['og_image']);
                 }
                 $ogImagePath = 'assets/img/blog/og/' . $ogFile;
             }
@@ -149,7 +153,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     content = '{$s($content)}',
                     image = '{$s($imagePath)}',
                     category_id = $catVal,
-doctor_id = $doctor_id,
+                    doctor_id = $doctor_id,
                     tags = '{$s($tags)}',
                     is_published = $is_published,
                     published_at = $pubAt,
@@ -295,7 +299,7 @@ require_once '../include/head.php';
                     </nav>
                 </div>
                 <div class="mt-3 mt-md-0 d-flex gap-2">
-                    <a href="../blog/<?= htmlspecialchars($blog['slug']) ?>" target="_blank" class="btn btn-outline-primary rounded-pill px-4 py-2 shadow-sm fw-semibold d-inline-flex align-items-center gap-2 bg-white">
+                    <a href="<?= SITE_URL ?>/blog/<?= htmlspecialchars($blog['slug']) ?>" target="_blank" class="btn btn-outline-primary rounded-pill px-4 py-2 shadow-sm fw-semibold d-inline-flex align-items-center gap-2 bg-white">
                         <i class="fa fa-external-link-alt"></i> View on Site
                     </a>
                     <a href="index.php" class="btn btn-light rounded-pill px-4 py-2 shadow-sm fw-semibold border d-inline-flex align-items-center gap-2">
@@ -355,7 +359,7 @@ require_once '../include/head.php';
                                     </div>
                                     <small class="text-muted mt-1 d-block" style="font-size: 0.75rem;">
                                         Lowercase letters, numbers and hyphens only.
-                                        <a href="../blog/<?= htmlspecialchars($blog['slug']) ?>" target="_blank" class="text-decoration-none ms-2 text-primary">
+                                        <a href="<?= SITE_URL ?>/blog/<?= htmlspecialchars($blog['slug']) ?>" target="_blank" class="text-decoration-none ms-2 text-primary">
                                             <i class="fa fa-link"></i> Preview URL
                                         </a>
                                     </small>
@@ -492,7 +496,7 @@ require_once '../include/head.php';
                                             <label class="form-label">OG Image <span class="text-muted fw-normal text-lowercase">(1200×630 recommended)</span></label>
                                             <div class="img-upload-zone" id="ogImageZone" onclick="document.getElementById('ogImageInput').click()">
                                                 <?php if(!empty($blog['og_image'])): ?>
-                                                    <img id="ogImagePreview" class="preview-img" src="../<?= htmlspecialchars($blog['og_image']) ?>" alt="OG Preview" style="display:block;">
+                                                    <img id="ogImagePreview" class="preview-img" src="../../<?= htmlspecialchars($blog['og_image']) ?>" alt="OG Preview" style="display:block;">
                                                     <div id="ogImgPlaceholder" style="display:none;">
                                                 <?php else: ?>
                                                     <img id="ogImagePreview" class="preview-img" alt="OG Preview">
@@ -511,9 +515,9 @@ require_once '../include/head.php';
                                             <div class="og-preview-card shadow-sm">
                                                 <div class="og-preview-img" id="ogPreviewImgBox">
                                                     <?php if(!empty($blog['og_image'])): ?>
-                                                        <img src="../<?= htmlspecialchars($blog['og_image']) ?>">
+                                                        <img src="../../<?= htmlspecialchars($blog['og_image']) ?>">
                                                     <?php elseif(!empty($blog['image'])): ?>
-                                                        <img src="../<?= htmlspecialchars($blog['image']) ?>">
+                                                        <img src="../../<?= htmlspecialchars($blog['image']) ?>">
                                                     <?php else: ?>
                                                         <span>No image selected</span>
                                                     <?php endif; ?>
@@ -686,7 +690,7 @@ require_once '../include/head.php';
                             <div class="card-body p-4">
                                 <div class="img-upload-zone" id="mainImageZone" onclick="document.getElementById('imageInput').click()">
                                     <?php if (!empty($blog['image'])): ?>
-                                        <img id="imagePreview" class="preview-img shadow-sm" src="../<?= htmlspecialchars($blog['image']) ?>" alt="Featured Image Preview" style="display:block;">
+                                        <img id="imagePreview" class="preview-img shadow-sm" src="../../<?= htmlspecialchars($blog['image']) ?>" alt="Featured Image Preview" style="display:block;">
                                         <div id="imgPlaceholder" style="display:none;">
                                     <?php else: ?>
                                         <img id="imagePreview" class="preview-img shadow-sm" alt="Featured Image Preview">
@@ -823,7 +827,8 @@ document.getElementById("blogTitle").addEventListener("input", function() {
 function autoFillCanonical(slug) {
     var canon = document.getElementById("canonicalUrl");
     if (canon && canon.value === "") {
-        canon.value = window.location.origin + "/rkhospital/blog/" + slug;
+        // FIX: Using PHP SITE_URL constant to form correct base canonical URL
+        canon.value = "<?= SITE_URL ?>/blog/" + slug;
     }
 }
 
