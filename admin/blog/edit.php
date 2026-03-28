@@ -3,6 +3,31 @@
 
 require_once './../../include/config.php';
 
+// ── Helper: Convert Image to WebP (Moved to top for global availability) ──
+function convertToWebp($source, $destination, $quality = 80) {
+    $info = getimagesize($source);
+    if (!$info) return false;
+
+    if ($info['mime'] == 'image/jpeg') {
+        $image = imagecreatefromjpeg($source);
+    } elseif ($info['mime'] == 'image/png') {
+        $image = imagecreatefrompng($source);
+        imagepalettetotruecolor($image);
+        imagealphablending($image, true);
+        imagesavealpha($image, true);
+    } elseif ($info['mime'] == 'image/gif') {
+        $image = imagecreatefromgif($source);
+    } elseif ($info['mime'] == 'image/webp') {
+        $image = imagecreatefromwebp($source);
+    } else {
+        return false;
+    }
+
+    $success = imagewebp($image, $destination, $quality);
+    imagedestroy($image);
+    return $success;
+}
+
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     header("Location: index.php");
     exit;
@@ -32,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $excerpt      = trim($_POST['excerpt'] ?? '');
     $content      = $_POST['content'] ?? '';
     $category_id  = !empty($_POST['category_id']) ? (int)$_POST['category_id'] : null;
-    $doctor_id = !empty($_POST['doctor_id']) ? (int)$_POST['doctor_id'] : 'NULL';
+    $doctor_id    = !empty($_POST['doctor_id']) ? (int)$_POST['doctor_id'] : 'NULL';
     $tags         = trim($_POST['tags'] ?? '');
     $is_published = isset($_POST['is_published']) ? 1 : 0;
     $published_at = !empty($_POST['published_at']) ? trim($_POST['published_at']) : date('Y-m-d');
@@ -77,26 +102,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // ── Image Upload ─────────────────────────────────────────────
     $imagePath   = $blog['image'];
     $ogImagePath = $blog['og_image'];
+    $seoBaseName = !empty($slug) ? $slug : 'blog-image'; // Use slug for SEO friendly name
 
     if (!empty($_FILES['image']['name'])) {
         $allowedTypes = ['image/jpeg','image/png','image/webp','image/gif'];
         $fileType     = mime_content_type($_FILES['image']['tmp_name']);
+        
         if (!in_array($fileType, $allowedTypes)) {
             $errors[] = 'Invalid main image type. Allowed: JPG, PNG, WEBP, GIF.';
         } elseif ($_FILES['image']['size'] > 2 * 1024 * 1024) {
             $errors[] = 'Main image size must be under 2MB.';
         } else {
-            // FIX: Use ../../ to go up two directories to the root frontend assets folder
+            // Point to the root assets folder (two levels up from admin/blog/edit.php)
             $uploadDir = '../../assets/img/blog/';
             if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
-            $ext      = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
-            $fileName = 'blog-' . time() . '-' . uniqid() . '.' . $ext;
-            if (move_uploaded_file($_FILES['image']['tmp_name'], $uploadDir . $fileName)) {
-                // FIX: Unlink from root frontend folder
-                if (!empty($blog['image']) && file_exists('../../' . $blog['image'])) @unlink('../../' . $blog['image']);
+            
+            // Create SEO friendly WebP filename
+            $fileName = $seoBaseName . '-' . uniqid() . '.webp';
+            $targetPath = $uploadDir . $fileName;
+
+            if (convertToWebp($_FILES['image']['tmp_name'], $targetPath, 85)) {
+                // Remove old image from root if it exists
+                if (!empty($blog['image']) && file_exists('../../' . $blog['image'])) {
+                    @unlink('../../' . $blog['image']);
+                }
+                
+                // Save DB path as relative to the root
                 $imagePath = 'assets/img/blog/' . $fileName;
+                
                 // Auto-set OG if missing
                 if (empty($ogImagePath)) $ogImagePath = $imagePath;
+            } else {
+                $errors[] = 'Failed to convert main image to WebP format.';
             }
         }
     }
@@ -104,18 +141,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // ── OG Image Upload ──────────────────────────────────────────
     if (!empty($_FILES['og_image']['name'])) {
         $fileType2 = mime_content_type($_FILES['og_image']['tmp_name']);
-        if (in_array($fileType2, ['image/jpeg','image/png','image/webp'])) {
-            // FIX: Use ../../ to go up two directories to the root frontend assets folder
-            $uploadDir = '../../assets/img/blog/og/';
-            if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
-            $ext2     = strtolower(pathinfo($_FILES['og_image']['name'], PATHINFO_EXTENSION));
-            $ogFile   = 'og-' . time() . '-' . uniqid() . '.' . $ext2;
-            if (move_uploaded_file($_FILES['og_image']['tmp_name'], $uploadDir . $ogFile)) {
-                // FIX: Unlink from root frontend folder
+        if (in_array($fileType2, ['image/jpeg','image/png','image/webp','image/gif'])) {
+            $uploadDirOg = '../../assets/img/blog/og/';
+            if (!is_dir($uploadDirOg)) mkdir($uploadDirOg, 0755, true);
+            
+            // Create SEO friendly WebP filename for OG
+            $ogFile  = $seoBaseName . '-og-' . uniqid() . '.webp';
+            $targetPathOg = $uploadDirOg . $ogFile;
+
+            if (convertToWebp($_FILES['og_image']['tmp_name'], $targetPathOg, 80)) {
                 if (!empty($blog['og_image']) && file_exists('../../' . $blog['og_image']) && $blog['og_image'] !== $blog['image']) {
                     @unlink('../../' . $blog['og_image']);
                 }
                 $ogImagePath = 'assets/img/blog/og/' . $ogFile;
+            } else {
+                $errors[] = 'Failed to convert Open Graph image to WebP format.';
             }
         }
     }
@@ -143,7 +183,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $robots_meta = $robots_index . ',' . $robots_follow;
         $pubAt   = "'" . $s($published_at) . "'";
         $catVal  = $category_id  ? (int)$category_id : 'NULL';
-        $authVal = $doctor_id ? (int)$doctor_id : 'NULL';
         $rtVal   = $reading_time ? (int)$reading_time : 'NULL';
 
         $sql = "UPDATE blogs SET
@@ -461,7 +500,7 @@ require_once '../include/head.php';
                                         </div>
 
                                         <div class="mt-4">
-                                            <label class="form-label"><i class="fa fa-google text-muted me-1"></i> Google SERP Preview</label>
+                                            <label class="form-label"><i class="fab fa-google text-muted me-1"></i> Google SERP Preview</label>
                                             <div class="serp-preview">
                                                 <div class="serp-url" id="serpUrl">rkhospital.com › blog › <span id="serpSlug">your-post-slug</span></div>
                                                 <div class="serp-title" id="serpTitle"><span class="serp-placeholder">Your meta title will appear here...</span></div>

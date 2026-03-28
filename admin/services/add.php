@@ -1,55 +1,83 @@
 <?php
-// C:\xamppnew\htdocs\rkhospital\admin\blog\add.php
+// C:\xamppnew\htdocs\rkhospital\admin\services\add.php
 
 require_once './../../include/config.php';
 
+// ── Helper: Convert Image to WebP ────────────────────────────
+function convertToWebp($source, $destination, $quality = 80) {
+    $info = getimagesize($source);
+    if (!$info) return false;
+
+    if ($info['mime'] == 'image/jpeg') {
+        $image = imagecreatefromjpeg($source);
+    } elseif ($info['mime'] == 'image/png') {
+        $image = imagecreatefrompng($source);
+        imagepalettetotruecolor($image);
+        imagealphablending($image, true);
+        imagesavealpha($image, true);
+    } elseif ($info['mime'] == 'image/gif') {
+        $image = imagecreatefromgif($source);
+    } elseif ($info['mime'] == 'image/webp') {
+        $image = imagecreatefromwebp($source);
+    } else {
+        return false;
+    }
+
+    $success = imagewebp($image, $destination, $quality);
+    imagedestroy($image);
+    return $success;
+}
+
 $errors = [];
 
+// Fetch Categories
 $categories = [];
 $res = $conn->query("SELECT id, name FROM categories ORDER BY name ASC");
 if ($res) { while ($r = $res->fetch_assoc()) { $categories[] = $r; } }
 
-$doctors = [];
-$res = $conn->query("SELECT id, name FROM doctors ORDER BY name ASC");
-if ($res) { while ($r = $res->fetch_assoc()) { $doctors[] = $r; } }
+// Fetch All Services for "Related Services" Dropdown
+$all_services = [];
+$res_srv = $conn->query("SELECT slug, title FROM services ORDER BY title ASC");
+if ($res_srv) { while ($r = $res_srv->fetch_assoc()) { $all_services[] = $r; } }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // ── Core Fields ──────────────────────────────────────────────
-    $title        = trim($_POST['title'] ?? '');
-    $slug         = trim($_POST['slug'] ?? '');
-    $excerpt      = trim($_POST['excerpt'] ?? '');
-    $content      = $_POST['content'] ?? '';
-    $category_id  = !empty($_POST['category_id']) ? (int)$_POST['category_id'] : null;
-    $doctor_id_post = !empty($_POST['doctor_id']) ? (int)$_POST['doctor_id'] : null;
-    $tags         = trim($_POST['tags'] ?? '');
-    $is_published = isset($_POST['is_published']) ? 1 : 0;
-    $published_at = !empty($_POST['published_at']) ? trim($_POST['published_at']) : date('Y-m-d');
+    $title             = trim($_POST['title'] ?? '');
+    $slug              = trim($_POST['slug'] ?? '');
+    $h1_title          = trim($_POST['h1_title'] ?? '');
+    $short_description = trim($_POST['short_description'] ?? '');
+    $content           = $_POST['content'] ?? '';
+    $category_id       = !empty($_POST['category_id']) ? (int)$_POST['category_id'] : null;
+    $icon              = trim($_POST['icon'] ?? '');
+    $sort_order        = (int)($_POST['sort_order'] ?? 0);
+    $is_published      = isset($_POST['is_published']) ? 1 : 0;
+
+    // ── Hero Fields ──────────────────────────────────────────────
+    $hero_title        = trim($_POST['hero_title'] ?? '');
+    $hero_subtitle     = trim($_POST['hero_subtitle'] ?? '');
+    $hero_image_alt    = trim($_POST['hero_image_alt'] ?? '');
+    $image_alt         = trim($_POST['image_alt'] ?? '');
 
     // ── SEO Fields ───────────────────────────────────────────────
-    $meta_title        = trim($_POST['meta_title'] ?? '');
-    $meta_description  = trim($_POST['meta_description'] ?? '');
-    $focus_keyword     = trim($_POST['focus_keyword'] ?? '');
-    $canonical_url     = trim($_POST['canonical_url'] ?? '');
-    $og_title          = trim($_POST['og_title'] ?? '');
-    $og_description    = trim($_POST['og_description'] ?? '');
-    $og_type           = trim($_POST['og_type'] ?? 'article');
-    $twitter_title     = trim($_POST['twitter_title'] ?? '');
+    $meta_title          = trim($_POST['meta_title'] ?? '');
+    $meta_description    = trim($_POST['meta_description'] ?? '');
+    $focus_keyword       = trim($_POST['focus_keyword'] ?? '');
+    $canonical_url       = trim($_POST['canonical_url'] ?? '');
+    $og_title            = trim($_POST['og_title'] ?? '');
+    $og_description      = trim($_POST['og_description'] ?? '');
+    $og_type             = trim($_POST['og_type'] ?? 'website');
+    $twitter_title       = trim($_POST['twitter_title'] ?? '');
     $twitter_description = trim($_POST['twitter_description'] ?? '');
-    $robots_index      = trim($_POST['robots_index'] ?? 'index');
-    $robots_follow     = trim($_POST['robots_follow'] ?? 'follow');
-    $schema_type       = trim($_POST['schema_type'] ?? 'BlogPosting');
-    $reading_time      = !empty($_POST['reading_time']) ? (int)$_POST['reading_time'] : null;
+    $twitter_card        = trim($_POST['twitter_card'] ?? 'summary_large_image');
+    $robots_index        = trim($_POST['robots_index'] ?? 'index');
+    $robots_follow       = trim($_POST['robots_follow'] ?? 'follow');
+    $schema_type         = trim($_POST['schema_type'] ?? 'MedicalProcedure');
     
     // ── Validation ───────────────────────────────────────────────
-    if (empty($title))   $errors[] = 'Title is required.';
+    if (empty($title))   $errors[] = 'Service Title is required.';
     if (empty($content) || $content === '<p><br></p>') $errors[] = 'Content is required.';
-    if (empty($category_id)) $errors[] = 'Category is required. Please select a category.';
-    if (empty($doctor_id_post)) $errors[] = 'Doctor is required. Please select a doctor.';
-    if (!empty($meta_title) && mb_strlen($meta_title) > 60)
-        $errors[] = 'Meta title should not exceed 60 characters.';
-    if (!empty($meta_description) && mb_strlen($meta_description) > 160)
-        $errors[] = 'Meta description should not exceed 160 characters.';
+    if (empty($category_id)) $errors[] = 'Please select a Category.';
 
     // ── Slug Generation ──────────────────────────────────────────
     if (empty($slug)) {
@@ -60,133 +88,182 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $slug    = trim($slug, '-');
     $slugEsc = $conn->real_escape_string($slug);
 
-    $chk = $conn->query("SELECT id FROM blogs WHERE slug = '$slugEsc'");
+    $chk = $conn->query("SELECT id FROM services WHERE slug = '$slugEsc'");
     if ($chk && $chk->num_rows > 0) {
         $errors[] = 'Slug already exists. Please use a different one.';
     }
 
     // ── Auto-fill SEO defaults ───────────────────────────────────
     if (empty($meta_title))       $meta_title       = $title;
-    if (empty($meta_description)) $meta_description = $excerpt;
+    if (empty($meta_description)) $meta_description = $short_description;
     if (empty($og_title))         $og_title         = $meta_title;
     if (empty($og_description))   $og_description   = $meta_description;
     if (empty($twitter_title))    $twitter_title    = $meta_title;
     if (empty($twitter_description)) $twitter_description = $meta_description;
 
-    // ── Helper: Convert Image to WebP ────────────────────────────
-    function convertToWebp($source, $destination, $quality = 80) {
-        $info = getimagesize($source);
-        if (!$info) return false;
+    // ── Image Uploads ─────────────────────────────────────────────
+    $imagePath     = '';
+    $heroImagePath = '';
+    $ogImagePath   = '';
+    $seoBaseName   = !empty($slug) ? $slug : 'service';
+    $uploadDir     = '../../assets/img/services/';
 
-        if ($info['mime'] == 'image/jpeg') {
-            $image = imagecreatefromjpeg($source);
-        } elseif ($info['mime'] == 'image/png') {
-            $image = imagecreatefrompng($source);
-            imagepalettetotruecolor($image);
-            imagealphablending($image, true);
-            imagesavealpha($image, true);
-        } elseif ($info['mime'] == 'image/gif') {
-            $image = imagecreatefromgif($source);
-        } elseif ($info['mime'] == 'image/webp') {
-            $image = imagecreatefromwebp($source);
-        } else {
-            return false;
-        }
+    if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
 
-        $success = imagewebp($image, $destination, $quality);
-        imagedestroy($image);
-        return $success;
-    }
-
-    // ── Image Upload ─────────────────────────────────────────────
-    $imagePath   = '';
-    $ogImagePath = '';
-    $seoBaseName = !empty($slug) ? $slug : 'blog-image';
-
+    // 1. Main Image
     if (!empty($_FILES['image']['name'])) {
-        $allowedTypes = ['image/jpeg','image/png','image/webp','image/gif'];
-        $fileType     = mime_content_type($_FILES['image']['tmp_name']);
-        
-        if (!in_array($fileType, $allowedTypes)) {
-            $errors[] = 'Invalid main image type. Allowed: JPG, PNG, WEBP, GIF.';
-        } elseif ($_FILES['image']['size'] > 2 * 1024 * 1024) {
-            $errors[] = 'Main image size must be under 2MB.';
-        } else {
-            $uploadDir = '../../assets/img/blog/';
-            if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
-            
-            $fileName = $seoBaseName . '-' . uniqid() . '.webp';
-            $targetPath = $uploadDir . $fileName;
-
-            if (convertToWebp($_FILES['image']['tmp_name'], $targetPath, 85)) {
-                $imagePath = 'assets/img/blog/' . $fileName;
+        $fileType = mime_content_type($_FILES['image']['tmp_name']);
+        if (in_array($fileType, ['image/jpeg','image/png','image/webp','image/gif'])) {
+            $fileName = $seoBaseName . '-main-' . uniqid() . '.webp';
+            if (convertToWebp($_FILES['image']['tmp_name'], $uploadDir . $fileName, 85)) {
+                $imagePath = 'assets/img/services/' . $fileName;
                 if (empty($ogImagePath)) $ogImagePath = $imagePath;
-            } else {
-                $errors[] = 'Failed to convert main image to WebP format.';
             }
         }
     }
 
-    // ── OG Image Upload ──────────────────────────────────────────
+    // 2. Hero Image
+    if (!empty($_FILES['hero_image']['name'])) {
+        $fileType = mime_content_type($_FILES['hero_image']['tmp_name']);
+        if (in_array($fileType, ['image/jpeg','image/png','image/webp','image/gif'])) {
+            $fileName = $seoBaseName . '-hero-' . uniqid() . '.webp';
+            if (convertToWebp($_FILES['hero_image']['tmp_name'], $uploadDir . $fileName, 85)) {
+                $heroImagePath = 'assets/img/services/' . $fileName;
+            }
+        }
+    }
+
+    // 3. OG Image
     if (!empty($_FILES['og_image']['name'])) {
-        $fileType2 = mime_content_type($_FILES['og_image']['tmp_name']);
-        if (in_array($fileType2, ['image/jpeg','image/png','image/webp','image/gif'])) {
-            $uploadDirOg = '../../assets/img/blog/og/';
-            if (!is_dir($uploadDirOg)) mkdir($uploadDirOg, 0755, true);
-            
-            $ogFile  = $seoBaseName . '-og-' . uniqid() . '.webp';
-            $targetPathOg = $uploadDirOg . $ogFile;
-
-            if (convertToWebp($_FILES['og_image']['tmp_name'], $targetPathOg, 80)) {
-                $ogImagePath = 'assets/img/blog/og/' . $ogFile;
-            } else {
-                $errors[] = 'Failed to convert Open Graph image to WebP format.';
+        $fileType = mime_content_type($_FILES['og_image']['tmp_name']);
+        if (in_array($fileType, ['image/jpeg','image/png','image/webp','image/gif'])) {
+            $fileName = $seoBaseName . '-og-' . uniqid() . '.webp';
+            if (convertToWebp($_FILES['og_image']['tmp_name'], $uploadDir . $fileName, 80)) {
+                $ogImagePath = 'assets/img/services/' . $fileName;
             }
         }
     }
+
+    // ── Automated JSON Generation ────────────────────────────────
+
+    // 1. FAQs Builder
+    $faqs = [];
+    if (!empty($_POST['faq_q']) && is_array($_POST['faq_q'])) {
+        foreach ($_POST['faq_q'] as $index => $q) {
+            $a = $_POST['faq_a'][$index] ?? '';
+            if (!empty(trim($q)) && !empty(trim($a))) {
+                $faqs[] = ['q' => trim($q), 'a' => trim($a)];
+            }
+        }
+    }
+    $faqs_json_raw = empty($faqs) ? '' : json_encode($faqs, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+    // 2. Sections Builder
+    $sections = [];
+    if (!empty($_POST['sec_h2']) && is_array($_POST['sec_h2'])) {
+        foreach ($_POST['sec_h2'] as $index => $h2) {
+            $sec_content  = $_POST['sec_content'][$index] ?? '';
+            $sec_list_raw = $_POST['sec_list'][$index] ?? '';
+            
+            $list_array = array_values(array_filter(array_map('trim', explode("\n", $sec_list_raw))));
+
+            if (!empty(trim($h2)) || !empty(trim($sec_content)) || !empty($list_array)) {
+                $sec = [];
+                if (!empty(trim($h2))) $sec['h2'] = trim($h2);
+                if (!empty(trim($sec_content))) $sec['content'] = trim($sec_content);
+                if (!empty($list_array)) $sec['list'] = $list_array;
+                $sections[] = $sec;
+            }
+        }
+    }
+    $sections_json_raw = empty($sections) ? '' : json_encode($sections, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+    // 3. Related Services Builder
+    $related_services = [];
+    if (!empty($_POST['related_services']) && is_array($_POST['related_services'])) {
+        $related_services = array_map('trim', $_POST['related_services']);
+    }
+    $related_services_json_raw = empty($related_services) ? '' : json_encode($related_services, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+    // 4. Auto Breadcrumb Builder
+    $catName = 'Services';
+    if ($category_id) {
+        $catRes = $conn->query("SELECT name FROM categories WHERE id = $category_id");
+        if ($catRes && $catRes->num_rows > 0) $catName = $catRes->fetch_assoc()['name'];
+    }
+    $breadcrumbData = [
+        ['name' => 'Home', 'url' => '/'],
+        ['name' => 'Services', 'url' => '/services.php'],
+        ['name' => $catName, 'url' => '/services.php?category=' . urlencode(strtolower($catName))],
+        ['name' => $title, 'url' => '/' . $slug]
+    ];
+    $breadcrumb_json_raw = json_encode($breadcrumbData, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+
+    // 5. Gallery Upload Builder
+    $gallery = [];
+    if (!empty($_FILES['gallery_images']['name'][0])) {
+        $galleryDir = '../../assets/img/services/gallery/';
+        if (!is_dir($galleryDir)) mkdir($galleryDir, 0755, true);
+        
+        foreach ($_FILES['gallery_images']['name'] as $key => $name) {
+            if ($_FILES['gallery_images']['error'][$key] === UPLOAD_ERR_OK) {
+                $tmp_name = $_FILES['gallery_images']['tmp_name'][$key];
+                $fileType = mime_content_type($tmp_name);
+                
+                if (in_array($fileType, ['image/jpeg','image/png','image/webp','image/gif'])) {
+                    $galFileName = $seoBaseName . '-gallery-' . uniqid() . '.webp';
+                    if (convertToWebp($tmp_name, $galleryDir . $galFileName, 80)) {
+                        $gallery[] = [
+                            'src' => 'assets/img/services/gallery/' . $galFileName,
+                            'alt' => $title
+                        ];
+                    }
+                }
+            }
+        }
+    }
+    $gallery_json_raw = empty($gallery) ? '' : json_encode($gallery, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
     // ── Build Schema JSON ────────────────────────────────────────
-    $schema_json = '';
+    $schema_json_final = '';
     if (!empty($schema_type)) {
         $schemaData = [
-            '@context' => 'https://schema.org',
-            '@type'    => $schema_type,
-            'headline' => $meta_title ?: $title,
-            'description' => $meta_description ?: $excerpt,
-            'url'      => (!empty($canonical_url) ? $canonical_url : ''),
-            'image'    => (!empty($ogImagePath) ? $ogImagePath : ''),
-            'datePublished' => $published_at ?: date('Y-m-d'),
-            'dateModified'  => date('Y-m-d'),
+            '@context'    => 'https://schema.org',
+            '@type'       => $schema_type,
+            'name'        => $meta_title ?: $title,
+            'description' => $meta_description ?: $short_description,
+            'url'         => (!empty($canonical_url) ? $canonical_url : ''),
+            'image'       => (!empty($ogImagePath) ? $ogImagePath : '')
         ];
-        $schema_json = json_encode($schemaData, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        $schema_json_final = json_encode($schemaData, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
     }
 
     // ── Insert ───────────────────────────────────────────────────
     if (empty($errors)) {
-        $s = fn($v) => $conn->real_escape_string($v);
+        $s = fn($v) => $v !== '' ? "'" . $conn->real_escape_string($v) . "'" : "NULL";
+        $s_raw = fn($v) => $conn->real_escape_string($v);
 
         $robots_meta = $robots_index . ',' . $robots_follow;
-        $pubAt   = "'" . $s($published_at) . "'";
-        $catVal  = (int)$category_id;
-        $doctor_id = (int)$doctor_id_post;
-        $rtVal   = $reading_time ? (int)$reading_time : 'NULL';
+        $catVal  = $category_id ? (int)$category_id : 'NULL';
 
-        $sql = "INSERT INTO blogs (
-                    title, slug, excerpt, content, image,
-                    category_id, doctor_id, tags, is_published, published_at,
+        $sql = "INSERT INTO services (
+                    title, hero_title, hero_subtitle, hero_image, hero_image_alt,
+                    slug, short_description, h1_title, breadcrumb_json, content,
+                    sections_json, faqs_json, image, image_alt, gallery_json, icon,
+                    category_id, related_services_json, is_published, sort_order,
                     meta_title, meta_description, focus_keyword, canonical_url,
                     og_title, og_description, og_image, og_type,
-                    twitter_title, twitter_description,
-                    robots_meta, schema_type, schema_json,
-                    reading_time, views, comments, created_at, updated_at
+                    twitter_title, twitter_description, twitter_card,
+                    robots_meta, schema_type, schema_json, created_at, updated_at
                 ) VALUES (
-                    '{$s($title)}','{$s($slug)}','{$s($excerpt)}','{$s($content)}','{$s($imagePath)}',
-                    $catVal,$docVal,'{$s($tags)}',$is_published,$pubAt,
-                    '{$s($meta_title)}','{$s($meta_description)}','{$s($focus_keyword)}','{$s($canonical_url)}',
-                    '{$s($og_title)}','{$s($og_description)}','{$s($ogImagePath)}','{$s($og_type)}',
-                    '{$s($twitter_title)}','{$s($twitter_description)}',
-                    '{$s($robots_meta)}','{$s($schema_type)}','{$s($schema_json)}',
-                    $rtVal,0,0,NOW(),NOW()
+                    {$s($title)}, {$s($hero_title)}, {$s($hero_subtitle)}, {$s($heroImagePath)}, {$s($hero_image_alt)},
+                    {$s($slug)}, {$s($short_description)}, {$s($h1_title)}, {$s($breadcrumb_json_raw)}, '{$s_raw($content)}',
+                    {$s($sections_json_raw)}, {$s($faqs_json_raw)}, {$s($imagePath)}, {$s($image_alt)}, {$s($gallery_json_raw)}, {$s($icon)},
+                    $catVal, {$s($related_services_json_raw)}, $is_published, $sort_order,
+                    {$s($meta_title)}, {$s($meta_description)}, {$s($focus_keyword)}, {$s($canonical_url)},
+                    {$s($og_title)}, {$s($og_description)}, {$s($ogImagePath)}, {$s($og_type)},
+                    {$s($twitter_title)}, {$s($twitter_description)}, {$s($twitter_card)},
+                    {$s($robots_meta)}, {$s($schema_type)}, {$s($schema_json_final)}, NOW(), NOW()
                 )";
 
         if ($conn->query($sql)) {
@@ -201,13 +278,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // helpers for repopulate
 $p = fn($k) => htmlspecialchars($_POST[$k] ?? '');
 
-// 2. Setup Page Variables for Includes
-$pageTitle  = 'Add New Blog';
-$activePage = 'blogs';
+$pageTitle  = 'Add New Service';
+$activePage = 'services';
 $assetBase  = '../';
 
 $extraCSS = '
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <style>
     :root {
         --success: #198754;
@@ -259,7 +336,7 @@ $extraCSS = '
     .serp-placeholder { color: #9aa0a6 !important; font-style: italic; }
 
     .og-preview-card { border: 1px solid #e0e0e0; border-radius: 0.5rem; overflow: hidden; background: #f8f9fa; margin-top: 6px; }
-    .og-preview-img { width: 100%; height: 160px; background: #e9ecef; display: flex; align-items: center; justify-content: center; color: #adb5bd; font-size: 0.8rem; }
+    .og-preview-img { width: 100%; height: 160px; background: #e9ecef; display: flex; align-items: center; justify-content: center; color: #adb5bd; font-size: 0.8rem; overflow: hidden;}
     .og-preview-img img { width: 100%; height: 100%; object-fit: cover; }
     .og-preview-body { padding: 0.75rem 1rem; background: #fff; border-top: 1px solid #e0e0e0; }
     .og-preview-domain { font-size: 0.65rem; color: #6c757d; text-transform: uppercase; letter-spacing: 0.5px; font-family: Arial, sans-serif; }
@@ -294,6 +371,11 @@ $extraCSS = '
 
     .nav-pills .nav-link { color: #6c757d; border-radius: 20px; font-size: 0.85rem; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.2s; }
     .nav-pills .nav-link.active { background-color: #e7f1ff; color: #0d6efd; }
+    
+    /* ── Dynamic Rows ── */
+    .dynamic-row { background: #fff; border: 1px solid #dee2e6; border-radius: 0.5rem; padding: 1.5rem; margin-bottom: 1rem; position: relative; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+    .remove-row-btn { position: absolute; top: 10px; right: 10px; background: #ffebee; color: #dc3545; border: none; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; }
+    .remove-row-btn:hover { background: #dc3545; color: #fff; }
 </style>
 ';
 
@@ -310,18 +392,18 @@ require_once '../include/head.php';
 
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4">
                 <div>
-                    <h3 class="fw-bolder text-dark mb-1">Create Blog Post</h3>
+                    <h3 class="fw-bolder text-dark mb-1">Create Service</h3>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb small bg-transparent p-0 m-0">
                             <li class="breadcrumb-item"><a href="../index.php" class="text-muted text-decoration-none">Dashboard</a></li>
-                            <li class="breadcrumb-item"><a href="index.php" class="text-muted text-decoration-none">Blogs</a></li>
+                            <li class="breadcrumb-item"><a href="index.php" class="text-muted text-decoration-none">Services</a></li>
                             <li class="breadcrumb-item active text-secondary fw-medium">Add New</li>
                         </ol>
                     </nav>
                 </div>
                 <div class="mt-3 mt-md-0">
                     <a href="index.php" class="btn btn-light rounded-pill px-4 py-2 shadow-sm fw-semibold border d-inline-flex align-items-center gap-2">
-                        <i class="fa fa-arrow-left"></i> Back to Blogs
+                        <i class="fa fa-arrow-left"></i> Back to Services
                     </a>
                 </div>
             </div>
@@ -332,15 +414,13 @@ require_once '../include/head.php';
                     <div>
                         <div class="fw-bold mb-1">Please fix the following errors:</div>
                         <ul class="mb-0 ps-3 small">
-                            <?php foreach ($errors as $e): ?>
-                                <li><?= htmlspecialchars($e) ?></li>
-                            <?php endforeach; ?>
+                            <?php foreach ($errors as $e): ?><li><?= htmlspecialchars($e) ?></li><?php endforeach; ?>
                         </ul>
                     </div>
                 </div>
             <?php endif; ?>
 
-            <form method="POST" enctype="multipart/form-data" id="blogForm">
+            <form method="POST" enctype="multipart/form-data" id="serviceForm">
                 <div class="row g-4">
 
                     <div class="col-xl-8 col-lg-7">
@@ -350,14 +430,14 @@ require_once '../include/head.php';
                                 <div class="bg-primary-subtle text-primary rounded d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
                                     <i class="fa fa-edit"></i>
                                 </div>
-                                <h6 class="mb-0 fw-bold text-dark text-uppercase small" style="letter-spacing: 0.5px;">Blog Content</h6>
+                                <h6 class="mb-0 fw-bold text-dark text-uppercase small" style="letter-spacing: 0.5px;">Service Content</h6>
                             </div>
                             <div class="card-body p-4">
 
                                 <div class="mb-4">
-                                    <label class="form-label">Title <span class="text-danger">*</span></label>
-                                    <input type="text" name="title" id="blogTitle" class="form-control"
-                                           placeholder="Enter an engaging blog title..."
+                                    <label class="form-label">Service Title <span class="text-danger">*</span></label>
+                                    <input type="text" name="title" id="serviceTitle" class="form-control"
+                                           placeholder="Enter an engaging service title..."
                                            value="<?= $p('title') ?>">
                                     <div class="char-counter">
                                         <span>Title length</span>
@@ -365,39 +445,156 @@ require_once '../include/head.php';
                                     </div>
                                 </div>
 
-                                <div class="mb-4">
-                                    <label class="form-label">URL Slug</label>
-                                    <div class="input-group">
-                                        <input type="text" name="slug" id="blogSlug" class="form-control"
-                                               placeholder="auto-generated-from-title"
-                                               value="<?= $p('slug') ?>">
-                                        <button type="button" class="btn btn-light border text-secondary" id="generateSlug" title="Auto-generate from title">
-                                            <i class="fa fa-refresh"></i>
-                                        </button>
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <label class="form-label">URL Slug</label>
+                                        <div class="input-group">
+                                            <input type="text" name="slug" id="serviceSlug" class="form-control"
+                                                   placeholder="auto-generated-from-title"
+                                                   value="<?= $p('slug') ?>">
+                                            <button type="button" class="btn btn-light border text-secondary" id="generateSlug" title="Auto-generate from title">
+                                                <i class="fa fa-refresh"></i>
+                                            </button>
+                                        </div>
+                                        <small class="text-muted mt-1 d-block" style="font-size: 0.75rem;">Lowercase, numbers and hyphens only.</small>
                                     </div>
-                                    <small class="text-muted" style="font-size: 0.75rem;">Lowercase letters, numbers and hyphens only. Keep it short & keyword-rich.</small>
+                                    <div class="col-md-6 mb-4">
+                                        <label class="form-label">H1 Title (Overrides default on page)</label>
+                                        <input type="text" name="h1_title" class="form-control" placeholder="e.g. Best PCOD Treatment in Nagpur" value="<?= $p('h1_title') ?>">
+                                    </div>
                                 </div>
 
                                 <div class="mb-4">
-                                    <label class="form-label">Excerpt / Short Description</label>
-                                    <textarea name="excerpt" id="blogExcerpt" class="form-control" rows="3"
-                                              placeholder="Write a compelling 1-2 sentence summary shown in blog listings and social shares..."><?= $p('excerpt') ?></textarea>
+                                    <label class="form-label">Short Description (Excerpt)</label>
+                                    <textarea name="short_description" id="shortDescription" class="form-control" rows="3"
+                                              placeholder="Write a compelling 1-2 sentence summary..."><?= $p('short_description') ?></textarea>
                                     <div class="char-counter">
-                                        <span>Excerpt length</span>
+                                        <span>Description length</span>
                                         <span class="count" id="excerptCount">0 chars</span>
                                     </div>
                                 </div>
 
                                 <div class="mb-2">
                                     <label class="form-label d-flex justify-content-between align-items-center">
-                                        <span>Content <span class="text-danger">*</span></span>
-                                        <span id="readingTimeDisplay" class="badge bg-light border text-secondary fw-medium rounded-pill" style="display:none!important;">
-                                            <i class="fa fa-clock me-1"></i> <span id="readingTimeText">~0 min read</span>
-                                        </span>
+                                        <span>Main Content <span class="text-danger">*</span></span>
                                     </label>
                                     <div id="quillEditor" class="bg-white"></div>
-                                    <textarea name="content" id="blogContent" class="d-none"><?= $p('content') ?></textarea>
-                                    <input type="hidden" name="reading_time" id="readingTimeInput">
+                                    <textarea name="content" id="serviceContent" class="d-none"><?= $p('content') ?></textarea>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="card border-0 shadow-sm rounded-4 mb-4">
+                            <div class="card-header bg-white border-bottom py-3 px-4 d-flex align-items-center gap-3">
+                                <div class="bg-info-subtle text-info rounded d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                                    <i class="fa fa-image"></i>
+                                </div>
+                                <h6 class="mb-0 fw-bold text-dark text-uppercase small" style="letter-spacing: 0.5px;">Hero Section (Top Banner)</h6>
+                            </div>
+                            <div class="card-body p-4">
+                                <div class="mb-4">
+                                    <label class="form-label">Hero Title</label>
+                                    <input type="text" name="hero_title" class="form-control" placeholder="Large title on banner..." value="<?= $p('hero_title') ?>">
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label">Hero Subtitle</label>
+                                    <textarea name="hero_subtitle" class="form-control" rows="3" placeholder="Subtitle text under the hero title..."><?= $p('hero_subtitle') ?></textarea>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <label class="form-label">Hero Background Image</label>
+                                        <div class="img-upload-zone" onclick="document.getElementById('heroImageInput').click()" style="padding: 1.5rem;">
+                                            <div id="heroImgPlaceholder">
+                                                <div class="upload-icon"><i class="fa fa-cloud-upload-alt"></i></div>
+                                                <small class="text-muted">Upload Hero Banner</small>
+                                            </div>
+                                            <img id="heroImagePreview" class="preview-img shadow-sm" alt="Hero Preview" style="display:none;">
+                                        </div>
+                                        <input type="file" name="hero_image" id="heroImageInput" accept="image/*" class="d-none">
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <label class="form-label">Hero Image Alt Text</label>
+                                        <input type="text" name="hero_image_alt" class="form-control" placeholder="Alt text for SEO" value="<?= $p('hero_image_alt') ?>">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card border-0 shadow-sm rounded-4 mb-4">
+                            <div class="card-header bg-white border-bottom py-3 px-4 d-flex align-items-center gap-3">
+                                <div class="bg-primary-subtle text-primary rounded d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                                    <i class="fa fa-magic"></i>
+                                </div>
+                                <h6 class="mb-0 fw-bold text-dark text-uppercase small" style="letter-spacing: 0.5px;">Page Builder (Auto JSON)</h6>
+                            </div>
+                            <div class="card-body p-4">
+                                
+                                <h5 class="mb-3 border-bottom pb-2 text-dark"><i class="fa fa-list me-2 text-primary"></i>Content Sections</h5>
+                                <div id="sectionsContainer">
+                                    <?php 
+                                    $sec_h2s = $_POST['sec_h2'] ?? [];
+                                    $sec_contents = $_POST['sec_content'] ?? [];
+                                    $sec_lists = $_POST['sec_list'] ?? [];
+                                    foreach ($sec_h2s as $idx => $h2): 
+                                    ?>
+                                        <div class="dynamic-row" id="sec_<?= $idx ?>">
+                                            <button type="button" class="remove-row-btn" onclick="document.getElementById('sec_<?= $idx ?>').remove()"><i class="fa fa-trash"></i></button>
+                                            <div class="mb-3">
+                                                <label class="form-label">Heading (H2)</label>
+                                                <input type="text" name="sec_h2[]" class="form-control" value="<?= htmlspecialchars($h2) ?>">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Paragraph Content</label>
+                                                <textarea name="sec_content[]" class="form-control" rows="3"><?= htmlspecialchars($sec_contents[$idx] ?? '') ?></textarea>
+                                            </div>
+                                            <div>
+                                                <label class="form-label">Bullet List (One item per line)</label>
+                                                <textarea name="sec_list[]" class="form-control" rows="3"><?= htmlspecialchars($sec_lists[$idx] ?? '') ?></textarea>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                                <button type="button" class="btn btn-outline-primary btn-sm fw-bold mb-5" id="addSectionBtn">
+                                    <i class="fa fa-plus me-1"></i> Add Content Section
+                                </button>
+
+                                <h5 class="mb-3 border-bottom pb-2 text-dark"><i class="fa fa-question-circle me-2 text-primary"></i>FAQs</h5>
+                                <div id="faqContainer">
+                                    <?php 
+                                    $faq_qs = $_POST['faq_q'] ?? [];
+                                    $faq_as = $_POST['faq_a'] ?? [];
+                                    foreach ($faq_qs as $idx => $q): 
+                                    ?>
+                                        <div class="dynamic-row" id="faq_<?= $idx ?>">
+                                            <button type="button" class="remove-row-btn" onclick="document.getElementById('faq_<?= $idx ?>').remove()"><i class="fa fa-trash"></i></button>
+                                            <div class="mb-3">
+                                                <label class="form-label">Question</label>
+                                                <input type="text" name="faq_q[]" class="form-control" value="<?= htmlspecialchars($q) ?>">
+                                            </div>
+                                            <div>
+                                                <label class="form-label">Answer</label>
+                                                <textarea name="faq_a[]" class="form-control" rows="2"><?= htmlspecialchars($faq_as[$idx] ?? '') ?></textarea>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                                <button type="button" class="btn btn-outline-primary btn-sm fw-bold mb-5" id="addFaqBtn">
+                                    <i class="fa fa-plus me-1"></i> Add FAQ
+                                </button>
+
+                                <h5 class="mb-3 border-bottom pb-2 text-dark"><i class="fa fa-link me-2 text-primary"></i>Related Services</h5>
+                                <div>
+                                    <label class="form-label">Select Related Services</label>
+                                    <select name="related_services[]" class="form-control select2-multiple" multiple="multiple">
+                                        <?php 
+                                        $selected_related = $_POST['related_services'] ?? [];
+                                        foreach ($all_services as $srv): 
+                                            $sel = in_array($srv['slug'], $selected_related) ? 'selected' : '';
+                                        ?>
+                                            <option value="<?= htmlspecialchars($srv['slug']) ?>" <?= $sel ?>><?= htmlspecialchars($srv['title']) ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
                                 </div>
 
                             </div>
@@ -469,18 +666,18 @@ require_once '../include/head.php';
                                         <div class="mb-4">
                                             <label class="form-label">Canonical URL</label>
                                             <input type="text" name="canonical_url" id="canonicalUrl" class="form-control"
-                                                   placeholder="https://yourdomain.com/blog/your-post-slug"
+                                                   placeholder="https://yourdomain.com/service/your-service-slug"
                                                    value="<?= $p('canonical_url') ?>">
-                                            <small class="text-muted mt-1 d-block" style="font-size: 0.75rem;">Leave blank to auto-generate. Use if this content exists on another URL.</small>
+                                            <small class="text-muted mt-1 d-block" style="font-size: 0.75rem;">Leave blank to auto-generate.</small>
                                         </div>
 
                                         <div class="mt-4">
                                             <label class="form-label"><i class="fab fa-google text-muted me-1"></i> Google SERP Preview</label>
                                             <div class="serp-preview">
-                                                <div class="serp-url" id="serpUrl">rkhospital.com › blog › <span id="serpSlug">your-post-slug</span></div>
+                                                <div class="serp-url" id="serpUrl">rkhospital.com › service › <span id="serpSlug">your-service-slug</span></div>
                                                 <div class="serp-title" id="serpTitle"><span class="serp-placeholder">Your meta title will appear here...</span></div>
                                                 <div class="serp-date d-inline-block pe-1" id="serpDate"><?= date('M j, Y') ?> — </div>
-                                                <div class="serp-desc d-inline" id="serpDesc"><span class="serp-placeholder">Your meta description will appear here. Make it compelling to improve click-through rate.</span></div>
+                                                <div class="serp-desc d-inline" id="serpDesc"><span class="serp-placeholder">Your meta description will appear here. Make it compelling.</span></div>
                                             </div>
                                         </div>
 
@@ -501,34 +698,9 @@ require_once '../include/head.php';
                                         <div class="mb-4">
                                             <label class="form-label">OG Type</label>
                                             <select name="og_type" class="form-select">
-                                                <option value="article" <?= ($p('og_type')||'article')==='article' ? 'selected' : '' ?>>article</option>
-                                                <option value="website" <?= $p('og_type')==='website' ? 'selected' : '' ?>>website</option>
-                                                <option value="blog"    <?= $p('og_type')==='blog'     ? 'selected' : '' ?>>blog</option>
+                                                <option value="website" <?= ($p('og_type')||'website')==='website' ? 'selected' : '' ?>>website</option>
+                                                <option value="article" <?= $p('og_type')==='article' ? 'selected' : '' ?>>article</option>
                                             </select>
-                                        </div>
-                                        <div class="mb-4">
-                                            <label class="form-label">OG Image <span class="text-muted fw-normal text-lowercase">(1200×630 recommended)</span></label>
-                                            <div class="img-upload-zone" id="ogImageZone" onclick="document.getElementById('ogImageInput').click()">
-                                                <div class="upload-icon"><i class="fa fa-image"></i></div>
-                                                <p>Click to upload custom OG image</p>
-                                                <small class="text-muted">Will fallback to Featured Image if empty</small>
-                                                <img id="ogImagePreview" class="preview-img" alt="OG Preview">
-                                            </div>
-                                            <input type="file" name="og_image" id="ogImageInput" accept="image/*" class="d-none">
-                                        </div>
-
-                                        <div class="mt-4">
-                                            <label class="form-label"><i class="fab fa-facebook text-primary me-1"></i> Social Card Preview</label>
-                                            <div class="og-preview-card shadow-sm">
-                                                <div class="og-preview-img" id="ogPreviewImgBox">
-                                                    <span>No image selected</span>
-                                                </div>
-                                                <div class="og-preview-body">
-                                                    <div class="og-preview-domain">yourdomain.com</div>
-                                                    <div class="og-preview-title" id="ogPreviewTitle">OG Title will appear here</div>
-                                                    <div class="og-preview-desc" id="ogPreviewDesc">OG description will appear here</div>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
 
@@ -558,38 +730,42 @@ require_once '../include/head.php';
                                     </div>
 
                                     <div class="tab-pane fade" id="tab-technical" role="tabpanel">
+                                        <?php 
+                                            $robots = explode(',', $p('robots_meta') ?: 'index,follow');
+                                            $rIndex = $robots[0] ?? 'index';
+                                            $rFollow = $robots[1] ?? 'follow';
+                                        ?>
                                         <div class="mb-4">
                                             <label class="form-label">Robots Meta Tag</label>
                                             <div class="row g-2">
                                                 <div class="col-6">
                                                     <div class="robots-group" id="robotsIndexGroup">
-                                                        <button type="button" class="robots-btn active-index shadow-sm" data-val="index" onclick="setRobots('index',this)">✅ INDEX</button>
-                                                        <button type="button" class="robots-btn shadow-sm" data-val="noindex" onclick="setRobots('noindex',this)">🚫 NOINDEX</button>
+                                                        <button type="button" class="robots-btn shadow-sm <?= $rIndex==='index'?'active-index':'' ?>" data-val="index" onclick="setRobots('index',this)">✅ INDEX</button>
+                                                        <button type="button" class="robots-btn shadow-sm <?= $rIndex==='noindex'?'active-noindex':'' ?>" data-val="noindex" onclick="setRobots('noindex',this)">🚫 NOINDEX</button>
                                                     </div>
                                                 </div>
                                                 <div class="col-6">
                                                     <div class="robots-group" id="robotsFollowGroup">
-                                                        <button type="button" class="robots-btn active-follow shadow-sm" data-val="follow" onclick="setFollow('follow',this)">🔗 FOLLOW</button>
-                                                        <button type="button" class="robots-btn shadow-sm" data-val="nofollow" onclick="setFollow('nofollow',this)">⛔ NOFOLLOW</button>
+                                                        <button type="button" class="robots-btn shadow-sm <?= $rFollow==='follow'?'active-follow':'' ?>" data-val="follow" onclick="setFollow('follow',this)">🔗 FOLLOW</button>
+                                                        <button type="button" class="robots-btn shadow-sm <?= $rFollow==='nofollow'?'active-nofollow':'' ?>" data-val="nofollow" onclick="setFollow('nofollow',this)">⛔ NOFOLLOW</button>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <input type="hidden" name="robots_index" id="robotsIndex" value="index">
-                                            <input type="hidden" name="robots_follow" id="robotsFollow" value="follow">
-                                            <small class="text-success fw-medium mt-2 d-block" id="robotsHint">✅ This page will be indexed and links followed by search engines.</small>
+                                            <input type="hidden" name="robots_index" id="robotsIndex" value="<?= $rIndex ?>">
+                                            <input type="hidden" name="robots_follow" id="robotsFollow" value="<?= $rFollow ?>">
+                                            <small class="fw-medium mt-2 d-block text-success" id="robotsHint">✅ This page will be indexed and links followed by search engines.</small>
                                         </div>
 
                                         <div class="mb-4">
-                                            <label class="form-label">Schema / Structured Data Type</label>
+                                            <label class="form-label">Schema Type</label>
                                             <div class="schema-options">
-                                                <?php $schemas = ['BlogPosting','Article','NewsArticle','MedicalWebPage','FAQPage','HowTo']; ?>
+                                                <?php $schemas = ['MedicalProcedure','MedicalSpecialty','MedicalClinic','Service']; ?>
                                                 <?php foreach ($schemas as $s): ?>
-                                                <button type="button" class="schema-opt shadow-sm <?= ($p('schema_type') ?: 'BlogPosting') === $s ? 'active' : '' ?>"
+                                                <button type="button" class="schema-opt shadow-sm <?= ($p('schema_type') ?: 'MedicalProcedure') === $s ? 'active' : '' ?>"
                                                         onclick="setSchema('<?= $s ?>',this)"><?= $s ?></button>
                                                 <?php endforeach; ?>
                                             </div>
-                                            <input type="hidden" name="schema_type" id="schemaType" value="<?= $p('schema_type') ?: 'BlogPosting' ?>">
-                                            <small class="text-muted mt-2 d-block" style="font-size: 0.75rem;">For healthcare blogs, <strong>MedicalWebPage</strong> or <strong>Article</strong> gives best rich-result coverage.</small>
+                                            <input type="hidden" name="schema_type" id="schemaType" value="<?= $p('schema_type') ?: 'MedicalProcedure' ?>">
                                         </div>
 
                                         <div class="mb-3 p-3 bg-light rounded-3 border">
@@ -598,8 +774,13 @@ require_once '../include/head.php';
                                         </div>
                                     </div>
 
-                                </div> </div>
-                        </div></div><div class="col-xl-4 col-lg-5">
+                                </div> 
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-xl-4 col-lg-5">
 
                         <div class="card border-0 shadow-sm rounded-4 mb-4">
                             <div class="card-header bg-white border-bottom py-3 px-4 d-flex align-items-center justify-content-between">
@@ -622,15 +803,14 @@ require_once '../include/head.php';
                                     </div>
                                 </div>
                                 <div class="mb-4">
-                                    <label class="form-label">Scheduled Publish Date</label>
-                                    <input type="datetime-local" name="published_at" class="form-control"
-                                           value="<?= $p('published_at') ?>">
+                                    <label class="form-label">Sort Order (Higher = lower in list)</label>
+                                    <input type="number" name="sort_order" class="form-control" value="<?= $p('sort_order') ?: '0' ?>">
                                 </div>
                                 <hr class="border-light-subtle my-4">
                                 <button type="submit" class="btn btn-primary w-100 rounded-pill py-2 shadow-sm fw-bold mb-2 d-flex align-items-center justify-content-center gap-2">
-                                    <i class="fa fa-save"></i> Save Blog Post
+                                    <i class="fa fa-save"></i> Save Service
                                 </button>
-                                <a href="index.php" class="btn btn-light w-100 rounded-pill py-2 border text-secondary fw-semibold">Cancel</a>
+                                <a href="index.php" class="btn btn-light w-100 rounded-pill py-2 border text-secondary fw-semibold d-block text-center">Cancel</a>
                             </div>
                         </div>
 
@@ -666,39 +846,15 @@ require_once '../include/head.php';
 
                         <div class="card border-0 shadow-sm rounded-4 mb-4">
                             <div class="card-header bg-white border-bottom py-3 px-4 d-flex align-items-center gap-3">
-                                <div class="bg-danger-subtle text-danger rounded d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
-                                    <i class="fa fa-image"></i>
-                                </div>
-                                <h6 class="mb-0 fw-bold text-dark text-uppercase small" style="letter-spacing: 0.5px;">Featured Image</h6>
-                            </div>
-                            <div class="card-body p-4">
-                                <div class="img-upload-zone" id="mainImageZone" onclick="document.getElementById('imageInput').click()">
-                                    <div id="imgPlaceholder">
-                                        <div class="upload-icon"><i class="fa fa-cloud-upload-alt"></i></div>
-                                        <p>Click or drag to upload</p>
-                                        <small class="text-muted" style="font-size: 0.75rem;">JPG, PNG, WEBP · Max 2MB</small>
-                                    </div>
-                                    <img id="imagePreview" class="preview-img shadow-sm" alt="Featured Image Preview">
-                                </div>
-                                <input type="file" name="image" id="imageInput" accept="image/*" class="d-none">
-                                <div class="alert alert-light border mt-3 mb-0 p-2 d-flex align-items-center gap-2 small">
-                                    <i class="fa fa-info-circle text-primary"></i>
-                                    <span>Recommended: 1200×628px for best appearance.</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card border-0 shadow-sm rounded-4 mb-4">
-                            <div class="card-header bg-white border-bottom py-3 px-4 d-flex align-items-center gap-3">
                                 <div class="bg-info-subtle text-info rounded d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
                                     <i class="fa fa-tags"></i>
                                 </div>
-                                <h6 class="mb-0 fw-bold text-dark text-uppercase small" style="letter-spacing: 0.5px;">Taxonomy & Author</h6>
+                                <h6 class="mb-0 fw-bold text-dark text-uppercase small" style="letter-spacing: 0.5px;">Taxonomy & Icon</h6>
                             </div>
                             <div class="card-body p-4">
                                 <div class="mb-4">
                                     <label class="form-label">Category <span class="text-danger">*</span></label>
-                                    <select name="category_id" id="categorySelect" class="form-select rounded-3">
+                                    <select name="category_id" class="form-select rounded-3">
                                         <option value="">— Select Category —</option>
                                         <?php foreach ($categories as $cat): ?>
                                             <option value="<?= $cat['id'] ?>" <?= (isset($_POST['category_id']) && $_POST['category_id'] == $cat['id']) ? 'selected' : '' ?>>
@@ -706,27 +862,54 @@ require_once '../include/head.php';
                                             </option>
                                         <?php endforeach; ?>
                                     </select>
-                                    <div class="invalid-feedback">Please select a category.</div>
                                 </div>
                                 <div class="mb-4">
-                                    <label class="form-label">Doctor <span class="text-danger">*</span></label>
-                                    <select name="doctor_id" id="doctorSelect" class="form-select rounded-3">
-                                        <option value="">— Select Doctor —</option>
-                                        <?php foreach ($doctors as $doctor): ?>
-                                            <option value="<?= $doctor['id'] ?>" <?= (isset($_POST['doctor_id']) && $_POST['doctor_id'] == $doctor['id']) ? 'selected' : '' ?>>
-                                                <?= htmlspecialchars($doctor['name']) ?>
-                                            </option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                    <div class="invalid-feedback">Please select a doctor.</div>
+                                    <label class="form-label">Icon Class (e.g. flaticon-baby)</label>
+                                    <input type="text" name="icon" class="form-control rounded-3" placeholder="flaticon-..." value="<?= $p('icon') ?>">
                                 </div>
-                                <div>
-                                    <label class="form-label">Tags</label>
-                                    <input type="text" name="tags" id="tagsInput" class="form-control rounded-3"
-                                           placeholder="e.g. Orthopedics, Health Tips"
-                                           value="<?= $p('tags') ?>">
-                                    <small class="text-muted mt-1 d-block" style="font-size: 0.75rem;">Comma-separated tags.</small>
-                                    <div id="tagPreview" class="keyword-tags mt-2"></div>
+                            </div>
+                        </div>
+
+                        <div class="card border-0 shadow-sm rounded-4 mb-4">
+                            <div class="card-header bg-white border-bottom py-3 px-4 d-flex align-items-center gap-3">
+                                <div class="bg-danger-subtle text-danger rounded d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                                    <i class="fa fa-image"></i>
+                                </div>
+                                <h6 class="mb-0 fw-bold text-dark text-uppercase small" style="letter-spacing: 0.5px;">Featured Image & Gallery</h6>
+                            </div>
+                            <div class="card-body p-4">
+                                <div class="mb-4">
+                                    <label class="form-label">Main Image (Thumbnail)</label>
+                                    <div class="img-upload-zone" id="mainImageZone" onclick="document.getElementById('imageInput').click()" style="padding: 1.5rem;">
+                                        <div id="imgPlaceholder">
+                                            <div class="upload-icon"><i class="fa fa-cloud-upload-alt"></i></div>
+                                            <small class="text-muted" style="font-size: 0.75rem;">JPG, PNG, WEBP</small>
+                                        </div>
+                                        <img id="imagePreview" class="preview-img shadow-sm" alt="Preview" style="display:none;">
+                                    </div>
+                                    <input type="file" name="image" id="imageInput" accept="image/*" class="d-none">
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label">Main Image Alt Text</label>
+                                    <input type="text" name="image_alt" class="form-control" value="<?= $p('image_alt') ?>">
+                                </div>
+                                <hr class="border-light-subtle my-4">
+                                <div class="mb-4">
+                                    <label class="form-label">Gallery Images (Auto JSON)</label>
+                                    <input type="file" name="gallery_images[]" class="form-control" accept="image/*" multiple>
+                                    <small class="text-muted mt-1 d-block" style="font-size: 0.75rem;">Hold CTRL to select multiple.</small>
+                                </div>
+                                <hr class="border-light-subtle my-4">
+                                <div class="mb-4">
+                                    <label class="form-label">Social (OG) Image</label>
+                                    <div class="img-upload-zone" id="ogImageZone" onclick="document.getElementById('ogImageInput').click()" style="padding: 1.5rem;">
+                                        <div id="ogImgPlaceholder">
+                                            <div class="upload-icon"><i class="fa fa-share-nodes"></i></div>
+                                            <small class="text-muted" style="font-size: 0.75rem;">Upload OG Image</small>
+                                        </div>
+                                        <img id="ogImagePreview" class="preview-img shadow-sm" alt="OG Preview" style="display:none;">
+                                    </div>
+                                    <input type="file" name="og_image" id="ogImageInput" accept="image/*" class="d-none">
                                 </div>
                             </div>
                         </div>
@@ -740,13 +923,65 @@ require_once '../include/head.php';
 <?php
 $extraJS = '
 <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
+// Select2
+$(document).ready(function() {
+    $(".select2-multiple").select2({
+        placeholder: "Search and select related services",
+        allowClear: true
+    });
+});
+
+// Dynamic Builders (Sections & FAQs)
+document.getElementById("addSectionBtn").addEventListener("click", function() {
+    const container = document.getElementById("sectionsContainer");
+    const id = Date.now();
+    const html = `
+        <div class="dynamic-row" id="sec_${id}">
+            <button type="button" class="remove-row-btn" onclick="document.getElementById(\'sec_${id}\').remove()"><i class="fa fa-trash"></i></button>
+            <div class="mb-3">
+                <label class="form-label">Heading (H2)</label>
+                <input type="text" name="sec_h2[]" class="form-control" placeholder="e.g. Treatment Options">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Paragraph Content</label>
+                <textarea name="sec_content[]" class="form-control" rows="3" placeholder="Description..."></textarea>
+            </div>
+            <div>
+                <label class="form-label">Bullet List (One item per line)</label>
+                <textarea name="sec_list[]" class="form-control" rows="3" placeholder="Point 1\nPoint 2\nPoint 3..."></textarea>
+            </div>
+        </div>
+    `;
+    container.insertAdjacentHTML("beforeend", html);
+});
+
+document.getElementById("addFaqBtn").addEventListener("click", function() {
+    const container = document.getElementById("faqContainer");
+    const id = Date.now();
+    const html = `
+        <div class="dynamic-row" id="faq_${id}">
+            <button type="button" class="remove-row-btn" onclick="document.getElementById(\'faq_${id}\').remove()"><i class="fa fa-trash"></i></button>
+            <div class="mb-3">
+                <label class="form-label">Question</label>
+                <input type="text" name="faq_q[]" class="form-control" placeholder="e.g. Is this safe?">
+            </div>
+            <div>
+                <label class="form-label">Answer</label>
+                <textarea name="faq_a[]" class="form-control" rows="2" placeholder="Provide the answer..."></textarea>
+            </div>
+        </div>
+    `;
+    container.insertAdjacentHTML("beforeend", html);
+});
+
 /* ═══════════════════════════════════════════════════════════════
    QUILL EDITOR
 ══════════════════════════════════════════════════════════════════ */
 var quill = new Quill("#quillEditor", {
     theme: "snow",
-    placeholder: "Write your blog content here. Use headings, lists, and keywords naturally...",
+    placeholder: "Write your main service content here...",
     modules: {
         toolbar: [
             [{ header: [2,3,4,false] }],
@@ -760,57 +995,26 @@ var quill = new Quill("#quillEditor", {
     }
 });
 
-' . (!empty($_POST['content']) ? 'quill.root.innerHTML = ' . json_encode($_POST['content']) . ';' : '') . '
+' . (!empty($_POST['content']) ? 'quill.clipboard.dangerouslyPasteHTML(' . json_encode($_POST['content']) . ');' : '') . '
 
 quill.on("text-change", function() {
     var html = quill.root.innerHTML;
-    document.getElementById("blogContent").value = html;
-    updateReadingTime(quill.getText());
+    document.getElementById("serviceContent").value = html;
     updateSeoScore();
     updateKdAnalysis();
-    document.getElementById("readingTimeDisplay").style.display = "inline-flex";
 });
 
-document.getElementById("blogForm").addEventListener("submit", function(e) {
+document.getElementById("serviceForm").addEventListener("submit", function(e) {
     var content = quill.root.innerHTML;
-    document.getElementById("blogContent").value = content;
+    document.getElementById("serviceContent").value = content;
     
     var textContent = quill.getText().trim();
-    var hasError = false;
-
-    // Validate content
     if (!textContent || textContent === "" || content === "<p><br></p>") {
         e.preventDefault();
-        alert("Content is required! Please write something.");
+        alert("Main content is required!");
         quill.focus();
         return false;
     }
-
-    // Validate category
-    var catSelect = document.getElementById("categorySelect");
-    if (!catSelect.value) {
-        catSelect.classList.add("is-invalid");
-        hasError = true;
-    } else {
-        catSelect.classList.remove("is-invalid");
-    }
-
-    // Validate doctor
-    var docSelect = document.getElementById("doctorSelect");
-    if (!docSelect.value) {
-        docSelect.classList.add("is-invalid");
-        hasError = true;
-    } else {
-        docSelect.classList.remove("is-invalid");
-    }
-
-    if (hasError) {
-        e.preventDefault();
-        // Scroll to the taxonomy card
-        catSelect.scrollIntoView({ behavior: "smooth", block: "center" });
-        return false;
-    }
-
     return true;
 });
 
@@ -821,11 +1025,11 @@ function toSlug(str) {
     return str.toLowerCase().trim().replace(/[^a-z0-9\s-]/g,"").replace(/\s+/g,"-").replace(/-+/g,"-");
 }
 
-document.getElementById("blogTitle").addEventListener("input", function() {
-    if (!document.getElementById("blogSlug").dataset.manual) {
-        document.getElementById("blogSlug").value = toSlug(this.value);
+document.getElementById("serviceTitle").addEventListener("input", function() {
+    if (!document.getElementById("serviceSlug").dataset.manual) {
+        document.getElementById("serviceSlug").value = toSlug(this.value);
     }
-    updateCharCount("blogTitle","titleCount",null,null,999);
+    updateCharCount("serviceTitle","titleCount",null,null,999);
     autoFillSeoFields();
     updateSeoScore();
     updateSerpPreview();
@@ -834,11 +1038,11 @@ document.getElementById("blogTitle").addEventListener("input", function() {
 function autoFillCanonical(slug) {
     var canon = document.getElementById("canonicalUrl");
     if (canon && canon.value === "") {
-        canon.value = window.location.origin + "/rkhospital/blog/" + slug;
+        canon.value = window.location.origin + "/rkhospital/service/" + slug;
     }
 }
 
-document.getElementById("blogSlug").addEventListener("input", function() {
+document.getElementById("serviceSlug").addEventListener("input", function() {
     this.dataset.manual = "true";
     this.value = this.value.toLowerCase().replace(/[^a-z0-9-]/g,"-");
     updateSerpPreview();
@@ -846,8 +1050,8 @@ document.getElementById("blogSlug").addEventListener("input", function() {
 });
 
 document.getElementById("generateSlug").addEventListener("click", function() {
-    var s = document.getElementById("blogSlug");
-    s.value = toSlug(document.getElementById("blogTitle").value);
+    var s = document.getElementById("serviceSlug");
+    s.value = toSlug(document.getElementById("serviceTitle").value);
     delete s.dataset.manual;
     updateSerpPreview();
     autoFillCanonical(s.value);
@@ -878,16 +1082,13 @@ function updateCharCount(fieldId, countId, barId, max, warnAt) {
     }
 }
 
-["metaTitle", "metaDesc", "blogExcerpt", "ogTitle", "ogDesc"].forEach(function(id) {
+["metaTitle", "metaDesc", "shortDescription", "ogTitle", "ogDesc"].forEach(function(id) {
     var el = document.getElementById(id);
     if(el) {
         el.addEventListener("input", function() {
             if(id === "metaTitle") { updateCharCount("metaTitle","metaTitleCount","metaTitleBar",60,50); this.dataset.manual = "1"; }
             if(id === "metaDesc")  updateCharCount("metaDesc","metaDescCount","metaDescBar",160,120);
-            if(id === "blogExcerpt") updateCharCount("blogExcerpt","excerptCount",null,null,999);
-            
-            if(id === "ogTitle") document.getElementById("ogPreviewTitle").textContent = this.value || "OG Title will appear here";
-            if(id === "ogDesc")  document.getElementById("ogPreviewDesc").textContent = this.value || "OG description will appear here";
+            if(id === "shortDescription") updateCharCount("shortDescription","excerptCount",null,null,999);
             
             updateSerpPreview();
             updateSeoScore();
@@ -896,9 +1097,9 @@ function updateCharCount(fieldId, countId, barId, max, warnAt) {
 });
 
 function updateSerpPreview() {
-    var title = document.getElementById("metaTitle").value || document.getElementById("blogTitle").value;
-    var desc  = document.getElementById("metaDesc").value  || document.getElementById("blogExcerpt").value;
-    var slug  = document.getElementById("blogSlug").value  || "your-post-slug";
+    var title = document.getElementById("metaTitle").value || document.getElementById("serviceTitle").value;
+    var desc  = document.getElementById("metaDesc").value  || document.getElementById("shortDescription").value;
+    var slug  = document.getElementById("serviceSlug").value  || "your-service-slug";
 
     var titleEl = document.getElementById("serpTitle");
     var descEl  = document.getElementById("serpDesc");
@@ -913,15 +1114,8 @@ function truncate(str, max) { return str.length > max ? str.substring(0, max) + 
 /* ═══════════════════════════════════════════════════════════════
    SEO ENGINE & HELPERS
 ══════════════════════════════════════════════════════════════════ */
-function updateReadingTime(text) {
-    var words = text.trim().split(/\s+/).filter(Boolean).length;
-    var mins  = Math.max(1, Math.ceil(words / 220));
-    document.getElementById("readingTimeText").textContent = "~" + mins + " min read (" + words + " words)";
-    document.getElementById("readingTimeInput").value = mins;
-}
-
 function autoFillSeoFields() {
-    var title = document.getElementById("blogTitle").value;
+    var title = document.getElementById("serviceTitle").value;
     var mt = document.getElementById("metaTitle");
     if (!mt.dataset.manual && title) {
         mt.value = title.substring(0,60);
@@ -936,8 +1130,7 @@ document.getElementById("focusKeyword").addEventListener("input", function() {
 });
 
 function updateSeoScore() {
-    var title     = document.getElementById("blogTitle").value;
-    var slug      = document.getElementById("blogSlug").value;
+    var title     = document.getElementById("serviceTitle").value;
     var metaT     = document.getElementById("metaTitle").value;
     var metaD     = document.getElementById("metaDesc").value;
     var keyword   = document.getElementById("focusKeyword").value.trim().toLowerCase();
@@ -1023,7 +1216,7 @@ function updateKdAnalysis() {
 
 function generateKeywordSuggestions(kw) {
     if (!kw || kw.length < 3) { document.getElementById("keywordSuggestions").innerHTML = ""; return; }
-    var suggestions = ["best " + kw, kw + " guide", kw + " benefits"];
+    var suggestions = ["best " + kw, kw + " treatment", kw + " in Nagpur"];
     var html = suggestions.map(function(s) {
         return "<span class=\"keyword-tag shadow-sm\" onclick=\"document.getElementById(\'focusKeyword\').value=\'" + s.replace(/\'/g,"\\\'") + "\';updateSeoScore();updateKdAnalysis();\">" + s + "</span>";
     }).join("");
@@ -1058,21 +1251,6 @@ function setSchema(val, btn) {
     document.getElementById("schemaType").value = val;
 }
 
-document.getElementById("tagsInput").addEventListener("input", function() {
-    var tags = this.value.split(",").map(function(t) { return t.trim(); }).filter(Boolean);
-    document.getElementById("tagPreview").innerHTML = tags.map(function(t) { return "<span class=\"keyword-tag shadow-sm\">" + t + "</span>"; }).join("");
-});
-
-// Clear invalid state on change
-["categorySelect", "doctorSelect"].forEach(function(id) {
-    var el = document.getElementById(id);
-    if (el) {
-        el.addEventListener("change", function() {
-            if (this.value) { this.classList.remove("is-invalid"); }
-        });
-    }
-});
-
 function updatePublishBadge(cb) {
     var badge = document.getElementById("publishStatusBadge");
     if (cb.checked) {
@@ -1084,35 +1262,42 @@ function updatePublishBadge(cb) {
     }
 }
 
-// Images
-["imageInput", "ogImageInput"].forEach(function(id) {
-    var input = document.getElementById(id);
+// Reusable Image Preview Logic
+function setupImagePreview(inputId, previewId, placeholderId) {
+    var input = document.getElementById(inputId);
     if(input) {
         input.addEventListener("change", function() {
-            if (this.files[0]) {
+            if (this.files && this.files[0]) {
                 var r = new FileReader();
                 r.onload = function(e) {
-                    if(id === "imageInput") {
-                        document.getElementById("imagePreview").src = e.target.result;
-                        document.getElementById("imagePreview").style.display = "block";
-                        document.getElementById("imgPlaceholder").style.display = "none";
-                        document.getElementById("ogPreviewImgBox").innerHTML = "<img src=\"" + e.target.result + "\" style=\"width:100%;height:100%;object-fit:cover;\">";
-                    } else {
-                        document.getElementById("ogImagePreview").src = e.target.result;
-                        document.getElementById("ogImagePreview").style.display = "block";
-                        document.getElementById("ogPreviewImgBox").innerHTML = "<img src=\"" + e.target.result + "\" style=\"width:100%;height:100%;object-fit:cover;\">";
-                    }
+                    document.getElementById(previewId).src = e.target.result;
+                    document.getElementById(previewId).style.display = "block";
+                    document.getElementById(placeholderId).style.display = "none";
                 };
                 r.readAsDataURL(this.files[0]);
             }
         });
     }
-});
+}
+
+setupImagePreview("imageInput", "imagePreview", "imgPlaceholder");
+setupImagePreview("heroImageInput", "heroImagePreview", "heroImgPlaceholder");
+setupImagePreview("ogImageInput", "ogImagePreview", "ogImgPlaceholder");
 
 // Init
-updateSeoScore();
-updateSerpPreview();
-if(document.getElementById("isPublished").checked) updatePublishBadge(document.getElementById("isPublished"));
+setTimeout(function(){
+    updateCharCount("serviceTitle","titleCount",null,null,999);
+    updateCharCount("metaTitle","metaTitleCount","metaTitleBar",60,50);
+    updateCharCount("metaDesc","metaDescCount","metaDescBar",160,120);
+    updateCharCount("shortDescription","excerptCount",null,null,999);
+    
+    updateSeoScore();
+    updateSerpPreview();
+    updateKdAnalysis();
+    updateRobotsHint();
+    if(document.getElementById("isPublished").checked) updatePublishBadge(document.getElementById("isPublished"));
+}, 100);
+
 </script>
 ';
 
