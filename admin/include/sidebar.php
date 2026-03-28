@@ -17,7 +17,7 @@ function sidebarLink($label, $href, $icon, $active) {
                 <?php sidebarLink('Dashboard',     'index.php',            'home',      $activePage); ?>
                 <?php sidebarLink('Appointments',  'appointment-list.php', 'layout',    $activePage); ?>
                 <?php sidebarLink('Specialities',  'specialities.php',     'users',     $activePage); ?>
-                <?php sidebarLink('Doctors',       'doctor-list.php',      'user-plus', $activePage); ?>
+                <?php sidebarLink('Doctors', 'doctors/index.php', 'user-plus', $activePage); ?>
                 <?php sidebarLink('Patients',      'patient-list.php',     'user',      $activePage); ?>
                 <?php sidebarLink('Reviews',       'reviews.php',          'star-o',    $activePage); ?>
                 <?php sidebarLink('Transactions',  'transactions-list.php','activity',  $activePage); ?>
@@ -38,7 +38,8 @@ function sidebarLink($label, $href, $icon, $active) {
 
                 <!-- Authentication submenu -->
                 <li class="submenu">
-                    <a href="#"><i class="fe fe-document"></i> <span>Authentication</span> <span class="menu-arrow"></span></a>
+                    <a href="#"><i class="fe fe-document"></i> <span>Authentication</span> <span
+                            class="menu-arrow"></span></a>
                     <ul style="display: none;">
                         <li><a href="login.php">Login</a></li>
                         <li><a href="register.php">Register</a></li>
@@ -49,7 +50,8 @@ function sidebarLink($label, $href, $icon, $active) {
 
                 <!-- Error Pages submenu -->
                 <li class="submenu">
-                    <a href="#"><i class="fe fe-warning"></i> <span>Error Pages</span> <span class="menu-arrow"></span></a>
+                    <a href="#"><i class="fe fe-warning"></i> <span>Error Pages</span> <span
+                            class="menu-arrow"></span></a>
                     <ul style="display: none;">
                         <li><a href="error-404.php">404 Error</a></li>
                         <li><a href="error-500.php">500 Error</a></li>
@@ -85,14 +87,16 @@ function sidebarLink($label, $href, $icon, $active) {
 
                 <!-- Multi Level submenu -->
                 <li class="submenu">
-                    <a href="javascript:void(0);"><i class="fe fe-code"></i> <span>Multi Level</span> <span class="menu-arrow"></span></a>
+                    <a href="javascript:void(0);"><i class="fe fe-code"></i> <span>Multi Level</span> <span
+                            class="menu-arrow"></span></a>
                     <ul style="display: none;">
                         <li class="submenu">
                             <a href="javascript:void(0);"><span>Level 1</span> <span class="menu-arrow"></span></a>
                             <ul style="display: none;">
                                 <li><a href="javascript:void(0);">Level 2</a></li>
                                 <li class="submenu">
-                                    <a href="javascript:void(0);"><span>Level 2</span> <span class="menu-arrow"></span></a>
+                                    <a href="javascript:void(0);"><span>Level 2</span> <span
+                                            class="menu-arrow"></span></a>
                                     <ul style="display: none;">
                                         <li><a href="javascript:void(0);">Level 3</a></li>
                                         <li><a href="javascript:void(0);">Level 3</a></li>

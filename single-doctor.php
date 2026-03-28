@@ -1,1834 +1,234 @@
+<?php
+// Include configuration
+require_once 'include/config.php';
+
+// Fetch by slug from .htaccess rule
+$slug = isset($_GET['slug']) ? clean($_GET['slug']) : '';
+
+// 1. Fetch Main Doctor Profile
+$stmt = $conn->prepare("SELECT * FROM doctors WHERE slug = ?");
+$stmt->bind_param("s", $slug);
+$stmt->execute();
+$doctor = $stmt->get_result()->fetch_assoc();
+
+if (!$doctor) {
+    header("Location: " . SITE_URL . "/error-404.html");
+    exit;
+}
+
+// Decode JSON data
+$education = !empty($doctor['education_json']) ? json_decode($doctor['education_json'], true) : [];
+$experience = !empty($doctor['experience_json']) ? json_decode($doctor['experience_json'], true) : [];
+$awards = !empty($doctor['awards_json']) ? json_decode($doctor['awards_json'], true) : [];
+$specializations = !empty($doctor['specializations']) ? explode(',', $doctor['specializations']) : [];
+
+?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 	<meta charset="utf-8">
-	<title>Dr. Darren Elder – Doctor Profile | Doccure</title>
+	<title><?= htmlspecialchars($doctor['name']) ?> – Doctor Profile | RK Hospital</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-	<!-- Google Fonts -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link
-		href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:wght@500;600&display=swap"
-		rel="stylesheet">
-
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
-
-	<!-- Font Awesome -->
-	<link rel="stylesheet" href="assets/plugins/fontawesome/css/fontawesome.min.css">
-	<link rel="stylesheet" href="assets/plugins/fontawesome/css/all.min.css">
-
-	<!-- Original Styles (kept for nav / footer / breadcrumb) -->
-	<link rel="stylesheet" href="assets/css/style.css">
-
+	<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="<?= asset('assets/css/bootstrap.min.css') ?>">
+	<link rel="stylesheet" href="<?= asset('assets/plugins/fontawesome/css/fontawesome.min.css') ?>">
+	<link rel="stylesheet" href="<?= asset('assets/plugins/fontawesome/css/all.min.css') ?>">
+	<link rel="stylesheet" href="<?= asset('assets/css/style.css') ?>">
 	<style>
-		/* ─── Design Tokens ─────────────────────────────────────── */
 		:root {
-			--blue-600: #2563EB;
-			--blue-500: #3B82F6;
-			--blue-100: #DBEAFE;
-			--blue-50: #EFF6FF;
-			--teal-500: #14B8A6;
-			--slate-900: #0F172A;
-			--slate-800: #1E293B;
-			--slate-700: #334155;
-			--slate-500: #64748B;
-			--slate-300: #CBD5E1;
-			--slate-100: #F1F5F9;
-			--slate-50: #F8FAFC;
-			--white: #FFFFFF;
-			--gold: #F59E0B;
-			--green-500: #22C55E;
-			--red-500: #EF4444;
-			--radius-sm: 8px;
-			--radius-md: 14px;
-			--radius-lg: 20px;
+			--blue-600: #2563EB; --blue-500: #3B82F6; --blue-100: #DBEAFE; --blue-50: #EFF6FF;
+			--teal-500: #14B8A6; --slate-900: #0F172A; --slate-800: #1E293B; --slate-700: #334155;
+			--slate-500: #64748B; --slate-300: #CBD5E1; --slate-100: #F1F5F9; --slate-50: #F8FAFC;
+			--white: #FFFFFF; --gold: #F59E0B; --green-500: #22C55E; --red-500: #EF4444;
+			--radius-sm: 8px; --radius-md: 14px; --radius-lg: 20px;
 			--shadow-sm: 0 1px 3px rgba(0, 0, 0, .06), 0 1px 2px rgba(0, 0, 0, .04);
 			--shadow-md: 0 4px 20px rgba(15, 23, 42, .08);
 			--shadow-lg: 0 12px 40px rgba(15, 23, 42, .12);
-			--font-body: 'DM Sans', sans-serif;
-			--font-display: 'Playfair Display', serif;
-		}
-
-		/* ─── Base ───────────────────────────────────────────────── */
-		body {
-			font-family: var(--font-body);
-			color: var(--slate-800);
-			background: var(--slate-50);
-		}
-
-		/* ─── Page Content Wrapper ───────────────────────────────── */
-		.content {
-			padding: 40px 0 60px;
-		}
-
-		/* ════════════════════════════════════════════════════════════
-		   DOCTOR WIDGET CARD  (the big profile card at the top)
-		   ════════════════════════════════════════════════════════════ */
-		.doc-profile-card {
-			background: var(--white);
-			border-radius: var(--radius-lg);
-			box-shadow: var(--shadow-md);
-			padding: 0;
-			overflow: hidden;
-			border: 1px solid rgba(203, 213, 225, .6);
-			margin-bottom: 24px;
-		}
-
-		/* Top accent stripe */
-		.doc-profile-card::before {
-			content: '';
-			display: block;
-			height: 5px;
-			background: linear-gradient(90deg, var(--blue-600) 0%, var(--teal-500) 100%);
-		}
-
-		.doc-profile-card .card-inner {
-			padding: 32px 36px 28px;
-			display: flex;
-			gap: 28px;
-			align-items: center;
-		}
-
-		/* Avatar */
-		.doc-avatar-wrap {
-			flex-shrink: 0;
-			position: relative;
-		}
-
-		.doc-avatar-wrap img {
-			width: 120px;
-			height: 120px;
-			border-radius: var(--radius-md);
-			object-fit: cover;
-			border: 3px solid var(--white);
-			box-shadow: var(--shadow-md);
-		}
-
-		.doc-verified-badge {
-			position: absolute;
-			bottom: -6px;
-			right: -6px;
-			background: var(--blue-600);
-			color: #fff;
-			border-radius: 50%;
-			width: 26px;
-			height: 26px;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			font-size: 12px;
-			box-shadow: 0 0 0 3px var(--white);
-		}
-
-		/* Info */
-		.doc-info-main {
-			flex: 1;
-			min-width: 0;
-		}
-
-		.doc-info-main h2 {
-			font-family: var(--font-display);
-			font-size: 1.65rem;
-			font-weight: 600;
-			color: var(--slate-900);
-			margin: 0 0 4px;
-			letter-spacing: -0.3px;
-		}
-
-		.doc-degrees {
-			font-size: .875rem;
-			color: var(--slate-500);
-			margin-bottom: 8px;
-		}
-
-		.doc-specialty-tag {
-			display: inline-flex;
-			align-items: center;
-			gap: 5px;
-			background: var(--blue-50);
-			color: var(--blue-600);
-			border: 1px solid var(--blue-100);
-			font-size: .78rem;
-			font-weight: 600;
-			padding: 3px 11px;
-			border-radius: 20px;
-			margin-bottom: 12px;
-			letter-spacing: .3px;
-			text-transform: uppercase;
-		}
-
-		.doc-specialty-tag i {
-			font-size: .75rem;
-		}
-
-		/* Stars rating removed (redundant with right-panel satisfaction %) */
-
-		/* Location row removed (location shown in right-panel stats) */
-
-		/* Gallery removed (not shown in card view) */
-
-		/* Service chips */
-		.doc-service-chips {
-			display: flex;
-			gap: 8px;
-			flex-wrap: wrap;
-		}
-
-		.doc-service-chips span {
-			background: var(--slate-100);
-			color: var(--slate-700);
-			font-size: .78rem;
-			font-weight: 500;
-			padding: 4px 12px;
-			border-radius: 20px;
-			border: 1px solid var(--slate-200);
-		}
-
-		/* Right panel */
-		.doc-actions-panel {
-			flex-shrink: 0;
-			display: flex;
-			flex-direction: column;
-			align-items: stretch;
-			gap: 0;
-			min-width: 230px;
-			padding-left: 28px;
-			border-left: 1px solid var(--slate-200);
-		}
-
-		/* Stats */
-		.doc-stats {
-			display: flex;
-			flex-direction: column;
-			gap: 12px;
-			width: 100%;
-			margin-bottom: 20px;
-		}
-
-		.doc-stat {
-			display: flex;
-			align-items: center;
-			gap: 10px;
-			font-size: .875rem;
-			color: var(--slate-700);
-		}
-
-		.doc-stat i {
-			color: var(--blue-500);
-			font-size: 1rem;
-			width: 20px;
-			text-align: center;
-			flex-shrink: 0;
-		}
-
-		.doc-stat strong {
-			font-weight: 600;
-			color: var(--slate-900);
-		}
-
-		/* Icon action buttons removed */
-
-		/* Book button */
-		.btn-book {
-			display: block;
-			width: 100%;
-			background: linear-gradient(135deg, var(--blue-600) 0%, #1D4ED8 100%);
-			color: var(--white);
-			font-family: var(--font-body);
-			font-size: .9rem;
-			font-weight: 600;
-			padding: 12px 24px;
-			border-radius: 12px;
-			border: none;
-			cursor: pointer;
-			text-align: center;
-			text-decoration: none;
-			box-shadow: 0 4px 14px rgba(37, 99, 235, .35);
-			transition: all .2s;
-			letter-spacing: .2px;
-		}
-
-		.btn-book:hover {
-			color: var(--white);
-			box-shadow: 0 6px 20px rgba(37, 99, 235, .45);
-			transform: translateY(-1px);
-		}
-
-		/* ════════════════════════════════════════════════════════════
-		   TABS CARD
-		   ════════════════════════════════════════════════════════════ */
-		.doc-tabs-card {
-			background: var(--white);
-			border-radius: var(--radius-lg);
-			box-shadow: var(--shadow-md);
-			border: 1px solid rgba(203, 213, 225, .6);
-			overflow: hidden;
-		}
-
-		/* Tab nav */
-		.doc-tab-nav {
-			display: flex;
-			border-bottom: 1px solid var(--slate-200);
-			background: var(--white);
-		}
-
-		.doc-tab-nav .tab-btn {
-			flex: 1;
-			padding: 18px 12px;
-			text-align: center;
-			font-size: .88rem;
-			font-weight: 600;
-			color: var(--slate-500);
-			border: none;
-			background: none;
-			cursor: pointer;
-			position: relative;
-			transition: color .2s;
-			letter-spacing: .2px;
-		}
-
-		.doc-tab-nav .tab-btn::after {
-			content: '';
-			position: absolute;
-			bottom: 0;
-			left: 50%;
-			right: 50%;
-			height: 3px;
-			background: var(--blue-600);
-			border-radius: 3px 3px 0 0;
-			transition: left .25s, right .25s;
-		}
-
-		.doc-tab-nav .tab-btn.active {
-			color: var(--blue-600);
-		}
-
-		.doc-tab-nav .tab-btn.active::after {
-			left: 16%;
-			right: 16%;
-		}
-
-		.doc-tab-nav .tab-btn:hover:not(.active) {
-			color: var(--slate-700);
-		}
-
-		/* Tab panes */
-		.tab-content-area {
-			padding: 36px;
-		}
-
-		.tab-pane {
-			display: none !important;
-		}
-
-		.tab-pane.active {
-			display: block !important;
-		}
-
-		/* ─── Section Title ─ */
-		.section-title {
-			font-family: var(--font-display);
-			font-size: 1.15rem;
-			font-weight: 600;
-			color: var(--slate-900);
-			margin-bottom: 18px;
-			padding-bottom: 10px;
-			border-bottom: 2px solid var(--blue-100);
-			display: flex;
-			align-items: center;
-			gap: 8px;
-		}
-
-		.section-title i {
-			color: var(--blue-500);
-			font-size: 1rem;
-		}
-
-		/* ─── Overview Tab ─ */
-		.about-text {
-			font-size: .9rem;
-			color: var(--slate-600);
-			line-height: 1.75;
-			margin-bottom: 32px;
-		}
-
-		.timeline-section {
-			margin-bottom: 32px;
-		}
-
-		.timeline {
-			list-style: none;
-			padding: 0;
-			margin: 0;
-			position: relative;
-		}
-
-		.timeline::before {
-			content: '';
-			position: absolute;
-			left: 11px;
-			top: 6px;
-			bottom: 0;
-			width: 2px;
-			background: var(--blue-100);
-		}
-
-		.timeline li {
-			display: flex;
-			gap: 18px;
-			margin-bottom: 20px;
-			position: relative;
-		}
-
-		.timeline-dot {
-			flex-shrink: 0;
-			width: 24px;
-			height: 24px;
-			border-radius: 50%;
-			background: var(--white);
-			border: 2.5px solid var(--blue-500);
-			position: relative;
-			z-index: 1;
-			margin-top: 2px;
-		}
-
-		.timeline-dot.award {
-			border-color: var(--gold);
-		}
-
-		.timeline-body h5 {
-			font-size: .9rem;
-			font-weight: 600;
-			color: var(--slate-900);
-			margin: 0 0 3px;
-		}
-
-		.timeline-body .degree {
-			font-size: .82rem;
-			font-weight: 600;
-			color: var(--blue-600);
-			background: var(--blue-50);
-			padding: 1px 8px;
-			border-radius: 4px;
-			display: inline-block;
-			margin-bottom: 3px;
-		}
-
-		.timeline-body .year {
-			font-size: .8rem;
-			color: var(--slate-500);
-		}
-
-		.timeline-body p {
-			font-size: .84rem;
-			color: var(--slate-600);
-			line-height: 1.6;
-			margin-top: 4px;
-		}
-
-		.award-year {
-			font-size: .78rem;
-			font-weight: 700;
-			color: var(--gold);
-			text-transform: uppercase;
-			letter-spacing: .5px;
-			margin-bottom: 3px;
-		}
-
-		/* Services + Specializations grid */
-		.services-grid,
-		.spec-grid {
-			display: flex;
-			flex-wrap: wrap;
-			gap: 8px;
-			margin-bottom: 28px;
-		}
-
-		.service-chip {
-			background: var(--slate-100);
-			color: var(--slate-700);
-			font-size: .82rem;
-			font-weight: 500;
-			padding: 6px 14px;
-			border-radius: 20px;
-			border: 1px solid var(--slate-200);
-		}
-
-		.spec-chip {
-			background: linear-gradient(135deg, var(--blue-50), #F0FDF4);
-			color: var(--blue-700, #1D4ED8);
-			font-size: .82rem;
-			font-weight: 600;
-			padding: 6px 14px;
-			border-radius: 20px;
-			border: 1px solid var(--blue-100);
-		}
-
-
-
-		/* ─── Locations Tab ─ */
-		.location-card {
-			background: var(--white);
-			border: 1px solid var(--slate-200);
-			border-radius: var(--radius-md);
-			padding: 24px;
-			margin-bottom: 20px;
-			display: grid;
-			grid-template-columns: 1fr auto;
-			gap: 16px;
-			align-items: start;
-		}
-
-		.clinic-name-link {
-			font-family: var(--font-display);
-			font-size: 1.05rem;
-			font-weight: 600;
-			color: var(--slate-900);
-			text-decoration: none;
-			display: block;
-			margin-bottom: 4px;
-		}
-
-		.clinic-name-link:hover {
-			color: var(--blue-600);
-		}
-
-		.clinic-sub {
-			font-size: .82rem;
-			color: var(--slate-500);
-			margin-bottom: 8px;
-		}
-
-		.clinic-loc {
-			font-size: .84rem;
-			color: var(--slate-600);
-			margin-bottom: 6px;
-		}
-
-		.clinic-loc i {
-			color: var(--blue-500);
-			margin-right: 4px;
-		}
-
-		.clinic-loc a {
-			color: var(--blue-600);
-			font-weight: 500;
-			text-decoration: none;
-		}
-
-		.clinic-photos {
-			display: flex;
-			gap: 6px;
-			margin-top: 12px;
-		}
-
-		.clinic-photos img {
-			width: 58px;
-			height: 46px;
-			object-fit: cover;
-			border-radius: 6px;
-			border: 1.5px solid var(--slate-200);
-		}
-
-		.consult-price-badge {
-			background: linear-gradient(135deg, var(--blue-600), #1D4ED8);
-			color: #fff;
-			font-size: 1.1rem;
-			font-weight: 700;
-			padding: 12px 18px;
-			border-radius: 12px;
-			text-align: center;
-			min-width: 90px;
-			box-shadow: 0 4px 12px rgba(37, 99, 235, .25);
-		}
-
-		.consult-price-badge small {
-			display: block;
-			font-size: .68rem;
-			font-weight: 400;
-			opacity: .85;
-			margin-top: 2px;
-		}
-
-		.timing-wrap {
-			margin-top: 10px;
-		}
-
-		.timing-row {
-			display: flex;
-			justify-content: space-between;
-			font-size: .83rem;
-			padding: 5px 0;
-			border-bottom: 1px dashed var(--slate-100);
-			color: var(--slate-700);
-		}
-
-		.timing-row:last-child {
-			border-bottom: none;
-		}
-
-		.timing-row .days {
-			color: var(--slate-500);
-			font-weight: 500;
-		}
-
-		/* ─── Reviews Tab ─ */
-		.review-summary {
-			background: linear-gradient(135deg, var(--blue-50), #F0FDF4);
-			border: 1px solid var(--blue-100);
-			border-radius: var(--radius-md);
-			padding: 28px;
-			display: flex;
-			align-items: center;
-			gap: 40px;
-			margin-bottom: 32px;
-		}
-
-		.review-score {
-			text-align: center;
-			flex-shrink: 0;
-		}
-
-		.review-score .big-num {
-			font-family: var(--font-display);
-			font-size: 3rem;
-			font-weight: 600;
-			color: var(--slate-900);
-			line-height: 1;
-		}
-
-		.review-score .big-stars i {
-			color: var(--gold);
-			font-size: 1rem;
-		}
-
-		.review-score .total {
-			font-size: .8rem;
-			color: var(--slate-500);
-			margin-top: 4px;
-		}
-
-		.rating-bars {
-			flex: 1;
-		}
-
-		.rating-bar-row {
-			display: flex;
-			align-items: center;
-			gap: 10px;
-			margin-bottom: 6px;
-			font-size: .8rem;
-			color: var(--slate-600);
-		}
-
-		.rating-bar-row .bar-track {
-			flex: 1;
-			height: 7px;
-			background: var(--slate-200);
-			border-radius: 4px;
-			overflow: hidden;
-		}
-
-		.rating-bar-row .bar-fill {
-			height: 100%;
-			background: var(--gold);
-			border-radius: 4px;
-		}
-
-		.review-card {
-			border: 1px solid var(--slate-200);
-			border-radius: var(--radius-md);
-			padding: 22px;
-			margin-bottom: 16px;
-			background: var(--white);
-		}
-
-		.review-header {
-			display: flex;
-			align-items: flex-start;
-			gap: 12px;
-			margin-bottom: 12px;
-		}
-
-		.review-avatar {
-			width: 44px;
-			height: 44px;
-			border-radius: 50%;
-			object-fit: cover;
-			border: 2px solid var(--blue-100);
-		}
-
-		.review-meta h6 {
-			font-weight: 700;
-			font-size: .9rem;
-			color: var(--slate-900);
-			margin: 0 0 2px;
-		}
-
-		.review-meta .rdate {
-			font-size: .78rem;
-			color: var(--slate-400);
-		}
-
-		.review-stars i {
-			color: var(--gold);
-			font-size: .8rem;
-		}
-
-		.review-stars i.empty {
-			color: var(--slate-300);
-		}
-
-		.review-recommend {
-			display: inline-flex;
-			align-items: center;
-			gap: 5px;
-			background: #F0FDF4;
-			color: #16A34A;
-			font-size: .78rem;
-			font-weight: 600;
-			padding: 3px 10px;
-			border-radius: 20px;
-			margin-bottom: 10px;
-		}
-
-		.review-text {
-			font-size: .875rem;
-			color: var(--slate-600);
-			line-height: 1.7;
-			margin: 0;
-		}
-
-		.review-actions {
-			display: flex;
-			gap: 10px;
-			margin-top: 12px;
-			padding-top: 12px;
-			border-top: 1px solid var(--slate-100);
-		}
-
-		.review-action-btn {
-			font-size: .78rem;
-			color: var(--slate-500);
-			background: none;
-			border: 1px solid var(--slate-200);
-			padding: 4px 12px;
-			border-radius: 20px;
-			cursor: pointer;
-			transition: all .2s;
-			text-decoration: none;
-		}
-
-		.review-action-btn:hover {
-			border-color: var(--blue-300);
-			color: var(--blue-600);
-			background: var(--blue-50);
-		}
-
-		/* Write review form */
-		.write-review-box {
-			background: var(--slate-50);
-			border: 1px solid var(--slate-200);
-			border-radius: var(--radius-md);
-			padding: 28px;
-			margin-top: 28px;
-		}
-
-		.write-review-box h4 {
-			font-family: var(--font-display);
-			font-size: 1.1rem;
-			margin-bottom: 20px;
-			color: var(--slate-900);
-		}
-
-		.star-rating-input {
-			display: flex;
-			flex-direction: row-reverse;
-			gap: 4px;
-			margin-bottom: 16px;
-		}
-
-		.star-rating-input input {
-			display: none;
-		}
-
-		.star-rating-input label {
-			font-size: 1.5rem;
-			color: var(--slate-300);
-			cursor: pointer;
-			transition: color .15s;
-		}
-
-		.star-rating-input label:hover,
-		.star-rating-input label:hover~label,
-		.star-rating-input input:checked~label {
-			color: var(--gold);
-		}
-
-		.form-control-custom {
-			width: 100%;
-			padding: 10px 14px;
-			border: 1.5px solid var(--slate-200);
-			border-radius: var(--radius-sm);
-			font-family: var(--font-body);
-			font-size: .875rem;
-			color: var(--slate-800);
-			background: var(--white);
-			transition: border-color .2s;
-		}
-
-		.form-control-custom:focus {
-			outline: none;
-			border-color: var(--blue-400);
-			box-shadow: 0 0 0 3px rgba(59, 130, 246, .15);
-		}
-
-		.btn-submit-review {
-			background: linear-gradient(135deg, var(--blue-600), #1D4ED8);
-			color: #fff;
-			border: none;
-			padding: 11px 28px;
-			border-radius: 10px;
-			font-family: var(--font-body);
-			font-weight: 600;
-			font-size: .9rem;
-			cursor: pointer;
-			transition: all .2s;
-		}
-
-		.btn-submit-review:hover {
-			box-shadow: 0 4px 14px rgba(37, 99, 235, .35);
-			transform: translateY(-1px);
-		}
-
-		/* ─── Business Hours Tab ─ */
-		.hours-card {
-			max-width: 560px;
-			margin: 0 auto;
-			background: var(--white);
-			border: 1px solid var(--slate-200);
-			border-radius: var(--radius-md);
-			overflow: hidden;
-		}
-
-		.hours-header {
-			background: linear-gradient(135deg, var(--blue-600), #1D4ED8);
-			color: #fff;
-			padding: 20px 28px;
-			display: flex;
-			align-items: center;
-			gap: 12px;
-		}
-
-		.hours-header h5 {
-			margin: 0;
-			font-size: 1rem;
-			font-weight: 600;
-		}
-
-		.hours-header p {
-			margin: 0;
-			font-size: .82rem;
-			opacity: .8;
-		}
-
-		.hours-row {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			padding: 14px 28px;
-			border-bottom: 1px solid var(--slate-100);
-			font-size: .88rem;
-		}
-
-		.hours-row:last-child {
-			border-bottom: none;
-		}
-
-		.hours-row.today {
-			background: var(--blue-50);
-		}
-
-		.hours-row .day-name {
-			font-weight: 600;
-			color: var(--slate-800);
-		}
-
-		.hours-row.today .day-name {
-			color: var(--blue-600);
-		}
-
-		.hours-row .time-slot {
-			color: var(--slate-600);
-		}
-
-		.badge-open {
-			background: #DCFCE7;
-			color: #16A34A;
-			font-size: .72rem;
-			font-weight: 700;
-			padding: 2px 9px;
-			border-radius: 20px;
-			letter-spacing: .3px;
-		}
-
-		.badge-closed {
-			background: #FEE2E2;
-			color: #DC2626;
-			font-size: .72rem;
-			font-weight: 700;
-			padding: 2px 9px;
-			border-radius: 20px;
-		}
-
-		/* ─── Two-col equal grid inside Overview ── */
-		.two-col-grid {
-			display: grid;
-			grid-template-columns: 1fr 1fr;
-			gap: 32px;
-			margin-bottom: 32px;
-		}
-
-		/* ─── Award cards grid ─ */
-		.awards-grid {
-			display: grid;
-			grid-template-columns: repeat(3, 1fr);
-			gap: 20px;
-			margin-bottom: 32px;
-		}
-
-		.award-card {
-			background: linear-gradient(135deg, var(--blue-50), #FFFBEB);
-			border: 1px solid #FDE68A;
-			border-radius: var(--radius-md);
-			padding: 20px;
-		}
-
-		.award-year-badge {
-			display: inline-block;
-			background: var(--gold);
-			color: #fff;
-			font-size: .72rem;
-			font-weight: 700;
-			letter-spacing: .5px;
-			text-transform: uppercase;
-			padding: 3px 10px;
-			border-radius: 20px;
-			margin-bottom: 10px;
-		}
-
-		.award-card h5 {
-			font-size: .9rem;
-			font-weight: 700;
-			color: var(--slate-900);
-			margin: 0 0 6px;
-		}
-
-		.award-card p {
-			font-size: .82rem;
-			color: var(--slate-600);
-			line-height: 1.6;
-			margin: 0;
-		}
-
-		@media (max-width: 900px) {
-			.doc-profile-card .card-inner {
-				flex-direction: column;
-			}
-
-			.doc-actions-panel {
-				width: 100%;
-				flex-direction: row;
-				flex-wrap: wrap;
-				align-items: flex-start;
-			}
-
-			.two-col-grid {
-				grid-template-columns: 1fr;
-			}
-
-			.awards-grid {
-				grid-template-columns: 1fr 1fr;
-			}
-		}
-
-		@media (max-width: 580px) {
-			.awards-grid {
-				grid-template-columns: 1fr;
-			}
-		}
-
-		/* ─── Location Map Section ─ */
-		.loc-address-card {
-			display: flex;
-			align-items: flex-start;
-			gap: 18px;
-			background: var(--blue-50);
-			border: 1px solid var(--blue-100);
-			border-radius: var(--radius-md);
-			padding: 22px 24px;
-			margin-bottom: 20px;
-		}
-
-		.loc-address-icon {
-			width: 48px;
-			height: 48px;
-			background: var(--blue-600);
-			color: #fff;
-			border-radius: 12px;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			font-size: 1.2rem;
-			flex-shrink: 0;
-			box-shadow: 0 4px 12px rgba(37, 99, 235, .25);
-		}
-
-		.loc-address-body h5 {
-			font-family: var(--font-display);
-			font-size: 1.05rem;
-			font-weight: 600;
-			color: var(--slate-900);
-			margin: 0 0 6px;
-		}
-
-		.loc-address-body p {
-			font-size: .875rem;
-			color: var(--slate-600);
-			line-height: 1.65;
-			margin: 0 0 14px;
-		}
-
-		.loc-address-actions {
-			display: flex;
-			gap: 10px;
-			flex-wrap: wrap;
-		}
-
-		.loc-btn-directions {
-			display: inline-flex;
-			align-items: center;
-			gap: 6px;
-			background: var(--blue-600);
-			color: #fff;
-			font-size: .82rem;
-			font-weight: 600;
-			padding: 8px 16px;
-			border-radius: 8px;
-			text-decoration: none;
-			transition: all .2s;
-			box-shadow: 0 3px 10px rgba(37, 99, 235, .25);
-		}
-
-		.loc-btn-directions:hover {
-			background: #1D4ED8;
-			color: #fff;
-			transform: translateY(-1px);
-		}
-
-		.loc-btn-open {
-			display: inline-flex;
-			align-items: center;
-			gap: 6px;
-			background: var(--white);
-			color: var(--blue-600);
-			font-size: .82rem;
-			font-weight: 600;
-			padding: 8px 16px;
-			border-radius: 8px;
-			text-decoration: none;
-			border: 1.5px solid var(--blue-200);
-			transition: all .2s;
-		}
-
-		.loc-btn-open:hover {
-			background: var(--blue-50);
-			color: var(--blue-600);
-			border-color: var(--blue-400);
-		}
-
-		.loc-map-wrap {
-			border-radius: var(--radius-md);
-			overflow: hidden;
-			border: 1px solid var(--slate-200);
-			box-shadow: var(--shadow-sm);
-		}
-
-		.loc-map-wrap iframe {
-			display: block;
-		}
-
-		/* ─── Responsive nav tabs (hide text on mobile) ─ */
-		@media (max-width: 480px) {
-			.doc-tab-nav .tab-btn {
-				font-size: .75rem;
-				padding: 14px 6px;
-			}
-		}
+			--font-body: 'DM Sans', sans-serif; --font-display: 'Playfair Display', serif;
+		}
+		body { font-family: var(--font-body); color: var(--slate-800); background: var(--slate-50); }
+		.content { padding: 40px 0 60px; }
+		.doc-profile-card { background: var(--white); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); padding: 0; overflow: hidden; border: 1px solid rgba(203, 213, 225, .6); margin-bottom: 24px; }
+		.doc-profile-card::before { content: ''; display: block; height: 5px; background: linear-gradient(90deg, var(--blue-600) 0%, var(--teal-500) 100%); }
+		.doc-profile-card .card-inner { padding: 32px 36px 28px; display: flex; gap: 28px; align-items: center; }
+		.doc-avatar-wrap { flex-shrink: 0; position: relative; }
+		.doc-avatar-wrap img { width: 120px; height: 120px; border-radius: var(--radius-md); object-fit: cover; border: 3px solid var(--white); box-shadow: var(--shadow-md); }
+		.doc-verified-badge { position: absolute; bottom: -6px; right: -6px; background: var(--blue-600); color: #fff; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; font-size: 12px; box-shadow: 0 0 0 3px var(--white); }
+		.doc-info-main { flex: 1; min-width: 0; }
+		.doc-info-main h2 { font-family: var(--font-display); font-size: 1.65rem; font-weight: 600; color: var(--slate-900); margin: 0 0 4px; letter-spacing: -0.3px; }
+		.doc-degrees { font-size: .875rem; color: var(--slate-500); margin-bottom: 8px; }
+		.doc-specialty-tag { display: inline-flex; align-items: center; gap: 5px; background: var(--blue-50); color: var(--blue-600); border: 1px solid var(--blue-100); font-size: .78rem; font-weight: 600; padding: 3px 11px; border-radius: 20px; margin-bottom: 12px; letter-spacing: .3px; text-transform: uppercase; }
+		.doc-actions-panel { flex-shrink: 0; display: flex; flex-direction: column; align-items: stretch; gap: 0; min-width: 230px; padding-left: 28px; border-left: 1px solid var(--slate-200); }
+		.doc-stats { display: flex; flex-direction: column; gap: 12px; width: 100%; margin-bottom: 20px; }
+		.doc-stat { display: flex; align-items: center; gap: 10px; font-size: .875rem; color: var(--slate-700); }
+		.doc-stat i { color: var(--blue-500); font-size: 1rem; width: 20px; text-align: center; flex-shrink: 0; }
+		.doc-stat strong { font-weight: 600; color: var(--slate-900); }
+		.btn-book { display: block; width: 100%; background: linear-gradient(135deg, var(--blue-600) 0%, #1D4ED8 100%); color: var(--white); font-family: var(--font-body); font-size: .9rem; font-weight: 600; padding: 12px 24px; border-radius: 12px; border: none; text-align: center; text-decoration: none; box-shadow: 0 4px 14px rgba(37, 99, 235, .35); transition: all .2s; }
+		.btn-book:hover { color: var(--white); box-shadow: 0 6px 20px rgba(37, 99, 235, .45); transform: translateY(-1px); }
+		.doc-tabs-card { background: var(--white); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); border: 1px solid rgba(203, 213, 225, .6); overflow: hidden; padding: 36px; }
+		.section-title { font-family: var(--font-display); font-size: 1.15rem; font-weight: 600; color: var(--slate-900); margin-bottom: 18px; padding-bottom: 10px; border-bottom: 2px solid var(--blue-100); display: flex; align-items: center; gap: 8px; }
+		.section-title i { color: var(--blue-500); font-size: 1rem; }
+		.about-text { font-size: .9rem; color: var(--slate-600); line-height: 1.75; margin-bottom: 32px; }
+		.two-col-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 32px; }
+		.timeline-section { margin-bottom: 32px; }
+		.timeline { list-style: none; padding: 0; margin: 0; position: relative; }
+		.timeline::before { content: ''; position: absolute; left: 11px; top: 6px; bottom: 0; width: 2px; background: var(--blue-100); }
+		.timeline li { display: flex; gap: 18px; margin-bottom: 20px; position: relative; }
+		.timeline-dot { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: var(--white); border: 2.5px solid var(--blue-500); position: relative; z-index: 1; margin-top: 2px; }
+		.timeline-body h5 { font-size: .9rem; font-weight: 600; color: var(--slate-900); margin: 0 0 3px; }
+		.timeline-body .degree { font-size: .82rem; font-weight: 600; color: var(--blue-600); background: var(--blue-50); padding: 1px 8px; border-radius: 4px; display: inline-block; margin-bottom: 3px; }
+		.timeline-body .year { font-size: .8rem; color: var(--slate-500); }
+		.awards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 32px; }
+		.award-card { background: linear-gradient(135deg, var(--blue-50), #FFFBEB); border: 1px solid #FDE68A; border-radius: var(--radius-md); padding: 20px; }
+		.award-year-badge { display: inline-block; background: var(--gold); color: #fff; font-size: .72rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; margin-bottom: 10px; }
+		.award-card h5 { font-size: .9rem; font-weight: 700; margin: 0 0 6px; }
+		.award-card p { font-size: .82rem; color: var(--slate-600); margin: 0; }
+		.spec-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+		.spec-chip { background: linear-gradient(135deg, var(--blue-50), #F0FDF4); color: var(--blue-700); font-size: .82rem; font-weight: 600; padding: 6px 14px; border-radius: 20px; border: 1px solid var(--blue-100); }
+		.loc-map-wrap { border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--slate-200); box-shadow: var(--shadow-sm); }
+		@media (max-width: 900px) { .doc-profile-card .card-inner { flex-direction: column; } .doc-actions-panel { width: 100%; flex-direction: row; flex-wrap: wrap; } .two-col-grid { grid-template-columns: 1fr; } .awards-grid { grid-template-columns: 1fr 1fr; } }
+		@media (max-width: 580px) { .awards-grid { grid-template-columns: 1fr; } }
 	</style>
 </head>
-
 <body>
-	<!-- ─── Header (kept from original, stripped CDN scripts) ─── -->
-	<header class="header header-default inner-header">
-		<div class="container">
-			<nav class="navbar navbar-expand-lg header-nav">
-				<div class="navbar-header">
-					<a id="mobile_btn" href="#">
-						<i class="fa-solid fa-bars"></i>
-					</a>
-					<a href="index.html" class="navbar-brand logo">
-						<img src="assets/img/logo.svg" class="img-fluid" alt="Logo">
-					</a>
-				</div>
-				<div class="header-menu">
-					<div class="main-menu-wrapper">
-						<div class="menu-header">
-							<a href="index.html" class="menu-logo">
-								<img src="assets/img/logo.svg" class="img-fluid" alt="Logo">
-							</a>
-							<a id="menu_close" class="menu-close" href="#">
-								<i class="fas fa-times"></i>
-							</a>
-						</div>
-						<ul class="main-nav">
-							<li><a href="index.html" class="main-menu">Home</a></li>
-							<li><a href="#" class="main-menu">Doctors</a></li>
-							<li class="active"><a href="#" class="main-menu">Patients</a></li>
-							<li><a href="#" class="main-menu">Pharmacy</a></li>
-							<li><a href="#" class="main-menu">Pages</a></li>
-						</ul>
-					</div>
-				</div>
-				<ul class="nav header-navbar-rht">
-					<li class="dropdown has-arrow logged-item">
-						<a href="#" data-bs-toggle="dropdown">
-							<span class="user-img">
-								<img class="rounded-circle" src="assets/img/doctors-dashboard/profile-06.jpg"
-									alt="User">
-							</span>
-						</a>
-						<div class="dropdown-menu dropdown-menu-end">
-							<div class="user-header">
-								<div class="avatar">
-									<img src="assets/img/doctors-dashboard/profile-06.jpg" alt="User"
-										class="avatar-img rounded-circle">
-								</div>
-								<div class="user-text">
-									<h6>Hendrita Hayes</h6>
-									<p class="text-muted mb-0">Patient</p>
-								</div>
-							</div>
-							<a class="dropdown-item" href="patient-dashboard.html">Dashboard</a>
-							<a class="dropdown-item" href="profile-settings.html">Profile Settings</a>
-							<a class="dropdown-item" href="login.html">Logout</a>
-						</div>
-					</li>
-				</ul>
-			</nav>
-		</div>
-	</header>
+    <?php require_once 'include/header.php'; ?>
 
-	<!-- ─── Breadcrumb ─── -->
-	<div class="breadcrumb-bar">
+    <div class="content">
 		<div class="container">
-			<div class="row align-items-center inner-banner">
-				<div class="col-md-12 col-12 text-center">
-					<nav aria-label="breadcrumb" class="page-breadcrumb">
-						<ol class="breadcrumb">
-							<li class="breadcrumb-item"><a href="index.html"><i class="isax isax-home-15"></i></a></li>
-							<li class="breadcrumb-item" aria-current="page">Patient</li>
-							<li class="breadcrumb-item active">Doctor Profile 2</li>
-						</ol>
-						<h2 class="breadcrumb-title">Doctor Profile</h2>
-					</nav>
-				</div>
-			</div>
-		</div>
-		<div class="breadcrumb-bg">
-			<img src="assets/img/bg/breadcrumb-bg-01.png" alt="" class="breadcrumb-bg-01">
-			<img src="assets/img/bg/breadcrumb-bg-02.png" alt="" class="breadcrumb-bg-02">
-			<img src="assets/img/bg/breadcrumb-icon.png" alt="" class="breadcrumb-bg-03">
-			<img src="assets/img/bg/breadcrumb-icon.png" alt="" class="breadcrumb-bg-04">
-		</div>
-	</div>
-
-	<!-- ─── Page Content ─── -->
-	<div class="content">
-		<div class="container">
-
-			<!-- ═══ DOCTOR PROFILE CARD ═══ -->
 			<div class="doc-profile-card">
 				<div class="card-inner">
-
-					<!-- Avatar -->
 					<div class="doc-avatar-wrap">
-						<img src="assets/img/doctors/doctor-thumb-02.jpg" alt="Dr. Darren Elder">
-						<div class="doc-verified-badge" title="Verified Doctor">
-							<i class="fas fa-check"></i>
-						</div>
+						<img src="<?= asset('assets/img/doctors/'.$doctor['photo']) ?>" alt="<?= htmlspecialchars($doctor['name']) ?>">
+						<div class="doc-verified-badge" title="Verified Doctor"><i class="fas fa-check"></i></div>
 					</div>
-
-					<!-- Main Info -->
 					<div class="doc-info-main">
-						<h2>Dr. Darren Elder</h2>
-						<p class="doc-degrees">BDS, MDS &mdash; Oral &amp; Maxillofacial Surgery</p>
+						<h2><?= htmlspecialchars($doctor['name']) ?></h2>
+						<p class="doc-degrees"><?= htmlspecialchars($doctor['designation']) ?></p>
+                        <?php if(!empty($doctor['specialty'])): ?>
 						<span class="doc-specialty-tag">
-							<i class="fas fa-tooth"></i> Dentist
+							<?= htmlspecialchars($doctor['specialty']) ?>
 						</span>
-
-
-						<div class="doc-service-chips" style="margin-top:14px;">
-							<span>Dental Fillings</span>
-							<span>Teeth Whitening</span>
-							<span>Root Canal</span>
-						</div>
+                        <?php endif; ?>
 					</div>
 
-					<!-- Right Actions Panel -->
 					<div class="doc-actions-panel">
 						<div class="doc-stats">
 							<div class="doc-stat">
 								<i class="far fa-thumbs-up"></i>
-								<div><strong>99%</strong> Satisfaction</div>
+								<div><strong><?= (int)$doctor['satisfaction_rate'] ?>%</strong> Satisfaction</div>
 							</div>
 							<div class="doc-stat">
 								<i class="far fa-comment"></i>
-								<div><strong>35</strong> Feedbacks</div>
+								<div><strong><?= (int)$doctor['feedback_count'] ?></strong> Feedbacks</div>
 							</div>
 							<div class="doc-stat">
 								<i class="fas fa-map-marker-alt"></i>
-								<div>Newyork, USA</div>
+								<div><?= htmlspecialchars($doctor['location'] ?: 'Nagpur, India') ?></div>
 							</div>
 							<div class="doc-stat">
 								<i class="far fa-money-bill-alt"></i>
-								<div><strong>$100</strong> / hour</div>
+								<div><strong><?= htmlspecialchars($doctor['consultation_fee'] ?: 'Contact Us') ?></strong></div>
 							</div>
 						</div>
-
-						<a href="booking.html" class="btn-book" style="margin-top:8px;display:flex;align-items:center;justify-content:center;gap:8px;">
+						<a href="<?= SITE_URL ?>/booking.html" class="btn-book" style="margin-top:8px;display:flex;align-items:center;justify-content:center;gap:8px;">
 							<i class="fas fa-calendar-check"></i> Book Appointment
 						</a>
 					</div>
-
 				</div>
 			</div>
-			<!-- ═══ END DOCTOR PROFILE CARD ═══ -->
 
-			<!-- ═══ TABS CARD ═══ -->
 			<div class="doc-tabs-card">
-
-				<!-- Tab Nav -->
-				<div class="doc-tab-nav" role="tablist">
-					<button class="tab-btn active" data-tab="overview" role="tab" aria-selected="true">
-						<i class="fas fa-user-md" style="margin-right:6px"></i>Overview
-					</button>
-					<button class="tab-btn" data-tab="locations" role="tab" aria-selected="false">
-						<i class="fas fa-map-marker-alt" style="margin-right:6px"></i>Locations
-					</button>
-					<button class="tab-btn" data-tab="reviews" role="tab" aria-selected="false">
-						<i class="fas fa-star" style="margin-right:6px"></i>Reviews
-					</button>
-					<button class="tab-btn" data-tab="business_hours" role="tab" aria-selected="false">
-						<i class="fas fa-clock" style="margin-right:6px"></i>Business Hours
-					</button>
-				</div>
-
-				<!-- Tab Content -->
 				<div class="tab-content-area">
-
-					<!-- ─── OVERVIEW TAB ─── -->
-					<div id="tab-overview" class="tab-pane active">
-
-						<!-- About -->
+					<div id="tab-overview" class="tab-pane active" style="display:block;">
 						<h3 class="section-title"><i class="fas fa-info-circle"></i>About Me</h3>
-						<p class="about-text">
-							Dr. Darren Elder is a highly experienced Oral &amp; Maxillofacial Surgeon with over 18 years
-							of clinical practice in advanced dental care. Specialising in implant dentistry, corrective
-							jaw surgery, and cosmetic procedures, he has treated more than 4,000 patients across two
-							major clinics in New York. Dr. Elder is known for his patient-centred approach and
-							commitment to pain-free treatments using the latest minimally invasive techniques. He is a
-							member of the American Dental Association and regularly presents at international dental
-							conferences.
-						</p>
+						<p class="about-text"><?= !empty($doctor['bio']) ? nl2br(htmlspecialchars($doctor['bio'])) : 'Biography coming soon.' ?></p>
 
-						<!-- Education + Experience side by side -->
 						<div class="two-col-grid">
 							<div>
 								<h3 class="section-title"><i class="fas fa-graduation-cap"></i>Education</h3>
 								<div class="timeline-section">
 									<ul class="timeline">
-										<li>
-											<div class="timeline-dot"></div>
-											<div class="timeline-body">
-												<h5>American Dental Medical University</h5>
-												<span class="degree">BDS</span>
-												<div class="year">1998 – 2003</div>
-											</div>
-										</li>
-										<li>
-											<div class="timeline-dot"></div>
-											<div class="timeline-body">
-												<h5>American Dental Medical University</h5>
-												<span class="degree">MDS – Oral &amp; Maxillofacial Surgery</span>
-												<div class="year">2003 – 2005</div>
-											</div>
-										</li>
+                                        <?php if(!empty($education)): ?>
+                                            <?php foreach($education as $edu): ?>
+                                            <li>
+                                                <div class="timeline-dot"></div>
+                                                <div class="timeline-body">
+                                                    <h5><?= htmlspecialchars($edu['title']) ?></h5>
+                                                    <span class="degree"><?= htmlspecialchars($edu['degree']) ?></span>
+                                                    <div class="year"><?= htmlspecialchars($edu['year']) ?></div>
+                                                </div>
+                                            </li>
+                                            <?php endforeach; ?>
+                                        <?php else: ?>
+                                            <li><p>Education history not updated yet.</p></li>
+                                        <?php endif; ?>
 									</ul>
 								</div>
 							</div>
 							<div>
-								<h3 class="section-title"><i class="fas fa-briefcase"></i>Work &amp; Experience</h3>
+								<h3 class="section-title"><i class="fas fa-briefcase"></i>Work & Experience</h3>
 								<div class="timeline-section">
 									<ul class="timeline">
-										<li>
-											<div class="timeline-dot"></div>
-											<div class="timeline-body">
-												<h5>Glowing Smiles Family Dental Clinic</h5>
-												<div class="year">2010 – Present &nbsp;<span
-														style="color:var(--green-500);font-weight:700">● Active</span>
-												</div>
-											</div>
-										</li>
-										<li>
-											<div class="timeline-dot"></div>
-											<div class="timeline-body">
-												<h5>Comfort Care Dental Clinic</h5>
-												<div class="year">2007 – 2010 &nbsp;(3 years)</div>
-											</div>
-										</li>
-										<li>
-											<div class="timeline-dot"></div>
-											<div class="timeline-body">
-												<h5>Dream Smile Dental Practice</h5>
-												<div class="year">2005 – 2007 &nbsp;(2 years)</div>
-											</div>
-										</li>
+                                        <?php if(!empty($experience)): ?>
+                                            <?php foreach($experience as $exp): ?>
+                                            <li>
+                                                <div class="timeline-dot"></div>
+                                                <div class="timeline-body">
+                                                    <h5><?= htmlspecialchars($exp['title']) ?></h5>
+                                                    <div class="year"><?= htmlspecialchars($exp['year']) ?></div>
+                                                </div>
+                                            </li>
+                                            <?php endforeach; ?>
+                                        <?php else: ?>
+                                            <li><p>Experience history not updated yet.</p></li>
+                                        <?php endif; ?>
 									</ul>
 								</div>
 							</div>
 						</div>
 
-						<!-- Awards full width -->
 						<h3 class="section-title"><i class="fas fa-trophy"></i>Awards</h3>
 						<div class="awards-grid">
-							<div class="award-card">
-								<div class="award-year-badge">July 2023</div>
-								<h5>Humanitarian Award</h5>
-								<p>Recognised for outstanding contribution to community dental health and pro-bono
-									services across underserved neighbourhoods in New York.</p>
-							</div>
-							<div class="award-card">
-								<div class="award-year-badge">March 2011</div>
-								<h5>Certificate for International Volunteer Service</h5>
-								<p>Awarded for voluntary dental care missions in three developing countries over five
-									years.</p>
-							</div>
-							<div class="award-card">
-								<div class="award-year-badge">May 2008</div>
-								<h5>Dental Professional of the Year</h5>
-								<p>Recognised by the Northeast Dental Society for exceptional patient outcomes and
-									innovation in implant techniques.</p>
-							</div>
+                            <?php if(!empty($awards)): ?>
+                                <?php foreach($awards as $awd): ?>
+                                <div class="award-card">
+                                    <div class="award-year-badge"><?= htmlspecialchars($awd['year']) ?></div>
+                                    <h5><?= htmlspecialchars($awd['title']) ?></h5>
+                                    <p><?= htmlspecialchars($awd['desc']) ?></p>
+                                </div>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <p>No awards listed yet.</p>
+                            <?php endif; ?>
 						</div>
 
-						<!-- Services + Specializations side by side -->
-						<div class="two-col-grid" style="margin-top:8px">
-							<div>
-								<h3 class="section-title"><i class="fas fa-stethoscope"></i>Services</h3>
-								<div class="services-grid">
-									<span class="service-chip">Tooth Cleaning</span>
-									<span class="service-chip">Root Canal Therapy</span>
-									<span class="service-chip">Dental Implants</span>
-									<span class="service-chip">Composite Bonding</span>
-									<span class="service-chip">Fissure Sealants</span>
-									<span class="service-chip">Surgical Extractions</span>
-									<span class="service-chip">Teeth Whitening</span>
-									<span class="service-chip">Dental Fillings</span>
-								</div>
-							</div>
-							<div>
-								<h3 class="section-title"><i class="fas fa-microscope"></i>Specializations</h3>
-								<div class="spec-grid">
-									<span class="spec-chip">Children Care</span>
-									<span class="spec-chip">Dental Care</span>
-									<span class="spec-chip">Oral &amp; Maxillofacial Surgery</span>
-									<span class="spec-chip">Orthodontics</span>
-									<span class="spec-chip">Periodontology</span>
-									<span class="spec-chip">Prosthodontics</span>
-								</div>
-							</div>
-						</div>
-
-					</div>
-					<!-- ─── END OVERVIEW ─── -->
-
-					<!-- ─── LOCATIONS TAB ─── -->
-					<div id="tab-locations" class="tab-pane">
-						<h3 class="section-title"><i class="fas fa-map-marker-alt"></i>Clinic Location</h3>
-
-						<!-- Address Card -->
-						<div class="loc-address-card">
-							<div class="loc-address-icon">
-								<i class="fas fa-clinic-medical"></i>
-							</div>
-							<div class="loc-address-body">
-								<h5>Dr. Darren Elder's Clinic</h5>
-								<p>27, Chandrashekhar Azad Square, Beside Hotel Al Zam Zam,<br>C A Road, Gandhibagh,
-									Nagpur – 440002, Maharashtra</p>
-								<div class="loc-address-actions">
-									<a href="https://www.google.com/maps/search/27+Chandrashekhar+Azad+Square+CA+Road+Gandhibagh+Nagpur+440002"
-										target="_blank" class="loc-btn-directions">
-										<i class="fas fa-directions"></i> Get Directions
-									</a>
-									<a href="https://www.google.com/maps/search/27+Chandrashekhar+Azad+Square+CA+Road+Gandhibagh+Nagpur+440002"
-										target="_blank" class="loc-btn-open">
-										<i class="fas fa-external-link-alt"></i> Open in Google Maps
-									</a>
-								</div>
-							</div>
-						</div>
-
-						<!-- Embedded Map -->
+                        <h3 class="section-title"><i class="fas fa-microscope"></i>Specializations</h3>
+                        <div class="spec-grid" style="margin-bottom: 32px;">
+                            <?php if(!empty($specializations)): ?>
+                                <?php foreach($specializations as $spec): ?>
+                                    <span class="spec-chip"><?= htmlspecialchars(trim($spec)) ?></span>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <p>No specializations listed yet.</p>
+                            <?php endif; ?>
+                        </div>
+                        
+                        <?php if(!empty($doctor['map_iframe'])): ?>
+                        <h3 class="section-title"><i class="fas fa-map-marker-alt"></i>Hospital Location</h3>
 						<div class="loc-map-wrap">
-							<iframe
-								src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3721.271!2d79.08!3d21.145!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjHCsDA4JzQyLjAiTiA3OcKwMDQnNDguMCJF!5e0!3m2!1sen!2sin!4v1234567890&q=Chandrashekhar+Azad+Square,+CA+Road,+Gandhibagh,+Nagpur,+Maharashtra+440002"
-								width="100%" height="420" style="border:0; border-radius: var(--radius-md);"
-								allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-								title="Clinic Location – Nagpur">
-							</iframe>
+							<?= $doctor['map_iframe'] ?>
 						</div>
+                        <?php endif; ?>
 					</div>
-					<!-- ─── END LOCATIONS ─── -->
-
-					<!-- ─── REVIEWS TAB ─── -->
-					<div id="tab-reviews" class="tab-pane">
-						<h3 class="section-title"><i class="fas fa-star"></i>Patient Reviews</h3>
-
-						<!-- Summary -->
-						<div class="review-summary">
-							<div class="review-score">
-								<div class="big-num">4.2</div>
-								<div class="big-stars">
-									<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
-										class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-								</div>
-								<div class="total">35 Reviews</div>
-							</div>
-							<div class="rating-bars">
-								<div class="rating-bar-row"><span>5 ★</span>
-									<div class="bar-track">
-										<div class="bar-fill" style="width:65%"></div>
-									</div><span>65%</span>
-								</div>
-								<div class="rating-bar-row"><span>4 ★</span>
-									<div class="bar-track">
-										<div class="bar-fill" style="width:20%"></div>
-									</div><span>20%</span>
-								</div>
-								<div class="rating-bar-row"><span>3 ★</span>
-									<div class="bar-track">
-										<div class="bar-fill" style="width:10%"></div>
-									</div><span>10%</span>
-								</div>
-								<div class="rating-bar-row"><span>2 ★</span>
-									<div class="bar-track">
-										<div class="bar-fill" style="width:3%"></div>
-									</div><span>3%</span>
-								</div>
-								<div class="rating-bar-row"><span>1 ★</span>
-									<div class="bar-track">
-										<div class="bar-fill" style="width:2%"></div>
-									</div><span>2%</span>
-								</div>
-							</div>
-						</div>
-
-						<!-- Review 1 -->
-						<div class="review-card">
-							<div class="review-header">
-								<img src="assets/img/patients/patient.jpg" alt="Richard Wilson" class="review-avatar">
-								<div class="review-meta" style="flex:1">
-									<h6>Richard Wilson</h6>
-									<div class="rdate">Reviewed 2 days ago</div>
-								</div>
-								<div>
-									<span class="review-stars">
-										<i class="fas fa-star"></i><i class="fas fa-star"></i><i
-											class="fas fa-star"></i><i class="fas fa-star"></i><i
-											class="fas fa-star empty"></i>
-									</span>
-								</div>
-							</div>
-							<div class="review-recommend"><i class="far fa-thumbs-up"></i> Recommends the doctor</div>
-							<p class="review-text">Dr. Elder was incredibly thorough and made me feel at ease from the
-								very first appointment. He explained every step of the procedure and the results have
-								been fantastic. I've recommended him to all my family members. Truly a top-tier dental
-								professional.</p>
-							<div class="review-actions">
-								<a href="#" class="review-action-btn"><i class="fas fa-reply"
-										style="margin-right:4px"></i>Reply</a>
-								<a href="#" class="review-action-btn"><i class="far fa-thumbs-up"
-										style="margin-right:4px"></i>Helpful (12)</a>
-							</div>
-						</div>
-
-						<!-- Review 2 with reply -->
-						<div class="review-card">
-							<div class="review-header">
-								<img src="assets/img/patients/patient1.jpg" alt="Charlene Reed" class="review-avatar">
-								<div class="review-meta" style="flex:1">
-									<h6>Charlene Reed</h6>
-									<div class="rdate">Reviewed 3 days ago</div>
-								</div>
-								<div>
-									<span class="review-stars">
-										<i class="fas fa-star"></i><i class="fas fa-star"></i><i
-											class="fas fa-star"></i><i class="fas fa-star"></i><i
-											class="fas fa-star"></i>
-									</span>
-								</div>
-							</div>
-							<div class="review-recommend"><i class="far fa-thumbs-up"></i> Recommends the doctor</div>
-							<p class="review-text">I had my dental implant surgery with Dr. Elder and the experience was
-								seamless. Very professional staff, clean clinic, and painless procedure. Follow-ups were
-								prompt and thorough. Five stars without hesitation.</p>
-							<div class="review-actions">
-								<a href="#" class="review-action-btn"><i class="fas fa-reply"
-										style="margin-right:4px"></i>Reply</a>
-								<a href="#" class="review-action-btn"><i class="far fa-thumbs-up"
-										style="margin-right:4px"></i>Helpful (8)</a>
-							</div>
-							<!-- Doctor Reply -->
-							<div
-								style="margin-top:16px; padding:16px; background:var(--blue-50); border-radius:10px; border-left:3px solid var(--blue-500);">
-								<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
-									<img src="assets/img/doctors/doctor-thumb-02.jpg" alt="Dr. Elder"
-										style="width:32px;height:32px;border-radius:50%;object-fit:cover;">
-									<span style="font-weight:700;font-size:.85rem;color:var(--blue-700,#1D4ED8)">Dr.
-										Darren Elder</span>
-									<span style="font-size:.75rem;color:var(--slate-400)">1 day ago</span>
-								</div>
-								<p style="font-size:.84rem;color:var(--slate-600);margin:0">Thank you so much for your
-									kind words, Charlene! It was a pleasure treating you. Wishing you continued great
-									dental health!</p>
-							</div>
-						</div>
-
-						<!-- Review 3 -->
-						<div class="review-card">
-							<div class="review-header">
-								<img src="assets/img/patients/patient2.jpg" alt="Travis Trimble" class="review-avatar">
-								<div class="review-meta" style="flex:1">
-									<h6>Travis Trimble</h6>
-									<div class="rdate">Reviewed 4 days ago</div>
-								</div>
-								<div>
-									<span class="review-stars">
-										<i class="fas fa-star"></i><i class="fas fa-star"></i><i
-											class="fas fa-star"></i><i class="fas fa-star"></i><i
-											class="fas fa-star empty"></i>
-									</span>
-								</div>
-							</div>
-							<p class="review-text">Good experience overall. The waiting time was a bit long but the
-								consultation itself was very informative. Dr. Elder took the time to explain all the
-								treatment options clearly and didn't rush through the appointment at all.</p>
-							<div class="review-actions">
-								<a href="#" class="review-action-btn"><i class="fas fa-reply"
-										style="margin-right:4px"></i>Reply</a>
-								<a href="#" class="review-action-btn"><i class="far fa-thumbs-up"
-										style="margin-right:4px"></i>Helpful (5)</a>
-							</div>
-						</div>
-
-						<div style="text-align:center; margin: 20px 0 8px;">
-							<a href="#"
-								style="background:var(--blue-50);color:var(--blue-600);border:1px solid var(--blue-200);padding:10px 28px;border-radius:10px;font-weight:600;font-size:.875rem;text-decoration:none;">
-								Show all 35 reviews
-							</a>
-						</div>
-
-						<!-- Write Review -->
-						<div class="write-review-box">
-							<h4>Write a Review for <strong>Dr. Darren Elder</strong></h4>
-							<div style="margin-bottom:16px">
-								<label
-									style="font-size:.85rem;font-weight:600;color:var(--slate-700);display:block;margin-bottom:8px">Your
-									Rating</label>
-								<div class="star-rating-input">
-									<input type="radio" id="s5" name="rating" value="5"><label for="s5">&#9733;</label>
-									<input type="radio" id="s4" name="rating" value="4"><label for="s4">&#9733;</label>
-									<input type="radio" id="s3" name="rating" value="3"><label for="s3">&#9733;</label>
-									<input type="radio" id="s2" name="rating" value="2"><label for="s2">&#9733;</label>
-									<input type="radio" id="s1" name="rating" value="1"><label for="s1">&#9733;</label>
-								</div>
-							</div>
-							<div style="margin-bottom:14px">
-								<label
-									style="font-size:.85rem;font-weight:600;color:var(--slate-700);display:block;margin-bottom:6px">Review
-									Title</label>
-								<input type="text" class="form-control-custom"
-									placeholder="Summarise your experience in one sentence…">
-							</div>
-							<div style="margin-bottom:18px">
-								<label
-									style="font-size:.85rem;font-weight:600;color:var(--slate-700);display:block;margin-bottom:6px">Your
-									Review</label>
-								<textarea class="form-control-custom" rows="4" maxlength="500"
-									placeholder="Tell others about your experience with Dr. Darren Elder…"
-									id="reviewText"></textarea>
-								<div style="font-size:.75rem;color:var(--slate-400);margin-top:6px;text-align:right">
-									<span id="charCount">500</span> characters remaining</div>
-							</div>
-							<div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
-								<input type="checkbox" id="agree" style="accent-color:var(--blue-600)">
-								<label for="agree" style="font-size:.83rem;color:var(--slate-600)">I agree to the <a
-										href="#" style="color:var(--blue-600)">Terms &amp; Conditions</a></label>
-							</div>
-							<button class="btn-submit-review"><i class="fas fa-paper-plane"
-									style="margin-right:7px"></i>Submit Review</button>
-						</div>
-					</div>
-					<!-- ─── END REVIEWS ─── -->
-
-					<!-- ─── BUSINESS HOURS TAB ─── -->
-					<div id="tab-business_hours" class="tab-pane">
-						<h3 class="section-title"><i class="fas fa-clock"></i>Business Hours</h3>
-
-						<div class="hours-card">
-							<div class="hours-header">
-								<div>
-									<h5>Dr. Darren Elder – Clinic Schedule</h5>
-									<p>Glowing Smiles Family Dental Clinic, New York</p>
-								</div>
-							</div>
-
-							<div class="hours-row today">
-								<span class="day-name">Today &ndash; Thursday <span class="badge-open"
-										style="margin-left:8px">Open Now</span></span>
-								<span class="time-slot">07:00 AM &ndash; 09:00 PM</span>
-							</div>
-							<div class="hours-row">
-								<span class="day-name">Monday</span>
-								<span class="time-slot">07:00 AM &ndash; 09:00 PM</span>
-							</div>
-							<div class="hours-row">
-								<span class="day-name">Tuesday</span>
-								<span class="time-slot">07:00 AM &ndash; 09:00 PM</span>
-							</div>
-							<div class="hours-row">
-								<span class="day-name">Wednesday</span>
-								<span class="time-slot">07:00 AM &ndash; 09:00 PM</span>
-							</div>
-							<div class="hours-row">
-								<span class="day-name">Thursday</span>
-								<span class="time-slot">07:00 AM &ndash; 09:00 PM</span>
-							</div>
-							<div class="hours-row">
-								<span class="day-name">Friday</span>
-								<span class="time-slot">07:00 AM &ndash; 09:00 PM</span>
-							</div>
-							<div class="hours-row">
-								<span class="day-name">Saturday</span>
-								<span class="time-slot">09:00 AM &ndash; 05:00 PM</span>
-							</div>
-							<div class="hours-row" style="background:#FFF5F5">
-								<span class="day-name" style="color:var(--red-500)">Sunday <span class="badge-closed"
-										style="margin-left:8px">Closed</span></span>
-								<span class="time-slot">&mdash;</span>
-							</div>
-						</div>
-
-						<!-- Holiday / Note -->
-						<div
-							style="margin-top:20px;max-width:560px;margin-left:auto;margin-right:auto;background:var(--blue-50);border:1px solid var(--blue-100);border-radius:10px;padding:16px 20px;display:flex;gap:12px;align-items:flex-start;">
-							<i class="fas fa-info-circle"
-								style="color:var(--blue-500);margin-top:2px;flex-shrink:0"></i>
-							<p style="margin:0;font-size:.84rem;color:var(--slate-700)">
-								<strong>Public Holidays:</strong> The clinic will be closed on all US federal public
-								holidays. Patients are advised to book at least 48 hours in advance for weekend
-								appointments. Emergency dental care is available by calling <strong>+1 (555)
-									012-3456</strong>.
-							</p>
-						</div>
-					</div>
-					<!-- ─── END BUSINESS HOURS ─── -->
-
 				</div>
 			</div>
-			<!-- ═══ END TABS CARD ═══ -->
-
 		</div>
 	</div>
-	<!-- ─── End Page Content ─── -->
 
-	<!-- ─── Footer (kept from original) ─── -->
-	<footer class="footer inner-footer">
-		<div class="footer-top">
-			<div class="container">
-				<div class="row">
-					<div class="col-xl-8">
-						<div class="row">
-							<div class="col-lg-3 col-md-3 col-sm-6">
-								<div class="footer-widget footer-menu">
-									<h6 class="footer-title">Company</h6>
-									<ul>
-										<li><a href="about-us.html">About</a></li>
-										<li><a href="search.html">Features</a></li>
-										<li><a href="#">Works</a></li>
-										<li><a href="#">Careers</a></li>
-										<li><a href="contact-us.html">Locations</a></li>
-									</ul>
-								</div>
-							</div>
-							<div class="col-lg-3 col-md-3 col-sm-6">
-								<div class="footer-widget footer-menu">
-									<h6 class="footer-title">Treatments</h6>
-									<ul>
-										<li><a href="search.html">Dental</a></li>
-										<li><a href="search.html">Cardiac</a></li>
-										<li><a href="search.html">Spinal Cord</a></li>
-										<li><a href="search.html">Hair Growth</a></li>
-										<li><a href="search.html">Anemia &amp; Disorder</a></li>
-									</ul>
-								</div>
-							</div>
-							<div class="col-lg-3 col-md-3 col-sm-6">
-								<div class="footer-widget footer-menu">
-									<h6 class="footer-title">Specialities</h6>
-									<ul>
-										<li><a href="search.html">Transplant</a></li>
-										<li><a href="search.html">Cardiologist</a></li>
-										<li><a href="search.html">Oncology</a></li>
-										<li><a href="search.html">Pediatrics</a></li>
-										<li><a href="search.html">Gynacology</a></li>
-									</ul>
-								</div>
-							</div>
-							<div class="col-lg-3 col-md-3 col-sm-6">
-								<div class="footer-widget footer-menu">
-									<h6 class="footer-title">Utilities</h6>
-									<ul>
-										<li><a href="pricing.html">Pricing</a></li>
-										<li><a href="contact-us.html">Contact</a></li>
-										<li><a href="#">Request A Quote</a></li>
-										<li><a href="#">Premium Membership</a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-4 col-md-7">
-						<div class="footer-widget">
-							<h6 class="footer-title">Newsletter</h6>
-							<p class="mb-2 text-dark">Subscribe &amp; Stay Updated from Doccure</p>
-							<div class="subscribe-input">
-								<form action="#">
-									<input type="email" class="form-control" placeholder="Enter Email Address">
-									<button type="submit"
-										class="btn btn-md btn-primary-gradient d-inline-flex align-items-center">
-										<i class="isax isax-send-25 me-1"></i>Send
-									</button>
-								</form>
-							</div>
-							<div class="social-icon">
-								<h6 class="mb-3 footer-title">Connect With Us</h6>
-								<ul>
-									<li><a href="#"><i class="fa-brands fa-facebook"></i></a></li>
-									<li><a href="#"><i class="fa-brands fa-x-twitter"></i></a></li>
-									<li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
-									<li><a href="#"><i class="fa-brands fa-linkedin"></i></a></li>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="footer-bottom">
-			<div class="container">
-				<div class="copyright">
-					<div class="copyright-text mb-0">
-						<p class="mb-0">Copyright &copy; 2025 Doccure. All Rights Reserved</p>
-					</div>
-					<div class="copyright-menu">
-						<ul class="policy-menu mb-0">
-							<li><a href="#">Legal Notice</a></li>
-							<li><a href="privacy-policy.html">Privacy Policy</a></li>
-							<li><a href="#">Refund Policy</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	</footer>
-
-	<!-- ─── Scripts ─── -->
-	<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-	<script src="assets/js/jquery-3.7.1.min.js"></script>
-	<script src="assets/js/bootstrap.bundle.min.js"></script>
-	<script src="assets/js/script.js"></script>
-
-	<script>
-		/* ─── Tab switching (runs after DOM + all scripts are ready) ── */
-		window.addEventListener('load', function () {
-
-			const tabBtns = document.querySelectorAll('.tab-btn');
-			const tabPanes = document.querySelectorAll('.tab-pane');
-
-			function activateTab(tabId) {
-				// hide all panes
-				tabPanes.forEach(p => {
-					p.classList.remove('active', 'show', 'fade');
-					p.style.display = 'none';
-				});
-				// deactivate all buttons
-				tabBtns.forEach(b => {
-					b.classList.remove('active');
-					b.setAttribute('aria-selected', 'false');
-				});
-				// show target pane
-				const target = document.getElementById('tab-' + tabId);
-				if (target) {
-					target.style.display = 'block';
-					target.classList.add('active');
-				}
-				// activate button
-				const btn = document.querySelector('.tab-btn[data-tab="' + tabId + '"]');
-				if (btn) {
-					btn.classList.add('active');
-					btn.setAttribute('aria-selected', 'true');
-				}
-			}
-
-			// Bind click on each tab button
-			tabBtns.forEach(btn => {
-				btn.addEventListener('click', function (e) {
-					e.preventDefault();
-					e.stopPropagation();
-					activateTab(this.dataset.tab);
-				});
-			});
-
-			// Init — show overview by default
-			activateTab('overview');
-		});
-
-		/* ─── Review char counter ─── */
-		window.addEventListener('load', function () {
-			const textArea = document.getElementById('reviewText');
-			const charCount = document.getElementById('charCount');
-			if (textArea && charCount) {
-				textArea.addEventListener('input', function () {
-					charCount.textContent = 500 - this.value.length;
-				});
-			}
-		});
-	</script>
+    <?php require_once 'include/footer.php'; ?>
+    <script src="<?= asset('assets/js/jquery-3.7.1.min.js') ?>"></script>
+	<script src="<?= asset('assets/js/bootstrap.bundle.min.js') ?>"></script>
 </body>
-
 </html>

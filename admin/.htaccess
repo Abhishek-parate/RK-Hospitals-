@@ -1,4 +1,18 @@
+# Root .htaccess
+Options -Indexes
 RewriteEngine On
+
+# 1. DOCTOR CLEAN URL
+# /doctor/dr-manan-gogia → single-doctor.php?slug=dr-manan-gogia
+RewriteRule ^doctor/([a-zA-Z0-9_-]+)$ single-doctor.php?slug=$1 [L,QSA]
+
+# 2. BLOG CLEAN URL
+RewriteRule ^blog/([a-zA-Z0-9_-]+)$ blog-details.php?slug=$1 [L,QSA]
+
+# 3. SERVICE CLEAN URL
+RewriteRule ^service/([a-zA-Z0-9_-]+)$ single-service.php?slug=$1 [L,QSA]
+
+# 4. INTERNAL PHP HANDLING
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^([^\.]+)$ $1.php [NC,L]
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^([^/]+)$ $1.php [L]
