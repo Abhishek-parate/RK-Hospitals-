@@ -1,123 +1,97 @@
+<?php $_base = rtrim(SITE_URL, '/') . '/'; ?>
 
-			<!-- Footer Section -->
-			<footer class="footer inner-footer footer-info">
-				<div class="footer-top">
-					<div class="container">
-						<div class="row">
-							<div class="col-xl-8">
-								<div class="row">
-									<div class="col-lg-3 col-md-3 col-sm-6">
-										<div class="footer-widget footer-menu">
-											<h6 class="footer-title">Company</h6>
-											<ul>
-												<li><a href="about-us.html">About</a></li>
-												<li><a href="search.html">Features</a></li>
-												<li><a href="index.html#">Works</a></li>
-												<li><a href="index.html#">Careers</a></li>
-												<li><a href="index.html#">Locations</a></li>
-											</ul>
-										</div>
-									</div>
-									<div class="col-lg-3 col-md-3 col-sm-6">
-										<div class="footer-widget footer-menu">
-											<h6 class="footer-title">Treatments</h6>
-											<ul>
-												<li><a href="search.html">Dental</a></li>
-												<li><a href="search.html">Cardiac</a></li>
-												<li><a href="search.html">Spinal Cord</a></li>
-												<li><a href="search.html">Hair Growth</a></li>
-												<li><a href="search.html">Anemia & Disorder</a></li>
-											</ul>
-										</div>
-									</div>
-									<div class="col-lg-3 col-md-3 col-sm-6">
-										<div class="footer-widget footer-menu">
-											<h6 class="footer-title">Specialities</h6>
-											<ul>
-												<li><a href="search.html">Transplant</a></li>
-												<li><a href="search.html">Cardiologist</a></li>
-												<li><a href="search.html">Oncology</a></li>
-												<li><a href="search.html">Pediatrics</a></li>
-												<li><a href="search.html">Gynacology</a></li>
-											</ul>
-										</div>
-									</div>
-									<div class="col-lg-3 col-md-3 col-sm-6">
-										<div class="footer-widget footer-menu">
-											<h6 class="footer-title">Utilites</h6>
-											<ul>
-												<li><a href="pricing.html">Pricing</a></li>
-												<li><a href="contact-us.html">Contact</a></li>
-												<li><a href="contact-us.html">Request A Quote</a></li>
-												<li><a href="index.html#">Premium Membership</a></li>
-												<li><a href="index.html#">Integrations</a></li>
-											</ul>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-xl-4 col-md-7">
-								<div class="footer-widget">
-									<h6 class="footer-title">Newsletter</h6>
-									<p class="mb-2 text-dark">Subscribe & Stay Updated from the Doccure</p>
-									<div class="subscribe-input">
-										<form action="index.html#">
-											<input type="email" class="form-control" placeholder="Enter Email Address">
-											<button type="submit" class="btn btn-md btn-primary-gradient d-inline-flex align-items-center"><i class="isax isax-send-25 me-1"></i>Send</button>
-										</form>
-									</div>
-									<div class="social-icon">
-										<h6 class="mb-3 footer-title">Connect With Us</h6>
-										<ul>
-											<li>
-												<a href="index.html#"><i class="fa-brands fa-facebook"></i></a>
-											</li>
-											<li>
-												<a href="index.html#"><i class="fa-brands fa-x-twitter"></i></a>
-											</li>
-											<li>
-												<a href="index.html#"><i class="fa-brands fa-instagram"></i></a>
-											</li>
-											<li>
-												<a href="index.html#"><i class="fa-brands fa-linkedin"></i></a>
-											</li>
-											<li>
-												<a href="index.html#"><i class="fa-brands fa-pinterest"></i></a>
-											</li>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="footer-bottom">
-					<div class="container">
-						<!-- Copyright -->
-						<div class="copyright">
-							<div class="copyright-text mb-0">
-								<p class="mb-0">Copyright © 2025 Doccure. All Rights Reserved</p>
-							</div>
-							<!-- Copyright Menu -->
-							<div class="copyright-menu">
-								<ul class="policy-menu mb-0">
-									<li><a href="index.html#">Legal Notice</a></li>
-									<li><a href="privacy-policy.html">Privacy Policy</a></li>
-									<li><a href="index.html#">Refund Policy</a></li>
-								</ul>
-							</div>
-							<!-- /Copyright Menu -->
-							<ul class="payment-method">
-								<li><a href="index.html#"><img src="assets/img/icons/card-01.svg" alt="Img"></a></li>
-								<li><a href="index.html#"><img src="assets/img/icons/card-02.svg" alt="Img"></a></li>
-								<li><a href="index.html#"><img src="assets/img/icons/card-03.svg" alt="Img"></a></li>
-								<li><a href="index.html#"><img src="assets/img/icons/card-04.svg" alt="Img"></a></li>
-								<li><a href="index.html#"><img src="assets/img/icons/card-05.svg" alt="Img"></a></li>
-								<li><a href="index.html#"><img src="assets/img/icons/card-06.svg" alt="Img"></a></li>
-							</ul>
-						</div>
-						<!-- /Copyright -->					
-					</div>
-				</div>
-			</footer>
-			<!-- /Footer Section -->
+<!-- Footer Section -->
+<footer class="footer inner-footer footer-info">
+    <div class="footer-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-4 col-lg-4 col-md-6 mb-4 mb-lg-0">
+                    <div class="footer-widget">
+                        <a href="<?= $_base ?>" class="d-inline-block mb-3">
+                            <img src="<?= $_base ?>assets/img/logo.svg" alt="RK Hospital" height="36">
+                        </a>
+                        <p class="text-dark mb-4">
+                            R.K. Hospital, Nagpur — providing compassionate, quality healthcare for over 20 years. Your health is our priority.
+                        </p>
+                        <ul class="d-flex gap-2 list-unstyled social-icon">
+                            <li><a href="javascript:void(0);" class="social-icon"><i class="fa-brands fa-facebook"></i></a></li>
+                            <li><a href="javascript:void(0);" class="social-icon"><i class="fa-brands fa-x-twitter"></i></a></li>
+                            <li><a href="javascript:void(0);" class="social-icon"><i class="fa-brands fa-instagram"></i></a></li>
+                            <li><a href="javascript:void(0);" class="social-icon"><i class="fa-brands fa-linkedin"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-6 mb-4 mb-lg-0">
+                    <div class="footer-widget footer-menu">
+                        <h6 class="footer-title">Quick Links</h6>
+                        <ul>
+                            <li><a href="<?= $_base ?>">Home</a></li>
+                            <li><a href="<?= $_base ?>about-us">About Us</a></li>
+                            <li><a href="<?= $_base ?>doctors">Our Doctors</a></li>
+                            <li><a href="<?= $_base ?>services">Services</a></li>
+                            <li><a href="<?= $_base ?>contact-us">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-6 mb-4 mb-lg-0">
+                    <div class="footer-widget footer-menu">
+                        <h6 class="footer-title">Resources</h6>
+                        <ul>
+                            <li><a href="<?= $_base ?>blogs">Blog</a></li>
+                            <li><a href="<?= $_base ?>services">Our Specialties</a></li>
+                            <li><a href="<?= $_base ?>contact-us">Book Appointment</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-xl-4 col-lg-4 col-md-6">
+                    <div class="footer-widget">
+                        <h6 class="footer-title">Contact Us</h6>
+                        <ul class="list-unstyled">
+                            <li class="mb-2 text-dark">
+                                <i class="fa fa-map-marker-alt me-2 text-primary"></i>
+                                RK Hospital, Nagpur, Maharashtra
+                            </li>
+                            <li class="mb-2">
+                                <i class="fa fa-phone me-2 text-primary"></i>
+                                <a href="tel:+910712000000" class="text-dark">+91 0712 000 000</a>
+                            </li>
+                            <li class="mb-4">
+                                <i class="fa fa-envelope me-2 text-primary"></i>
+                                <a href="mailto:info@rkhospital.in" class="text-dark">info@rkhospital.in</a>
+                            </li>
+                        </ul>
+                        <h6 class="footer-title">Newsletter</h6>
+                        <div class="subscribe-input">
+                            <form action="<?= $_base ?>contact-us" method="get">
+                                <input type="email" name="email" class="form-control" placeholder="Enter your email">
+                                <button type="submit" class="btn btn-md btn-primary-gradient d-inline-flex align-items-center">
+                                    <i class="isax isax-send-25 me-1"></i>Subscribe
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <div class="container">
+            <div class="copyright">
+                <div class="copyright-text mb-0">
+                    <p class="mb-0">Copyright &copy; <?= date('Y') ?> R.K. Hospital Nagpur. All Rights Reserved.</p>
+                </div>
+                <div class="copyright-menu">
+                    <ul class="policy-menu mb-0">
+                        <li><a href="<?= $_base ?>about-us">About</a></li>
+                        <li><a href="<?= $_base ?>contact-us">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- /Footer Section -->

@@ -3,7 +3,10 @@
     "allow": [
       "Bash(mysql -u root rkhospital -e \"SHOW TABLES;\")",
       "Bash(cd:*)",
-      "Bash(/c/xampp/htdocs/rkhospital/admin/.htaccess:*)"
+      "Bash(/c/xampp/htdocs/rkhospital/admin/.htaccess:*)",
+      "Bash(ls C:/xampp/htdocs/rkhospital/*.html)",
+      "Bash(rm -f *.html)",
+      "Bash(ls *.html)"
     ]
   }
 }
