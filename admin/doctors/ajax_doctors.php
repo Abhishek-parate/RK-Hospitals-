@@ -1,7 +1,9 @@
 <?php
 // C:\xampp\htdocs\rkhospital\admin\doctors\ajax_doctors.php
 require_once './../../include/config.php';
+require_once __DIR__ . '/../include/auth.php';
 header('Content-Type: application/json');
+if (!canAccess('doctors')) { echo json_encode(['error'=>'Forbidden']); exit; }
 
 $limit  = 10;
 $page   = isset($_GET['page']) && is_numeric($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
@@ -35,8 +37,8 @@ while ($row = $result->fetch_assoc()) {
         <td class="text-end pe-4">
             <div class="btn-group shadow-sm border rounded-pill overflow-hidden bg-white">
                 <a href="<?= SITE_URL ?>/doctor/<?= $row['slug'] ?>" target="_blank" class="btn btn-sm btn-light border-0 py-2 px-3 text-secondary"><i class="fa fa-eye"></i></a>
-                <a href="edit.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-light border-0 py-2 px-3 text-primary"><i class="fa fa-pencil-alt"></i></a>
-                <a href="index.php?delete=<?= $row['id'] ?>" onclick="return confirm('Delete this doctor?')" class="btn btn-sm btn-light border-0 py-2 px-3 text-danger"><i class="fa fa-trash-alt"></i></a>
+                <a href="edit?id=<?= $row['id'] ?>" class="btn btn-sm btn-light border-0 py-2 px-3 text-primary"><i class="fa fa-pencil-alt"></i></a>
+                <a href="./?delete=<?= $row['id'] ?>" onclick="return confirm('Delete this doctor?')" class="btn btn-sm btn-light border-0 py-2 px-3 text-danger"><i class="fa fa-trash-alt"></i></a>
             </div>
         </td>
     </tr>

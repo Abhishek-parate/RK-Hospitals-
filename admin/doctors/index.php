@@ -1,6 +1,8 @@
 <?php
 // admin/doctors/index.php
 require_once __DIR__ . '/../../include/config.php';
+require_once __DIR__ . '/../include/auth.php';
+requireAccess('doctors');
 
 $limit  = 10;
 $page   = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
@@ -12,7 +14,7 @@ $searchLike = '%' . $conn->real_escape_string($search) . '%';
 if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
     $deleteId = (int)$_GET['delete'];
     $conn->query("DELETE FROM doctors WHERE id = $deleteId");
-    header("Location: index.php?msg=deleted");
+    header("Location: ./?msg=deleted");
     exit;
 }
 
@@ -20,7 +22,7 @@ if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
 if (isset($_GET['toggle']) && is_numeric($_GET['toggle'])) {
     $toggleId = (int)$_GET['toggle'];
     $conn->query("UPDATE doctors SET is_published = NOT is_published WHERE id = $toggleId");
-    header("Location: index.php");
+    header("Location: ./");
     exit;
 }
 
@@ -123,7 +125,7 @@ function rankPotential($score) {
 
 // ── Page Setup ─────────────────────────────────────────────────
 $pageTitle  = 'Manage Doctors';
-$activePage = 'doctors';
+$activePage = 'doctors-index';
 $assetBase  = '../';
 
 $extraCSS = '
@@ -177,13 +179,13 @@ require_once '../include/head.php';
                     <h3 class="fw-bolder text-dark mb-1">Doctors Directory</h3>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb small bg-transparent p-0 m-0">
-                            <li class="breadcrumb-item"><a href="../index.php" class="text-muted text-decoration-none">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="../" class="text-muted text-decoration-none">Dashboard</a></li>
                             <li class="breadcrumb-item active text-secondary fw-medium">Doctors</li>
                         </ol>
                     </nav>
                 </div>
                 <div class="mt-3 mt-md-0">
-                    <a href="add.php" class="btn btn-primary rounded-pill px-4 py-2 shadow-sm fw-semibold d-inline-flex align-items-center gap-2">
+                    <a href="add" class="btn btn-primary rounded-pill px-4 py-2 shadow-sm fw-semibold d-inline-flex align-items-center gap-2">
                         <i class="fa fa-plus"></i> Add Doctor
                     </a>
                 </div>
@@ -323,7 +325,7 @@ require_once '../include/head.php';
                                             </div>
                                             <h5 class="text-dark fw-bold">No doctors found</h5>
                                             <p class="text-muted mb-4">Add your first doctor profile to get started.</p>
-                                            <a href="add.php" class="btn btn-primary rounded-pill px-4 shadow-sm">Add Doctor</a>
+                                            <a href="add" class="btn btn-primary rounded-pill px-4 shadow-sm">Add Doctor</a>
                                         </div>
                                     </td>
                                 </tr>
@@ -432,7 +434,7 @@ require_once '../include/head.php';
 
                                     <!-- Status -->
                                     <td class="py-3">
-                                        <a href="index.php?toggle=<?= $doc['id'] ?>" class="text-decoration-none">
+                                        <a href="./?toggle=<?= $doc['id'] ?>" class="text-decoration-none">
                                             <?php if ($doc['is_published']): ?>
                                             <span class="badge bg-success-subtle text-success-emphasis border border-success-subtle rounded-pill py-2 px-3 fw-semibold">
                                                 <span class="d-inline-block bg-success rounded-circle me-2" style="width:6px;height:6px;vertical-align:middle;"></span>Live
@@ -455,13 +457,13 @@ require_once '../include/head.php';
                                                 <i class="fa fa-external-link-alt"></i>
                                             </a>
                                             <div class="border-start border-light"></div>
-                                            <a href="edit.php?id=<?= $doc['id'] ?>"
+                                            <a href="edit?id=<?= $doc['id'] ?>"
                                                 class="btn btn-sm btn-light border-0 py-2 px-3 text-secondary"
                                                 data-bs-toggle="tooltip" title="Edit Profile">
                                                 <i class="fa fa-pencil-alt"></i>
                                             </a>
                                             <div class="border-start border-light"></div>
-                                            <a href="index.php?delete=<?= $doc['id'] ?>"
+                                            <a href="./?delete=<?= $doc['id'] ?>"
                                                 class="btn btn-sm btn-light border-0 py-2 px-3 text-danger"
                                                 onclick="return confirm('Permanently delete Dr. <?= addslashes(htmlspecialchars($doc['name'])) ?>? This cannot be undone.')"
                                                 data-bs-toggle="tooltip" title="Delete Profile">

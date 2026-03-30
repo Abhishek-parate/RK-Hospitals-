@@ -2,6 +2,8 @@
 // C:\xamppnew\htdocs\rkhospital\admin\blog\edit.php
 
 require_once './../../include/config.php';
+require_once __DIR__ . '/../include/auth.php';
+requireAccess('blogs');
 
 // ── Helper: Convert Image to WebP (Moved to top for global availability) ──
 function convertToWebp($source, $destination, $quality = 80) {
@@ -29,7 +31,7 @@ function convertToWebp($source, $destination, $quality = 80) {
 }
 
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-    header("Location: index.php");
+    header("Location: ./");
     exit;
 }
 $id = (int)$_GET['id'];
@@ -37,7 +39,7 @@ $id = (int)$_GET['id'];
 // Fetch existing blog data
 $res  = $conn->query("SELECT * FROM blogs WHERE id = $id");
 $blog = $res ? $res->fetch_assoc() : null;
-if (!$blog) { header("Location: index.php"); exit; }
+if (!$blog) { header("Location: ./"); exit; }
 
 $errors = [];
 
@@ -214,7 +216,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 WHERE id = $id";
 
         if ($conn->query($sql)) {
-            header("Location: index.php?msg=updated");
+            header("Location: ./?msg=updated");
             exit;
         } else {
             $errors[] = 'Database error: ' . $conn->error;
@@ -230,7 +232,7 @@ $p = fn($k) => htmlspecialchars($_POST[$k] ?? $blog[$k] ?? '');
 
 // 2. Setup Page Variables for Includes
 $pageTitle  = 'Edit Blog';
-$activePage = 'blogs';
+$activePage = 'blogs-edit';
 $assetBase  = '../';
 
 $extraCSS = '
@@ -331,8 +333,8 @@ require_once '../include/head.php';
                     <h3 class="fw-bolder text-dark mb-1">Edit Blog Post</h3>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb small bg-transparent p-0 m-0">
-                            <li class="breadcrumb-item"><a href="../index.php" class="text-muted text-decoration-none">Dashboard</a></li>
-                            <li class="breadcrumb-item"><a href="index.php" class="text-muted text-decoration-none">Blogs</a></li>
+                            <li class="breadcrumb-item"><a href="../" class="text-muted text-decoration-none">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="./" class="text-muted text-decoration-none">Blogs</a></li>
                             <li class="breadcrumb-item active text-secondary fw-medium">Edit</li>
                         </ol>
                     </nav>
@@ -341,7 +343,7 @@ require_once '../include/head.php';
                     <a href="<?= SITE_URL ?>/blog/<?= htmlspecialchars($blog['slug']) ?>" target="_blank" class="btn btn-outline-primary rounded-pill px-4 py-2 shadow-sm fw-semibold d-inline-flex align-items-center gap-2 bg-white">
                         <i class="fa fa-external-link-alt"></i> View on Site
                     </a>
-                    <a href="index.php" class="btn btn-light rounded-pill px-4 py-2 shadow-sm fw-semibold border d-inline-flex align-items-center gap-2">
+                    <a href="./" class="btn btn-light rounded-pill px-4 py-2 shadow-sm fw-semibold border d-inline-flex align-items-center gap-2">
                         <i class="fa fa-arrow-left"></i> Back to Blogs
                     </a>
                 </div>
@@ -685,7 +687,7 @@ require_once '../include/head.php';
                                 <button type="submit" class="btn btn-primary w-100 rounded-pill py-2 shadow-sm fw-bold mb-2 d-flex align-items-center justify-content-center gap-2">
                                     <i class="fa fa-save"></i> Update Blog Post
                                 </button>
-                                <a href="index.php" class="btn btn-light w-100 rounded-pill py-2 border text-secondary fw-semibold">Cancel</a>
+                                <a href="./" class="btn btn-light w-100 rounded-pill py-2 border text-secondary fw-semibold">Cancel</a>
                             </div>
                         </div>
 

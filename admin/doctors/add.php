@@ -1,6 +1,8 @@
 <?php
 // admin/doctors/add.php
 require_once './../../include/config.php';
+require_once __DIR__ . '/../include/auth.php';
+requireAccess('doctors');
 
 $errors = [];
 
@@ -217,7 +219,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         );
 
         if ($stmt->execute()) {
-            header("Location: index.php?msg=added");
+            header("Location: ./?msg=added");
             exit;
         } else {
             $errors[] = 'Database error: ' . $stmt->error;
@@ -229,7 +231,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $p = fn($k) => htmlspecialchars($_POST[$k] ?? '');
 
 $pageTitle  = 'Add Doctor';
-$activePage = 'doctors';
+$activePage = 'doctors-add';
 $assetBase  = '../';
 
 $extraCSS = '
@@ -292,14 +294,14 @@ require_once '../include/head.php';
                     <h3 class="fw-bolder text-dark mb-1">Add Doctor Profile</h3>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb small bg-transparent p-0 m-0">
-                            <li class="breadcrumb-item"><a href="../index.php" class="text-muted text-decoration-none">Dashboard</a></li>
-                            <li class="breadcrumb-item"><a href="index.php" class="text-muted text-decoration-none">Doctors</a></li>
+                            <li class="breadcrumb-item"><a href="../" class="text-muted text-decoration-none">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="./" class="text-muted text-decoration-none">Doctors</a></li>
                             <li class="breadcrumb-item active text-secondary fw-medium">Add New</li>
                         </ol>
                     </nav>
                 </div>
                 <div class="mt-3 mt-md-0">
-                    <a href="index.php" class="btn btn-light rounded-pill px-4 py-2 shadow-sm fw-semibold border d-inline-flex align-items-center gap-2">
+                    <a href="./" class="btn btn-light rounded-pill px-4 py-2 shadow-sm fw-semibold border d-inline-flex align-items-center gap-2">
                         <i class="fa fa-arrow-left"></i> Back to Doctors
                     </a>
                 </div>
@@ -622,7 +624,7 @@ require_once '../include/head.php';
                                 <button type="submit" class="btn btn-primary w-100 rounded-pill py-2 fw-bold shadow-sm">
                                     <i class="fa fa-save me-2"></i> Save Doctor Profile
                                 </button>
-                                <a href="index.php" class="btn btn-light w-100 rounded-pill py-2 fw-semibold border mt-2">
+                                <a href="./" class="btn btn-light w-100 rounded-pill py-2 fw-semibold border mt-2">
                                     Cancel
                                 </a>
                             </div>

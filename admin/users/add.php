@@ -1,6 +1,8 @@
 <?php
 // admin/users/add.php
 require_once './../../include/config.php';
+require_once __DIR__ . '/../include/auth.php';
+requireAccess('users');
 
 $errors = [];
 
@@ -92,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $actEsc = $conn->real_escape_string($act);
             $conn->query("INSERT INTO admin_activity_log (user_id, action, detail, ip, created_at)
                 VALUES ($newId, 'user_created', '$actEsc', '$ip', NOW())");
-            header("Location: index.php?msg=added"); exit;
+            header("Location: ./?msg=added"); exit;
         } else {
             $errors[] = 'Database error: ' . $stmt->error;
         }
@@ -102,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $p = fn($k, $default = '') => htmlspecialchars($_POST[$k] ?? $default);
 
 $pageTitle  = 'Add Admin User';
-$activePage = 'users';
+$activePage = 'users-add';
 $assetBase  = '../';
 
 $extraCSS = '
@@ -169,13 +171,13 @@ require_once '../include/head.php';
                     <h3 class="fw-bolder text-dark mb-1">Add Admin User</h3>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb small bg-transparent p-0 m-0">
-                            <li class="breadcrumb-item"><a href="../index.php" class="text-muted text-decoration-none">Dashboard</a></li>
-                            <li class="breadcrumb-item"><a href="index.php" class="text-muted text-decoration-none">Users</a></li>
+                            <li class="breadcrumb-item"><a href="../" class="text-muted text-decoration-none">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="./" class="text-muted text-decoration-none">Users</a></li>
                             <li class="breadcrumb-item active text-secondary fw-medium">Add New</li>
                         </ol>
                     </nav>
                 </div>
-                <a href="index.php" class="btn btn-light rounded-pill px-4 py-2 shadow-sm fw-semibold border mt-3 mt-md-0 d-inline-flex align-items-center gap-2">
+                <a href="./" class="btn btn-light rounded-pill px-4 py-2 shadow-sm fw-semibold border mt-3 mt-md-0 d-inline-flex align-items-center gap-2">
                     <i class="fa fa-arrow-left"></i> Back
                 </a>
             </div>
@@ -403,7 +405,7 @@ require_once '../include/head.php';
                             <button type="submit" class="btn btn-primary w-100 rounded-pill py-2 fw-bold shadow-sm mb-2">
                                 <i class="fa fa-user-plus me-2"></i> Create User
                             </button>
-                            <a href="index.php" class="btn btn-light w-100 rounded-pill py-2 fw-semibold border">Cancel</a>
+                            <a href="./" class="btn btn-light w-100 rounded-pill py-2 fw-semibold border">Cancel</a>
                         </div>
                     </div>
 

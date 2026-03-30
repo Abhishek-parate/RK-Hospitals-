@@ -3,6 +3,8 @@
 // Handles AJAX requests for blog search + pagination
 
 require_once './../../include/config.php';
+require_once __DIR__ . '/../include/auth.php';
+if (!canAccess('blogs')) { header('Content-Type: application/json'); echo json_encode(['error'=>'Forbidden']); exit; }
 
 header('Content-Type: application/json');
 
@@ -222,7 +224,7 @@ foreach ($blogs as $blog) {
 
         <!-- Status Toggle -->
         <td class="py-3">
-            <a href="index.php?toggle=<?= $blog['id'] ?>" class="text-decoration-none">
+            <a href="./?toggle=<?= $blog['id'] ?>" class="text-decoration-none">
                 <?php if ($blog['is_published']): ?>
                     <span class="badge bg-success-subtle text-success-emphasis border border-success-subtle rounded-pill py-2 px-3 fw-semibold">
                         <span class="d-inline-block bg-success rounded-circle me-2" style="width:6px;height:6px;vertical-align:middle;"></span>Live
@@ -245,13 +247,13 @@ foreach ($blogs as $blog) {
                     <i class="fa fa-external-link-alt"></i>
                 </a>
                 <div class="border-start border-light"></div>
-                <a href="edit.php?id=<?= $blog['id'] ?>"
+                <a href="edit?id=<?= $blog['id'] ?>"
                    class="btn btn-sm btn-light border-0 py-2 px-3 text-secondary"
                    data-bs-toggle="tooltip" title="Edit Article">
                     <i class="fa fa-pencil-alt"></i>
                 </a>
                 <div class="border-start border-light"></div>
-                <a href="index.php?delete=<?= $blog['id'] ?>"
+                <a href="./?delete=<?= $blog['id'] ?>"
                    class="btn btn-sm btn-light border-0 py-2 px-3 text-danger"
                    onclick="return confirm('Delete this blog permanently? This cannot be undone.')"
                    data-bs-toggle="tooltip" title="Delete Article">
@@ -297,7 +299,7 @@ if (empty($blogs)) {
             </div>
             <h5 class="text-dark fw-bold">No articles found</h5>
             <p class="text-muted mb-4">No blogs matching <strong>' . htmlspecialchars($search) . '</strong>.</p>
-            <a href="index.php" class="btn btn-primary rounded-pill px-4 shadow-sm">Clear Search</a>
+            <a href="./" class="btn btn-primary rounded-pill px-4 shadow-sm">Clear Search</a>
         </div>
     </td></tr>';
     $rows = [$emptyHtml];

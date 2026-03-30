@@ -1,11 +1,13 @@
 <?php
 // admin/doctors/edit.php
 require_once './../../include/config.php';
+require_once __DIR__ . '/../include/auth.php';
+requireAccess('doctors');
 
 $id  = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 $res = $conn->query("SELECT * FROM doctors WHERE id = $id");
 $doctor = $res ? $res->fetch_assoc() : null;
-if (!$doctor) { header("Location: index.php"); exit; }
+if (!$doctor) { header("Location: ./"); exit; }
 
 $errors = [];
 
@@ -204,7 +206,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ");
 
         $stmt->bind_param(
-            "ssssiiссsssssssssiissssssssssssi",
+            "ssssiisssssssssssisssssssssssssssi",
             $name, $slug, $designation, $specialty,
             $satisfaction_rate, $feedback_count, $location, $consultation_fee,
             $bio, $excerpt, $edu_json, $exp_json, $awd_json,
@@ -218,7 +220,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         );
 
         if ($stmt->execute()) {
-            header("Location: index.php?msg=updated");
+            header("Location: ./?msg=updated");
             exit;
         } else {
             $errors[] = 'Database error: ' . $stmt->error;
@@ -242,7 +244,7 @@ $currentIndex = trim($robotsParts[0] ?? 'index');
 $currentFollow= trim($robotsParts[1] ?? 'follow');
 
 $pageTitle  = 'Edit Doctor — ' . htmlspecialchars($doctor['name']);
-$activePage = 'doctors';
+$activePage = 'doctors-edit';
 $assetBase  = '../';
 
 $extraCSS = '
@@ -304,8 +306,8 @@ require_once '../include/head.php';
                     <h3 class="fw-bolder text-dark mb-1">Edit Doctor Profile</h3>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb small bg-transparent p-0 m-0">
-                            <li class="breadcrumb-item"><a href="../index.php" class="text-muted text-decoration-none">Dashboard</a></li>
-                            <li class="breadcrumb-item"><a href="index.php" class="text-muted text-decoration-none">Doctors</a></li>
+                            <li class="breadcrumb-item"><a href="../" class="text-muted text-decoration-none">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="./" class="text-muted text-decoration-none">Doctors</a></li>
                             <li class="breadcrumb-item active text-secondary fw-medium"><?= htmlspecialchars($doctor['name']) ?></li>
                         </ol>
                     </nav>
@@ -315,7 +317,7 @@ require_once '../include/head.php';
                         class="btn btn-light rounded-pill px-4 py-2 shadow-sm fw-semibold border d-inline-flex align-items-center gap-2">
                         <i class="fa fa-external-link-alt"></i> View Profile
                     </a>
-                    <a href="index.php" class="btn btn-light rounded-pill px-4 py-2 shadow-sm fw-semibold border d-inline-flex align-items-center gap-2">
+                    <a href="./" class="btn btn-light rounded-pill px-4 py-2 shadow-sm fw-semibold border d-inline-flex align-items-center gap-2">
                         <i class="fa fa-arrow-left"></i> Back
                     </a>
                 </div>
@@ -731,7 +733,7 @@ require_once '../include/head.php';
                                 <button type="submit" class="btn btn-primary w-100 rounded-pill py-2 fw-bold shadow-sm">
                                     <i class="fa fa-save me-2"></i> Update Profile
                                 </button>
-                                <a href="index.php" class="btn btn-light w-100 rounded-pill py-2 fw-semibold border mt-2">Cancel</a>
+                                <a href="./" class="btn btn-light w-100 rounded-pill py-2 fw-semibold border mt-2">Cancel</a>
                             </div>
                         </div>
 
@@ -790,7 +792,7 @@ require_once '../include/head.php';
                             </div>
                             <div class="card-body p-4">
                                 <p class="text-muted small mb-3">Permanently delete this doctor profile. This action cannot be undone and will remove all associated data.</p>
-                                <a href="index.php?delete=<?= $id ?>"
+                                <a href="./?delete=<?= $id ?>"
                                    class="btn btn-outline-danger w-100 rounded-pill fw-semibold"
                                    onclick="return confirm('Permanently delete Dr. <?= addslashes(htmlspecialchars($doctor['name'])) ?>? This cannot be undone.')">
                                     <i class="fa fa-trash-alt me-2"></i> Delete Profile

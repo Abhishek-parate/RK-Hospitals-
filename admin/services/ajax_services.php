@@ -3,6 +3,8 @@
 // Handles AJAX requests for services search + pagination
 
 require_once './../../include/config.php';
+require_once __DIR__ . '/../include/auth.php';
+if (!canAccess('services')) { header('Content-Type: application/json'); echo json_encode(['error'=>'Forbidden']); exit; }
 
 header('Content-Type: application/json');
 
@@ -203,7 +205,7 @@ foreach ($services as $service) {
         </td>
 
         <td class="py-3">
-            <a href="index.php?toggle=<?= $service['id'] ?>" class="text-decoration-none">
+            <a href="./?toggle=<?= $service['id'] ?>" class="text-decoration-none">
                 <?php if ($service['is_published']): ?>
                     <span class="badge bg-success-subtle text-success-emphasis border border-success-subtle rounded-pill py-2 px-3 fw-semibold">
                         <span class="d-inline-block bg-success rounded-circle me-2" style="width:6px;height:6px;vertical-align:middle;"></span>Live
@@ -225,13 +227,13 @@ foreach ($services as $service) {
                     <i class="fa fa-external-link-alt"></i>
                 </a>
                 <div class="border-start border-light"></div>
-                <a href="edit.php?id=<?= $service['id'] ?>"
+                <a href="edit?id=<?= $service['id'] ?>"
                    class="btn btn-sm btn-light border-0 py-2 px-3 text-secondary"
                    data-bs-toggle="tooltip" title="Edit Service">
                     <i class="fa fa-pencil-alt"></i>
                 </a>
                 <div class="border-start border-light"></div>
-                <a href="index.php?delete=<?= $service['id'] ?>"
+                <a href="./?delete=<?= $service['id'] ?>"
                    class="btn btn-sm btn-light border-0 py-2 px-3 text-danger"
                    onclick="return confirm('Delete this service permanently? This cannot be undone.')"
                    data-bs-toggle="tooltip" title="Delete Service">
@@ -276,7 +278,7 @@ if (empty($services)) {
             </div>
             <h5 class="text-dark fw-bold">No services found</h5>
             <p class="text-muted mb-4">No services matching <strong>' . htmlspecialchars($search) . '</strong>.</p>
-            <a href="index.php" class="btn btn-primary rounded-pill px-4 shadow-sm">Clear Search</a>
+            <a href="./" class="btn btn-primary rounded-pill px-4 shadow-sm">Clear Search</a>
         </div>
     </td></tr>';
     $rows = [$emptyHtml];

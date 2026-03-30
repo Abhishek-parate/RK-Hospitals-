@@ -2,6 +2,8 @@
 // C:\xamppnew\htdocs\rkhospital\admin\blog\add.php
 
 require_once './../../include/config.php';
+require_once __DIR__ . '/../include/auth.php';
+requireAccess('blogs');
 
 $errors = [];
 
@@ -190,7 +192,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 )";
 
         if ($conn->query($sql)) {
-            header("Location: index.php?msg=added");
+            header("Location: ./?msg=added");
             exit;
         } else {
             $errors[] = 'Database error: ' . $conn->error;
@@ -203,7 +205,7 @@ $p = fn($k) => htmlspecialchars($_POST[$k] ?? '');
 
 // 2. Setup Page Variables for Includes
 $pageTitle  = 'Add New Blog';
-$activePage = 'blogs';
+$activePage = 'blogs-add';
 $assetBase  = '../';
 
 $extraCSS = '
@@ -313,14 +315,14 @@ require_once '../include/head.php';
                     <h3 class="fw-bolder text-dark mb-1">Create Blog Post</h3>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb small bg-transparent p-0 m-0">
-                            <li class="breadcrumb-item"><a href="../index.php" class="text-muted text-decoration-none">Dashboard</a></li>
-                            <li class="breadcrumb-item"><a href="index.php" class="text-muted text-decoration-none">Blogs</a></li>
+                            <li class="breadcrumb-item"><a href="../" class="text-muted text-decoration-none">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="./" class="text-muted text-decoration-none">Blogs</a></li>
                             <li class="breadcrumb-item active text-secondary fw-medium">Add New</li>
                         </ol>
                     </nav>
                 </div>
                 <div class="mt-3 mt-md-0">
-                    <a href="index.php" class="btn btn-light rounded-pill px-4 py-2 shadow-sm fw-semibold border d-inline-flex align-items-center gap-2">
+                    <a href="./" class="btn btn-light rounded-pill px-4 py-2 shadow-sm fw-semibold border d-inline-flex align-items-center gap-2">
                         <i class="fa fa-arrow-left"></i> Back to Blogs
                     </a>
                 </div>
@@ -630,7 +632,7 @@ require_once '../include/head.php';
                                 <button type="submit" class="btn btn-primary w-100 rounded-pill py-2 shadow-sm fw-bold mb-2 d-flex align-items-center justify-content-center gap-2">
                                     <i class="fa fa-save"></i> Save Blog Post
                                 </button>
-                                <a href="index.php" class="btn btn-light w-100 rounded-pill py-2 border text-secondary fw-semibold">Cancel</a>
+                                <a href="./" class="btn btn-light w-100 rounded-pill py-2 border text-secondary fw-semibold">Cancel</a>
                             </div>
                         </div>
 

@@ -4,7 +4,7 @@ require_once '../include/config.php';
 
 // Redirect if already logged in
 if (isset($_SESSION['admin_id'])) {
-    header("Location: index.php");
+    header("Location: " . SITE_URL . "/admin/");
     exit;
 }
 
@@ -159,7 +159,7 @@ if ($step === 1 && $_SERVER['REQUEST_METHOD'] === 'POST') {
                     <i class="fa-solid fa-circle-check" style="font-size:50px;color:#28a745;"></i>
                     <h1 class="mt-3">Password Reset!</h1>
                     <p class="subtitle">Your password has been updated successfully.</p>
-                    <a href="login.php" class="btn btn-primary px-4">
+                    <a href="login" class="btn btn-primary px-4">
                         <i class="fa-solid fa-right-to-bracket me-2"></i>Go to Login
                     </a>
                 </div>
@@ -205,7 +205,7 @@ if ($step === 1 && $_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                     <?php endif; ?>
 
-                    <a href="forgot-password.php" class="btn btn-primary px-4 mt-2">
+                    <a href="forgot-password" class="btn btn-primary px-4 mt-2">
                         <i class="fa-solid fa-arrow-left me-2"></i>Back
                     </a>
                 </div>
@@ -233,7 +233,7 @@ if ($step === 1 && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 </form>
 
                 <div class="auth-footer">
-                    Remember your password? <a href="login.php">Login here</a>
+                    Remember your password? <a href="login">Login here</a>
                 </div>
             <?php endif; ?>
 

@@ -2,6 +2,8 @@
 // C:\xamppnew\htdocs\rkhospital\admin\services\edit.php
 
 require_once './../../include/config.php';
+require_once __DIR__ . '/../include/auth.php';
+requireAccess('services');
 
 
 // ── WebP Converter ────────────────────────────────────────────────────────
@@ -27,11 +29,11 @@ if (!function_exists('convertToWebp')) {
 
 // ── Fetch record ──────────────────────────────────────────────────────────
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-if (!$id) { header("Location: index.php?err=invalid"); exit; }
+if (!$id) { header("Location: ./?err=invalid"); exit; }
 
 $svc = null;
 $res = $conn->query("SELECT * FROM services WHERE id = $id LIMIT 1");
-if (!$res || $res->num_rows === 0) { header("Location: index.php?err=notfound"); exit; }
+if (!$res || $res->num_rows === 0) { header("Location: ./?err=notfound"); exit; }
 $svc = $res->fetch_assoc();
 
 // ── Fetch dropdowns ───────────────────────────────────────────────────────
@@ -389,7 +391,7 @@ $rF = trim($robotsParts[1] ?? 'follow');
 $p = fn($k) => htmlspecialchars($svc[$k] ?? '');
 
 $pageTitle  = 'Edit Service — '.htmlspecialchars($svc['title']);
-$activePage = 'services';
+$activePage = 'services-edit';
 $assetBase  = '../';
 
 $extraCSS = '
@@ -495,17 +497,17 @@ require_once '../include/head.php';
                     </h4>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb small bg-transparent p-0 m-0">
-                            <li class="breadcrumb-item"><a href="../index.php" class="text-muted text-decoration-none">Dashboard</a></li>
-                            <li class="breadcrumb-item"><a href="index.php" class="text-muted text-decoration-none">Services</a></li>
+                            <li class="breadcrumb-item"><a href="../" class="text-muted text-decoration-none">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="./" class="text-muted text-decoration-none">Services</a></li>
                             <li class="breadcrumb-item active"><?= htmlspecialchars($svc['title']) ?></li>
                         </ol>
                     </nav>
                 </div>
                 <div class="d-flex gap-2 mt-3 mt-md-0">
-                    <a href="view.php?id=<?= $id ?>" target="_blank" class="btn btn-light border rounded-pill px-4 py-2 fw-semibold shadow-sm">
+                    <a href="view?id=<?= $id ?>" target="_blank" class="btn btn-light border rounded-pill px-4 py-2 fw-semibold shadow-sm">
                         <i class="fa fa-eye me-1"></i> Preview
                     </a>
-                    <a href="index.php" class="btn btn-light border rounded-pill px-4 py-2 fw-semibold shadow-sm">
+                    <a href="./" class="btn btn-light border rounded-pill px-4 py-2 fw-semibold shadow-sm">
                         <i class="fa fa-arrow-left me-1"></i> Back
                     </a>
                 </div>
@@ -1016,7 +1018,7 @@ require_once '../include/head.php';
                                     <button type="submit" class="btn btn-primary btn-lg rounded-pill fw-bold shadow">
                                         <i class="fa fa-save me-2"></i> Update Service
                                     </button>
-                                    <a href="index.php" class="btn btn-light border rounded-pill fw-semibold">
+                                    <a href="./" class="btn btn-light border rounded-pill fw-semibold">
                                         <i class="fa fa-times me-2"></i> Cancel
                                     </a>
                                 </div>

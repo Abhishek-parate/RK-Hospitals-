@@ -2,6 +2,8 @@
 // C:\xamppnew\htdocs\rkhospital\admin\services\add.php
 
 require_once './../../include/config.php';
+require_once __DIR__ . '/../include/auth.php';
+requireAccess('services');
 
 // ── Helper: Convert Image to WebP ─────────────────────────────────────────
 if (!function_exists('convertToWebp')) {
@@ -340,7 +342,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 )";
 
         if ($conn->query($sql)) {
-            header("Location: index.php?msg=added");
+            header("Location: ./?msg=added");
             exit;
         } else {
             $errors[] = 'Database error: '.$conn->error;
@@ -351,7 +353,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $p = fn($k) => htmlspecialchars($_POST[$k] ?? '');
 
 $pageTitle  = 'Add New Service';
-$activePage = 'services';
+$activePage = 'services-add';
 $assetBase  = '../';
 
 $extraCSS = '
@@ -519,13 +521,13 @@ require_once '../include/head.php';
                     </h4>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb small bg-transparent p-0 m-0">
-                            <li class="breadcrumb-item"><a href="../index.php" class="text-muted text-decoration-none">Dashboard</a></li>
-                            <li class="breadcrumb-item"><a href="index.php" class="text-muted text-decoration-none">Services</a></li>
+                            <li class="breadcrumb-item"><a href="../" class="text-muted text-decoration-none">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="./" class="text-muted text-decoration-none">Services</a></li>
                             <li class="breadcrumb-item active">Add New</li>
                         </ol>
                     </nav>
                 </div>
-                <a href="index.php" class="btn btn-light border rounded-pill px-4 py-2 fw-semibold mt-3 mt-md-0 d-inline-flex align-items-center gap-2 shadow-sm">
+                <a href="./" class="btn btn-light border rounded-pill px-4 py-2 fw-semibold mt-3 mt-md-0 d-inline-flex align-items-center gap-2 shadow-sm">
                     <i class="fa fa-arrow-left"></i> Back to Services
                 </a>
             </div>
@@ -1054,7 +1056,7 @@ require_once '../include/head.php';
                                     <button type="submit" class="btn btn-primary btn-lg rounded-pill fw-bold shadow">
                                         <i class="fa fa-save me-2"></i>Save Service
                                     </button>
-                                    <a href="index.php" class="btn btn-light border rounded-pill fw-semibold">
+                                    <a href="./" class="btn btn-light border rounded-pill fw-semibold">
                                         <i class="fa fa-times me-2"></i>Cancel
                                     </a>
                                 </div>

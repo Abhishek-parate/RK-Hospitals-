@@ -1,11 +1,13 @@
 <?php
 // admin/users/edit.php
 require_once './../../include/config.php';
+require_once __DIR__ . '/../include/auth.php';
+requireAccess('users');
 
 $id  = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 $res = $conn->query("SELECT * FROM admin_users WHERE id = $id");
 $user = $res ? $res->fetch_assoc() : null;
-if (!$user) { header("Location: index.php"); exit; }
+if (!$user) { header("Location: ./"); exit; }
 
 $errors = [];
 
@@ -98,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $conn->query("INSERT INTO admin_activity_log (user_id, action, detail, ip, created_at)
                     VALUES ($id, 'user_updated', '$act', '$ip', NOW())");
             }
-            header("Location: index.php?msg=updated"); exit;
+            header("Location: ./?msg=updated"); exit;
         } else {
             $errors[] = 'Database error: ' . $stmt->error;
         }
@@ -124,7 +126,7 @@ $siteUrl   = defined('SITE_URL') ? rtrim(SITE_URL, '/') : '';
 $avatarSrc = !empty($user['avatar']) ? $siteUrl . '/' . ltrim($user['avatar'], '/') : '';
 
 $pageTitle  = 'Edit User — ' . htmlspecialchars($user['name']);
-$activePage = 'users';
+$activePage = 'users-edit';
 $assetBase  = '../';
 
 $extraCSS = '
@@ -184,13 +186,13 @@ require_once '../include/head.php';
                     <h3 class="fw-bolder text-dark mb-1">Edit User</h3>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb small bg-transparent p-0 m-0">
-                            <li class="breadcrumb-item"><a href="../index.php" class="text-muted text-decoration-none">Dashboard</a></li>
-                            <li class="breadcrumb-item"><a href="index.php" class="text-muted text-decoration-none">Users</a></li>
+                            <li class="breadcrumb-item"><a href="../" class="text-muted text-decoration-none">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="./" class="text-muted text-decoration-none">Users</a></li>
                             <li class="breadcrumb-item active text-secondary fw-medium"><?= htmlspecialchars($user['name']) ?></li>
                         </ol>
                     </nav>
                 </div>
-                <a href="index.php" class="btn btn-light rounded-pill px-4 py-2 shadow-sm fw-semibold border mt-3 mt-md-0 d-inline-flex align-items-center gap-2">
+                <a href="./" class="btn btn-light rounded-pill px-4 py-2 shadow-sm fw-semibold border mt-3 mt-md-0 d-inline-flex align-items-center gap-2">
                     <i class="fa fa-arrow-left"></i> Back
                 </a>
             </div>
@@ -454,7 +456,7 @@ require_once '../include/head.php';
                             <button type="submit" class="btn btn-primary w-100 rounded-pill py-2 fw-bold shadow-sm mb-2">
                                 <i class="fa fa-save me-2"></i> Update User
                             </button>
-                            <a href="index.php" class="btn btn-light w-100 rounded-pill py-2 fw-semibold border">Cancel</a>
+                            <a href="./" class="btn btn-light w-100 rounded-pill py-2 fw-semibold border">Cancel</a>
                         </div>
                     </div>
 
@@ -547,7 +549,7 @@ require_once '../include/head.php';
                         </div>
                         <div class="card-body p-4">
                             <p class="text-muted small mb-3">Permanently delete this user. All associated activity logs will also be removed.</p>
-                            <a href="index.php?delete=<?= $id ?>"
+                            <a href="./?delete=<?= $id ?>"
                                class="btn btn-outline-danger w-100 rounded-pill fw-semibold"
                                onclick="return confirm('Permanently delete <?= addslashes(htmlspecialchars($user['name'])) ?>?')">
                                 <i class="fa fa-trash-alt me-2"></i> Delete User

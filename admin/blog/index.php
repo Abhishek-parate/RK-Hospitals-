@@ -3,6 +3,8 @@
 
 // 1. Database Connection & Logic
 require_once './../../include/config.php';
+require_once __DIR__ . '/../include/auth.php';
+requireAccess('blogs');
 
 $limit  = 10;
 $page   = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
@@ -13,14 +15,14 @@ $searchLike = '%' . $conn->real_escape_string($search) . '%';
 if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
     $deleteId = (int)$_GET['delete'];
     $conn->query("DELETE FROM blogs WHERE id = $deleteId");
-    header("Location: index.php?msg=deleted");
+    header("Location: ./?msg=deleted");
     exit;
 }
 
 if (isset($_GET['toggle']) && is_numeric($_GET['toggle'])) {
     $toggleId = (int)$_GET['toggle'];
     $conn->query("UPDATE blogs SET is_published = NOT is_published WHERE id = $toggleId");
-    header("Location: index.php");
+    header("Location: ./");
     exit;
 }
 
@@ -123,7 +125,7 @@ function rankPotential($score) {
 
 // 2. Setup Page Variables for Includes
 $pageTitle  = 'Blog Analytics & SEO';
-$activePage = 'blogs';
+$activePage = 'blogs-index';
 $assetBase  = '../';
 
 $extraCSS = '
@@ -195,14 +197,14 @@ require_once '../include/head.php';
                     <h3 class="fw-bolder text-dark mb-1">Blog Analytics</h3>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb small bg-transparent p-0 m-0">
-                            <li class="breadcrumb-item"><a href="../index.php"
+                            <li class="breadcrumb-item"><a href="../"
                                     class="text-muted text-decoration-none">Dashboard</a></li>
                             <li class="breadcrumb-item active text-secondary fw-medium">Blogs &amp; SEO</li>
                         </ol>
                     </nav>
                 </div>
                 <div class="mt-3 mt-md-0">
-                    <a href="add.php"
+                    <a href="add"
                         class="btn btn-primary rounded-pill px-4 py-2 shadow-sm fw-semibold d-inline-flex align-items-center gap-2">
                         <i class="fa fa-plus"></i> Create Post
                     </a>
@@ -364,7 +366,7 @@ require_once '../include/head.php';
                                             </div>
                                             <h5 class="text-dark fw-bold">No articles found</h5>
                                             <p class="text-muted mb-4">You don't have any blogs yet.</p>
-                                            <a href="add.php" class="btn btn-primary rounded-pill px-4 shadow-sm">Write
+                                            <a href="add" class="btn btn-primary rounded-pill px-4 shadow-sm">Write
                                                 your first post</a>
                                         </div>
                                     </td>
@@ -496,7 +498,7 @@ require_once '../include/head.php';
 
                                     <!-- Status Toggle -->
                                     <td class="py-3">
-                                        <a href="index.php?toggle=<?= $blog['id'] ?>" class="text-decoration-none">
+                                        <a href="./?toggle=<?= $blog['id'] ?>" class="text-decoration-none">
                                             <?php if ($blog['is_published']): ?>
                                             <span
                                                 class="badge bg-success-subtle text-success-emphasis border border-success-subtle rounded-pill py-2 px-3 fw-semibold">
@@ -524,13 +526,13 @@ require_once '../include/head.php';
                                                 <i class="fa fa-external-link-alt"></i>
                                             </a>
                                             <div class="border-start border-light"></div>
-                                            <a href="edit.php?id=<?= $blog['id'] ?>"
+                                            <a href="edit?id=<?= $blog['id'] ?>"
                                                 class="btn btn-sm btn-light border-0 py-2 px-3 text-secondary"
                                                 data-bs-toggle="tooltip" title="Edit Article">
                                                 <i class="fa fa-pencil-alt"></i>
                                             </a>
                                             <div class="border-start border-light"></div>
-                                            <a href="index.php?delete=<?= $blog['id'] ?>"
+                                            <a href="./?delete=<?= $blog['id'] ?>"
                                                 class="btn btn-sm btn-light border-0 py-2 px-3 text-danger"
                                                 onclick="return confirm('Delete this blog permanently? This cannot be undone.')"
                                                 data-bs-toggle="tooltip" title="Delete Article">

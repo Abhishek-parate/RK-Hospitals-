@@ -1,6 +1,8 @@
 <?php
 // admin/users/index.php
 require_once __DIR__ . '/../../include/config.php';
+require_once __DIR__ . '/../include/auth.php';
+requireAccess('users');
 
 // ── AJAX Handler ──────────────────────────────────────────────
 if (isset($_GET['ajax'])) {
@@ -77,7 +79,7 @@ if (isset($_GET['ajax'])) {
 if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
     $del = (int)$_GET['delete'];
     $conn->query("DELETE FROM admin_users WHERE id = $del");
-    header("Location: index.php?msg=deleted"); exit;
+    header("Location: ./?msg=deleted"); exit;
 }
 
 // ── Bulk Delete ───────────────────────────────────────────────
@@ -87,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bulk_delete'])) {
         $in = implode(',', $ids);
         $conn->query("DELETE FROM admin_users WHERE id IN ($in)");
     }
-    header("Location: index.php?msg=bulk_deleted"); exit;
+    header("Location: ./?msg=bulk_deleted"); exit;
 }
 
 // ── Export CSV ────────────────────────────────────────────────
@@ -135,7 +137,7 @@ $totalRecords = $countRes ? (int)$countRes->fetch_assoc()['total'] : 0;
 $totalPages   = max(1, (int)ceil($totalRecords / $limit));
 
 $pageTitle  = 'Admin Users';
-$activePage = 'users';
+$activePage = 'users-index';
 $assetBase  = '../';
 
 $extraCSS = '
@@ -224,7 +226,7 @@ require_once '../include/head.php';
                     <h3 class="fw-bolder text-dark mb-1">Admin Users</h3>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb small bg-transparent p-0 m-0">
-                            <li class="breadcrumb-item"><a href="../index.php" class="text-muted text-decoration-none">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="../" class="text-muted text-decoration-none">Dashboard</a></li>
                             <li class="breadcrumb-item active fw-medium text-secondary">Users</li>
                         </ol>
                     </nav>
@@ -233,7 +235,7 @@ require_once '../include/head.php';
                     <a href="?export=csv" class="btn btn-light rounded-pill px-4 py-2 fw-semibold border shadow-sm d-inline-flex align-items-center gap-2">
                         <i class="fa fa-file-csv text-success"></i> Export CSV
                     </a>
-                    <a href="add.php" class="btn btn-primary rounded-pill px-4 py-2 fw-semibold shadow-sm d-inline-flex align-items-center gap-2">
+                    <a href="add" class="btn btn-primary rounded-pill px-4 py-2 fw-semibold shadow-sm d-inline-flex align-items-center gap-2">
                         <i class="fa fa-plus"></i> Add User
                     </a>
                 </div>
@@ -393,7 +395,7 @@ require_once '../include/head.php';
                                         <div class="empty-icon"><i class="fa fa-users fs-1 text-secondary opacity-50"></i></div>
                                         <h5 class="fw-bold text-dark">No users found</h5>
                                         <p class="text-muted mb-4 small">Add your first admin user to get started.</p>
-                                        <a href="add.php" class="btn btn-primary rounded-pill px-4 shadow-sm">
+                                        <a href="add" class="btn btn-primary rounded-pill px-4 shadow-sm">
                                             <i class="fa fa-plus me-2"></i>Add User
                                         </a>
                                     </div>
@@ -482,12 +484,12 @@ function renderUserRow($user, $initials, $color) {
         <td class="py-3">' . $joined . '</td>
         <td class="py-3 text-end pe-4">
             <div class="d-flex justify-content-end gap-1">
-                <a href="edit.php?id=' . $user['id'] . '"
+                <a href="edit?id=' . $user['id'] . '"
                     class="btn btn-sm btn-light border rounded-circle d-flex align-items-center justify-content-center shadow-sm"
                     style="width:32px;height:32px;" data-bs-toggle="tooltip" title="Edit">
                     <i class="fa fa-pencil-alt text-secondary" style="font-size:.75rem;"></i>
                 </a>
-                <a href="index.php?delete=' . $user['id'] . '"
+                <a href="./?delete=' . $user['id'] . '"
                     class="btn btn-sm btn-light border rounded-circle d-flex align-items-center justify-content-center shadow-sm"
                     style="width:32px;height:32px;" data-bs-toggle="tooltip" title="Delete"
                     onclick="return confirm(\'Delete ' . addslashes(htmlspecialchars($user['name'])) . '? This cannot be undone.\')">
@@ -686,12 +688,12 @@ function buildRow(u) {
         <td class="py-3">${joined}</td>
         <td class="py-3 text-end pe-4">
             <div class="d-flex justify-content-end gap-1">
-                <a href="edit.php?id=${u.id}"
+                <a href="edit?id=${u.id}"
                     class="btn btn-sm btn-light border rounded-circle d-flex align-items-center justify-content-center shadow-sm"
                     style="width:32px;height:32px;" data-bs-toggle="tooltip" title="Edit">
                     <i class="fa fa-pencil-alt text-secondary" style="font-size:.75rem;"></i>
                 </a>
-                <a href="index.php?delete=${u.id}"
+                <a href="./?delete=${u.id}"
                     class="btn btn-sm btn-light border rounded-circle d-flex align-items-center justify-content-center shadow-sm"
                     style="width:32px;height:32px;" data-bs-toggle="tooltip" title="Delete"
                     onclick="return confirm('Delete ${escHtml(u.name)}? This cannot be undone.')">
