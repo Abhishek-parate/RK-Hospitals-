@@ -437,6 +437,27 @@
     overflow: hidden !important;
     text-overflow: ellipsis !important;
 }
+.btn-view-all-rk {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #1a1a2e;
+    color: #fff !important;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 14px 40px;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    letter-spacing: 0.4px;
+}
+
+.btn-view-all-rk:hover {
+    background: #b71c1c;
+    color: #fff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(183, 28, 28, 0.35);
+}
 
     </style>
 </head>
@@ -492,7 +513,7 @@
     <div class="container">
         <div class="section-header section-header-one text-center wow fadeInUp" data-wow-duration="1s">
             <div class="title">Top Specialties</div>
-            <h2 class="section-title">Highlighting the <span class="text-danger">Care & Support</span></h2>
+            <h2 class="section-title">Advanced Treatments <span class="text-danger">At RK Hospital Nagpur</span></h2>
         </div>
         <div class="speciality-slider-info">
             <div class="spciality-slider">
@@ -689,820 +710,877 @@
 </section>
         <!-- /About Us -->
 
-        <section class="work-section-seven section">
-            <div class="container">
+ <section class="work-section-seven section">
+    <div class="container">
 
-                <div class="row">
-                    <div class="col-xxl-10 col-lg-11 mx-auto">
-                        <div class="section-header section-header-seven text-center">
-                            <div class="section-sub-title" style="color:#004D8F;">Trusted Healthcare Since 2010</div>
-                            <h2 class="section-title">We combine advanced robotic technology with
-                                compassionate care to <span style="color:#AB1820 !important;">deliver the best orthopedic &amp;
-                                    gynecology outcomes</span></h2>
-                        </div>
+        <div class="row">
+            <div class="col-xxl-10 col-lg-11 mx-auto">
+                <div class="section-header section-header-seven text-center">
+                    <div class="section-sub-title" style="color:#004D8F;">
+                        Top Orthopedic & Gynecology Hospital in Nagpur | Dr. Agrawal's R.K. Hospital
                     </div>
-                </div>
-                 
-                <div class="row g-4">
 
-                    <!-- Work Item 1 -->
-                    <div class="col-xl-3 col-md-6 d-flex wow fadeInUp" data-wow-delay="0.2s" data-wow-duration="1s">
-                        <div class="work-item-two flex-fill">
-                            <h3 class="custom-title">Advanced Joint Replacement Surgery</h3>
-                            <div class="work-info">
-                                <div class="work-icon">
-                                    <img src="assets/img/icons/work-01.svg" alt="icon" class="img-fluid">
-                                </div>
-                                <div class="count-number">01</div>
-                            </div>
-                            <p>Expert knee, hip & shoulder replacement using robotic-assisted precision for faster
-                                recovery
-                                and long-lasting results.</p>
-                        </div>
-                    </div>
-                    <!-- Work Item 1 End -->
+                    <h2 class="section-title">
+                        Best Robotic Joint Replacement & Women's Care at 
+                        <span style="color:#E8002D;">
+                            R.K. Hospital Nagpur
+                        </span>
+                    </h2>
 
-                    <!-- Work Item 2 -->
-                    <div class="col-xl-3 col-md-6 d-flex wow fadeInUp" data-wow-delay="0.2s" data-wow-duration="2s">
-                        <div class="work-item-two flex-fill">
-                            <h3 class="custom-title">Women's Health & Gynecology Care</h3>
-                            <div class="work-info">
-                                <div class="work-icon">
-                                    <img src="assets/img/icons/work-02.svg" alt="icon" class="img-fluid">
-                                </div>
-                                <div class="count-number">02</div>
-                            </div>
-                            <p>Comprehensive gynecological services including PCOS, fibroids, laparoscopic surgery &
-                                complete maternity care.</p>
-                        </div>
-                    </div>
-                    <!-- Work Item 2 End -->
-                  
-                    <!-- Work Item 3 -->
-                    <div class="col-xl-3 col-md-6 d-flex wow fadeInUp" data-wow-delay="0.2s" data-wow-duration="3s">
-                        <div class="work-item-two flex-fill">
-                            <h3 class="custom-title">Sports Injury & Spine Treatment</h3>
-                            <div class="work-info">
-                                <div class="work-icon">
-                                    <img src="assets/img/icons/work-03.svg" alt="icon" class="img-fluid">
-                                </div>
-                                <div class="count-number">03</div>
-                            </div>
-                            <p>Specialized treatment for ligament tears, fractures, spine disorders & sports injuries
-                                with
-                                physiotherapy support.</p>
-                        </div>
-                    </div>
-                    <!-- Work Item 3 End -->
+                    <p>
+                        Dr. Agrawal's R.K. Hospital is one of the best hospitals in Nagpur for orthopedic surgery, robotic knee replacement, hip replacement, spine treatment, and gynecology care. Equipped with advanced medical technology, modular operation theatres, and experienced doctors, we provide high-quality, safe, and affordable treatment. Our hospital is known for excellent patient care, successful surgeries, and 24/7 emergency services in Nagpur and nearby areas.
+                    </p>
 
-                    <!-- Work Item 4 -->
-                    <div class="col-xl-3 col-md-6 d-flex wow fadeInUp" data-wow-delay="0.2s" data-wow-duration="4s">
-                        <div class="work-item-two flex-fill">
-                            <h3 class="custom-title">High-Risk Pregnancy & Maternity</h3>
-                            <div class="work-info">
-                                <div class="work-icon">
-                                    <img src="assets/img/icons/work-04.svg" alt="icon" class="img-fluid">
-                                </div>
-                                <div class="count-number">04</div>
-                            </div>
-                            <p>Dedicated care for high-risk pregnancies, normal & C-section deliveries with 24/7 NICU &
-                                maternity support.</p>
-                        </div>
-                    </div>
-                    <!-- Work Item 4 End -->
-
-                </div>
-
-                <div class="text-center">
-                    <div class="connect-badge">
-                        Consult our specialists for orthopedic &amp; gynecology concerns
-                        <span>Book Appointment Today</span>
-                    </div>
+                    <p>
+                        Whether you are looking for the best orthopedic doctor in Nagpur, a trusted maternity hospital, or advanced trauma care, R.K. Hospital ensures personalized treatment with faster recovery and long-term results.
+                    </p>
                 </div>
             </div>
-        </section>
+        </div>
+         
+        <div class="row g-4">
+
+            <!-- Work Item 1 -->
+            <div class="col-xl-3 col-md-6 d-flex wow fadeInUp" data-wow-delay="0.2s" data-wow-duration="1s">
+                <div class="work-item-two flex-fill">
+                    <h3 class="custom-title">Robotic Knee Replacement & Hip Surgery Nagpur</h3>
+                    <div class="work-info">
+                        <div class="work-icon">
+                            <img src="assets/img/icons/work-01.svg" alt="Best Robotic Knee Replacement Hospital in Nagpur" class="img-fluid">
+                        </div>
+                        <div class="count-number">01</div>
+                    </div>
+                    <p>
+                        Specialized in robotic-assisted knee and hip replacement surgery in Nagpur offering high precision, minimal pain, shorter hospital stay, and faster recovery for patients.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Work Item 2 -->
+            <div class="col-xl-3 col-md-6 d-flex wow fadeInUp" data-wow-delay="0.2s" data-wow-duration="2s">
+                <div class="work-item-two flex-fill">
+                    <h3 class="custom-title">Advanced Gynecology & Pregnancy Care</h3>
+                    <div class="work-info">
+                        <div class="work-icon">
+                            <img src="assets/img/icons/work-02.svg" alt="Best Gynecology Hospital in Nagpur for Pregnancy Care" class="img-fluid">
+                        </div>
+                        <div class="count-number">02</div>
+                    </div>
+                    <p>
+                        Complete women’s healthcare including PCOS treatment, infertility solutions, fibroids treatment, laparoscopic gynecology surgery, and safe pregnancy care in Nagpur.
+                    </p>
+                </div>
+            </div>
+           
+            <!-- Work Item 3 -->
+            <div class="col-xl-3 col-md-6 d-flex wow fadeInUp" data-wow-delay="0.2s" data-wow-duration="3s">
+                <div class="work-item-two flex-fill">
+                    <h3 class="custom-title">Spine Surgery, Back Pain & Trauma Care Nagpur</h3>
+                    <div class="work-info">
+                        <div class="work-icon">
+                            <img src="assets/img/icons/work-03.svg" alt="Spine Specialist and Trauma Care Hospital in Nagpur" class="img-fluid">
+                        </div>
+                        <div class="count-number">03</div>
+                    </div>
+                    <p>
+                        Expert treatment for spine problems, slip disc, fractures, accident injuries, sports injuries, and orthopedic trauma care with advanced diagnostics and rehabilitation.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Work Item 4 -->
+            <div class="col-xl-3 col-md-6 d-flex wow fadeInUp" data-wow-delay="0.2s" data-wow-duration="4s">
+                <div class="work-item-two flex-fill">
+                    <h3 class="custom-title">Best Maternity & High-Risk Pregnancy Hospital Nagpur</h3>
+                    <div class="work-info">
+                        <div class="work-icon">
+                            <img src="assets/img/icons/work-04.svg" alt="High Risk Pregnancy and Delivery Hospital in Nagpur" class="img-fluid">
+                        </div>
+                        <div class="count-number">04</div>
+                    </div>
+                    <p>
+                        Trusted maternity hospital in Nagpur providing high-risk pregnancy care, normal delivery, C-section, prenatal checkups, and postnatal care with 24/7 expert support.
+                    </p>
+                </div>
+            </div>
+
+    </div>
+
+        <div class="text-center">
+            <div class="connect-badge">
+                Looking for the best orthopedic or gynecology hospital in Nagpur? Visit Dr. Agrawal's R.K. Hospital today for expert consultation and advanced treatment.
+                <span>Book Appointment Now | Call +91 97660 57372</span>
+            </div>
+        </div>
+    </div>
+</section>
         <!-- Why Choose Section Start -->
-        <section class="whychoose-section-nine section">
-            <div class="container">
-                <div class="section-header section-header-nine text-center wow fadeInUp" data-wow-duration="1s">
-                    <div class="title"><span class="dot"></span>WHY CHOOSE US</div>
-                    <h2 class="section-title"> Your <span class="text-primary text-decoration-underline">Trusted</span>
-                        Homecare Partner </h2>
+       <section class="whychoose-section-nine section">
+    <div class="container">
+        <div class="section-header section-header-nine text-center wow fadeInUp" data-wow-duration="1s">
+            <div class="title"><span class="dot"></span>WHY CHOOSE US</div>
+            <h2 class="section-title">
+                Why Patients Trust 
+                <span class="text-white">
+                    Dr. Agrawal's R.K. Hospital Nagpur
+                </span>
+            </h2>
+            <p style="color:#fff;">
+                Recognized as one of the best orthopedic and gynecology hospitals in Nagpur, we provide advanced treatment, expert doctors, and 24/7 emergency care with a strong focus on patient safety and successful outcomes.
+            </p>
+        </div>
+
+        <!-- start row -->
+        <div class="row">
+
+            <!-- Left -->
+            <div class="col-lg-3">
+                <div class="choose-item-nine wow fadeInUp" data-wow-duration="1s">
+                    <h3 class="custom-title">Advanced Orthopedic & Joint Replacement</h3>
+                    <p class="description">
+                        Specialized in robotic knee replacement, hip replacement, spine surgery, and trauma care with high success rates in Nagpur.
+                    </p>
                 </div>
 
-
-                <!-- start row -->
-                <div class="row">
-                    <!-- Left Item -->
-                    <div class="col-lg-3">
-                        <div class="choose-item-nine wow fadeInUp" data-wow-duration="1s">
-                            <h3 class="custom-title">Medical & Non-Medical Services</h3>
-                            <p class="description">From nursing and therapy to companionship and daily assistance</p>
-                        </div>
-                        <div class="choose-item-nine wow fadeInUp" data-wow-duration="2s">
-                            <h3 class="custom-title">Modern Monitoring & Health Tracking</h3>
-                            <p class="description">Technology-enabled tracking, digital reports, medication reminders
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="choose-img-nine">
-                            <img src="assets/img/about/choose-img-one.jpg" alt="choose-img"
-                                class="img-fluid img-one d-none">
-                            <video playsinline="playsinline" autoplay muted="muted" loop="loop" id="video">
-                                <source src="assets/img/video/video.mp4" type="video/mp4">
-                            </video>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="choose-item-nine right-item wow fadeInUp" data-wow-duration="1s">
-                            <h3 class="custom-title">Family-Centered Care Approach</h3>
-                            <p class="description">We focus on comfort, dignity, independence, and building trust</p>
-                        </div>
-                        <div class="choose-item-nine right-item wow fadeInUp" data-wow-duration="2s">
-                            <h3 class="custom-title">24/7 Support & Emergency</h3>
-                            <p class="description">Round-the-clock care, monitoring, and helpline for safety at all
-                                times.</p>
-                        </div>
-                    </div>
-                    <!-- right Item -->
+                <div class="choose-item-nine wow fadeInUp" data-wow-duration="2s">
+                    <h3 class="custom-title">Modern Technology & Operation Theatres</h3>
+                    <p class="description">
+                        Equipped with advanced diagnostic systems, modular OT, and robotic-assisted surgical technology for precise and safe treatment.
+                    </p>
                 </div>
-                <!-- end row -->
-
-                <!-- start row -->
-                <div class="row choose-step-nine g-3 justify-content-center">
-                    <div class="col-lg-4 col-md-6 col-sm-6">
-                        <div class="choose-step wow fadeInUp" data-wow-duration="1s">
-                            <div class="step-icon">
-                                <img src="assets/img/bg/choose-step-bg.png" alt="choose-img" class="img-fluid bg-one">
-                                <img src="assets/img/icons/step-icon-1.png" alt="choose-img" class="img-fluid icon">
-                            </div>
-                            <div class="step-content">
-                                <span class="level">Step 1</span>
-                                <h3 class="custom-title">Select Your Service</h3>
-                                <p>Choose from nursing care, elder care, therapy, or medical assistance your specific
-                                    needs.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-6">
-                        <div class="choose-step wow fadeInUp" data-wow-duration="2s">
-                            <div class="step-icon">
-                                <img src="assets/img/bg/choose-step-bg.png" alt="choose-img" class="img-fluid bg-one">
-                                <img src="assets/img/icons/step-icon-2.png" alt="choose-img" class="img-fluid icon">
-                            </div>
-                            <div class="step-content">
-                                <span class="level">Step 2</span>
-                                <h3 class="custom-title">Choose Date & Time</h3>
-                                <p>Pick your preferred date and time , and we’ll certified caregiver and share booking
-                                    details.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-6">
-                        <div class="choose-step wow fadeInUp" data-wow-duration="3s">
-                            <div class="step-icon">
-                                <img src="assets/img/bg/choose-step-bg.png" alt="choose-img" class="img-fluid bg-one">
-                                <img src="assets/img/icons/step-icon-3.png" alt="choose-img" class="img-fluid icon">
-                            </div>
-                            <div class="step-content">
-                                <span class="level">Step 3</span>
-                                <h3 class="custom-title">Care Begins at Home</h3>
-                                <p>Our professional caregiver arrives at your location and starts personalized care with
-                                    full support.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- end row -->
-
             </div>
-            <img src="assets/img/bg/choose-bg-5.png" alt="choose" class="img-fluid choose-bg-5">
-        </section>
+
+            <!-- Center -->
+            <div class="col-lg-6">
+                <div class="choose-img-nine">
+                    <video playsinline autoplay muted loop id="video">
+                        <source src="assets/img/home/RK-hospital.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+
+            <!-- Right -->
+            <div class="col-lg-3">
+                <div class="choose-item-nine right-item wow fadeInUp" data-wow-duration="1s">
+                    <h3 class="custom-title">Expert Doctors & 5-Star Patient Care</h3>
+                    <p class="description">
+                        Experienced orthopedic surgeons and gynecologists delivering personalized care with excellent patient satisfaction and trusted results.
+                    </p>
+                </div>
+
+                <div class="choose-item-nine right-item wow fadeInUp" data-wow-duration="2s">
+                    <h3 class="custom-title">24/7 Emergency & Trauma Services</h3>
+                    <p class="description">
+                        круглосуточная emergency care for accidents, fractures, pregnancy emergencies, and critical conditions in Nagpur.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+        <!-- end row -->
+
+        <!-- Steps -->
+        <div class="row choose-step-nine g-3 justify-content-center">
+
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="choose-step wow fadeInUp" data-wow-duration="1s">
+                    <div class="step-icon">
+                        <img src="assets/img/bg/choose-step-bg.png" class="img-fluid bg-one">
+                        <img src="assets/img/icons/step-icon-1.png" class="img-fluid icon">
+                    </div>
+                    <div class="step-content">
+                        <span class="level">Step 1</span>
+                        <h3 class="custom-title">Book Your Appointment Now</h3>
+                        <p>
+                            Call or visit Dr. Agrawal's R.K. Hospital Nagpur to consult with our expert orthopedic or gynecology specialists.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="choose-step wow fadeInUp" data-wow-duration="2s">
+                    <div class="step-icon">
+                        <img src="assets/img/bg/choose-step-bg.png" class="img-fluid bg-one">
+                        <img src="assets/img/icons/step-icon-2.png" class="img-fluid icon">
+                    </div>
+                    <div class="step-content">
+                        <span class="level">Step 2</span>
+                        <h3 class="custom-title">Diagnosis & Treatment Plan</h3>
+                        <p>
+                            Get accurate diagnosis using advanced technology and receive a personalized treatment plan for faster recovery.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="choose-step wow fadeInUp" data-wow-duration="3s">
+                    <div class="step-icon">
+                        <img src="assets/img/bg/choose-step-bg.png" class="img-fluid bg-one">
+                        <img src="assets/img/icons/step-icon-3.png" class="img-fluid icon">
+                    </div>
+                    <div class="step-content">
+                        <span class="level">Step 3</span>
+                        <h3 class="custom-title">Advanced Treatment & Recovery</h3>
+                        <p>
+                            Receive world-class treatment including robotic surgery, maternity care, or trauma management with continuous support.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <img src="assets/img/home/why-choose-bg.png" alt="Best Hospital in Nagpur RK Hospital" class="img-fluid choose-bg-5">
+</section>
         <!-- Why Choose Section Start-->
 
 
         <!-- Services Section -->
-        <section class="services-section wow fadeInUp" data-wow-duration="1s">
-            <div class="horizontal-slide d-flex" data-direction="right" data-speed="slow">
-                <div class="slide-list d-flex gap-4">
-                    <div class="services-slide">
-                        <h6><a href="index.html#">Multi Speciality Treatments & Doctors</a></h6>
-                    </div>
-                    <div class="services-slide">
-                        <h6><a href="index.html#">Lab Testing Services</a></h6>
-                    </div>
-                    <div class="services-slide">
-                        <h6><a href="index.html#">Medecines & Supplies</a></h6>
-                    </div>
-                    <div class="services-slide">
-                        <h6><a href="index.html#">Hospitals & Clinics</a></h6>
-                    </div>
-                    <div class="services-slide">
-                        <h6><a href="index.html#">Health Care Services</a></h6>
-                    </div>
-                    <div class="services-slide">
-                        <h6><a href="index.html#">Talk to Doctors</a></h6>
-                    </div>
-                    <div class="services-slide">
-                        <h6><a href="index.html#">Home Care Services</a></h6>
-                    </div>
-                </div>
+       <section class="services-section wow fadeInUp" data-wow-duration="1s">
+    <div class="horizontal-slide d-flex" data-direction="right" data-speed="slow">
+        <div class="slide-list d-flex gap-4">
+
+            <div class="services-slide">
+                <h6><a href="#">Best Orthopedic & Gynecology Hospital in Nagpur</a></h6>
             </div>
-        </section>
+
+            <div class="services-slide">
+                <h6><a href="#">Robotic Knee & Hip Replacement Surgery Nagpur</a></h6>
+            </div>
+
+            <div class="services-slide">
+                <h6><a href="#">Spine, Back Pain & Trauma Treatment</a></h6>
+            </div>
+
+            <div class="services-slide">
+                <h6><a href="#">Pregnancy Care, Normal Delivery & C-Section</a></h6>
+            </div>
+
+            <div class="services-slide">
+                <h6><a href="#">Infertility Treatment & Women's Health Care</a></h6>
+            </div>
+
+            <div class="services-slide">
+                <h6><a href="#">24/7 Emergency & Accident Trauma Care</a></h6>
+            </div>
+
+            <div class="services-slide">
+                <h6><a href="#">Laparoscopic & Minimally Invasive Surgery</a></h6>
+            </div>
+
+        </div>
+    </div>
+</section>
         <!-- /Services Section -->
 
 
 
 
         <section class="services-section-seven section" style="padding-top: 20px;">
-            <div class="container">
+    <div class="container">
 
-                <div class="section-header section-header-seven">
-                    <div class="row g-4 align-items-center">
-                        <div class="col-xl-8">
-                            <div class="section-sub-title" style="color:#004D8F;">Our Speciality Services</div>
-                            <h2 class="section-title">Comprehensive orthopedic &amp; gynecology care with
-                                state-of-the-art
-                                technology and <span style="color:#ED1C24;">expert medical professionals</span></h2>
-                        </div>
-                        <div class="col-xl-4">
-                            <div class="text-xl-end">
-                                <a href="orthopedic-services.html" class="btn btn-white theme-7-btn">View All
-                                    Services<span class="icon"><i class="isax isax-arrow-right-3"></i></span></a>
-                            </div>
-                        </div>
-                        <div class="services-item-seven">
-                            <div class="service-header">
-                                <h3 class="custom-title">ECG & EKG Tests</h3>
-                            </div>
-                            <div class="service-content">
-                                <p>Accurate testing to monitor and analyze your heart's electrical activity. Helps
-                                    detect
-                                    arrhythmias and early cardiac abnormalities.</p>
-                            </div>
-                            <div class="service-img">
-                                <img src="assets/img/home/ecg.webp" alt="service" class="img-fluid">
-                            </div>
-                        </div>
-                        <!-- Service Item End -->
+        <div class="section-header section-header-seven">
+            <div class="row g-4 align-items-center">
 
-                        <!-- Service Item -->
-                        <div class="services-item-seven">
-                            <div class="service-header">
-                                <h3 class="custom-title">Robotic Hip Replacement</h3>
-                            </div>
-                            <div class="service-content">
-                                <p>Advanced robotic hip replacement surgery ensuring accurate implant placement and
-                                    quicker
-                                    return to daily activities.</p>
-                            </div>
-                            <div class="service-img">
-                                <img src="assets/img/home/robotic.webp" alt="service" class="img-fluid">
-                            </div>
-                        </div>
-                        <!-- Service Item End -->
-
-                        <!-- Service Item -->
-                        <div class="services-item-seven active">
-                            <div class="service-header">
-                                <h3 class="custom-title">Spine Surgery</h3>
-                            </div>
-                            <div class="service-content">
-                                <p>Expert spine surgery for disc problems, spinal stenosis, and deformities using
-                                    minimally
-                                    invasive techniques.</p>
-                            </div>
-                            <div class="service-img">
-                                <img src="assets/img/home/spline.webp" alt="service" class="img-fluid">
-                            </div>
-                        </div>
-                        <!-- Service Item End -->
-
-                        <!-- Service Item -->
-                        <div class="services-item-seven">
-                            <div class="service-header">
-                                <h3 class="custom-title">Pregnancy &amp; Delivery Care</h3>
-                            </div>
-                            <div class="service-content">
-                                <p>Complete antenatal, delivery, and postnatal care by an experienced gynecologist in a
-                                    safe
-                                    and hygienic environment.</p>
-                            </div>
-                            <div class="service-img">
-                                <img src="assets/img/home/delivery.webp" alt="service" class="img-fluid">
-                            </div>
-                        </div>
-                        <!-- Service Item End -->
-
-                        <!-- Service Item -->
-                        <div class="services-item-seven">
-                            <div class="service-header">
-                                <h3 class="custom-title">Laparoscopic Gynecology Surgery</h3>
-                            </div>
-                            <div class="service-content">
-                                <p>Keyhole laparoscopic procedures for fibroids, ovarian cysts, endometriosis, and other
-                                    gynecological conditions.</p>
-                            </div>
-                            <div class="service-img">
-                                <img src="assets/img/home/laparoscopic.webp" alt="service" class="img-fluid">
-                            </div>
-                        </div>
-                        <!-- Service Item End -->
-
+                <div class="col-xl-8">
+                    <div class="section-sub-title" style="color:#004D8F;">
+                        Best Medical Services in Nagpur | R.K. Hospital
                     </div>
-                    <img src="assets/img/bg/service-bg-01.png" alt="bg" class="service-bg-01">
-        </section>
+
+                    <h2 class="section-title">
+                        Advanced Orthopedic & Gynecology Treatments at 
+                        <span style="color:#ED1C24;">
+                            Dr. Agrawal's R.K. Hospital Nagpur
+                        </span>
+                    </h2>
+                    <p>
+                        We provide world-class orthopedic surgery, robotic joint replacement, spine treatment, trauma care, and advanced gynecology services in Nagpur with modern technology and experienced doctors.
+                    </p>
+                </div>
+
+                <div class="col-xl-4">
+                    <div class="text-xl-end">
+                        <a href="orthopedic-services.html" class="btn btn-white theme-7-btn">
+                            View All Services
+                            <span class="icon"><i class="isax isax-arrow-right-3"></i></span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Service 1 -->
+                <div class="services-item-seven">
+                    <div class="service-header">
+                        <h3 class="custom-title">Robotic Knee Replacement in Nagpur</h3>
+                    </div>
+                    <div class="service-content">
+                        <p>
+                            Advanced robotic knee replacement surgery with high precision, less pain, faster recovery, and long-lasting results by expert orthopedic surgeons.
+                        </p>
+                    </div>
+                    <div class="service-img">
+                        <img src="assets/img/home/ecg.webp" alt="Robotic Knee Replacement Hospital Nagpur" class="img-fluid">
+                    </div>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="services-item-seven">
+                    <div class="service-header">
+                        <h3 class="custom-title">Robotic Hip Replacement Surgery Nagpur</h3>
+                    </div>
+                    <div class="service-content">
+                        <p>
+                            Minimally invasive hip replacement surgery using robotic technology for accurate implant positioning and quicker recovery.
+                        </p>
+                    </div>
+                    <div class="service-img">
+                        <img src="assets/img/home/robotic.webp" alt="Hip Replacement Surgery Hospital Nagpur" class="img-fluid">
+                    </div>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="services-item-seven active">
+                    <div class="service-header">
+                        <h3 class="custom-title">Spine Surgery & Back Pain Treatment Nagpur</h3>
+                    </div>
+                    <div class="service-content">
+                        <p>
+                            Specialized spine treatment for slip disc, back pain, spinal stenosis, and deformities using advanced and minimally invasive techniques.
+                        </p>
+                    </div>
+                    <div class="service-img">
+                        <img src="assets/img/home/spline.webp" alt="Spine Surgery Hospital in Nagpur" class="img-fluid">
+                    </div>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="services-item-seven">
+                    <div class="service-header">
+                        <h3 class="custom-title">Pregnancy Care & Delivery Hospital Nagpur</h3>
+                    </div>
+                    <div class="service-content">
+                        <p>
+                            Complete maternity services including antenatal care, normal delivery, C-section, and postnatal care in a safe and hygienic environment.
+                        </p>
+                    </div>
+                    <div class="service-img">
+                        <img src="assets/img/home/delivery.webp" alt="Pregnancy Hospital in Nagpur" class="img-fluid">
+                    </div>
+                </div>
+
+                <!-- Service 5 -->
+                <div class="services-item-seven">
+                    <div class="service-header">
+                        <h3 class="custom-title">Laparoscopic Gynecology Surgery Nagpur</h3>
+                    </div>
+                    <div class="service-content">
+                        <p>
+                            Advanced laparoscopic (keyhole) surgery for fibroids, ovarian cysts, endometriosis, and other gynecological conditions with faster recovery.
+                        </p>
+                    </div>
+                    <div class="service-img">
+                        <img src="assets/img/home/laparoscopic.webp" alt="Laparoscopic Gynecology Surgery Nagpur" class="img-fluid">
+                    </div>
+                </div>
+
+            </div>
+
+            <img src="assets/img/bg/service-bg-01.png" alt="Best Hospital Services in Nagpur RK Hospital" class="service-bg-01">
+        </div>
+    </div>
+</section>
 
 
 
         <!-- ==================== Doctors Listing ==================== -->
-        <section class="section" style="background: #fff; padding: 56px 0 80px;">
-            <div class="container">
+     <section class="section" style="background: #fff; padding: 56px 0 80px;">
+    <div class="container">
 
-                <!-- Section Header -->
-                <div class="row mb-5">
-                    <div class="col-12">
-                        <div class="rk-eyebrow">Our Specialists</div>
-                        <h2 class="rk-section-title">Explore the team <span>in their Success</span></h2>
-                        <p style="color: var(--text-soft); font-size:15px; margin-top:6px;">
-                            Showing <strong style="color:var(--red);">2</strong> highly experienced and trusted medical
-                            specialists
+        <!-- Section Header -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="rk-eyebrow">Our Expert Doctors in Nagpur</div>
+                <h2 class="rk-section-title">
+                    Meet the Specialists at 
+                    <span>Dr. Agrawal's R.K. Hospital Nagpur</span>
+                </h2>
+                <p style="color: var(--text-soft); font-size:15px; margin-top:6px;">
+                    Trusted by patients for advanced orthopedic surgery and gynecology care in Nagpur with high success rates
+                </p>
+            </div>
+        </div>
+
+        <!-- Doctor Cards -->
+        <div class="row g-4 justify-content-center">
+
+            <!-- Doctor 1 -->
+            <div class="col-lg-6">
+                <div class="doc-card">
+
+                    <div class="doc-banner">
+                        <div class="deco-ring r1"></div>
+                        <div class="deco-ring r2"></div>
+                        <div class="doc-photo-wrap">
+                            <img src="assets/img/home/doctor1.webp" alt="Best Gynecologist in Nagpur Dr Priyanka Jain Agrawal">
+                            <span class="doc-spec-badge">Gynecologist & Obstetrician</span>
+                        </div>
+                    </div>
+
+                    <div class="doc-body">
+                        <div class="doc-name">Dr. Priyanka Jain Agrawal</div>
+                        <div class="doc-degree">MBBS, MD – Obstetrics & Gynecology</div>
+                        <div class="doc-hr"></div>
+
+                        <div class="doc-tags">
+                            <span class="doc-tag">High-Risk Pregnancy</span>
+                            <span class="doc-tag">Normal Delivery</span>
+                            <span class="doc-tag">C-Section</span>
+                            <span class="doc-tag">Infertility</span>
+                            <span class="doc-tag">PCOS/PCOD</span>
+                            <span class="doc-tag">Laparoscopy</span>
+                        </div>
+
+                        <p class="doc-bio">
+                            Dr. Priyanka Jain Agrawal is one of the best gynecologists in Nagpur, specializing in high-risk pregnancy care, infertility treatment, and advanced women’s health services. She is known for successfully managing critical pregnancy cases, offering safe delivery, and providing complete maternal care.
+                            <br><br>
+                            Her expertise includes laparoscopic and hysteroscopic surgeries for fibroids, ovarian cysts, and endometriosis, along with PCOS/PCOD and menopause management. Patients trust her for her compassionate approach, ethical treatment, and excellent outcomes.
                         </p>
-                    </div>
-                </div>
 
-                <!-- Doctor Cards -->
-                <div class="row g-4 justify-content-center">
-
-                    <!-- ── Doctor 1 ── -->
-                    <div class="col-lg-6">
-                        <div class="doc-card">
-
-                            <div class="doc-banner">
-                                <div class="deco-ring r1"></div>
-                                <div class="deco-ring r2"></div>
-                                <div class="doc-photo-wrap">
-                                    <img src="assets/img/home/doctor1.webp" alt="Dr. Priyanka Jain Agrawal">
-                                    <span class="doc-spec-badge">Gynecologist &amp; Obstetrician</span>
-                                </div>
+                        <div class="doc-info-strip">
+                            <div class="doc-info-item">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <span>Central Avenue, Nagpur</span>
                             </div>
-
-                            <div class="doc-body">
-                                <div class="doc-name">Dr. Priyanka Jain Agrawal</div>
-                                <div class="doc-degree">MBBS, MS – Obstetrics &amp; Gynecology</div>
-                                <div class="doc-hr"></div>
-
-                                <div class="doc-tags">
-                                    <span class="doc-tag">Pregnancy Care</span>
-                                    <span class="doc-tag">Normal Delivery</span>
-                                    <span class="doc-tag">C-Section</span>
-                                    <span class="doc-tag">Infertility</span>
-                                    <span class="doc-tag">Laparoscopy</span>
-                                    <span class="doc-tag">Hysteroscopy</span>
-                                </div>
-
-                                <p class="doc-bio">
-                                    Dr. Priyanka Jain Agrawal is a trusted Obstetrician-Gynecologist in Nagpur,
-                                    specializing
-                                    in pregnancy care, infertility treatment, and women's health. She offers antenatal
-                                    checkups, normal and cesarean deliveries, menstrual and hormonal disorder
-                                    management,
-                                    and advanced laparoscopic and hysteroscopy procedures.
-                                    <br><br>
-                                    Known for her patient-friendly approach, clear guidance, and ethical treatment, she
-                                    supports women through every stage — from planning a pregnancy to childbirth and
-                                    postpartum care.
-                                </p>
-
-                                <div class="doc-info-strip">
-                                    <div class="doc-info-item">
-                                        <i class="fa-solid fa-location-dot"></i>
-                                        <span>Central Avenue, Nagpur</span>
-                                    </div>
-                                    <div class="doc-info-item">
-                                        <i class="fa-solid fa-clock"></i>
-                                        <span><strong>Mon – Sat</strong> &nbsp;·&nbsp; 9 AM – 6 PM</span>
-                                    </div>
-                                </div>
-
-                                <div class="doc-actions">
-                                    <a href="gynecology-services.html" class="btn-rk-primary">
-                                        <i class="fa-solid fa-list-ul me-2"></i>Detailed Services
-                                    </a>
-                                    <a href="contact-us.html" class="btn-rk-outline">
-                                        <i class="fa-solid fa-calendar-plus"></i> Book
-                                    </a>
-                                </div>
+                            <div class="doc-info-item">
+                                <i class="fa-solid fa-clock"></i>
+                                <span><strong>Mon – Sat</strong> · 7 PM – 9 PM</span>
                             </div>
+                        </div>
 
+                        <div class="doc-actions">
+                            <a href="gynecology-services.html" class="btn-rk-primary">
+                                Detailed Services
+                            </a>
+                            <a href="contact-us.html" class="btn-rk-outline">
+                                Book Appointment
+                            </a>
                         </div>
                     </div>
-                    <!-- ── /Doctor 1 ── -->
-
-                    <!-- ── Doctor 2 ── -->
-                    <div class="col-lg-6">
-                        <div class="doc-card">
-
-                            <div class="doc-banner">
-                                <div class="deco-ring r1"></div>
-                                <div class="deco-ring r2"></div>
-                                <div class="doc-photo-wrap">
-                                    <img src="assets/img/home/doctor3.webp" alt="Dr. Rahul R. Agrawal">
-                                    <span class="doc-spec-badge">Orthopedic Surgeon</span>
-                                </div>
-                            </div>
-
-                            <div class="doc-body">
-                                <div class="doc-name">Dr. Rahul R. Agrawal</div>
-                                <div class="doc-degree">MBBS, MS – Orthopedics &amp; Traumatology</div>
-                                <div class="doc-hr"></div>
-
-                                <div class="doc-tags">
-                                    <span class="doc-tag">Robotic Knee</span>
-                                    <span class="doc-tag">Joint Replacement</span>
-                                    <span class="doc-tag">Spine Surgery</span>
-                                    <span class="doc-tag">Fracture Care</span>
-                                    <span class="doc-tag">Arthroscopy</span>
-                                    <span class="doc-tag">Sports Injuries</span>
-                                </div>
-
-                                <p class="doc-bio">
-                                    Dr. Rahul R. Agrawal is a trusted Orthopedic Surgeon in Nagpur, known for treating
-                                    fractures, joint problems, and sports injuries with a patient-first approach. He
-                                    specializes in joint replacement, robotic-assisted knee and hip surgery, spine
-                                    treatment, trauma care, arthroscopy, deformity correction, and pediatric
-                                    orthopedics.
-                                    <br><br>
-                                    With experience across emergency care, rehabilitation, and advanced orthopedic
-                                    procedures, Dr. Rahul focuses on accurate diagnosis, transparent guidance, and safe
-                                    recovery plans for every patient.
-                                </p>
-
-                                <div class="doc-info-strip">
-                                    <div class="doc-info-item">
-                                        <i class="fa-solid fa-location-dot"></i>
-                                        <span>Central Avenue, Nagpur</span>
-                                    </div>
-                                    <div class="doc-info-item">
-                                        <i class="fa-solid fa-clock"></i>
-                                        <span><strong>Mon – Sat</strong> &nbsp;·&nbsp; 9 AM – 6 PM</span>
-                                    </div>
-                                </div>
-
-                                <div class="doc-actions">
-                                    <a href="orthopedic-services.html" class="btn-rk-primary">
-                                        <i class="fa-solid fa-list-ul me-2"></i>Detailed Services
-                                    </a>
-                                    <a href="contact-us.html" class="btn-rk-outline">
-                                        <i class="fa-solid fa-calendar-plus"></i> Book
-                                    </a>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <!-- ── /Doctor 2 ── -->
 
                 </div>
             </div>
-        </section>
+
+            <!-- Doctor 2 -->
+            <div class="col-lg-6">
+                <div class="doc-card">
+
+                    <div class="doc-banner">
+                        <div class="deco-ring r1"></div>
+                        <div class="deco-ring r2"></div>
+                        <div class="doc-photo-wrap">
+                            <img src="assets/img/home/doctor3.webp" alt="Best Orthopedic Surgeon in Nagpur Dr Rahul Agrawal">
+                            <span class="doc-spec-badge">Orthopedic & Joint Replacement Surgeon</span>
+                        </div>
+                    </div>
+
+                    <div class="doc-body">
+                        <div class="doc-name">Dr. Rahul R. Agrawal</div>
+                        <div class="doc-degree">MBBS, MS Orthopaedics, FIJR</div>
+                        <div class="doc-hr"></div>
+
+                        <div class="doc-tags">
+                            <span class="doc-tag">Robotic Knee</span>
+                            <span class="doc-tag">Hip Replacement</span>
+                            <span class="doc-tag">Spine Surgery</span>
+                            <span class="doc-tag">Fracture Care</span>
+                            <span class="doc-tag">Arthroscopy</span>
+                            <span class="doc-tag">Sports Injuries</span>
+                        </div>
+
+                        <p class="doc-bio">
+                            Dr. Rahul Agrawal is a leading orthopedic surgeon in Nagpur, specializing in robotic knee replacement, hip replacement surgery, spine treatment, and complex trauma care. With advanced training and international exposure, he provides high-precision surgical treatment with faster recovery.
+                            <br><br>
+                            He is highly experienced in handling fractures, ligament injuries, arthroscopy, and joint problems. Known for his surgical precision and patient-first approach, he ensures safe procedures and effective rehabilitation for long-term mobility.
+                        </p>
+
+                        <div class="doc-info-strip">
+                            <div class="doc-info-item">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <span>Central Avenue, Nagpur</span>
+                            </div>
+                            <div class="doc-info-item">
+                                <i class="fa-solid fa-clock"></i>
+                                <span><strong>Mon – Sat</strong> · 7 PM – 9 PM</span>
+                            </div>
+                        </div>
+
+                        <div class="doc-actions">
+                            <a href="orthopedic-services.html" class="btn-rk-primary">
+                                Detailed Services
+                            </a>
+                            <a href="contact-us.html" class="btn-rk-outline">
+                                Book Appointment
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
         <!-- ==================== /Doctors Listing ==================== -->
 
 
 
         <!-- Testimonial Section -->
-        <section class="testimonial-section-one section">
-            <div class="container">
-                <div class="section-header section-header-one text-center wow fadeInUp" data-wow-duration="1s">
-                    <div class="title">Testimonials</div>
-                    <h2 class="section-title"> 15k Users <span class="text-danger">Trust Doccure </span>Worldwide </h2>
+<section class="testimonial-section-one section">
+    <div class="container">
+
+        <div class="section-header section-header-one text-center wow fadeInUp" data-wow-duration="1s">
+            <div class="title">Patient Reviews</div>
+            <h2 class="section-title">
+                496+ Patients Trust 
+                <span class="text-danger">Dr. Agrawal's R.K. Hospital Nagpur</span>
+            </h2>
+            <p>
+                Rated 5★ by patients for orthopedic surgery, pregnancy care, and advanced treatment in Nagpur
+            </p>
+        </div>
+
+        <div class="testimonials-slider">
+
+            <!-- Review 1 -->
+            <div class="slide-item">
+                <div class="testimonials-item wow fadeInUp">
+                    <div class="testimonials-info">
+                        <div class="review-star d-flex justify-content-between">
+                            <div class="rating d-flex">
+                                <i class="fa-solid fa-star filled"></i>
+                                <i class="fa-solid fa-star filled"></i>
+                                <i class="fa-solid fa-star filled"></i>
+                                <i class="fa-solid fa-star filled"></i>
+                                <i class="fa-solid fa-star filled"></i>
+                            </div>
+                        </div>
+                        <div class="testimonial-content">
+                            <h3 class="title">Excellent Gynecology Treatment</h3>
+                            <p class="description">
+                                I had a very positive experience at RK Hospital. Dr. Priyanka Jain Agrawal performed a laparoscopic hysterectomy with great expertise. The staff was supportive, hospital was clean, and the cashless insurance process was smooth. Highly recommended hospital in Nagpur.
+                            </p>
+                        </div>
+                        <div class="testimonial-author">
+                            <div>
+                                <p class="author-name">Jaishree Jaiswal</p>
+                                <p class="author-location">Nagpur</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+            </div>
 
-                <!-- Testimonial Slider -->
-                <div class="testimonials-slider ">
-                    <!-- Item 1 -->
-                    <div class="slide-item">
-                        <div class="testimonials-item wow fadeInUp" data-wow-duration="1s">
-                            <div class="testimonials-info">
-                                <div class="review-star justify-content-between">
-                                    <div class="rating d-flex">
-                                        <i class="fa-solid fa-star filled me-1"></i>
-                                        <i class="fa-solid fa-star filled me-1"></i>
-                                        <i class="fa-solid fa-star filled me-1"></i>
-                                        <i class="fa-solid fa-star filled me-1"></i>
-                                        <i class="fa-solid fa-star filled"></i>
-                                    </div>
-                                    <span>
-                                        <img src="assets/img/icons/quote-icon.svg" alt="img">
-                                    </span>
-                                </div>
-                                <div class="testimonial-content">
-                                    <h3 class="title">Nice Treatment</h3>
-                                    <p class="description">I had a wonderful experience the staff was friendly and
-                                        attentive, and Dr. Smith took the time to explain everything clearly.</p>
-                                </div>
-                                <div class="testimonial-author">
-                                    <a href="index.html#" class="avatar avatar-lg">
-                                        <img src="assets/img/patients/patient22.jpg" class="rounded-circle" alt="img">
-                                    </a>
-                                    <div>
-                                        <p class="author-name"><a href="index.html#">Deny Hendrawan</a></p>
-                                        <p class="author-location">United States</p>
-                                    </div>
-                                </div>
+            <!-- Review 2 -->
+            <div class="slide-item">
+                <div class="testimonials-item wow fadeInUp">
+                    <div class="testimonials-info">
+                        <div class="review-star d-flex justify-content-between">
+                            <div class="rating d-flex">
+                                <i class="fa-solid fa-star filled"></i>
+                                <i class="fa-solid fa-star filled"></i>
+                                <i class="fa-solid fa-star filled"></i>
+                                <i class="fa-solid fa-star filled"></i>
+                                <i class="fa-solid fa-star filled"></i>
+                            </div>
+                        </div>
+                        <div class="testimonial-content">
+                            <h3 class="title">Best Pregnancy & Delivery Care</h3>
+                            <p class="description">
+                                We chose Dr. Priyanka Jain for delivery and it was the best decision. The doctor is knowledgeable and always available. The staff and hospital environment were very positive. Perfect place for a smooth and stress-free maternity journey in Nagpur.
+                            </p>
+                        </div>
+                        <div class="testimonial-author">
+                            <div>
+                                <p class="author-name">Shreya Jain</p>
+                                <p class="author-location">Nagpur</p>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Item 2 -->
-                    <div class="slide-item">
-                        <div class="testimonials-item wow fadeInUp" data-wow-duration="2s">
-                            <div class="testimonials-info">
-                                <div class="review-star justify-content-between">
-                                    <div class="rating d-flex">
-                                        <i class="fa-solid fa-star filled me-1"></i>
-                                        <i class="fa-solid fa-star filled me-1"></i>
-                                        <i class="fa-solid fa-star filled me-1"></i>
-                                        <i class="fa-solid fa-star filled me-1"></i>
-                                        <i class="fa-solid fa-star filled"></i>
-                                    </div>
-                                    <span>
-                                        <img src="assets/img/icons/quote-icon.svg" alt="img">
-                                    </span>
-                                </div>
-                                <div class="testimonial-content">
-                                    <h3 class="title">Nice Support</h3>
-                                    <p class="description">My experience was excellent. The staff was polite and
-                                        attentive, and the doctor took the time to explain every step clearly.</p>
-                                </div>
-                                <div class="testimonial-author">
-                                    <a href="index.html#" class="avatar avatar-lg">
-                                        <img src="assets/img/patients/patient2.jpg" class="rounded-circle" alt="img">
-                                    </a>
-                                    <div>
-                                        <p class="author-name"><a href="index.html#">Brooks Steave</a></p>
-                                        <p class="author-location">Dallas, CA</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Item 3 -->
-                    <div class="slide-item">
-                        <div class="testimonials-item wow fadeInUp" data-wow-duration="3s">
-                            <div class="testimonials-info">
-                                <div class="review-star justify-content-between">
-                                    <div class="rating d-flex">
-                                        <i class="fa-solid fa-star filled me-1"></i>
-                                        <i class="fa-solid fa-star filled me-1"></i>
-                                        <i class="fa-solid fa-star filled me-1"></i>
-                                        <i class="fa-solid fa-star filled me-1"></i>
-                                        <i class="fa-solid fa-star filled"></i>
-                                    </div>
-                                    <span>
-                                        <img src="assets/img/icons/quote-icon.svg" alt="img">
-                                    </span>
-                                </div>
-                                <div class="testimonial-content">
-                                    <h3 class="title">Excellent Service</h3>
-                                    <p class="description">I had a wonderful experience the staff was friendly and
-                                        attentive, and Dr. Smith took the time to explain everything clearly.</p>
-                                </div>
-                                <div class="testimonial-author">
-                                    <a href="index.html#" class="avatar avatar-lg">
-                                        <img src="assets/img/patients/patient23.jpg" class="rounded-circle" alt="img">
-                                    </a>
-                                    <div>
-                                        <p class="author-name"><a href="index.html#">Sofia Doe</a></p>
-                                        <p class="author-location">Los Boston, USA</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Item 4 -->
-                    <div class="slide-item">
-                        <div class="testimonials-item wow fadeInUp" data-wow-duration="4s">
-                            <div class="testimonials-info">
-                                <div class="review-star justify-content-between">
-                                    <div class="rating d-flex">
-                                        <i class="fa-solid fa-star filled me-1"></i>
-                                        <i class="fa-solid fa-star filled me-1"></i>
-                                        <i class="fa-solid fa-star filled me-1"></i>
-                                        <i class="fa-solid fa-star filled me-1"></i>
-                                        <i class="fa-solid fa-star filled"></i>
-                                    </div>
-                                    <span>
-                                        <img src="assets/img/icons/quote-icon.svg" alt="img">
-                                    </span>
-                                </div>
-                                <div class="testimonial-content">
-                                    <h3 class="title">Good Hospitability</h3>
-                                    <p class="description">Genuinely cares about his patients. He helped me understand
-                                        my condition and worked with me to create a plan.</p>
-                                </div>
-                                <div class="testimonial-author">
-                                    <a href="index.html#" class="avatar avatar-lg">
-                                        <img src="assets/img/patients/patient21.jpg" class="rounded-circle" alt="img">
-                                    </a>
-                                    <div>
-                                        <p class="author-name"><a href="index.html#">Johnson DWayne</a></p>
-                                        <p class="author-location">San Francisco, CA</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
-                <!-- /Testimonial Slider -->
+            </div>
+
+            <!-- Review 3 -->
+            <div class="slide-item">
+                <div class="testimonials-item wow fadeInUp">
+                    <div class="testimonials-info">
+                        <div class="review-star d-flex justify-content-between">
+                            <div class="rating d-flex">
+                                <i class="fa-solid fa-star filled"></i>
+                                <i class="fa-solid fa-star filled"></i>
+                                <i class="fa-solid fa-star filled"></i>
+                                <i class="fa-solid fa-star filled"></i>
+                                <i class="fa-solid fa-star filled"></i>
+                            </div>
+                        </div>
+                        <div class="testimonial-content">
+                            <h3 class="title">Successful Hip Replacement Surgery</h3>
+                            <p class="description">
+                                My mother underwent femur head replacement surgery at RK Hospital. Dr. Agrawal is very kind and explains everything clearly. Staff is cooperative and prompt. One of the best orthopedic hospitals in Nagpur.
+                            </p>
+                        </div>
+                        <div class="testimonial-author">
+                            <div>
+                                <p class="author-name">Madhavi Naik</p>
+                                <p class="author-location">Nagpur</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-        </section>
+            </div>
+
+            <!-- Review 4 -->
+            <div class="slide-item">
+                <div class="testimonials-item wow fadeInUp">
+                    <div class="testimonials-info">
+                        <div class="review-star d-flex justify-content-between">
+                            <div class="rating d-flex">
+                                <i class="fa-solid fa-star filled"></i>
+                                <i class="fa-solid fa-star filled"></i>
+                                <i class="fa-solid fa-star filled"></i>
+                                <i class="fa-solid fa-star filled"></i>
+                                <i class="fa-solid fa-star filled"></i>
+                            </div>
+                        </div>
+                        <div class="testimonial-content">
+                            <h3 class="title">Clean & Hygienic Hospital</h3>
+                            <p class="description">
+                                RK Hospital is very clean and hygienic. Staff provides excellent service and truly cares for patients. Easily accessible location in Nagpur. Highly recommended for orthopedic and gynecology treatment.
+                            </p>
+                        </div>
+                        <div class="testimonial-author">
+                            <div>
+                                <p class="author-name">Rushi Pande</p>
+                                <p class="author-location">Nagpur</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        
+        <div class="text-center mt-5">
+            <a href="https://www.google.com/maps/place/Dr.Agrawal's+R.K.Hospital/@21.1493999,79.1136561,17z/data=!3m1!4b1!4m6!3m5!1s0x3bd4c79a161b6283:0xb92548dea3dc4756!8m2!3d21.1493999!4d79.1136561!16s%2Fg%2F11y28_whc0?entry=ttu&g_ep=EgoyMDI2MDMyNC4wIKXMDSoASAFQAw%3D%3D" 
+               target="_blank" rel="noopener noreferrer" class="btn-view-all-rk">
+                Read More &nbsp;<i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+
+    </div>
+</section>
         <!-- /Testimonial Section -->
 
 
 
         <!-- Start Faq -->
-        <section class="faq-section-eight section">
-            <div class="container">
-                <!-- start row -->
-                <div class="row">
-                    <div class="col-lg-5">
-                        <div class="faq-support">
-                            <img src="assets/img/home/faq1.webp" alt="faq-img" class="img-fluid img-1">
-                            
-                        </div>
+<section class="faq-section-eight section">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-5">
+                <div class="faq-support">
+                    <img src="assets/img/home/faq1.webp" alt="RK Hospital Nagpur FAQ" class="img-fluid img-1">
+                </div>
+            </div>
+
+            <div class="col-lg-7">
+                <div class="section-header section-header-eight">
+                    <div class="section-sub-title">
+                        <span class="dot"></span>FAQs – RK Hospital Nagpur
                     </div>
-                    <div class="col-lg-7">
-                        <div class="section-header section-header-eight">
-                            <div class="section-sub-title"><span class="dot"></span>Our Experts Respond</div>
-                            <h2 class="section-title">Commonly <span class="line">Asked Questions</span></h2>
-                        </div>
-                        <div class="faq-info wow zoomIn" data-wow-duration="1s">
-                            <div class="accordion" id="faq-details-one">
+                    <h2 class="section-title">
+                        Frequently Asked Questions about 
+                        <span class="line">Dr. Agrawal's R.K. Hospital</span>
+                    </h2>
+                </div>
 
-                                <!-- FAQ Item -->
-                                <div class="accordion-item">
-                                    <h3 class="accordion-header" id="headingOne">
-                                        <a href="javascript:void(0);" class="accordion-button" data-bs-toggle="collapse"
-                                            data-bs-target="#collapseOne" aria-expanded="true"
-                                            aria-controls="collapseOne">
-                                            How do I book an appointment with a doctor?
-                                        </a>
-                                    </h3>
-                                    <div id="collapseOne" class="accordion-collapse collapse show"
-                                        data-bs-parent="#faq-details-one">
-                                        <div class="accordion-body">
-                                            <div class="accordion-content">
-                                                <p>Yes, simply visit our website and log in or create an account. Search
-                                                    for a doctor based on specialization, location, or availability &
-                                                    confirm your booking.</p>
-                                            </div>
-                                        </div>
-                                    </div>
+                <div class="faq-info wow zoomIn">
+                    <div class="accordion" id="faq-details-one">
+
+                        <!-- FAQ 1 -->
+                        <div class="accordion-item">
+                            <h3 class="accordion-header">
+                                <a class="accordion-button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                    What are the operating hours of RK Hospital Nagpur?
+                                </a>
+                            </h3>
+                            <div id="faq1" class="accordion-collapse collapse show">
+                                <div class="accordion-body">
+                                    <p>
+                                        Dr. Agrawal's R.K. Hospital Nagpur is open 24/7 for emergency services. OPD timings are 11:00 AM to 4:00 PM and 7:00 PM to 9:00 PM (Mon–Sat).
+                                    </p>
                                 </div>
-                                <!-- /FAQ Item -->
-
-                                <!-- FAQ Item -->
-                                <div class="accordion-item">
-                                    <h3 class="accordion-header" id="headingTwo">
-                                        <a href="javascript:void(0);" class="accordion-button collapsed"
-                                            data-bs-toggle="collapse" data-bs-target="#collapseTwo"
-                                            aria-expanded="false" aria-controls="collapseTwo">
-                                            Can I request a specific doctor when booking my appointment?
-                                        </a>
-                                    </h3>
-                                    <div id="collapseTwo" class="accordion-collapse collapse"
-                                        data-bs-parent="#faq-details-one">
-                                        <div class="accordion-body">
-                                            <div class="accordion-content">
-                                                <p>Yes, you can usually request a specific doctor when booking your
-                                                    appointment, though availability may vary based on their schedule.
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /FAQ Item -->
-
-                                <!-- FAQ Item -->
-                                <div class="accordion-item">
-                                    <h3 class="accordion-header" id="headingThree">
-                                        <a href="javascript:void(0);" class="accordion-button collapsed"
-                                            data-bs-toggle="collapse" data-bs-target="#collapseThree"
-                                            aria-expanded="false" aria-controls="collapseThree">
-                                            What should I do if I need to cancel or reschedule my appointment?
-                                        </a>
-                                    </h3>
-                                    <div id="collapseThree" class="accordion-collapse collapse"
-                                        data-bs-parent="#faq-details-one">
-                                        <div class="accordion-body">
-                                            <div class="accordion-content">
-                                                <p>If you need to cancel or reschedule your appointment, contact the
-                                                    doctor as soon as possible to inform them and to reschedule for
-                                                    another available time slot.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /FAQ Item -->
-
-                                <!-- FAQ Item -->
-                                <div class="accordion-item">
-                                    <h3 class="accordion-header" id="headingFour">
-                                        <a href="javascript:void(0);" class="accordion-button collapsed"
-                                            data-bs-toggle="collapse" data-bs-target="#collapseFour"
-                                            aria-expanded="false" aria-controls="collapseFour">
-                                            What if I'm running late for my appointment?
-                                        </a>
-                                    </h3>
-                                    <div id="collapseFour" class="accordion-collapse collapse"
-                                        data-bs-parent="#faq-details-one">
-                                        <div class="accordion-body">
-                                            <div class="accordion-content">
-                                                <p>If you know you will be late, it's courteous to call the doctor's
-                                                    office and inform them. Depending on their policy and schedule, they
-                                                    may be able to accommodate you or reschedule your appointment.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /FAQ Item -->
-
-                                <!-- FAQ Item -->
-                                <div class="accordion-item">
-                                    <h3 class="accordion-header" id="headingFive">
-                                        <a href="javascript:void(0);" class="accordion-button collapsed"
-                                            data-bs-toggle="collapse" data-bs-target="#collapseFive"
-                                            aria-expanded="false" aria-controls="collapseFive">
-                                            Can I book appointments for family members or dependents?
-                                        </a>
-                                    </h3>
-                                    <div id="collapseFive" class="accordion-collapse collapse"
-                                        data-bs-parent="#faq-details-one">
-                                        <div class="accordion-body">
-                                            <div class="accordion-content">
-                                                <p>Yes, in many cases, you can book appointments for family members or
-                                                    dependents. However, you may need to provide their personal
-                                                    information and consent to do so.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /FAQ Item -->
-
                             </div>
                         </div>
-                                     
+
+                        <!-- FAQ 2 -->
+                        <div class="accordion-item">
+                            <h3 class="accordion-header">
+                                <a class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                    How can I book an appointment at RK Hospital Nagpur?
+                                </a>
+                            </h3>
+                            <div id="faq2" class="accordion-collapse collapse">
+                                <div class="accordion-body">
+                                    <p>
+                                        You can book an appointment by calling +91 97660 57372 or 8999290433. Walk-in and online booking options are also available.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FAQ 3 -->
+                        <div class="accordion-item">
+                            <h3 class="accordion-header">
+                                <a class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                    What treatments are available at RK Hospital Nagpur?
+                                </a>
+                            </h3>
+                            <div id="faq3" class="accordion-collapse collapse">
+                                <div class="accordion-body">
+                                    <p>
+                                        RK Hospital specializes in robotic knee & hip replacement, spine surgery, trauma care, pregnancy care, infertility treatment, and laparoscopic gynecology procedures.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FAQ 4 -->
+                        <div class="accordion-item">
+                            <h3 class="accordion-header">
+                                <a class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                    Does RK Hospital provide robotic surgery in Nagpur?
+                                </a>
+                            </h3>
+                            <div id="faq4" class="accordion-collapse collapse">
+                                <div class="accordion-body">
+                                    <p>
+                                        Yes, Dr. Agrawal's R.K. Hospital is a leading center for robotic knee and hip replacement surgery in Nagpur, offering high precision and faster recovery.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FAQ 5 -->
+                        <div class="accordion-item">
+                            <h3 class="accordion-header">
+                                <a class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#faq5">
+                                    Where is RK Hospital located in Nagpur?
+                                </a>
+                            </h3>
+                            <div id="faq5" class="accordion-collapse collapse">
+                                <div class="accordion-body">
+                                    <p>
+                                        Dr. Agrawal's R.K. Hospital is located at Central Avenue, beside Hotel Al Zam Zam, Nagpur, Maharashtra, easily accessible from all major areas.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-                <!-- end row -->
+
             </div>
-        </section>
+        </div>
+    </div>
+</section>
         <!-- End Faq -->
         <!-- /Article Section -->
          <?php include 'include/latest-blog.php'; ?>
          
         <!-- Info Section -->
-        <section class="info-section">
-            <div class="container">
-                <div class="contact-info">
-                    <div class="info-col">
-                        <div class="wow fadeInUp" data-wow-duration="1s">
-                            <h3 class="info-title">Working for Your Better Health.</h3>
-                        </div>
-                        <div class="support-info wow fadeInUp" data-wow-duration="1s">
-                            <div class="con-info">
-                                <span class="con-icon">
-                                    <i class="isax isax-headphone5"></i>
-                                </span>
-                                <div class="con-details">
-                                    <p class="title">Customer Support</p>
-                                    <p class="description">+1 56589 54598</p>
-                                </div>
-                            </div>
-                            <div class="con-info">
-                                <span class="con-icon">
-                                    <i class="isax isax-message-25"></i>
-                                </span>
-                                <div class="con-details">
-                                    <p class="title">Drop Us an Email</p>
-                                    <p class="description"><a
-                                            href="https://doccure.dreamstechnologies.com/cdn-cgi/l/email-protection"
-                                            class="__cf_email__"
-                                            data-cfemail="ef86818980dedddad9af8a978e829f838ac18c8082">[email&#160;protected]</a>
-                                    </p>
-                                </div>
-                            </div>
+       <section class="info-section">
+    <div class="container">
+        <div class="contact-info">
+            <div class="info-col">
+                <div class="wow fadeInUp" data-wow-duration="1s">
+                    <h3 class="info-title">
+                        Contact Dr. Agrawal's R.K. Hospital Nagpur
+                    </h3>
+                </div>
+
+                <div class="support-info wow fadeInUp" data-wow-duration="1s">
+
+                    <!-- Phone -->
+                    <div class="con-info">
+                        <span class="con-icon">
+                            <i class="isax isax-headphone5"></i>
+                        </span>
+                        <div class="con-details">
+                            <p class="title">24/7 Emergency & Appointment</p>
+                            <p class="description">
+                                +91 97660 57372 <br>
+                                +91 89992 90433
+                            </p>
                         </div>
                     </div>
-                    <img src="assets/img/bg/info-bg.png" alt="element" class="img-fluid element-01">
+
+                    <!-- Email -->
+                    <div class="con-info">
+                        <span class="con-icon">
+                            <i class="isax isax-message-25"></i>
+                        </span>
+                        <div class="con-details">
+                            <p class="title">Email Support</p>
+                            <p class="description">
+                                <a href="">
+                                    
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Address -->
+                    <div class="con-info">
+                        <span class="con-icon">
+                            <i class="isax isax-location"></i>
+                        </span>
+                        <div class="con-details">
+                            <p class="title">Hospital Address</p>
+                            <p class="description">
+                                27, Chandrashekhar Azad Square, Central Avenue Road,<br>
+                                Beside Hotel Al Zam Zam, Gandhibagh,<br>
+                                Nagpur, Maharashtra 440002
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Website -->
+                    <div class="con-info">
+                        <span class="con-icon">
+                            <i class="isax isax-global"></i>
+                        </span>
+                        <div class="con-details">
+                            <p class="title">Official Website</p>
+                            <p class="description">
+                                <a href="" target="_blank">
+                                  
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-        </section>
+
+            <img src="assets/img/bg/info-bg.png" alt="RK Hospital Nagpur Contact Info" class="img-fluid element-01">
+        </div>
+    </div>
+</section>
         <!-- /Info Section -->
         <?php include 'include/footer.php'; ?>
 
