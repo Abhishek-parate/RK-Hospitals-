@@ -1,0 +1,8 @@
+/* about-us.css — About page specific overrides */
+
+/* Banner eyebrow pill uses red theme */
+.contact-hero-banner .banner-eyebrow {
+    background: rgba(211, 47, 47, 0.15);
+    border: 1px solid rgba(211, 47, 47, 0.3);
+    color: #fff;
+}

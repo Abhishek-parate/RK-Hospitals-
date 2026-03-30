@@ -98,10 +98,66 @@ $meta_keywords    = "RK Hospital Nagpur, about RK Hospital, Dr Rahul Agrawal ort
         <?php include 'include/header.php'; ?>
 
         <!-- ══════════════════════════════════════════
-             SECTION 1: ABOUT HERO
+             SECTION 1: ABOUT HERO BANNER
         ══════════════════════════════════════════ -->
+        <section class="contact-hero-banner">
+            <img src="<?= $base_url ?>assets/img/home/image-crousel2.webp" alt="RK Hospital Nagpur About Us" class="banner-img">
+            <div class="banner-grid-pattern"></div>
+            <div class="banner-overlay"></div>
 
+            <!-- Floating Stat Badges -->
+            <div class="banner-stat-badge badge-left">
+                <div class="badge-icon"><i class="fa-solid fa-award"></i></div>
+                <div class="badge-text">
+                    <div class="num">25+</div>
+                    <div class="label">Years of Excellence</div>
+                </div>
+            </div>
 
+            <div class="banner-stat-badge badge-right">
+                <div class="badge-icon"><i class="fa-solid fa-star"></i></div>
+                <div class="badge-text">
+                    <div class="num">5.0 ★</div>
+                    <div class="label">496+ Reviews</div>
+                </div>
+            </div>
+
+            <div class="banner-content">
+                <div class="banner-eyebrow">
+                    <i class="fa-solid fa-hospital"></i>
+                    Dr. Agrawal's R.K. Hospital, Nagpur
+                </div>
+                <h1 class="banner-heading">
+                    About Our<br>
+                    <span>Hospital & Doctors</span>
+                </h1>
+                <p class="banner-sub">
+                    Over 25 years of compassionate care in Orthopedic Surgery, Robotic Knee Replacement, Gynecology &amp; Pregnancy Care — trusted by thousands of families in Nagpur.
+                </p>
+                <div class="banner-cta-group">
+                    <a href="tel:+919766057372" class="banner-btn-primary">
+                        <i class="fa-solid fa-phone"></i>
+                        Call Now: +91 97660 57372
+                    </a>
+                    <a href="<?= $base_url ?>contact-us" class="banner-btn-outline">
+                        <i class="fa-solid fa-calendar-check"></i>
+                        Book Appointment
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Breadcrumb -->
+        <div class="breadcrumb-strip">
+            <div class="container">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="<?= $base_url ?>"><i class="fa-solid fa-house me-1"></i>Home</a></li>
+                        <li class="breadcrumb-item active">About Us</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
 
         <!-- ══════════════════════════════════════════
              SECTION 2: OUR STORY

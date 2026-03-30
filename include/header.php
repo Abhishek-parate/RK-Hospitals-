@@ -19,6 +19,15 @@ function navActive(string $segment): string {
     }
     return (strpos($_uri, '/' . $segment) !== false) ? ' class="active"' : '';
 }
+
+// Fetch published doctors for submenu
+$_navDoctors = [];
+$_navDoctorsRes = $conn->query("SELECT name, slug, designation, photo FROM doctors WHERE is_published = 1 ORDER BY name ASC LIMIT 8");
+if ($_navDoctorsRes) {
+    while ($_navDr = $_navDoctorsRes->fetch_assoc()) {
+        $_navDoctors[] = $_navDr;
+    }
+}
 ?>
 <!-- Header -->
 <header class="header <?= $_headerClass ?>">
@@ -55,8 +64,32 @@ function navActive(string $segment): string {
                             <a href="<?= $_base ?>">Home</a>
                         </li>
 
-                        <li<?= navActive('doctors') ?>>
-                            <a href="<?= $_base ?>doctors">Doctors</a>
+                        <li class="has-submenu<?= strpos($_uri, '#') !== false ? ' active' : '' ?>">
+                            <a href="<?= $_base ?>#">
+                                Doctors <span><i class="fa-solid fa-chevron-down"></i></span>
+                            </a>
+                            <?php if (!empty($_navDoctors)): ?>
+                            <ul class="submenu sub-menu-one sub-menu-default">
+                                <?php foreach ($_navDoctors as $_dr): ?>
+                                <li>
+                                    <a href="<?= $_base ?>doctors/<?= htmlspecialchars($_dr['slug']) ?>" class="d-flex align-items-center gap-2">
+                                        <img src="<?= $_base . htmlspecialchars($_dr['photo']) ?>"
+                                             alt="<?= htmlspecialchars($_dr['name']) ?>"
+                                             width="32" height="32"
+                                             style="border-radius:50%;object-fit:cover;flex-shrink:0;"
+                                             onerror="this.src='<?= $_base ?>assets/img/doctors/default.jpg'">
+                                        <span>
+                                            <strong style="display:block;font-size:.85rem;line-height:1.2;"><?= htmlspecialchars($_dr['name']) ?></strong>
+                                            <?php if (!empty($_dr['designation'])): ?>
+                                            <small style="color:#888;font-size:.75rem;"><?= htmlspecialchars($_dr['designation']) ?></small>
+                                            <?php endif; ?>
+                                        </span>
+                                    </a>
+                                </li>
+                                <?php endforeach; ?>
+                               
+                            </ul>
+                            <?php endif; ?>
                         </li>
 
                         <li<?= navActive('service') ?>>
