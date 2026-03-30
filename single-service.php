@@ -12,6 +12,7 @@ if (empty($slug)) {
 // ─── Fetch the service (Updated with Prepared Statements for Security) ─────────
 $service_sql = "SELECT 
                   s.id, s.title, s.hero_title, s.hero_subtitle,
+                  s.hero_content_json, s.service_card_json, s.why_choose_json,
                   s.hero_image, s.hero_image_alt, s.slug,
                   s.short_description, s.h1_title, s.breadcrumb_json,
                   s.content, s.sections_json, s.faqs_json,
@@ -29,6 +30,7 @@ $service_sql = "SELECT
                 WHERE s.slug = ? AND s.is_published = 1
                 LIMIT 1";
 
+
 $stmt = $conn->prepare($service_sql);
 $stmt->bind_param("s", $slug);
 $stmt->execute();
@@ -39,37 +41,71 @@ if (!$service_res || $service_res->num_rows === 0) {
     ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <base href="<?= SITE_URL ?>/"> <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - Service Not Found | Dr. Agrawal's R.K. Hospital</title>    
+    <base href="<?= SITE_URL ?>/">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Service Not Found | Dr. Agrawal's R.K. Hospital</title>
     <link rel="shortcut icon" href="<?= asset('assets/img/favicon.png') ?>" type="image/x-icon">
     <link rel="stylesheet" href="<?= asset('assets/css/bootstrap.min.css') ?>">
     <link rel="stylesheet" href="<?= asset('assets/plugins/fontawesome/css/fontawesome.min.css') ?>">
     <link rel="stylesheet" href="<?= asset('assets/plugins/fontawesome/css/all.min.css') ?>">
     <link rel="stylesheet" href="<?= asset('assets/css/style.css') ?>">
     <style>
-        .error-404-wrap { min-height: 80vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 60px 20px; }
-        .error-404-code { font-size: 100px; font-weight: 800; color: #1a6ef5; line-height: 1; margin-bottom: 10px; }
-        .error-404-title { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 12px; }
-        .error-404-msg { color: #6c757d; font-size: 15px; margin-bottom: 30px; max-width: 440px; margin-left: auto; margin-right: auto; }
+    .error-404-wrap {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 60px 20px;
+    }
+
+    .error-404-code {
+        font-size: 100px;
+        font-weight: 800;
+        color: #1a6ef5;
+        line-height: 1;
+        margin-bottom: 10px;
+    }
+
+    .error-404-title {
+        font-size: 26px;
+        font-weight: 700;
+        color: #1a1a2e;
+        margin-bottom: 12px;
+    }
+
+    .error-404-msg {
+        color: #6c757d;
+        font-size: 15px;
+        margin-bottom: 30px;
+        max-width: 440px;
+        margin-left: auto;
+        margin-right: auto;
+    }
     </style>
 </head>
+
 <body>
     <div class="main-wrapper">
         <div class="error-404-wrap">
             <div>
                 <div class="error-404-code">404</div>
                 <div class="error-404-title">Service Not Found</div>
-                <p class="error-404-msg">The service page you're looking for doesn't exist or may have been removed. Please check the URL or browse our services.</p>
+                <p class="error-404-msg">The service page you're looking for doesn't exist or may have been removed.
+                    Please check the URL or browse our services.</p>
                 <a href="index.php" class="btn btn-primary me-2"><i class="fa fa-home me-1"></i> Go to Home</a>
-                <a href="services.php" class="btn btn-outline-primary"><i class="fa fa-th-large me-1"></i> Browse Services</a>
+                <a href="services.php" class="btn btn-outline-primary"><i class="fa fa-th-large me-1"></i> Browse
+                    Services</a>
             </div>
         </div>
     </div>
     <script src="<?= asset('assets/js/jquery-3.7.1.min.js') ?>"></script>
     <script src="<?= asset('assets/js/bootstrap.bundle.min.js') ?>"></script>
 </body>
+
 </html>
 <?php
     exit;
@@ -77,12 +113,18 @@ if (!$service_res || $service_res->num_rows === 0) {
 
 $service = $service_res->fetch_assoc();
 
-// ─── Decode JSON fields ───────────────────────────────────────────────────────
-$faqs            = !empty($service['faqs_json'])            ? json_decode($service['faqs_json'], true)            : [];
-$sections        = !empty($service['sections_json'])        ? json_decode($service['sections_json'], true)        : [];
-$gallery         = !empty($service['gallery_json'])         ? json_decode($service['gallery_json'], true)         : [];
-$related_slugs   = !empty($service['related_services_json'])? json_decode($service['related_services_json'], true): [];
-$breadcrumb_data = !empty($service['breadcrumb_json'])      ? json_decode($service['breadcrumb_json'], true)      : [];
+// ─── Decode all JSON fields ───────────────────────────────────────────────────
+$faqs           = !empty($service['faqs_json'])            ? json_decode($service['faqs_json'], true)            : [];
+$sections       = !empty($service['sections_json'])        ? json_decode($service['sections_json'], true)        : [];
+$gallery        = !empty($service['gallery_json'])         ? json_decode($service['gallery_json'], true)         : [];
+$related_slugs  = !empty($service['related_services_json'])? json_decode($service['related_services_json'], true): [];
+$breadcrumb_data= !empty($service['breadcrumb_json'])      ? json_decode($service['breadcrumb_json'], true)      : [];
+
+// ─── NEW: The 3 dynamic section columns ──────────────────────────────────────
+$why_choose     = !empty($service['why_choose_json'])      ? json_decode($service['why_choose_json'], true)      : [];
+$hero_content   = !empty($service['hero_content_json'])    ? json_decode($service['hero_content_json'], true)    : [];
+$service_card   = !empty($service['service_card_json'])    ? json_decode($service['service_card_json'], true)    : [];
+
 
 // ─── SEO values with fallbacks ────────────────────────────────────────────────
 $meta_title       = !empty($service['meta_title'])       ? $service['meta_title']       : $service['title'] . ' in Nagpur | RK Hospital';
@@ -134,7 +176,7 @@ $latest_blogs_res = $conn->query($latest_blogs_sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
     <base href="<?= SITE_URL ?>/">
 
     <title><?= htmlspecialchars($meta_title) ?></title>
@@ -158,7 +200,9 @@ $latest_blogs_res = $conn->query($latest_blogs_sql);
     <meta name="twitter:image" content="<?= htmlspecialchars(SITE_URL . '/' . $og_image) ?>">
 
     <?php if (!empty($service['schema_json'])): ?>
-    <script type="application/ld+json"><?= $service['schema_json'] ?></script>
+    <script type="application/ld+json">
+    <?= $service['schema_json'] ?>
+    </script>
     <?php else: ?>
     <script type="application/ld+json">
     {
@@ -169,10 +213,24 @@ $latest_blogs_res = $conn->query($latest_blogs_sql);
         "url": "<?= $canonical ?>",
         "breadcrumb": {
             "@type": "BreadcrumbList",
-            "itemListElement": [
-                {"@type":"ListItem","position":1,"name":"Home","item":"<?= SITE_URL ?>"},
-                {"@type":"ListItem","position":2,"name":"Services","item":"<?= SITE_URL ?>/services.php"},
-                {"@type":"ListItem","position":3,"name":"<?= addslashes(htmlspecialchars($service['title'])) ?>","item":"<?= $canonical ?>"}
+            "itemListElement": [{
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "<?= SITE_URL ?>"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Services",
+                    "item": "<?= SITE_URL ?>/services.php"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "name": "<?= addslashes(htmlspecialchars($service['title'])) ?>",
+                    "item": "<?= $canonical ?>"
+                }
             ]
         },
         "publisher": {
@@ -197,15 +255,15 @@ $latest_blogs_res = $conn->query($latest_blogs_sql);
         "@context": "https://schema.org",
         "@type": "FAQPage",
         "mainEntity": [
-            <?php foreach ($faqs as $i => $faq): ?>
-            {
+            <?php foreach ($faqs as $i => $faq): ?> {
                 "@type": "Question",
                 "name": "<?= addslashes(htmlspecialchars($faq['q'])) ?>",
                 "acceptedAnswer": {
                     "@type": "Answer",
                     "text": "<?= addslashes(htmlspecialchars($faq['a'])) ?>"
                 }
-            }<?= ($i < count($faqs) - 1) ? ',' : '' ?>
+            }
+            <?= ($i < count($faqs) - 1) ? ',' : '' ?>
             <?php endforeach; ?>
         ]
     }
@@ -232,62 +290,139 @@ $latest_blogs_res = $conn->query($latest_blogs_sql);
     <link rel="stylesheet" href="<?= asset('assets/css/style.css') ?>">
 
     <style>
-        /* ── Appointment Form Styles ─────────────────────────────────── */
-        .date-icon {
-            position: absolute; right: 12px; top: 50%;
-            transform: translateY(-50%); color: #0d6efd; pointer-events: none;
-        }
-        .flatpickr-calendar { border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,.1); }
-        .flatpickr-day.selected { background: #0d6efd; border-color: #0d6efd; }
-        .flatpickr-day:hover { background: #e7f1ff; color: #0d6efd; }
+    /* ── Appointment Form Styles ─────────────────────────────────── */
+    .date-icon {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #0d6efd;
+        pointer-events: none;
+    }
 
-        /* ── Custom bullet points ────────────────────────────────────── */
-        .custom-point {
-            position: relative; padding: 16px 16px 16px 45px;
-            background: #fff; border-radius: 10px;
-            transition: all .3s ease; border: 1px solid #f1f1f1;
-        }
-        .custom-point:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,.05); }
-        .custom-point::before {
-            content: ""; position: absolute; left: 15px; top: 20px;
-            width: 12px; height: 12px; border-radius: 50%;
-            background: linear-gradient(135deg, #0d6efd, #00c6ff);
-            box-shadow: 0 0 0 4px rgba(13,110,253,.15);
-        }
-        .custom-point h6 { margin-bottom: 5px; font-weight: 600; color: #0b1c39; }
-        .custom-point p  { margin: 0; font-size: 14px; color: #6c757d; }
+    .flatpickr-calendar {
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, .1);
+    }
 
-        /* ── Icon badge ──────────────────────────────────────────────── */
-        .icon-style {
-            width: 60px; height: 60px; background: #6f42c1;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-        }
-        .icon-style i { color: #fff; font-size: 24px; }
+    .flatpickr-day.selected {
+        background: #0d6efd;
+        border-color: #0d6efd;
+    }
 
-        /* ── Service nav list (sidebar) ──────────────────────────────── */
-        .service-nav-list { list-style: none; padding: 0; margin: 0; }
-        .service-nav-list li a {
-            display: flex; align-items: center; gap: 10px;
-            padding: 9px 12px; border-radius: 8px; color: #444;
-            text-decoration: none; font-size: 14px; font-weight: 500;
-            transition: background .2s, color .2s;
-        }
-        .service-nav-list li a:hover,
-        .service-nav-list li.active a {
-            background: #e7f1ff; color: #0d6efd;
-        }
-        .service-nav-list li.active a { font-weight: 700; }
-        .service-nav-list li a i { font-size: 18px; color: #0d6efd; flex-shrink: 0; }
+    .flatpickr-day:hover {
+        background: #e7f1ff;
+        color: #0d6efd;
+    }
 
-        /* ── Gallery grid ────────────────────────────────────────────── */
-        .service-gallery img {
-            border-radius: 10px; object-fit: cover;
-            width: 100%; height: 140px; transition: transform .3s;
-        }
-        .service-gallery a:hover img { transform: scale(1.04); }
+    /* ── Custom bullet points ────────────────────────────────────── */
+    .custom-point {
+        position: relative;
+        padding: 16px 16px 16px 45px;
+        background: #fff;
+        border-radius: 10px;
+        transition: all .3s ease;
+        border: 1px solid #f1f1f1;
+    }
 
-        /* ── About section ───────────────────────────────────────────── */
-        .aboutsection { padding: 40px 0 0; }
+    .custom-point:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, .05);
+    }
+
+    .custom-point::before {
+        content: "";
+        position: absolute;
+        left: 15px;
+        top: 20px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #0d6efd, #00c6ff);
+        box-shadow: 0 0 0 4px rgba(13, 110, 253, .15);
+    }
+
+    .custom-point h6 {
+        margin-bottom: 5px;
+        font-weight: 600;
+        color: #0b1c39;
+    }
+
+    .custom-point p {
+        margin: 0;
+        font-size: 14px;
+        color: #6c757d;
+    }
+
+    /* ── Icon badge ──────────────────────────────────────────────── */
+    .icon-style {
+        width: 60px;
+        height: 60px;
+        background: #6f42c1;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .icon-style i {
+        color: #fff;
+        font-size: 24px;
+    }
+
+    /* ── Service nav list (sidebar) ──────────────────────────────── */
+    .service-nav-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .service-nav-list li a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 9px 12px;
+        border-radius: 8px;
+        color: #444;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        transition: background .2s, color .2s;
+    }
+
+    .service-nav-list li a:hover,
+    .service-nav-list li.active a {
+        background: #e7f1ff;
+        color: #0d6efd;
+    }
+
+    .service-nav-list li.active a {
+        font-weight: 700;
+    }
+
+    .service-nav-list li a i {
+        font-size: 18px;
+        color: #0d6efd;
+        flex-shrink: 0;
+    }
+
+    /* ── Gallery grid ────────────────────────────────────────────── */
+    .service-gallery img {
+        border-radius: 10px;
+        object-fit: cover;
+        width: 100%;
+        height: 140px;
+        transition: transform .3s;
+    }
+
+    .service-gallery a:hover img {
+        transform: scale(1.04);
+    }
+
+    /* ── About section ───────────────────────────────────────────── */
+    .aboutsection {
+        padding: 40px 0 0;
+    }
     </style>
 </head>
 
@@ -319,7 +454,7 @@ $latest_blogs_res = $conn->query($latest_blogs_sql);
 
                         <?php if (!empty($service['category_name'])): ?>
                         <span class="badge mb-3 px-3 py-2"
-                              style="background:rgba(255,255,255,.2);color:#fff;font-size:13px;border:1px solid rgba(255,255,255,.4);border-radius:30px;">
+                            style="background:rgba(255,255,255,.2);color:#fff;font-size:13px;border:1px solid rgba(255,255,255,.4);border-radius:30px;">
                             <?= htmlspecialchars($service['category_name']) ?>
                         </span>
                         <?php endif; ?>
@@ -358,6 +493,19 @@ $latest_blogs_res = $conn->query($latest_blogs_sql);
             </div>
         </div>
         <?php if (!empty($hero_title) || !empty($service['short_description'])): ?>
+        <?php
+// hero_content_json: {tagline, heading, description, hero_image, features:[{title, description, icon}]}
+$hc_tagline  = !empty($hero_content['tagline'])     ? $hero_content['tagline']     : (($service['category_name'] ?? 'Medical Services') . ' — Nagpur');
+$hc_heading  = !empty($hero_content['heading'])     ? $hero_content['heading']     : $hero_title;
+$hc_desc     = !empty($hero_content['description']) ? $hero_content['description'] : ($service['short_description'] ?? '');
+$hc_img      = !empty($hero_content['hero_image'])  ? $hero_content['hero_image']  : ($service['image'] ?: 'assets/img/service/service-02.jpg');
+$hc_features = !empty($hero_content['features'])    ? $hero_content['features']    : [];
+
+// WOW animation delay map
+$icon_map = ['doctor' => 'fa-solid fa-user-doctor', 'heart' => 'fa-solid fa-heart-pulse', 'star' => 'fa-solid fa-star'];
+?>
+
+        <?php if (!empty($hc_heading) || !empty($service['short_description'])): ?>
         <div class="about-sec aboutsection">
             <div class="container">
                 <div class="row align-items-center">
@@ -365,9 +513,8 @@ $latest_blogs_res = $conn->query($latest_blogs_sql);
                     <div class="col-lg-5 mb-4 mb-lg-0">
                         <div class="about-img-ten">
                             <div class="about-img-01">
-                                <img src="<?= asset($service['image'] ?: 'assets/img/service/service-02.jpg') ?>"
-                                     class="img-fluid"
-                                     alt="<?= htmlspecialchars($service['image_alt'] ?: $service['title'] . ' - RK Hospital') ?>">
+                                <img src="<?= asset($hc_img) ?>" class="img-fluid"
+                                    alt="<?= htmlspecialchars($service['image_alt'] ?: $service['title'] . ' - RK Hospital') ?>">
                             </div>
                         </div>
                     </div>
@@ -377,43 +524,42 @@ $latest_blogs_res = $conn->query($latest_blogs_sql);
                             <div class="section-header section-header-ten">
                                 <div class="section-sub-title">
                                     <span class="dot"></span>
-                                    <?= htmlspecialchars($service['category_name'] ?? 'Medical Services') ?> — Nagpur
+                                    <?= htmlspecialchars($hc_tagline) ?>
                                 </div>
-                                <h2 class="section-title"><?= htmlspecialchars($hero_title) ?></h2>
-                                <?php if (!empty($service['short_description'])): ?>
-                                <p><?= htmlspecialchars($service['short_description']) ?></p>
+                                <h2 class="section-title"><?= htmlspecialchars($hc_heading) ?></h2>
+                                <?php if (!empty($hc_desc)): ?>
+                                <p><?= htmlspecialchars($hc_desc) ?></p>
                                 <?php endif; ?>
                             </div>
 
-                            <div class="mission-item-ten wow fadeInUp" data-wow-delay="0.2s" data-wow-duration="1s">
+                            <?php if (!empty($hc_features)): ?>
+                            <?php foreach ($hc_features as $fi => $feat): ?>
+                            <?php $delay = number_format(($fi + 1) * 0.2, 1); ?>
+                            <?php $fa_icon = $icon_map[$feat['icon'] ?? ''] ?? ($feat['icon'] ?? 'fa-solid fa-star'); ?>
+                            <div class="mission-item-ten wow fadeInUp" data-wow-delay="<?= $delay ?>s"
+                                data-wow-duration="1s">
                                 <div class="mission-icon">
                                     <div class="mission-inner icon-style">
-                                        <i class="fa-solid fa-user-doctor"></i>
+                                        <i class="<?= htmlspecialchars($fa_icon) ?>"></i>
                                     </div>
                                 </div>
                                 <div>
-                                    <h3 class="custom-title">Expert Specialists in Nagpur</h3>
-                                    <p>Experienced doctors and surgeons trusted by thousands of patients across Nagpur and Central India.</p>
+                                    <h3 class="custom-title"><?= htmlspecialchars($feat['title']) ?></h3>
+                                    <p><?= htmlspecialchars($feat['description']) ?></p>
                                 </div>
                             </div>
+                            <?php endforeach; ?>
 
-                            <div class="mission-item-ten wow fadeInUp" data-wow-delay="0.4s" data-wow-duration="1s">
-                                <div class="mission-icon">
-                                    <div class="mission-inner icon-style">
-                                        <i class="fa-solid fa-heart-pulse"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <h3 class="custom-title">Personalised, Comprehensive Treatment</h3>
-                                    <p>Combining advanced diagnostics, modern procedures, and compassionate follow-up care — all under one roof.</p>
-                                </div>
-                            </div>
+
+                            <?php endif; ?>
+
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
+        <?php endif; ?>
+
         <?php endif; ?>
         <div class="content">
             <div class="container">
@@ -426,24 +572,40 @@ $latest_blogs_res = $conn->query($latest_blogs_sql);
                                 <div class="doctor-widget">
                                     <div class="doc-info-left">
                                         <div class="doctor-img1">
-                                            <img src="<?= asset($service['image'] ?: 'assets/img/service/service-02.jpg') ?>"
-                                                 class="img-fluid"
-                                                 alt="<?= htmlspecialchars($service['image_alt'] ?: $service['title'] . ' Nagpur') ?>">
+                                            <?php
+    $thumb_img = !empty($service_card['thumbnail_image'])
+        ? $service_card['thumbnail_image']
+        : ($service['image'] ?: 'assets/img/service/service-02.jpg');
+    $thumb_alt = !empty($service_card['thumbnail_alt'])
+        ? $service_card['thumbnail_alt']
+        : ($service['image_alt'] ?: $service['title'] . ' Nagpur');
+    ?>
+                                            <img src="<?= asset($thumb_img) ?>" class="img-fluid"
+                                                alt="<?= htmlspecialchars($thumb_alt) ?>">
                                         </div>
+
                                         <div class="doc-info-cont">
-                                            <h2 class="doc-name mb-2"><?= htmlspecialchars($service['title']) ?></h2>
+                                            <?php
+                                                // service_card_json: {title, department, location, description, thumbnail_image, thumbnail_alt}
+                                                $sc_title  = !empty($service_card['title'])       ? $service_card['title']       : $service['title'];
+                                                $sc_dept   = !empty($service_card['department'])   ? $service_card['department']   : 'Department of ' . ($service['category_name'] ?? 'Medical Services');
+                                                $sc_loc    = !empty($service_card['location'])     ? $service_card['location']     : 'RK Hospital, Nagpur, Maharashtra';
+                                                $sc_desc   = !empty($service_card['description'])  ? $service_card['description']  : ($service['short_description'] ?? '');
+                                                ?>
+                                            <h2 class="doc-name mb-2"><?= htmlspecialchars($sc_title) ?></h2>
                                             <p class="text-muted mb-1">
                                                 <i class="isax isax-hospital me-1 text-primary"></i>
-                                                Department of <?= htmlspecialchars($service['category_name'] ?? 'Medical Services') ?>
+                                                <?= htmlspecialchars($sc_dept) ?>
                                             </p>
                                             <p class="text-muted mb-2">
                                                 <i class="isax isax-location me-1 text-primary"></i>
-                                                RK Hospital, Nagpur, Maharashtra
+                                                <?= htmlspecialchars($sc_loc) ?>
                                             </p>
-                                            <?php if (!empty($service['short_description'])): ?>
-                                            <p><?= htmlspecialchars($service['short_description']) ?></p>
+                                            <?php if (!empty($sc_desc)): ?>
+                                            <p><?= htmlspecialchars($sc_desc) ?></p>
                                             <?php endif; ?>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -481,7 +643,9 @@ $latest_blogs_res = $conn->query($latest_blogs_sql);
                                                 <ul class="experience-list">
                                                     <?php foreach ($section['list'] as $item): ?>
                                                     <li>
-                                                        <div class="experience-user"><div class="before-circle"></div></div>
+                                                        <div class="experience-user">
+                                                            <div class="before-circle"></div>
+                                                        </div>
                                                         <div class="experience-content">
                                                             <div class="timeline-content">
                                                                 <p><?= htmlspecialchars($item) ?></p>
@@ -502,9 +666,10 @@ $latest_blogs_res = $conn->query($latest_blogs_sql);
                                             <div class="row g-3 service-gallery">
                                                 <?php foreach ($gallery as $img): ?>
                                                 <div class="col-md-4 col-6">
-                                                    <a href="<?= htmlspecialchars($img['src']) ?>" data-fancybox="service-gallery">
+                                                    <a href="<?= htmlspecialchars($img['src']) ?>"
+                                                        data-fancybox="service-gallery">
                                                         <img src="<?= htmlspecialchars($img['src']) ?>"
-                                                             alt="<?= htmlspecialchars($img['alt'] ?? $service['title']) ?>">
+                                                            alt="<?= htmlspecialchars($img['alt'] ?? $service['title']) ?>">
                                                     </a>
                                                 </div>
                                                 <?php endforeach; ?>
@@ -512,58 +677,50 @@ $latest_blogs_res = $conn->query($latest_blogs_sql);
                                         </div>
                                         <?php endif; ?>
 
+                                        <!-- ─── Why Choose RK Hospital ───────────────────────────────────────────── -->
+                                        <!-- ─── Why Choose RK Hospital ───────────────────────────────────────────── -->
+                                        <?php if (!empty($why_choose)): ?>
                                         <div class="widget about-widget">
                                             <h3 class="widget-title">
-                                                Why Choose RK Hospital for <?= htmlspecialchars($service['title']) ?> in Nagpur?
+                                                Why Choose RK Hospital for <?= htmlspecialchars($service['title']) ?> in
+                                                Nagpur?
                                             </h3>
                                             <div class="row g-4 mt-2">
+                                                <?php foreach ($why_choose as $wc): ?>
                                                 <div class="col-md-6">
                                                     <div class="custom-point">
-                                                        <h6>Experienced Specialists</h6>
-                                                        <p>Senior consultants with years of focused expertise in <?= htmlspecialchars($service['title']) ?>.</p>
+                                                        <h6><?= htmlspecialchars($wc['title']) ?></h6>
+                                                        <p><?= htmlspecialchars($wc['description'] ?? $wc['desc'] ?? '') ?>
+                                                        </p>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <div class="custom-point">
-                                                        <h6>Advanced Equipment</h6>
-                                                        <p>State-of-the-art diagnostic and surgical technology for accurate results and safe procedures.</p>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="custom-point">
-                                                        <h6>Personalised Care Plans</h6>
-                                                        <p>Every patient receives an individualised treatment plan tailored to their condition and lifestyle.</p>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="custom-point">
-                                                        <h6>Easy Appointment Booking</h6>
-                                                        <p>Book online or call us. Flexible slots including evenings and weekends available.</p>
-                                                    </div>
-                                                </div>
+                                                <?php endforeach; ?>
                                             </div>
                                         </div>
+                                        <?php endif; ?>
+
+
 
                                         <?php if (!empty($faqs)): ?>
                                         <div class="widget about-widget mb-0">
                                             <h3 class="widget-title">
-                                                Frequently Asked Questions about <?= htmlspecialchars($service['title']) ?>
+                                                Frequently Asked Questions about
+                                                <?= htmlspecialchars($service['title']) ?>
                                             </h3>
                                             <div class="accordion mt-3" id="faq-service">
                                                 <?php foreach ($faqs as $fi => $faq): ?>
                                                 <div class="accordion-item">
                                                     <h4 class="accordion-header">
                                                         <a href="javascript:void(0);"
-                                                           class="accordion-button <?= $fi > 0 ? 'collapsed' : '' ?>"
-                                                           data-bs-toggle="collapse"
-                                                           data-bs-target="#sfaq<?= $fi ?>"
-                                                           aria-expanded="<?= $fi === 0 ? 'true' : 'false' ?>">
+                                                            class="accordion-button <?= $fi > 0 ? 'collapsed' : '' ?>"
+                                                            data-bs-toggle="collapse" data-bs-target="#sfaq<?= $fi ?>"
+                                                            aria-expanded="<?= $fi === 0 ? 'true' : 'false' ?>">
                                                             <?= htmlspecialchars($faq['q']) ?>
                                                         </a>
                                                     </h4>
                                                     <div id="sfaq<?= $fi ?>"
-                                                         class="accordion-collapse collapse <?= $fi === 0 ? 'show' : '' ?>"
-                                                         data-bs-parent="#faq-service">
+                                                        class="accordion-collapse collapse <?= $fi === 0 ? 'show' : '' ?>"
+                                                        data-bs-parent="#faq-service">
                                                         <div class="accordion-body">
                                                             <p><?= nl2br(htmlspecialchars($faq['a'])) ?></p>
                                                         </div>
@@ -579,7 +736,7 @@ $latest_blogs_res = $conn->query($latest_blogs_sql);
 
                             </div>
                         </div>
-                        </div>
+                    </div>
                     <div class="col-md-5 col-lg-3 col-xl-3 theiaStickySidebar">
 
                         <div class="card search-filter">
@@ -589,16 +746,15 @@ $latest_blogs_res = $conn->query($latest_blogs_sql);
                                 </h4>
                                 <form action="booking.php" method="POST" id="appointmentForm" novalidate>
                                     <input type="hidden" name="department"
-                                           value="<?= htmlspecialchars($service['category_slug'] ?? 'general') ?>">
-                                    <input type="hidden" name="service_id"
-                                           value="<?= (int)$service['id'] ?>">
+                                        value="<?= htmlspecialchars($service['category_slug'] ?? 'general') ?>">
+                                    <input type="hidden" name="service_id" value="<?= (int)$service['id'] ?>">
 
                                     <div class="mb-3">
                                         <label class="form-label" for="apptName">
                                             Full Name <span class="text-danger">*</span>
                                         </label>
                                         <input type="text" name="name" id="apptName" class="form-control"
-                                               placeholder="Enter your full name" autocomplete="name">
+                                            placeholder="Enter your full name" autocomplete="name">
                                         <div class="invalid-feedback">
                                             Please enter your full name (letters only, min 3 characters).
                                         </div>
@@ -609,7 +765,7 @@ $latest_blogs_res = $conn->query($latest_blogs_sql);
                                             Phone Number <span class="text-danger">*</span>
                                         </label>
                                         <input type="tel" name="phone" id="apptPhone" class="form-control"
-                                               placeholder="+91 XXXXX XXXXX" maxlength="13" autocomplete="tel">
+                                            placeholder="+91 XXXXX XXXXX" maxlength="13" autocomplete="tel">
                                         <div class="invalid-feedback">
                                             Enter a valid 10-digit Indian mobile number.
                                         </div>
@@ -620,8 +776,8 @@ $latest_blogs_res = $conn->query($latest_blogs_sql);
                                             Preferred Date <span class="text-danger">*</span>
                                         </label>
                                         <div class="position-relative">
-                                            <input type="text" name="date" id="appointmentDate"
-                                                   class="form-control" placeholder="Select Date" readonly>
+                                            <input type="text" name="date" id="appointmentDate" class="form-control"
+                                                placeholder="Select Date" readonly>
                                             <span class="date-icon">
                                                 <i class="isax isax-calendar"></i>
                                             </span>
@@ -730,7 +886,7 @@ $latest_blogs_res = $conn->query($latest_blogs_sql);
                                     <?php foreach ($related_services as $rs): ?>
                                     <li class="list-group-item px-0 border-0 py-1">
                                         <a href="single-service.php?slug=<?= urlencode($rs['slug']) ?>"
-                                           class="d-flex align-items-center gap-2 text-dark">
+                                            class="d-flex align-items-center gap-2 text-dark">
                                             <i class="isax isax-arrow-right-3 text-primary"></i>
                                             <?= htmlspecialchars($rs['title']) ?>
                                         </a>
@@ -749,9 +905,8 @@ $latest_blogs_res = $conn->query($latest_blogs_sql);
                                     <li>
                                         <div class="post-thumb">
                                             <a href="blog/<?= htmlspecialchars($lb['slug']) ?>">
-                                                <img class="img-fluid"
-                                                     src="<?= htmlspecialchars($lb['image']) ?>"
-                                                     alt="<?= htmlspecialchars($lb['title']) ?>">
+                                                <img class="img-fluid" src="<?= htmlspecialchars($lb['image']) ?>"
+                                                    alt="<?= htmlspecialchars($lb['title']) ?>">
                                             </a>
                                         </div>
                                         <div class="post-info">
@@ -768,8 +923,8 @@ $latest_blogs_res = $conn->query($latest_blogs_sql);
                             </div>
                         </div>
                         <?php endif; ?>
-                        </div>
                     </div>
+                </div>
             </div>
         </div>
         <?php include 'include/footer.php'; ?>
@@ -787,7 +942,8 @@ $latest_blogs_res = $conn->query($latest_blogs_sql);
         <div class="offcanvas-body">
             <div class="about-popup-item">
                 <h3 class="title">About RK Hospital</h3>
-                <p>Modern healthcare platform providing compassionate, advanced medical services to patients across Nagpur and Central India.</p>
+                <p>Modern healthcare platform providing compassionate, advanced medical services to patients across
+                    Nagpur and Central India.</p>
             </div>
             <div class="about-popup-item">
                 <h3 class="title">Our Location</h3>
@@ -812,7 +968,7 @@ $latest_blogs_res = $conn->query($latest_blogs_sql);
     <div class="progress-wrap active-progress">
         <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
             <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"
-                  style="transition:stroke-dashoffset 10ms linear;stroke-dasharray:307.919px,307.919px;stroke-dashoffset:228.265px;">
+                style="transition:stroke-dashoffset 10ms linear;stroke-dasharray:307.919px,307.919px;stroke-dashoffset:228.265px;">
             </path>
         </svg>
     </div>
@@ -840,13 +996,17 @@ $latest_blogs_res = $conn->query($latest_blogs_sql);
     });
 
     // ── Sticky Sidebar ────────────────────────────────────────────────────
-    $(document).ready(function () {
+    $(document).ready(function() {
         if ($('.theiaStickySidebar').length) {
-            $(".theiaStickySidebar").theiaStickySidebar({ additionalMarginTop: 30 });
+            $(".theiaStickySidebar").theiaStickySidebar({
+                additionalMarginTop: 30
+            });
         }
         // Select2
         if ($.fn.select2) {
-            $('.select').select2({ minimumResultsForSearch: Infinity });
+            $('.select').select2({
+                minimumResultsForSearch: Infinity
+            });
         }
         // WOW
         new WOW().init();
@@ -856,66 +1016,132 @@ $latest_blogs_res = $conn->query($latest_blogs_sql);
     </script>
 
     <script>
-    (function () {
+    (function() {
         'use strict';
 
-        var form     = document.getElementById('appointmentForm');
+        var form = document.getElementById('appointmentForm');
         if (!form) return;
 
-        var nameEl    = document.getElementById('apptName');
-        var phoneEl   = document.getElementById('apptPhone');
-        var dateEl    = document.getElementById('appointmentDate');
+        var nameEl = document.getElementById('apptName');
+        var phoneEl = document.getElementById('apptPhone');
+        var dateEl = document.getElementById('appointmentDate');
         var serviceEl = document.getElementById('apptService');
         var dateError = document.getElementById('dateError');
 
-        function isValidName(v)    { return v.trim().length >= 3 && /^[a-zA-Z\s'.]+$/.test(v.trim()); }
-        function isValidPhone(v)   { var c = v.replace(/[\s\-]/g,''); return /^(\+91|91)?[6-9]\d{9}$/.test(c); }
-        function isValidDate(v)    { return v.trim() !== ''; }
-        function isValidService(v) { return v !== ''; }
+        function isValidName(v) {
+            return v.trim().length >= 3 && /^[a-zA-Z\s'.]+$/.test(v.trim());
+        }
 
-        function markValid(el)    { el.classList.remove('is-invalid'); el.classList.add('is-valid'); }
-        function markInvalid(el)  { el.classList.remove('is-valid'); el.classList.add('is-invalid'); }
-        function clearMark(el)    { el.classList.remove('is-valid','is-invalid'); }
+        function isValidPhone(v) {
+            var c = v.replace(/[\s\-]/g, '');
+            return /^(\+91|91)?[6-9]\d{9}$/.test(c);
+        }
 
-        function markDateValid()   { dateEl.classList.remove('is-invalid'); dateEl.classList.add('is-valid'); dateError.style.display = 'none'; }
-        function markDateInvalid() { dateEl.classList.remove('is-valid'); dateEl.classList.add('is-invalid'); dateError.style.display = 'block'; }
+        function isValidDate(v) {
+            return v.trim() !== '';
+        }
 
-        nameEl.addEventListener('blur',  function() { isValidName(this.value) ? markValid(this) : markInvalid(this); });
-        nameEl.addEventListener('input', function() { if (this.classList.contains('is-invalid')) { isValidName(this.value) ? markValid(this) : markInvalid(this); } });
+        function isValidService(v) {
+            return v !== '';
+        }
+
+        function markValid(el) {
+            el.classList.remove('is-invalid');
+            el.classList.add('is-valid');
+        }
+
+        function markInvalid(el) {
+            el.classList.remove('is-valid');
+            el.classList.add('is-invalid');
+        }
+
+        function clearMark(el) {
+            el.classList.remove('is-valid', 'is-invalid');
+        }
+
+        function markDateValid() {
+            dateEl.classList.remove('is-invalid');
+            dateEl.classList.add('is-valid');
+            dateError.style.display = 'none';
+        }
+
+        function markDateInvalid() {
+            dateEl.classList.remove('is-valid');
+            dateEl.classList.add('is-invalid');
+            dateError.style.display = 'block';
+        }
+
+        nameEl.addEventListener('blur', function() {
+            isValidName(this.value) ? markValid(this) : markInvalid(this);
+        });
+        nameEl.addEventListener('input', function() {
+            if (this.classList.contains('is-invalid')) {
+                isValidName(this.value) ? markValid(this) : markInvalid(this);
+            }
+        });
 
         phoneEl.addEventListener('input', function() {
-            this.value = this.value.replace(/[^0-9+\s]/g,'');
-            this.value.trim() ? (isValidPhone(this.value) ? markValid(this) : markInvalid(this)) : clearMark(this);
+            this.value = this.value.replace(/[^0-9+\s]/g, '');
+            this.value.trim() ? (isValidPhone(this.value) ? markValid(this) : markInvalid(this)) :
+                clearMark(this);
         });
         phoneEl.addEventListener('blur', function() {
-            !this.value.trim() ? markInvalid(this) : (isValidPhone(this.value) ? markValid(this) : markInvalid(this));
+            !this.value.trim() ? markInvalid(this) : (isValidPhone(this.value) ? markValid(this) :
+                markInvalid(this));
         });
 
-        serviceEl.addEventListener('change', function() { isValidService(this.value) ? markValid(this) : markInvalid(this); });
+        serviceEl.addEventListener('change', function() {
+            isValidService(this.value) ? markValid(this) : markInvalid(this);
+        });
 
         if (typeof flatpickr !== 'undefined') {
             flatpickr('#appointmentDate', {
-                minDate: 'today', dateFormat: 'j M Y', disableMobile: true, animate: true,
-                onChange: function(d) { d.length > 0 ? markDateValid() : markDateInvalid(); }
+                minDate: 'today',
+                dateFormat: 'j M Y',
+                disableMobile: true,
+                animate: true,
+                onChange: function(d) {
+                    d.length > 0 ? markDateValid() : markDateInvalid();
+                }
             });
         }
 
-        form.addEventListener('submit', function (e) {
+        form.addEventListener('submit', function(e) {
             var valid = true;
-            if (!isValidName(nameEl.value))        { markInvalid(nameEl);    valid = false; } else markValid(nameEl);
-            if (!isValidPhone(phoneEl.value))       { markInvalid(phoneEl);   valid = false; } else markValid(phoneEl);
-            if (!isValidDate(dateEl.value))         { markDateInvalid();       valid = false; } else markDateValid();
-            if (!isValidService(serviceEl.value))   { markInvalid(serviceEl); valid = false; } else markValid(serviceEl);
+            if (!isValidName(nameEl.value)) {
+                markInvalid(nameEl);
+                valid = false;
+            } else markValid(nameEl);
+            if (!isValidPhone(phoneEl.value)) {
+                markInvalid(phoneEl);
+                valid = false;
+            } else markValid(phoneEl);
+            if (!isValidDate(dateEl.value)) {
+                markDateInvalid();
+                valid = false;
+            } else markDateValid();
+            if (!isValidService(serviceEl.value)) {
+                markInvalid(serviceEl);
+                valid = false;
+            } else markValid(serviceEl);
 
             if (!valid) {
-                e.preventDefault(); e.stopPropagation();
+                e.preventDefault();
+                e.stopPropagation();
                 var firstErr = form.querySelector('.is-invalid');
-                if (firstErr) { firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' }); firstErr.focus(); }
+                if (firstErr) {
+                    firstErr.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                    firstErr.focus();
+                }
             }
         });
     })();
     </script>
 
 </body>
+
 </html>
 <?php $conn->close(); ?>
