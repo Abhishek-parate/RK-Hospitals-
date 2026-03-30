@@ -1,770 +1,331 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="description" content="The responsive professional Doccure template offers many features, like scheduling appointments with  top doctors, clinics, and hospitals via voice, video call & chat.">
-		<meta name="keywords" content="practo clone, doccure, doctor appointment, Practo clone html template, doctor booking template">
-		<meta name="author" content="Practo Clone HTML Template - Doctor Booking Template">
-		<meta property="og:url" content="https://doccure.dreamstechnologies.com/html/">
-		<meta property="og:type" content="website">
-		<meta property="og:title" content="Doctors Appointment HTML Website Templates | Doccure">
-		<meta property="og:description" content="The responsive professional Doccure template offers many features, like scheduling appointments with  top doctors, clinics, and hospitals via voice, video call & chat.">
-		<meta property="og:image" content="assets/img/preview-banner.jpg">
-		<meta name="twitter:card" content="summary_large_image">
-		<meta property="twitter:domain" content="https://doccure.dreamstechnologies.com/html/">
-		<meta property="twitter:url" content="https://doccure.dreamstechnologies.com/html/">
-		<meta name="twitter:title" content="Doctors Appointment HTML Website Templates | Doccure">
-		<meta name="twitter:description" content="The responsive professional Doccure template offers many features, like scheduling appointments with  top doctors, clinics, and hospitals via voice, video call & chat.">
-		<meta name="twitter:image" content="assets/img/preview-banner.jpg">	
-        <title>Doccure - Dashboard</title>
-		
-		<!-- Favicon -->
-        <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
-		
-		<!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-		
-		<!-- Fontawesome CSS -->
-		<link rel="stylesheet" href="assets/plugins/fontawesome/css/fontawesome.min.css">
-		<link rel="stylesheet" href="assets/plugins/fontawesome/css/all.min.css">
-		
-		<!-- Feathericon CSS -->
-        <link rel="stylesheet" href="assets/css/feathericon.min.css">
-		
-		<link rel="stylesheet" href="assets/plugins/morris/morris.css">
-		
-		<!-- Main CSS -->
-        <link rel="stylesheet" href="assets/css/custom.css">
-        
-    </head>
-    <body><a href="https://doccure.dreamstechnologies.com/cdn-cgi/content?id=HZP2rirknCCLsmcPBEho6JVTUhLXqPhrNoDGp7whfAk-1773164994.850854-1.0.1.1-KMMj6AsGOjo0QwTh3ywyvs05Ul6hibGaNv8Lj_iHnS4" aria-hidden="true" rel="nofollow noopener" style="display: none !important; visibility: hidden !important"></a>
-	
-		<!-- Main Wrapper -->
-        <div class="main-wrapper">
-		
-			<!-- Header -->
-            <div class="header">
-			
-				<!-- Logo -->
-                <div class="header-left">
-                    <a href="index.html" class="logo">
-						<img src="assets/img/logo.png" alt="Logo">
-					</a>
-					<a href="index.php" class="logo logo-small">
-						<img src="assets/img/logo-small.png" alt="Logo" width="30" height="30">
-					</a>
-                </div>
-				<!-- /Logo -->
-				
-				<a href="javascript:void(0);" id="toggle_btn">
-					<i class="fe fe-text-align-left"></i>
-				</a>
-				
-				<div class="top-nav-search">
-					<form>
-						<input type="text" class="form-control" placeholder="Search here">
-						<button class="btn" type="submit"><i class="fa fa-search"></i></button>
-					</form>
-				</div>
-				
-				<!-- Mobile Menu Toggle -->
-				<a class="mobile_btn" id="mobile_btn">
-					<i class="fa fa-bars"></i>
-				</a>
-				<!-- /Mobile Menu Toggle -->
-				
-				<!-- Header Right Menu -->
-				<ul class="nav user-menu">
+<?php
+require_once __DIR__ . '/../include/config.php';
 
-					<!-- Notifications -->
-					<li class="nav-item dropdown noti-dropdown">
-						<a href="index.html#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
-							<i class="fe fe-bell"></i> <span class="badge rounded-pill">3</span>
-						</a>
-						<div class="dropdown-menu notifications">
-							<div class="topnav-dropdown-header">
-								<span class="notification-title">Notifications</span>
-								<a href="javascript:void(0)" class="clear-noti"> Clear All </a>
-							</div>
-							<div class="noti-content">
-								<ul class="notification-list">
-									<li class="notification-message">
-										<a href="index.html#">
-											<div class="notify-block d-flex">
-												<span class="avatar avatar-sm flex-shrink-0">
-													<img class="avatar-img rounded-circle" alt="User Image" src="assets/img/doctors/doctor-thumb-01.jpg">
-												</span>
-												<div class="media-body flex-grow-1">
-													<p class="noti-details"><span class="noti-title">Dr. Ruby Perrin</span> Schedule <span class="noti-title">her appointment</span></p>
-													<p class="noti-time"><span class="notification-time">4 mins ago</span></p>
-												</div>
-											</div>
-										</a>
-									</li>
-									
-									
-									
-								</ul>
-							</div>
-							
-						</div>
-					</li>
-					<!-- /Notifications -->
-					
-					<!-- User Menu -->
-					<li class="nav-item dropdown has-arrow">
-						<a href="index.html#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
-							<span class="user-img"><img class="rounded-circle" src="assets/img/profiles/avatar-01.jpg" width="31" alt="Ryan Taylor"></span>
-						</a>
-						<div class="dropdown-menu">
-							<div class="user-header">
-								<div class="avatar avatar-sm">
-									<img src="assets/img/profiles/avatar-01.jpg" alt="User Image" class="avatar-img rounded-circle">
-								</div>
-								<div class="user-text">
-									<h6>Ryan Taylor</h6>
-									<p class="text-muted mb-0">Administrator</p>
-								</div>
-							</div>
-							<a class="dropdown-item" href="profile.html">My Profile</a>
-							<a class="dropdown-item" href="settings.html">Settings</a>
-							<a class="dropdown-item" href="contact-us.html">Logout</a>
-						</div>
-					</li>
-					<!-- /User Menu -->
-					
-				</ul>
-				<!-- /Header Right Menu -->
-				
-            </div>
-			<!-- /Header -->
-			
-			<!-- Sidebar -->
-            <div class="sidebar" id="sidebar">
-                <div class="sidebar-inner slimscroll">
-					<div id="sidebar-menu" class="sidebar-menu">
-						<ul>
-							<li class="menu-title"> 
-								<span>Main</span>
-							</li>
-							<li class="active"> 
-								<a href="index.html"><i class="fe fe-home"></i> <span>Dashboard</span></a>
-							</li>
-							<li> 
-								<a href="appointment-list.html"><i class="fe fe-layout"></i> <span>Appointments</span></a>
-							</li>
-							<li> 
-								<a href="specialities.html"><i class="fe fe-users"></i> <span>Specialities</span></a>
-							</li>
-							<li> 
-								<a href="doctor-list.html"><i class="fe fe-user-plus"></i> <span>Doctors</span></a>
-							</li>
-							<li> 
-								<a href="patient-list.html"><i class="fe fe-user"></i> <span>Patients</span></a>
-							</li>
-							<li> 
-								<a href="blogs.php"><i class="fe fe-star-o"></i> <span>Blogs</span></a>
-							</li>
-							<li> 
-								<a href="transactions-list.html"><i class="fe fe-activity"></i> <span>Transactions</span></a>
-							</li>
-							<li> 
-								<a href="settings.html"><i class="fe fe-vector"></i> <span>Settings</span></a>
-							</li>
-							<li class="submenu">
-								<a href="index.html#"><i class="fe fe-document"></i> <span> Reports</span> <span class="menu-arrow"></span></a>
-								<ul style="display: none;">
-									<li><a href="invoice-report.html">Invoice Reports</a></li>
-								</ul>
-							</li>
-							<li class="menu-title"> 
-								<span>Pages</span>
-							</li>
-							<li> 
-								<a href="profile.html"><i class="fe fe-user-plus"></i> <span>Profile</span></a>
-							</li>
-							<li class="submenu">
-								<a href="index.html#"><i class="fe fe-document"></i> <span> Authentication </span> <span class="menu-arrow"></span></a>
-								<ul style="display: none;">
-									<li><a href="contact-us.html"> Login </a></li>
-									<li><a href="register.html"> Register </a></li>
-									<li><a href="forgot-password.html"> Forgot Password </a></li>
-									<li><a href="lock-screen.html"> Lock Screen </a></li>
-								</ul>
-							</li>
-							<li class="submenu">
-								<a href="index.html#"><i class="fe fe-warning"></i> <span> Error Pages </span> <span class="menu-arrow"></span></a>
-								<ul style="display: none;">
-									<li><a href="error-404.html">404 Error </a></li>
-									<li><a href="error-500.html">500 Error </a></li>
-								</ul>
-							</li>
-							<li> 
-								<a href="blank-page.html"><i class="fe fe-file"></i> <span>Blank Page</span></a>
-							</li>
-							<li class="menu-title"> 
-								<span>UI Interface</span>
-							</li>
-							<li> 
-								<a href="components.html"><i class="fe fe-vector"></i> <span>Components</span></a>
-							</li>
-							<li class="submenu">
-								<a href="index.html#"><i class="fe fe-layout"></i> <span> Forms </span> <span class="menu-arrow"></span></a>
-								<ul style="display: none;">
-									<li><a href="form-basic-inputs.html">Basic Inputs </a></li>
-									<li><a href="form-input-groups.html">Input Groups </a></li>
-									<li><a href="form-horizontal.html">Horizontal Form </a></li>
-									<li><a href="form-vertical.html"> Vertical Form </a></li>
-									<li><a href="form-mask.html"> Form Mask </a></li>
-									<li><a href="form-validation.html"> Form Validation </a></li>
-								</ul>
-							</li>
-							<li class="submenu">
-								<a href="index.html#"><i class="fe fe-table"></i> <span> Tables </span> <span class="menu-arrow"></span></a>
-								<ul style="display: none;">
-									<li><a href="tables-basic.html">Basic Tables </a></li>
-									<li><a href="data-tables.html">Data Table </a></li>
-								</ul>
-							</li>
-							<li class="submenu">
-								<a href="javascript:void(0);"><i class="fe fe-code"></i> <span>Multi Level</span> <span class="menu-arrow"></span></a>
-								<ul style="display: none;">
-									<li class="submenu">
-										<a href="javascript:void(0);"> <span>Level 1</span> <span class="menu-arrow"></span></a>
-										<ul style="display: none;">
-											<li><a href="javascript:void(0);"><span>Level 2</span></a></li>
-											<li class="submenu">
-												<a href="javascript:void(0);"> <span> Level 2</span> <span class="menu-arrow"></span></a>
-												<ul style="display: none;">
-													<li><a href="javascript:void(0);">Level 3</a></li>
-													<li><a href="javascript:void(0);">Level 3</a></li>
-												</ul>
-											</li>
-											<li><a href="javascript:void(0);"> <span>Level 2</span></a></li>
-										</ul>
-									</li>
-									<li>
-										<a href="javascript:void(0);"> <span>Level 1</span></a>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</div>
+// ── Stats ─────────────────────────────────────────────────────────────────────
+$totalDoctors   = (int)$conn->query("SELECT COUNT(*) AS c FROM doctors")->fetch_assoc()['c'];
+$totalBlogs     = (int)$conn->query("SELECT COUNT(*) AS c FROM blogs")->fetch_assoc()['c'];
+$publishedBlogs = (int)$conn->query("SELECT COUNT(*) AS c FROM blogs WHERE is_published=1")->fetch_assoc()['c'];
+$totalUsers     = (int)$conn->query("SELECT COUNT(*) AS c FROM admin_users")->fetch_assoc()['c'];
+
+$totalServices = 0;
+$svcCheck = $conn->query("SHOW TABLES LIKE 'services'");
+if ($svcCheck && $svcCheck->num_rows > 0) {
+    $totalServices = (int)$conn->query("SELECT COUNT(*) AS c FROM services")->fetch_assoc()['c'];
+}
+
+// ── Recent data ───────────────────────────────────────────────────────────────
+$recentDoctors = [];
+$res = $conn->query("SELECT id, name, designation, photo FROM doctors ORDER BY id DESC LIMIT 6");
+if ($res) while ($r = $res->fetch_assoc()) $recentDoctors[] = $r;
+
+$recentBlogs = [];
+$res = $conn->query("
+    SELECT b.id, b.title, b.is_published, b.views, b.created_at, c.name AS category
+    FROM blogs b LEFT JOIN categories c ON c.id = b.category_id
+    ORDER BY b.created_at DESC LIMIT 6
+");
+if ($res) while ($r = $res->fetch_assoc()) $recentBlogs[] = $r;
+
+$recentUsers = [];
+$res = $conn->query("SELECT id, name, email, created_at FROM admin_users ORDER BY created_at DESC LIMIT 5");
+if ($res) while ($r = $res->fetch_assoc()) $recentUsers[] = $r;
+
+// ── Meta ──────────────────────────────────────────────────────────────────────
+$pageTitle  = 'Dashboard';
+$activePage = 'dashboard';
+$assetBase  = '';
+
+require_once __DIR__ . '/include/head.php';
+?>
+
+    <?php require_once __DIR__ . '/include/header.php'; ?>
+    <?php require_once __DIR__ . '/include/sidebar.php'; ?>
+
+    <!-- ══ PAGE WRAPPER ══════════════════════════════════════════════════════ -->
+    <div class="page-wrapper">
+        <div class="content container-fluid">
+
+            <!-- ── Page Header ── -->
+            <div class="page-header">
+                <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+                    <div>
+                        <h3 class="page-title">Dashboard</h3>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item active">Overview</li>
+                        </ul>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <div style="background:#fff;border:1.5px solid #e5e9f2;border-radius:9px;padding:8px 14px;display:flex;align-items:center;gap:8px;box-shadow:0 1px 3px rgba(0,0,0,.04);">
+                            <i class="fe fe-calendar" style="color:#4f46e5;font-size:14px;"></i>
+                            <span style="font-size:13px;font-weight:500;color:#374151;"><?= date('d M Y') ?></span>
+                        </div>
+                    </div>
                 </div>
             </div>
-			<!-- /Sidebar -->
-			
-			<!-- Page Wrapper -->
-            <div class="page-wrapper">
-			
-                <div class="content container-fluid">
-					
-					<!-- Page Header -->
-					<div class="page-header">
-						<div class="row">
-							<div class="col-sm-12">
-								<h3 class="page-title">Welcome Admin!</h3>
-								<ul class="breadcrumb">
-									<li class="breadcrumb-item active">Dashboard</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<!-- /Page Header -->
 
-					<div class="row">
-						<div class="col-xl-3 col-sm-6 col-12">
-							<div class="card">
-								<div class="card-body">
-									<div class="dash-widget-header">
-										<span class="dash-widget-icon text-primary border-primary">
-											<i class="fe fe-users"></i>
-										</span>
-										<div class="dash-count">
-											<h3>168</h3>
-										</div>
-									</div>
-									<div class="dash-widget-info">
-										<h6 class="text-muted">Doctors</h6>
-										<div class="progress progress-sm">
-											<div class="progress-bar bg-primary w-50"></div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-xl-3 col-sm-6 col-12">
-							<div class="card">
-								<div class="card-body">
-									<div class="dash-widget-header">
-										<span class="dash-widget-icon text-success">
-											<i class="fe fe-credit-card"></i>
-										</span>
-										<div class="dash-count">
-											<h3>487</h3>
-										</div>
-									</div>
-									<div class="dash-widget-info">
-										
-										<h6 class="text-muted">Patients</h6>
-										<div class="progress progress-sm">
-											<div class="progress-bar bg-success w-50"></div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-xl-3 col-sm-6 col-12">
-							<div class="card">
-								<div class="card-body">
-									<div class="dash-widget-header">
-										<span class="dash-widget-icon text-danger border-danger">
-											<i class="fe fe-money"></i>
-										</span>
-										<div class="dash-count">
-											<h3>485</h3>
-										</div>
-									</div>
-									<div class="dash-widget-info">
-										
-										<h6 class="text-muted">Appointment</h6>
-										<div class="progress progress-sm">
-											<div class="progress-bar bg-danger w-50"></div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-xl-3 col-sm-6 col-12">
-							<div class="card">
-								<div class="card-body">
-									<div class="dash-widget-header">
-										<span class="dash-widget-icon text-warning border-warning">
-											<i class="fe fe-folder"></i>
-										</span>
-										<div class="dash-count">
-											<h3>$62523</h3>
-										</div>
-									</div>
-									<div class="dash-widget-info">
-										
-										<h6 class="text-muted">Revenue</h6>
-										<div class="progress progress-sm">
-											<div class="progress-bar bg-warning w-50"></div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-12 col-lg-6">
-						
-							<!-- Sales Chart -->
-							<div class="card card-chart">
-								<div class="card-header">
-									<h4 class="card-title">Revenue</h4>
-								</div>
-								<div class="card-body">
-									<div id="morrisArea"></div>
-								</div>
-							</div>
-							<!-- /Sales Chart -->
-							
-						</div>
-						<div class="col-md-12 col-lg-6">
-						
-							<!-- Invoice Chart -->
-							<div class="card card-chart">
-								<div class="card-header">
-									<h4 class="card-title">Status</h4>
-								</div>
-								<div class="card-body">
-									<div id="morrisLine"></div>
-								</div>
-							</div>
-							<!-- /Invoice Chart -->
-							
-						</div>	
-					</div>
-					<div class="row">
-						<div class="col-md-6 d-flex">
-						
-							<!-- Recent Orders -->
-							<div class="card card-table flex-fill">
-								<div class="card-header">
-									<h4 class="card-title">Doctors List</h4>
-								</div>
-								<div class="card-body">
-									<div class="table-responsive">
-										<table class="table table-hover table-center mb-0">
-											<thead>
-												<tr>
-													<th>Doctor Name</th>
-													<th>Speciality</th>
-													<th>Earned</th>
-													<th>Blogs</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile.html" class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-01.jpg" alt="User Image"></a>
-															<a href="profile.html">Dr. Ruby Perrin</a>
-														</h2>
-													</td>
-													<td>Dental</td>
-													<td>$3200.00</td>
-													<td>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star-o text-secondary"></i>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile.html" class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-02.jpg" alt="User Image"></a>
-															<a href="profile.html">Dr. Darren Elder</a>
-														</h2>
-													</td>
-													<td>Dental</td>
-													<td>$3100.00</td>
-													<td>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star-o text-secondary"></i>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile.html" class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-03.jpg" alt="User Image"></a>
-															<a href="profile.html">Dr. Deborah Angel</a>
-														</h2>
-													</td>
-													<td>Cardiology</td>
-													<td>$4000.00</td>
-													<td>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star-o text-secondary"></i>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile.html" class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-04.jpg" alt="User Image"></a>
-															<a href="profile.html">Dr. Sofia Brient</a>
-														</h2>
-													</td>
-													<td>Urology</td>
-													<td>$3200.00</td>
-													<td>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star-o text-secondary"></i>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile.html" class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-05.jpg" alt="User Image"></a>
-															<a href="profile.html">Dr. Marvin Campbell</a>
-														</h2>
-													</td>
-													<td>Orthopaedics</td>
-													<td>$3500.00</td>
-													<td>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star-o text-secondary"></i>
-													</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</div>
-							<!-- /Recent Orders -->
-							
-						</div>
-						<div class="col-md-6 d-flex">
-						
-							<!-- Feed Activity -->
-							<div class="card  card-table flex-fill">
-								<div class="card-header">
-									<h4 class="card-title">Patients List</h4>
-								</div>
-								<div class="card-body">
-									<div class="table-responsive">
-										<table class="table table-hover table-center mb-0">
-											<thead>
-												<tr>													
-													<th>Patient Name</th>
-													<th>Phone</th>
-													<th>Last Visit</th>
-													<th>Paid</th>													
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile.html" class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle" src="assets/img/patients/patient1.jpg" alt="User Image"></a>
-															<a href="profile.html">Charlene Reed </a>
-														</h2>
-													</td>
-													<td>8286329170</td>
-													<td>20 Oct 2023</td>
-													<td>$100.00</td>
-												</tr>
-												<tr>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile.html" class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle" src="assets/img/patients/patient2.jpg" alt="User Image"></a>
-															<a href="profile.html">Travis Trimble </a>
-														</h2>
-													</td>
-													<td>2077299974</td>
-													<td>22 Oct 2023</td>
-													<td>$200.00</td>
-												</tr>
-												<tr>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile.html" class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle" src="assets/img/patients/patient3.jpg" alt="User Image"></a>
-															<a href="profile.html">Carl Kelly</a>
-														</h2>
-													</td>
-													<td>2607247769</td>
-													<td>21 Oct 2023</td>
-													<td>$250.00</td>
-												</tr>
-												<tr>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile.html" class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle" src="assets/img/patients/patient4.jpg" alt="User Image"></a>
-															<a href="profile.html"> Michelle Fairfax</a>
-														</h2>
-													</td>
-													<td>5043686874</td>
-													<td>21 Sep 2023</td>
-													<td>$150.00</td>
-												</tr>
-												<tr>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile.html" class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle" src="assets/img/patients/patient5.jpg" alt="User Image"></a>
-															<a href="profile.html">Gina Moore</a>
-														</h2>
-													</td>
-													<td>9548207887</td>
-													<td>18 Sep 2023</td>
-													<td>$350.00</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</div>
-							<!-- /Feed Activity -->
-							
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-12">
-						
-							<!-- Recent Orders -->
-							<div class="card card-table">
-								<div class="card-header">
-									<h4 class="card-title">Appointment List</h4>
-								</div>
-								<div class="card-body">
-									<div class="table-responsive">
-										<table class="table table-hover table-center mb-0">
-											<thead>
-												<tr>
-													<th>Doctor Name</th>
-													<th>Speciality</th>
-													<th>Patient Name</th>
-													<th>Apointment Time</th>
-													<th>Status</th>
-													<th>Amount</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile.html" class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-01.jpg" alt="User Image"></a>
-															<a href="profile.html">Dr. Ruby Perrin</a>
-														</h2>
-													</td>
-													<td>Dental</td>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile.html" class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle" src="assets/img/patients/patient1.jpg" alt="User Image"></a>
-															<a href="profile.html">Charlene Reed </a>
-														</h2>
-													</td>
-													<td>9 Nov 2023 <span class="text-primary d-block">11.00 AM - 11.15 AM</span></td>
-													<td>
-														<div class="status-toggle">
-															<input type="checkbox" id="status_1" class="check" checked>
-															<label for="status_1" class="checktoggle">checkbox</label>
-														</div>
-													</td>
-													<td>
-														$200.00
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile.html" class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-02.jpg" alt="User Image"></a>
-															<a href="profile.html">Dr. Darren Elder</a>
-														</h2>
-													</td>
-													<td>Dental</td>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile.html" class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle" src="assets/img/patients/patient2.jpg" alt="User Image"></a>
-															<a href="profile.html">Travis Trimble </a>
-														</h2>
-													</td>
-													
-													<td>5 Nov 2023 <span class="text-primary d-block">11.00 AM - 11.35 AM</span></td>
-													<td>
-														<div class="status-toggle">
-															<input type="checkbox" id="status_2" class="check" checked>
-															<label for="status_2" class="checktoggle">checkbox</label>
-														</div>
-													</td>
-													<td>
-														$300.00
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile.html" class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-03.jpg" alt="User Image"></a>
-															<a href="profile.html">Dr. Deborah Angel</a>
-														</h2>
-													</td>
-													<td>Cardiology</td>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile.html" class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle" src="assets/img/patients/patient3.jpg" alt="User Image"></a>
-															<a href="profile.html">Carl Kelly</a>
-														</h2>
-													</td>
-													<td>11 Nov 2023 <span class="text-primary d-block">12.00 PM - 12.15 PM</span></td>
-													<td>
-														<div class="status-toggle">
-															<input type="checkbox" id="status_3" class="check" checked>
-															<label for="status_3" class="checktoggle">checkbox</label>
-														</div>
-													</td>
-													<td>
-														$150.00
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile.html" class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-04.jpg" alt="User Image"></a>
-															<a href="profile.html">Dr. Sofia Brient</a>
-														</h2>
-													</td>
-													<td>Urology</td>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile.html" class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle" src="assets/img/patients/patient4.jpg" alt="User Image"></a>
-															<a href="profile.html"> Michelle Fairfax</a>
-														</h2>
-													</td>
-													<td>7 Nov 2023<span class="text-primary d-block">1.00 PM - 1.20 PM</span></td>
-													<td>
-														<div class="status-toggle">
-															<input type="checkbox" id="status_4" class="check" checked>
-															<label for="status_4" class="checktoggle">checkbox</label>
-														</div>
-													</td>
-													<td>
-														$150.00
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile.html" class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-05.jpg" alt="User Image"></a>
-															<a href="profile.html">Dr. Marvin Campbell</a>
-														</h2>
-													</td>
-													<td>Orthopaedics</td>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile.html" class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle" src="assets/img/patients/patient5.jpg" alt="User Image"></a>
-															<a href="profile.html">Gina Moore</a>
-														</h2>
-													</td>
-													
-													<td>15 Nov 2023 <span class="text-primary d-block">1.00 PM - 1.15 PM</span></td>
-													<td>
-														<div class="status-toggle">
-															<input type="checkbox" id="status_5" class="check" checked>
-															<label for="status_5" class="checktoggle">checkbox</label>
-														</div>
-													</td>
-													<td>
-														$200.00
-													</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</div>
-							<!-- /Recent Orders -->
-							
-						</div>
-					</div>
-					
-				</div>			
-			</div>
-			<!-- /Page Wrapper -->
-		
+            <!-- ── Stat Cards ── -->
+            <div class="row g-3 mb-4">
+
+                <div class="col-xl-3 col-sm-6">
+                    <div class="stat-card s-indigo">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="stat-icon si-indigo">
+                                <i class="fe fe-user-plus"></i>
+                            </div>
+                            <span style="font-size:11px;font-weight:600;background:#eef2ff;color:#4f46e5;padding:3px 10px;border-radius:99px;">Doctors</span>
+                        </div>
+                        <div class="stat-value"><?= $totalDoctors ?></div>
+                        <div class="stat-label">Total Doctors</div>
+                        <div class="stat-progress mt-3">
+                            <div class="stat-progress-bar" style="width:<?= min(100, $totalDoctors * 15) ?>%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-sm-6">
+                    <div class="stat-card s-emerald">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="stat-icon si-emerald">
+                                <i class="fe fe-edit-2"></i>
+                            </div>
+                            <span style="font-size:11px;font-weight:600;background:#ecfdf5;color:#059669;padding:3px 10px;border-radius:99px;"><?= $publishedBlogs ?> live</span>
+                        </div>
+                        <div class="stat-value"><?= $totalBlogs ?></div>
+                        <div class="stat-label">Total Blogs</div>
+                        <div class="stat-progress mt-3">
+                            <div class="stat-progress-bar" style="width:<?= $totalBlogs > 0 ? min(100, round(($publishedBlogs/$totalBlogs)*100)) : 0 ?>%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-sm-6">
+                    <div class="stat-card s-amber">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="stat-icon si-amber">
+                                <i class="fe fe-briefcase"></i>
+                            </div>
+                            <span style="font-size:11px;font-weight:600;background:#fffbeb;color:#d97706;padding:3px 10px;border-radius:99px;">Services</span>
+                        </div>
+                        <div class="stat-value"><?= $totalServices ?></div>
+                        <div class="stat-label">Total Services</div>
+                        <div class="stat-progress mt-3">
+                            <div class="stat-progress-bar" style="width:<?= min(100, $totalServices * 10) ?>%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-sm-6">
+                    <div class="stat-card s-cyan">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="stat-icon si-cyan">
+                                <i class="fe fe-lock"></i>
+                            </div>
+                            <span style="font-size:11px;font-weight:600;background:#ecfeff;color:#0891b2;padding:3px 10px;border-radius:99px;">Users</span>
+                        </div>
+                        <div class="stat-value"><?= $totalUsers ?></div>
+                        <div class="stat-label">Admin Users</div>
+                        <div class="stat-progress mt-3">
+                            <div class="stat-progress-bar" style="width:<?= min(100, $totalUsers * 20) ?>%"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ── Quick Actions ── -->
+            <div class="card mb-4" style="border-radius:14px;">
+                <div class="card-body" style="padding:16px 20px;">
+                    <div class="d-flex align-items-center gap-3 flex-wrap">
+                        <span style="font-size:12px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.8px;white-space:nowrap;">Quick Add</span>
+                        <div style="width:1px;height:20px;background:#e5e9f2;"></div>
+                        <div class="quick-actions">
+                            <a href="<?= SITE_URL ?>/admin/doctors/add.php" class="quick-pill qp-indigo">
+                                <i class="fe fe-user-plus" style="font-size:13px;"></i> Add Doctor
+                            </a>
+                            <a href="<?= SITE_URL ?>/admin/blog/add.php" class="quick-pill qp-emerald">
+                                <i class="fe fe-edit-2" style="font-size:13px;"></i> New Blog
+                            </a>
+                            <a href="<?= SITE_URL ?>/admin/services/add.php" class="quick-pill qp-amber">
+                                <i class="fe fe-briefcase" style="font-size:13px;"></i> Add Service
+                            </a>
+                            <a href="<?= SITE_URL ?>/admin/users/add.php" class="quick-pill qp-slate">
+                                <i class="fe fe-lock" style="font-size:13px;"></i> Add User
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── Doctors + Blogs ── -->
+            <div class="row g-3 mb-3">
+
+                <!-- Recent Doctors -->
+                <div class="col-lg-6">
+                    <div class="card h-100 mb-0">
+                        <div class="card-header">
+                            <h4 class="card-title d-flex align-items-center gap-2">
+                                <span style="width:24px;height:24px;border-radius:6px;background:#eef2ff;display:inline-flex;align-items:center;justify-content:center;">
+                                    <i class="fe fe-user-plus" style="font-size:12px;color:#4f46e5;"></i>
+                                </span>
+                                Recent Doctors
+                            </h4>
+                            <a href="<?= SITE_URL ?>/admin/doctors/index.php" class="btn btn-white btn-sm">View All</a>
+                        </div>
+                        <div style="padding:0;">
+                            <table class="table table-hover mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Doctor</th>
+                                        <th>Designation</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php if (empty($recentDoctors)): ?>
+                                    <tr><td colspan="3" class="text-center py-5" style="color:#9ca3af;">
+                                        <i class="fe fe-user-plus" style="font-size:28px;display:block;margin-bottom:8px;opacity:.3;"></i>
+                                        No doctors yet
+                                    </td></tr>
+                                    <?php else: foreach ($recentDoctors as $doc):
+                                        $photo = SITE_URL . '/' . ltrim($doc['photo'] ?? 'assets/img/patients/default.jpg', '/');
+                                    ?>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <img src="<?= htmlspecialchars($photo) ?>"
+                                                     onerror="this.src='<?= SITE_URL ?>/assets/img/patients/default.jpg'"
+                                                     style="width:34px;height:34px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid #f0f0f5;">
+                                                <span class="fw-500" style="font-size:13.5px;"><?= htmlspecialchars($doc['name']) ?></span>
+                                            </div>
+                                        </td>
+                                        <td class="text-sm" style="color:#6b7280;">
+                                            <?= htmlspecialchars(mb_strimwidth($doc['designation'] ?? '—', 0, 28, '…')) ?>
+                                        </td>
+                                        <td class="text-end">
+                                            <a href="<?= SITE_URL ?>/admin/doctors/edit.php?id=<?= $doc['id'] ?>"
+                                               class="btn btn-white btn-xs"><i class="fe fe-edit-2" style="color:#4f46e5;"></i></a>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach; endif; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Blogs -->
+                <div class="col-lg-6">
+                    <div class="card h-100 mb-0">
+                        <div class="card-header">
+                            <h4 class="card-title d-flex align-items-center gap-2">
+                                <span style="width:24px;height:24px;border-radius:6px;background:#ecfdf5;display:inline-flex;align-items:center;justify-content:center;">
+                                    <i class="fe fe-edit-2" style="font-size:12px;color:#10b981;"></i>
+                                </span>
+                                Recent Blogs
+                            </h4>
+                            <a href="<?= SITE_URL ?>/admin/blog/index.php" class="btn btn-white btn-sm">View All</a>
+                        </div>
+                        <div style="padding:0;">
+                            <table class="table table-hover mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Category</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php if (empty($recentBlogs)): ?>
+                                    <tr><td colspan="3" class="text-center py-5" style="color:#9ca3af;">
+                                        <i class="fe fe-edit" style="font-size:28px;display:block;margin-bottom:8px;opacity:.3;"></i>
+                                        No blogs yet
+                                    </td></tr>
+                                    <?php else: foreach ($recentBlogs as $blog): ?>
+                                    <tr>
+                                        <td style="max-width:180px;">
+                                            <a href="<?= SITE_URL ?>/admin/blog/edit.php?id=<?= $blog['id'] ?>"
+                                               style="color:#111827;font-weight:500;font-size:13px;text-decoration:none;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                                                <?= htmlspecialchars($blog['title']) ?>
+                                            </a>
+                                            <span class="text-xs" style="color:#9ca3af;"><?= number_format($blog['views']) ?> views</span>
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-primary-light badge-primary" style="font-size:10.5px;">
+                                                <?= htmlspecialchars($blog['category'] ?? '—') ?>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <?php if ($blog['is_published']): ?>
+                                                <span class="badge badge-success">Published</span>
+                                            <?php else: ?>
+                                                <span class="badge badge-danger">Draft</span>
+                                            <?php endif; ?>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach; endif; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ── Admin Users ── -->
+            <div class="card mb-0">
+                <div class="card-header">
+                    <h4 class="card-title d-flex align-items-center gap-2">
+                        <span style="width:24px;height:24px;border-radius:6px;background:#ecfeff;display:inline-flex;align-items:center;justify-content:center;">
+                            <i class="fe fe-lock" style="font-size:12px;color:#06b6d4;"></i>
+                        </span>
+                        Admin Users
+                    </h4>
+                    <a href="<?= SITE_URL ?>/admin/users/add.php" class="btn btn-primary btn-sm">
+                        <i class="fe fe-plus me-1"></i> Add User
+                    </a>
+                </div>
+                <div style="padding:0;">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>User</th>
+                                <th>Email</th>
+                                <th>Joined</th>
+                                <th class="text-end">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if (empty($recentUsers)): ?>
+                            <tr><td colspan="5" class="text-center py-5" style="color:#9ca3af;">No users found.</td></tr>
+                            <?php else: foreach ($recentUsers as $i => $u):
+                                $uInitial = strtoupper(substr($u['name'], 0, 1));
+                            ?>
+                            <tr>
+                                <td class="text-sm" style="color:#9ca3af;width:40px;"><?= $i + 1 ?></td>
+                                <td>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="avatar-initial"><?= $uInitial ?></div>
+                                        <span class="fw-500" style="font-size:13.5px;"><?= htmlspecialchars($u['name']) ?></span>
+                                    </div>
+                                </td>
+                                <td class="text-sm" style="color:#6b7280;"><?= htmlspecialchars($u['email']) ?></td>
+                                <td class="text-sm" style="color:#6b7280;"><?= date('d M Y', strtotime($u['created_at'])) ?></td>
+                                <td class="text-end">
+                                    <a href="<?= SITE_URL ?>/admin/users/edit.php?id=<?= $u['id'] ?>"
+                                       class="btn btn-white btn-xs"><i class="fe fe-edit-2" style="color:#4f46e5;"></i></a>
+                                </td>
+                            </tr>
+                            <?php endforeach; endif; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div style="height:36px;"></div>
+
         </div>
-		<!-- /Main Wrapper -->
-		
-		<!-- jQuery -->
-        <script src="assets/js/jquery-3.7.1.min.js" type="b3229f327c5ba46ef3a7a0a2-text/javascript"></script>
-		
-		<!-- Bootstrap Core JS -->
-        <script src="assets/js/bootstrap.bundle.min.js" type="b3229f327c5ba46ef3a7a0a2-text/javascript"></script>
-		
-		<!-- Slimscroll JS -->
-        <script src="assets/plugins/slimscroll/jquery.slimscroll.min.js" type="b3229f327c5ba46ef3a7a0a2-text/javascript"></script>
-		
-		<script src="assets/plugins/raphael/raphael.min.js" type="b3229f327c5ba46ef3a7a0a2-text/javascript"></script>    
-		<script src="assets/plugins/morris/morris.min.js" type="b3229f327c5ba46ef3a7a0a2-text/javascript"></script>  
-		<script src="assets/js/chart.morris.js" type="b3229f327c5ba46ef3a7a0a2-text/javascript"></script>
-		
-		<!-- Custom JS -->
-		<script src="assets/js/script.js" type="b3229f327c5ba46ef3a7a0a2-text/javascript"></script>
-		
-    <script src="../../../cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="b3229f327c5ba46ef3a7a0a2-|49" defer></script></body>
-</html>
+    </div>
+    <!-- ══ /PAGE WRAPPER ═════════════════════════════════════════════════════ -->
+
+<?php require_once __DIR__ . '/include/footer.php'; ?>
