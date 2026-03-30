@@ -3,15 +3,15 @@
 
 // ─── Database Configuration ───────────────────────────────────────────────────
 define('DB_HOST', 'localhost');
-define('DB_USER', 'root');         // apna DB username
-define('DB_PASS', '');             // apna DB password
-define('DB_NAME', 'rkhospital');   // apna DB name
+define('DB_USER', 'root');
+define('DB_PASS', '');
+define('DB_NAME', 'rkhospital');
 
 // ─── Site Configuration ───────────────────────────────────────────────────────
-define('SITE_URL',       'http://localhost/rkhospital'); 
-define('BLOG_IMG_PATH',  'assets/img/blog/');           
-define('BLOGS_PER_PAGE', 6);     
-define('SERVICES_PER_PAGE', 6); // or however many per page you want                       
+define('SITE_URL',        'http://localhost/rkhospital');
+define('BLOG_IMG_PATH',   'assets/img/blog/');
+define('BLOGS_PER_PAGE',  6);
+define('SERVICES_PER_PAGE', 6);
 
 // ─── Connect to DB ────────────────────────────────────────────────────────────
 $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
@@ -40,6 +40,8 @@ function truncate($text, $limit = 120) {
     return substr($text, 0, strrpos(substr($text, 0, $limit), ' ')) . '...';
 }
 
+// ─── Helper: Asset URL ───────────────────────────────────────────────────────
 function asset($path) {
     return SITE_URL . '/' . ltrim($path, '/');
 }
+?> 

@@ -643,7 +643,7 @@
                         <div class="col-md-6">
                             <div class="about-inner-img">
                                 <div class="about-img">
-                                    <img src="assets/img/home/about-doctor1.webp" class="img-fluid" alt="Orthopedic Surgeon in Nagpur RK Hospital">
+                                    <img src="assets/img/about/about-doctor1.webp" class="img-fluid" alt="Orthopedic Surgeon in Nagpur RK Hospital">
                                 </div>
                                 <div class="about-img">
                                     <img src="assets/img/home/about-doctor3.webp" class="img-fluid" alt="Gynecology Treatment RK Hospital Nagpur">

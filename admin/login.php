@@ -2,24 +2,30 @@
 if (session_status() === PHP_SESSION_NONE) session_start();
 require_once '../include/config.php';
 
-// Already logged in
+// ── Already logged in ─────────────────────────────────────────
 if (isset($_SESSION['admin_id'])) {
-    header("Location: " . SITE_URL . "/admin/"); exit;
+    session_write_close();
+    header("Location: " . SITE_URL . "/admin/index.php");
+    exit;
 }
 
-// ── Refresh captcha (GET) — must be BEFORE any HTML output ───────────────────
+// ── Refresh captcha ───────────────────────────────────────────
 if (isset($_GET['refresh_captcha'])) {
-    $_SESSION['captcha'] = null; // force regenerate below
-    header("Location: login"); exit;
+    $_SESSION['captcha'] = null;
+    session_write_close();
+    header("Location: login.php");
+    exit;
 }
 
-// ── Back to login: clear pending session ──────────────────────────────────────
+// ── Cancel 2FA ────────────────────────────────────────────────
 if (isset($_GET['cancel_2fa'])) {
     unset($_SESSION['pending_admin_id'], $_SESSION['captcha']);
-    header("Location: login"); exit;
+    session_write_close();
+    header("Location: login.php");
+    exit;
 }
 
-// ── Generate Math CAPTCHA ─────────────────────────────────────────────────────
+// ── Generate Math CAPTCHA ─────────────────────────────────────
 function generateCaptcha(): array {
     $ops = ['+', '-', '*'];
     $op  = $ops[array_rand($ops)];
@@ -40,15 +46,16 @@ $error        = '';
 $show2fa      = false;
 $captchaError = false;
 
-// ── POST handler ──────────────────────────────────────────────────────────────
+// ── POST Handler ──────────────────────────────────────────────
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $formStep = $_POST['form_step'] ?? 'credentials';
 
-    // ════════════════════════════════════════════════════
-    // STEP 1: Verify email + password
-    // ════════════════════════════════════════════════════
+    // ════════════════════════════════════════════════
+    // STEP 1 — Verify Email + Password
+    // ════════════════════════════════════════════════
     if ($formStep === 'credentials') {
+
         $email    = trim($_POST['email']    ?? '');
         $password = trim($_POST['password'] ?? '');
 
@@ -58,51 +65,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $error = "Please enter a valid email address.";
         } else {
             $stmt = $conn->prepare(
-                "SELECT id, name, email, password, role, status, two_fa_enabled FROM admin_users WHERE email = ?"
+                "SELECT id, name, email, password, role, status, two_fa_enabled
+                 FROM admin_users WHERE email = ? LIMIT 1"
             );
             $stmt->bind_param("s", $email);
             $stmt->execute();
             $admin = $stmt->get_result()->fetch_assoc();
             $stmt->close();
 
-            if (!$admin) {
+            if (!$admin || !password_verify($password, $admin['password'])) {
                 $error = "Invalid email or password.";
                 $_SESSION['captcha'] = generateCaptcha();
-            } elseif (!$admin['status']) {
+            } elseif (!(int)$admin['status']) {
                 $error = "Your account has been deactivated. Contact a super admin.";
-            } elseif (!password_verify($password, $admin['password'])) {
-                $error = "Invalid email or password.";
-                $_SESSION['captcha'] = generateCaptcha();
-            } elseif ($admin['two_fa_enabled']) {
-                // ── Password OK, 2FA required ─────────────────────
-                // Store ONLY the user ID — no password in session/hidden fields
+            } elseif ((int)$admin['two_fa_enabled']) {
+                // Password OK → require 2FA captcha
                 $_SESSION['pending_admin_id'] = (int)$admin['id'];
-                $_SESSION['captcha']          = generateCaptcha(); // fresh captcha each time
+                $_SESSION['captcha']          = generateCaptcha();
                 $show2fa = true;
             } else {
-                // ── No 2FA — login immediately ─────────────────────
+                // No 2FA → login immediately
                 $_SESSION['admin_id']    = $admin['id'];
                 $_SESSION['admin_name']  = $admin['name'];
                 $_SESSION['admin_email'] = $admin['email'];
                 $_SESSION['admin_role']  = $admin['role'];
 
                 $ip = $conn->real_escape_string($_SERVER['REMOTE_ADDR'] ?? '0.0.0.0');
-                $conn->query("UPDATE admin_users SET last_login=NOW(), last_login_ip='$ip', login_count=login_count+1 WHERE id={$admin['id']}");
+                $conn->query("UPDATE admin_users SET last_login = NOW(), last_login_ip = '$ip', login_count = login_count + 1 WHERE id = {$admin['id']}");
                 $conn->query("INSERT INTO admin_activity_log (user_id, action, detail, ip, created_at) VALUES ({$admin['id']}, 'login', 'Standard login', '$ip', NOW())");
 
-                header("Location: " . SITE_URL . "/admin/"); exit;
+                session_write_close(); // ← CRITICAL: flush session before redirect
+                header("Location: " . SITE_URL . "/admin/index.php");
+                exit;
             }
         }
     }
 
-    // ════════════════════════════════════════════════════
-    // STEP 2: Verify captcha
-    // ════════════════════════════════════════════════════
+    // ════════════════════════════════════════════════
+    // STEP 2 — Verify Math CAPTCHA
+    // ════════════════════════════════════════════════
     elseif ($formStep === 'captcha') {
-        // Must have a pending user ID
+
         if (empty($_SESSION['pending_admin_id'])) {
-            // Session expired or invalid — restart
             $error = "Session expired. Please log in again.";
+            unset($_SESSION['captcha']);
         } else {
             $captchaAnswer = trim($_POST['captcha_answer'] ?? '');
 
@@ -113,12 +119,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $error        = "Incorrect answer. Please try again.";
                 $captchaError = true;
                 $show2fa      = true;
-                $_SESSION['captcha'] = generateCaptcha(); // new question on wrong answer
+                $_SESSION['captcha'] = generateCaptcha();
             } else {
-                // ── Captcha correct — fetch user and log in ────────
                 $pendingId = (int)$_SESSION['pending_admin_id'];
+
                 $stmt = $conn->prepare(
-                    "SELECT id, name, email, role, status FROM admin_users WHERE id = ? AND status = 1"
+                    "SELECT id, name, email, role, status FROM admin_users WHERE id = ? AND status = 1 LIMIT 1"
                 );
                 $stmt->bind_param("i", $pendingId);
                 $stmt->execute();
@@ -137,17 +143,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $_SESSION['admin_role']  = $admin['role'];
 
                     $ip = $conn->real_escape_string($_SERVER['REMOTE_ADDR'] ?? '0.0.0.0');
-                    $conn->query("UPDATE admin_users SET last_login=NOW(), last_login_ip='$ip', login_count=login_count+1 WHERE id={$admin['id']}");
+                    $conn->query("UPDATE admin_users SET last_login = NOW(), last_login_ip = '$ip', login_count = login_count + 1 WHERE id = {$admin['id']}");
                     $conn->query("INSERT INTO admin_activity_log (user_id, action, detail, ip, created_at) VALUES ({$admin['id']}, 'login', 'Login with 2FA captcha', '$ip', NOW())");
 
-                    header("Location: " . SITE_URL . "/admin/"); exit;
+                    session_write_close(); // ← CRITICAL: flush session before redirect
+                    header("Location: " . SITE_URL . "/admin/index.php");
+                    exit;
                 }
             }
         }
     }
 }
 
-// Show step 2 if session has a pending user (e.g. page refresh)
+// Show step 2 if session has pending user (page refresh)
 if (!empty($_SESSION['pending_admin_id'])) {
     $show2fa = true;
 }
@@ -217,10 +225,10 @@ $opSym     = $opDisplay[$captcha['op']] ?? $captcha['op'];
         }
         .auth-left::before { content:''; position:absolute; width:300px; height:300px; border-radius:50%; background:rgba(255,255,255,0.06); top:-80px; right:-80px; }
         .auth-left::after  { content:''; position:absolute; width:200px; height:200px; border-radius:50%; background:rgba(255,255,255,0.06); bottom:-50px; left:-50px; }
-        .auth-left img { max-width:120px; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.25)); position:relative; z-index:1; }
-        .auth-left .brand-name { color:#fff; font-size:1.1rem; font-weight:800; text-align:center; margin-top:16px; letter-spacing:.3px; position:relative; z-index:1; }
-        .auth-left .brand-sub  { color:rgba(255,255,255,0.65); font-size:.78rem; text-align:center; margin-top:4px; position:relative; z-index:1; }
-        .auth-left .divider    { width:40px; height:3px; background:rgba(255,255,255,0.35); border-radius:4px; margin:20px auto; position:relative; z-index:1; }
+        .auth-left img          { max-width:120px; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.25)); position:relative; z-index:1; }
+        .auth-left .brand-name  { color:#fff; font-size:1.1rem; font-weight:800; text-align:center; margin-top:16px; letter-spacing:.3px; position:relative; z-index:1; }
+        .auth-left .brand-sub   { color:rgba(255,255,255,0.65); font-size:.78rem; text-align:center; margin-top:4px; position:relative; z-index:1; }
+        .auth-left .divider     { width:40px; height:3px; background:rgba(255,255,255,0.35); border-radius:4px; margin:20px auto; position:relative; z-index:1; }
         .auth-left .security-badges { display:flex; flex-direction:column; gap:10px; width:100%; position:relative; z-index:1; }
         .auth-left .badge-item {
             background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.18);
@@ -240,8 +248,8 @@ $opSym     = $opDisplay[$captcha['op']] ?? $captcha['op'];
         .step-dot.active   { background:#1a6ef5; color:#fff; }
         .step-dot.done     { background:#198754; color:#fff; }
         .step-dot.inactive { background:#e9ecef; color:#adb5bd; }
-        .step-line      { flex:1; height:2px; background:#e9ecef; }
-        .step-line.done { background:#198754; }
+        .step-line         { flex:1; height:2px; background:#e9ecef; }
+        .step-line.done    { background:#198754; }
         .step-label { font-size:.65rem; text-align:center; color:#6c757d; margin-top:4px; font-weight:600; }
 
         .auth-heading { font-size:1.6rem; font-weight:800; color:#0f172a; margin-bottom:4px; }
@@ -269,8 +277,8 @@ $opSym     = $opDisplay[$captcha['op']] ?? $captcha['op'];
             padding:.75rem; font-weight:700; font-size:.95rem; color:#fff; width:100%;
             box-shadow:0 4px 14px rgba(26,110,245,.35); transition:all .2s; cursor:pointer;
         }
-        .btn-login:hover  { transform:translateY(-1px); box-shadow:0 6px 20px rgba(26,110,245,.4); }
-        .btn-login:active { transform:none; }
+        .btn-login:hover    { transform:translateY(-1px); box-shadow:0 6px 20px rgba(26,110,245,.4); }
+        .btn-login:active   { transform:none; }
         .btn-login:disabled { opacity:.7; cursor:not-allowed; transform:none; }
 
         .forgot-link { font-size:.8rem; color:#1a6ef5; text-decoration:none; font-weight:600; }
@@ -282,7 +290,11 @@ $opSym     = $opDisplay[$captcha['op']] ?? $captcha['op'];
             border:2px solid #bfdbfe; border-radius:14px; padding:20px; margin-bottom:20px;
             animation:fadeInDown .35s ease;
         }
-        .captcha-label { font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.6px; color:#1a6ef5; margin-bottom:12px; display:flex; align-items:center; gap:6px; }
+        .captcha-label {
+            font-size:.7rem; font-weight:700; text-transform:uppercase;
+            letter-spacing:.6px; color:#1a6ef5; margin-bottom:12px;
+            display:flex; align-items:center; gap:6px;
+        }
         .captcha-equation { display:flex; align-items:center; justify-content:center; gap:12px; margin-bottom:14px; }
         .captcha-num {
             width:52px; height:52px; background:#1a6ef5; color:#fff; border-radius:12px;
@@ -294,7 +306,7 @@ $opSym     = $opDisplay[$captcha['op']] ?? $captcha['op'];
             border-radius:50%; display:flex; align-items:center; justify-content:center;
             font-size:1.2rem; font-weight:800; user-select:none;
         }
-        .captcha-eq { color:#64748b; font-size:1.3rem; font-weight:700; }
+        .captcha-eq    { color:#64748b; font-size:1.3rem; font-weight:700; }
         .captcha-input {
             text-align:center; font-size:1.3rem; font-weight:800; letter-spacing:4px;
             border-radius:10px !important; border:2px solid #bfdbfe !important;
@@ -316,17 +328,20 @@ $opSym     = $opDisplay[$captcha['op']] ?? $captcha['op'];
         @keyframes shake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-6px)} 40%,80%{transform:translateX(6px)} }
         .form-section { animation:fadeInDown .3s ease; }
 
-        .auth-footer { font-size:.8rem; color:#94a3b8; margin-top:20px; text-align:center; }
+        .auth-footer   { font-size:.8rem; color:#94a3b8; margin-top:20px; text-align:center; }
         .auth-footer a { color:#1a6ef5; font-weight:700; text-decoration:none; }
 
-        @media (max-width:640px) { .auth-left{display:none;} .auth-right{padding:32px 24px;} }
+        @media (max-width:640px) {
+            .auth-left  { display:none; }
+            .auth-right { padding:32px 24px; }
+        }
     </style>
 </head>
 <body>
 <div class="auth-wrapper">
     <div class="auth-box">
 
-        <!-- ── Left Panel ──────────────────────────────────── -->
+        <!-- ══ Left Panel ════════════════════════════════════ -->
         <div class="auth-left">
             <img src="../assets/img/RK-Logo.png" alt="R.K. Hospital">
             <div class="brand-name">R.K. Hospital</div>
@@ -340,7 +355,7 @@ $opSym     = $opDisplay[$captcha['op']] ?? $captcha['op'];
             </div>
         </div>
 
-        <!-- ── Right Panel ─────────────────────────────────── -->
+        <!-- ══ Right Panel ═══════════════════════════════════ -->
         <div class="auth-right">
 
             <!-- Step Indicator -->
@@ -359,7 +374,7 @@ $opSym     = $opDisplay[$captcha['op']] ?? $captcha['op'];
             </div>
 
             <?php if (!$show2fa): ?>
-            <!-- ══ STEP 1: Email + Password ══════════════════════ -->
+            <!-- ══ STEP 1: Email + Password ═══════════════════ -->
             <div class="form-section">
                 <h2 class="auth-heading">Welcome Back</h2>
                 <p class="auth-sub">Sign in to your admin account</p>
@@ -392,7 +407,8 @@ $opSym     = $opDisplay[$captcha['op']] ?? $captcha['op'];
                             <input type="password" name="password" id="passwordField"
                                    class="form-control" placeholder="Enter your password"
                                    autocomplete="current-password" required>
-                            <button type="button" class="input-group-text bg-light border-start-0"
+                            <button type="button"
+                                    class="input-group-text bg-light border-start-0"
                                     style="border-radius:0 10px 10px 0;border:1.5px solid #e2e8f0;cursor:pointer;"
                                     onclick="togglePw()">
                                 <i class="fa fa-eye text-muted" id="pwEye"></i>
@@ -401,7 +417,7 @@ $opSym     = $opDisplay[$captcha['op']] ?? $captcha['op'];
                     </div>
 
                     <div class="text-end mb-4">
-                        <a href="forgot-password" class="forgot-link">
+                        <a href="forgot-password.php" class="forgot-link">
                             <i class="fa fa-key me-1"></i>Forgot Password?
                         </a>
                     </div>
@@ -413,7 +429,7 @@ $opSym     = $opDisplay[$captcha['op']] ?? $captcha['op'];
             </div>
 
             <?php else: ?>
-            <!-- ══ STEP 2: Math CAPTCHA ══════════════════════════ -->
+            <!-- ══ STEP 2: Math CAPTCHA ════════════════════════ -->
             <div class="form-section">
                 <h2 class="auth-heading">Security Check</h2>
                 <p class="auth-sub">Solve the equation to verify it's you</p>
@@ -426,10 +442,8 @@ $opSym     = $opDisplay[$captcha['op']] ?? $captcha['op'];
                 <?php endif; ?>
 
                 <form method="POST" action="login.php" id="captchaForm">
-                    <!-- Only form_step needed — no hidden email/password! -->
                     <input type="hidden" name="form_step" value="captcha">
 
-                    <!-- Math CAPTCHA Card -->
                     <div class="captcha-card">
                         <div class="captcha-label">
                             <i class="fa fa-calculator"></i>
@@ -453,8 +467,7 @@ $opSym     = $opDisplay[$captcha['op']] ?? $captcha['op'];
                                 Enter the result of:
                                 <strong><?= (int)$captcha['a'] ?> <?= htmlspecialchars($opSym) ?> <?= (int)$captcha['b'] ?></strong>
                             </div>
-                            <!-- New question via GET (handled at top before HTML) -->
-                            <a href="login?refresh_captcha=1"
+                            <a href="login.php?refresh_captcha=1"
                                class="text-primary text-decoration-none"
                                style="font-size:.75rem;font-weight:700;">
                                 <i class="fa fa-refresh me-1"></i>New question
@@ -469,7 +482,8 @@ $opSym     = $opDisplay[$captcha['op']] ?? $captcha['op'];
                     </button>
 
                     <div class="text-center mt-3">
-                        <a href="login?cancel_2fa=1" class="text-muted text-decoration-none"
+                        <a href="login.php?cancel_2fa=1"
+                           class="text-muted text-decoration-none"
                            style="font-size:.8rem;font-weight:600;">
                             <i class="fa fa-arrow-left me-1"></i>Back to login
                         </a>
@@ -489,30 +503,29 @@ $opSym     = $opDisplay[$captcha['op']] ?? $captcha['op'];
 <script src="assets/js/jquery-3.7.1.min.js"></script>
 <script src="assets/js/bootstrap.bundle.min.js"></script>
 <script>
-// ── Password Visibility ───────────────────────────────────────
+// ── Password toggle ───────────────────────────────────────────
 function togglePw() {
     const f = document.getElementById('passwordField');
     const e = document.getElementById('pwEye');
     if (!f) return;
     const show = f.type === 'password';
-    f.type = show ? 'text' : 'password';
+    f.type      = show ? 'text'                    : 'password';
     e.className = show ? 'fa fa-eye-slash text-muted' : 'fa fa-eye text-muted';
 }
 
-// ── Step 1: login button spinner ──────────────────────────────
+// ── Step 1: spinner on submit ─────────────────────────────────
 const loginForm = document.getElementById('loginForm');
 if (loginForm) {
     loginForm.addEventListener('submit', function () {
-        const btn = document.getElementById('loginBtn');
+        const btn     = document.getElementById('loginBtn');
         btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Verifying...';
         btn.disabled  = true;
     });
 }
 
-// ── Step 2: captcha live feedback ─────────────────────────────
+// ── Step 2: live captcha feedback ─────────────────────────────
 const captchaInput = document.getElementById('captchaInput');
 if (captchaInput) {
-    // The correct answer embedded safely — used only for UX feedback, not security
     const correctAnswer = <?= (int)($captcha['answer'] ?? 0) ?>;
 
     captchaInput.addEventListener('input', function () {
@@ -522,44 +535,39 @@ if (captchaInput) {
 
         this.classList.remove('error', 'success');
 
-        if (raw === '') {
-            live.innerHTML = '';
-            return;
-        }
+        if (raw === '') { live.innerHTML = ''; return; }
 
         if (!isNaN(val) && val === correctAnswer) {
             this.classList.add('success');
-            live.innerHTML = `<div class="d-flex align-items-center gap-2 text-success small fw-bold">
-                <i class="fa fa-check-circle fs-5"></i>
-                <span>Correct! Logging you in…</span>
-            </div>`;
-            // Auto-submit after brief pause so user sees the feedback
-            setTimeout(() => {
-                document.getElementById('captchaForm').submit();
-            }, 600);
+            live.innerHTML = `
+                <div class="d-flex align-items-center gap-2 text-success small fw-bold">
+                    <i class="fa fa-check-circle fs-5"></i>
+                    <span>Correct! Logging you in…</span>
+                </div>`;
+            setTimeout(() => document.getElementById('captchaForm').submit(), 600);
         } else if (raw.length > String(correctAnswer).length) {
             this.classList.add('error');
-            live.innerHTML = `<div class="d-flex align-items-center gap-2 text-danger small fw-bold">
-                <i class="fa fa-times-circle fs-5"></i>
-                <span>That doesn't look right. Try again.</span>
-            </div>`;
+            live.innerHTML = `
+                <div class="d-flex align-items-center gap-2 text-danger small fw-bold">
+                    <i class="fa fa-times-circle fs-5"></i>
+                    <span>That doesn't look right. Try again.</span>
+                </div>`;
         } else {
-            live.innerHTML = `<div class="d-flex align-items-center gap-2 text-muted small">
-                <i class="fa fa-pencil-alt"></i>
-                <span>Keep going…</span>
-            </div>`;
+            live.innerHTML = `
+                <div class="d-flex align-items-center gap-2 text-muted small">
+                    <i class="fa fa-pencil-alt"></i>
+                    <span>Keep going…</span>
+                </div>`;
         }
     });
 
-    // Block non-numeric input (allow minus for negative answers)
     captchaInput.addEventListener('keydown', function (e) {
         const allowed = ['Backspace','Delete','ArrowLeft','ArrowRight','Tab','Enter','-'];
         if (!allowed.includes(e.key) && !/^[0-9]$/.test(e.key)) e.preventDefault();
     });
 
-    // Captcha submit: show spinner
     document.getElementById('captchaForm').addEventListener('submit', function () {
-        const btn = document.getElementById('captchaBtn');
+        const btn     = document.getElementById('captchaBtn');
         btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Checking…';
         btn.disabled  = true;
     });

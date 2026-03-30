@@ -1,5 +1,7 @@
 <?php
 // admin/users/add.php
+// Line 1, column 1 — no blank lines above, no BOM
+if (session_status() === PHP_SESSION_NONE) session_start();
 require_once './../../include/config.php';
 require_once __DIR__ . '/../include/auth.php';
 requireAccess('users');
@@ -11,96 +13,129 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email    = trim($_POST['email']    ?? '');
     $phone    = trim($_POST['phone']    ?? '');
     $role     = trim($_POST['role']     ?? 'admin');
-    $status   = isset($_POST['status']) ? 1 : 0;
-    $two_fa   = isset($_POST['two_fa_enabled']) ? 1 : 0;
+    $status   = isset($_POST['status'])          ? 1 : 0;
+    $two_fa   = isset($_POST['two_fa_enabled'])   ? 1 : 0;
     $notes    = trim($_POST['notes']    ?? '');
     $password = $_POST['password']         ?? '';
     $confirm  = $_POST['confirm_password'] ?? '';
 
-    $allowedRoles = ['superadmin','admin','editor','viewer'];
+    $allowedRoles = ['superadmin', 'admin', 'editor', 'viewer'];
 
     // ── Validation ────────────────────────────────────────────
-    if (empty($name))    $errors[] = 'Full name is required.';
-    if (empty($email))   $errors[] = 'Email address is required.';
+    if (empty($name))  $errors[] = 'Full name is required.';
+    if (empty($email)) $errors[] = 'Email address is required.';
     elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) $errors[] = 'Enter a valid email address.';
     if (!in_array($role, $allowedRoles)) $errors[] = 'Invalid role selected.';
-    if (empty($password)) $errors[] = 'Password is required.';
+    if (empty($password))          $errors[] = 'Password is required.';
     elseif (strlen($password) < 8) $errors[] = 'Password must be at least 8 characters.';
     elseif ($password !== $confirm) $errors[] = 'Passwords do not match.';
     if (!empty($phone) && !preg_match('/^[0-9+\-\s()]{7,20}$/', $phone))
         $errors[] = 'Enter a valid phone number.';
 
-    // ── Duplicate check ───────────────────────────────────────
+    // ── Duplicate email check ─────────────────────────────────
     if (empty($errors)) {
-        $emailEsc = $conn->real_escape_string($email);
-        $chk = $conn->query("SELECT id FROM admin_users WHERE email = '$emailEsc'");
-        if ($chk && $chk->num_rows > 0) $errors[] = 'This email is already registered.';
+        $stmt = $conn->prepare("SELECT id FROM admin_users WHERE email = ? LIMIT 1");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $stmt->store_result();
+        if ($stmt->num_rows > 0) $errors[] = 'This email is already registered.';
+        $stmt->close();
     }
 
     // ── Avatar Upload ─────────────────────────────────────────
-    $avatar = null;
-    if (!empty($_FILES['avatar']['name'])) {
-        $allowed = ['image/jpeg','image/png','image/webp','image/gif'];
-        $mime    = mime_content_type($_FILES['avatar']['tmp_name']);
+    $avatar = null; // stays null if no file uploaded
+
+    if (empty($errors) && !empty($_FILES['avatar']['name'])) {
+        $allowed  = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+        $mime     = mime_content_type($_FILES['avatar']['tmp_name']);
+
         if (!in_array($mime, $allowed)) {
-            $errors[] = 'Invalid avatar type. Allowed: JPG, PNG, WEBP.';
+            $errors[] = 'Invalid avatar type. Allowed: JPG, PNG, WEBP, GIF.';
         } elseif ($_FILES['avatar']['size'] > 1 * 1024 * 1024) {
             $errors[] = 'Avatar must be under 1MB.';
         } else {
-            $dir   = '../../assets/img/avatars/';
+            $dir = '../../assets/img/avatars/';
             if (!is_dir($dir)) mkdir($dir, 0755, true);
+
             $fname = 'avatar_' . uniqid() . '.webp';
             $src   = $_FILES['avatar']['tmp_name'];
+
             switch ($mime) {
                 case 'image/jpeg': $img = imagecreatefromjpeg($src); break;
                 case 'image/png':
                     $img = imagecreatefrompng($src);
-                    imagealphablending($img, true); imagesavealpha($img, true); break;
-                case 'image/gif':  $img = imagecreatefromgif($src);  break;
-                default:           $img = imagecreatefromwebp($src); break;
+                    imagealphablending($img, true);
+                    imagesavealpha($img, true);
+                    break;
+                case 'image/gif': $img = imagecreatefromgif($src);  break;
+                default:          $img = imagecreatefromwebp($src); break;
             }
-            // Square crop
-            $ow = imagesx($img); $oh = imagesy($img);
+
+            // Square crop to 200×200
+            $ow  = imagesx($img);
+            $oh  = imagesy($img);
             $min = min($ow, $oh);
-            $cx  = (int)(($ow - $min) / 2); $cy = (int)(($oh - $min) / 2);
+            $cx  = (int)(($ow - $min) / 2);
+            $cy  = (int)(($oh - $min) / 2);
             $sq  = imagecreatetruecolor(200, 200);
             imagecopyresampled($sq, $img, 0, 0, $cx, $cy, 200, 200, $min, $min);
             imagewebp($sq, $dir . $fname, 85);
-            imagedestroy($img); imagedestroy($sq);
+            imagedestroy($img);
+            imagedestroy($sq);
+
             $avatar = 'assets/img/avatars/' . $fname;
         }
     }
 
+    // ── Insert into DB ────────────────────────────────────────
     if (empty($errors)) {
-        $hashed   = password_hash($password, PASSWORD_BCRYPT);
-        $nameEsc  = $conn->real_escape_string($name);
-        $phoneEsc = $conn->real_escape_string($phone);
-        $notesEsc = $conn->real_escape_string($notes);
-        $avEsc    = $avatar ? $conn->real_escape_string($avatar) : 'NULL';
-        $avSql    = $avatar ? "'$avEsc'" : 'NULL';
+        $hashed = password_hash($password, PASSWORD_BCRYPT);
 
-        $stmt = $conn->prepare("INSERT INTO admin_users
-            (name, email, password, role, phone, avatar, status, two_fa_enabled, notes, created_at, updated_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())");
-        $stmt->bind_param("ssssssiis",
-            $name, $email, $hashed, $role,
-            $phone, $avatar, $status, $two_fa, $notes);
+        $stmt = $conn->prepare("
+            INSERT INTO admin_users
+                (name, email, password, role, phone, avatar, status, two_fa_enabled, notes, created_at, updated_at)
+            VALUES
+                (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())
+        ");
+
+        // FIX: avatar is nullable — use NULL in SQL when empty
+        // bind types: s s s s s s i i s
+        $avatarVal = $avatar ?? null; // explicit null
+        $stmt->bind_param(
+            "ssssssiis",
+            $name,
+            $email,
+            $hashed,
+            $role,
+            $phone,
+            $avatarVal,
+            $status,
+            $two_fa,
+            $notes
+        );
 
         if ($stmt->execute()) {
-            $newId = $stmt->insert_id;
-            // Log activity
-            $ip  = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
-            $act = "Created user: $name ($email) with role: $role";
-            $actEsc = $conn->real_escape_string($act);
-            $conn->query("INSERT INTO admin_activity_log (user_id, action, detail, ip, created_at)
-                VALUES ($newId, 'user_created', '$actEsc', '$ip', NOW())");
-            header("Location: ./?msg=added"); exit;
+            $newId = (int)$stmt->insert_id;
+            $stmt->close();
+
+            // Activity log — sanitize IP
+            $ip     = $conn->real_escape_string($_SERVER['REMOTE_ADDR'] ?? '0.0.0.0');
+            $detail = $conn->real_escape_string("Created user: $name ($email) with role: $role");
+            $conn->query("
+                INSERT INTO admin_activity_log (user_id, action, detail, ip, created_at)
+                VALUES ($newId, 'user_created', '$detail', '$ip', NOW())
+            ");
+
+            header("Location: ./?msg=added");
+            exit;
         } else {
-            $errors[] = 'Database error: ' . $stmt->error;
+            $errors[] = 'Database error: ' . htmlspecialchars($stmt->error);
+            $stmt->close();
         }
     }
 }
 
+// ── Helper: safe POST re-population ──────────────────────────
 $p = fn($k, $default = '') => htmlspecialchars($_POST[$k] ?? $default);
 
 $pageTitle  = 'Add Admin User';
@@ -165,7 +200,7 @@ require_once '../include/head.php';
     <div class="page-wrapper" style="background-color:#f4f6f9;min-height:100vh;">
         <div class="content container-fluid pt-4 pb-5">
 
-            <!-- Header -->
+            <!-- Page Header -->
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4">
                 <div>
                     <h3 class="fw-bolder text-dark mb-1">Add Admin User</h3>
@@ -182,19 +217,25 @@ require_once '../include/head.php';
                 </a>
             </div>
 
-            <!-- Errors -->
+            <!-- Validation Errors -->
             <?php if (!empty($errors)): ?>
             <div class="alert alert-danger border-0 shadow-sm rounded-4 d-flex align-items-start gap-3 mb-4">
                 <i class="fa fa-exclamation-triangle mt-1 fs-5"></i>
-                <div><div class="fw-bold mb-1">Please fix the following:</div>
-                <ul class="mb-0 ps-3 small"><?php foreach ($errors as $e): ?><li><?= htmlspecialchars($e) ?></li><?php endforeach; ?></ul></div>
+                <div>
+                    <div class="fw-bold mb-1">Please fix the following:</div>
+                    <ul class="mb-0 ps-3 small">
+                        <?php foreach ($errors as $e): ?>
+                        <li><?= htmlspecialchars($e) ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
             </div>
             <?php endif; ?>
 
             <form method="POST" enctype="multipart/form-data" id="addUserForm">
             <div class="row g-4">
 
-                <!-- ── LEFT ──────────────────────────────────── -->
+                <!-- ══ LEFT COLUMN ════════════════════════════ -->
                 <div class="col-xl-8 col-lg-7">
 
                     <!-- Account Details -->
@@ -209,29 +250,35 @@ require_once '../include/head.php';
                                     <label class="form-label">Full Name <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <span class="input-group-text bg-light border-end-0 text-muted"><i class="fa fa-user"></i></span>
-                                        <input type="text" name="name" id="nameInput" class="form-control border-start-0 ps-0"
-                                               placeholder="John Smith" value="<?= $p('name') ?>" required>
+                                        <input type="text" name="name" id="nameInput"
+                                               class="form-control border-start-0 ps-0"
+                                               placeholder="John Smith"
+                                               value="<?= $p('name') ?>" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Email Address <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <span class="input-group-text bg-light border-end-0 text-muted"><i class="fa fa-envelope"></i></span>
-                                        <input type="email" name="email" class="form-control border-start-0 ps-0"
-                                               placeholder="admin@rkhospital.com" value="<?= $p('email') ?>" required>
+                                        <input type="email" name="email"
+                                               class="form-control border-start-0 ps-0"
+                                               placeholder="admin@rkhospital.com"
+                                               value="<?= $p('email') ?>" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Phone Number</label>
                                     <div class="input-group">
                                         <span class="input-group-text bg-light border-end-0 text-muted"><i class="fa fa-phone"></i></span>
-                                        <input type="tel" name="phone" class="form-control border-start-0 ps-0"
-                                               placeholder="+91 98765 43210" value="<?= $p('phone') ?>">
+                                        <input type="tel" name="phone"
+                                               class="form-control border-start-0 ps-0"
+                                               placeholder="+91 98765 43210"
+                                               value="<?= $p('phone') ?>">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Account Status</label>
-                                    <div class="d-flex align-items-center gap-3 p-3 bg-light rounded-3 border h-100" style="margin-top:0;">
+                                    <div class="d-flex align-items-center gap-3 p-3 bg-light rounded-3 border">
                                         <div class="form-check form-switch mb-0 d-flex align-items-center gap-3">
                                             <input class="form-check-input" type="checkbox" name="status" id="statusToggle"
                                                    style="width:2.75rem;height:1.4rem;cursor:pointer;"
@@ -244,7 +291,10 @@ require_once '../include/head.php';
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <label class="form-label">Internal Notes <span class="text-muted fw-normal text-lowercase">(optional)</span></label>
+                                    <label class="form-label">
+                                        Internal Notes
+                                        <span class="text-muted fw-normal text-lowercase">(optional)</span>
+                                    </label>
                                     <textarea name="notes" class="form-control" rows="2"
                                               placeholder="e.g. Managing blog section only..."><?= $p('notes') ?></textarea>
                                 </div>
@@ -256,17 +306,17 @@ require_once '../include/head.php';
                     <div class="card border-0 shadow-sm rounded-4 mb-4">
                         <div class="card-header bg-white border-bottom py-3 px-4 d-flex align-items-center gap-3">
                             <div class="section-icon bg-warning-subtle text-warning"><i class="fa fa-shield-alt"></i></div>
-                            <h6 class="mb-0 fw-bold text-dark text-uppercase small" style="letter-spacing:.5px;">Role & Permissions</h6>
+                            <h6 class="mb-0 fw-bold text-dark text-uppercase small" style="letter-spacing:.5px;">Role &amp; Permissions</h6>
                         </div>
                         <div class="card-body p-4">
                             <input type="hidden" name="role" id="roleInput" value="<?= $p('role', 'admin') ?>">
                             <div class="role-cards">
                                 <?php
                                 $roles = [
-                                    'superadmin' => ['icon'=>'fa-crown',      'bg'=>'bg-danger-subtle',  'color'=>'text-danger',  'name'=>'Super Admin',  'desc'=>'Full access to all modules & settings'],
-                                    'admin'      => ['icon'=>'fa-user-shield', 'bg'=>'bg-primary-subtle', 'color'=>'text-primary', 'name'=>'Admin',        'desc'=>'Manage content, users & media'],
-                                    'editor'     => ['icon'=>'fa-pen-nib',     'bg'=>'bg-success-subtle', 'color'=>'text-success', 'name'=>'Editor',       'desc'=>'Create & edit posts and pages'],
-                                    'viewer'     => ['icon'=>'fa-eye',         'bg'=>'bg-info-subtle',    'color'=>'text-info',    'name'=>'Viewer',       'desc'=>'Read-only access to the panel'],
+                                    'superadmin' => ['icon' => 'fa-crown',       'bg' => 'bg-danger-subtle',  'color' => 'text-danger',  'name' => 'Super Admin', 'desc' => 'Full access to all modules & settings'],
+                                    'admin'      => ['icon' => 'fa-user-shield',  'bg' => 'bg-primary-subtle', 'color' => 'text-primary', 'name' => 'Admin',       'desc' => 'Manage content, users & media'],
+                                    'editor'     => ['icon' => 'fa-pen-nib',      'bg' => 'bg-success-subtle', 'color' => 'text-success', 'name' => 'Editor',      'desc' => 'Create & edit posts and pages'],
+                                    'viewer'     => ['icon' => 'fa-eye',          'bg' => 'bg-info-subtle',    'color' => 'text-info',    'name' => 'Viewer',      'desc' => 'Read-only access to the panel'],
                                 ];
                                 $currentRole = $_POST['role'] ?? 'admin';
                                 foreach ($roles as $val => $r):
@@ -281,9 +331,12 @@ require_once '../include/head.php';
                                 </div>
                                 <?php endforeach; ?>
                             </div>
+
                             <!-- Permissions Matrix -->
                             <div class="mt-4 p-3 bg-light rounded-3 border" id="permMatrix">
-                                <div class="small fw-bold text-dark mb-3 text-uppercase" style="letter-spacing:.5px;">Permissions Preview</div>
+                                <div class="small fw-bold text-dark mb-3 text-uppercase" style="letter-spacing:.5px;">
+                                    Permissions Preview
+                                </div>
                                 <div class="row g-2" id="permRows"></div>
                             </div>
                         </div>
@@ -304,14 +357,15 @@ require_once '../include/head.php';
                                         <input type="password" name="password" id="passwordInput"
                                                class="form-control border-start-0 border-end-0 ps-0"
                                                placeholder="Min 8 characters" required>
-                                        <button type="button" class="input-group-text bg-light border-start-0 text-muted" id="togglePw">
+                                        <button type="button" class="input-group-text bg-light border-start-0 text-muted"
+                                                id="togglePw">
                                             <i class="fa fa-eye" id="eyeIcon1"></i>
                                         </button>
                                     </div>
                                     <div class="pw-bar mt-2"><div class="pw-bar-fill" id="pwBar"></div></div>
                                     <div class="d-flex justify-content-between mt-1">
                                         <span style="font-size:.7rem;" class="text-muted">Strength</span>
-                                        <span style="font-size:.7rem;" class="fw-bold" id="pwLabel" style="color:#adb5bd;">—</span>
+                                        <span style="font-size:.7rem;" class="fw-bold" id="pwLabel">—</span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -321,7 +375,8 @@ require_once '../include/head.php';
                                         <input type="password" name="confirm_password" id="confirmInput"
                                                class="form-control border-start-0 border-end-0 ps-0"
                                                placeholder="Re-enter password" required>
-                                        <button type="button" class="input-group-text bg-light border-start-0 text-muted" id="toggleCfm">
+                                        <button type="button" class="input-group-text bg-light border-start-0 text-muted"
+                                                id="toggleCfm">
                                             <i class="fa fa-eye" id="eyeIcon2"></i>
                                         </button>
                                     </div>
@@ -338,7 +393,8 @@ require_once '../include/head.php';
                                     </div>
                                     <div class="mt-3 d-flex align-items-center justify-content-between">
                                         <span class="small text-muted fw-medium">Generate a secure password:</span>
-                                        <button type="button" class="btn btn-sm btn-light border rounded-pill px-3 fw-semibold" id="generatePwBtn">
+                                        <button type="button" class="btn btn-sm btn-light border rounded-pill px-3 fw-semibold"
+                                                id="generatePwBtn">
                                             <i class="fa fa-magic me-1"></i> Generate
                                         </button>
                                     </div>
@@ -349,7 +405,7 @@ require_once '../include/head.php';
 
                 </div><!-- /col-xl-8 -->
 
-                <!-- ── RIGHT SIDEBAR ──────────────────────── -->
+                <!-- ══ RIGHT SIDEBAR ══════════════════════════ -->
                 <div class="col-xl-4 col-lg-5">
 
                     <!-- Avatar Card -->
@@ -363,7 +419,8 @@ require_once '../include/head.php';
                                 <div class="avatar-placeholder" id="avatarPlaceholder" style="background:#6c757d;">
                                     <span id="avatarInitial">?</span>
                                 </div>
-                                <img id="avatarPreview" src="" alt="" style="display:none;width:110px;height:110px;border-radius:50%;object-fit:cover;border:3px solid #e9ecef;">
+                                <img id="avatarPreview" src="" alt=""
+                                     style="display:none;width:110px;height:110px;border-radius:50%;object-fit:cover;border:3px solid #e9ecef;">
                                 <div class="avatar-upload-btn" onclick="document.getElementById('avatarInput').click()">
                                     <i class="fa fa-camera"></i>
                                 </div>
@@ -384,7 +441,7 @@ require_once '../include/head.php';
                             <div class="d-flex align-items-center justify-content-between p-3 bg-light rounded-3 border">
                                 <div>
                                     <div class="fw-semibold text-dark small">Two-Factor Auth (2FA)</div>
-                                    <div class="text-muted" style="font-size:.7rem;">Require OTP on login</div>
+                                    <div class="text-muted" style="font-size:.7rem;">Require captcha on login</div>
                                 </div>
                                 <div class="form-check form-switch mb-0">
                                     <input class="form-check-input" type="checkbox" name="two_fa_enabled" id="twoFaToggle"
@@ -392,9 +449,10 @@ require_once '../include/head.php';
                                            <?= isset($_POST['two_fa_enabled']) ? 'checked' : '' ?>>
                                 </div>
                             </div>
-                            <div class="alert alert-warning border-0 bg-warning-subtle rounded-3 p-3 mt-3 small d-flex align-items-start gap-2" id="twoFaNote" style="display:none!important;">
+                            <div class="alert alert-warning border-0 bg-warning-subtle rounded-3 p-3 mt-3 small d-flex align-items-start gap-2"
+                                 id="twoFaNote" style="display:none;">
                                 <i class="fa fa-info-circle mt-1 text-warning"></i>
-                                <span>User will be prompted to set up 2FA on their first login.</span>
+                                <span>User will be asked to solve a math captcha on every login.</span>
                             </div>
                         </div>
                     </div>
@@ -413,33 +471,35 @@ require_once '../include/head.php';
 
             </div>
             </form>
+
         </div>
     </div>
 </div>
 
 <script>
-// ── Avatar ────────────────────────────────────────────────────
+// ── Avatar preview ────────────────────────────────────────────
 document.getElementById('nameInput').addEventListener('input', function () {
     const v = this.value.trim();
     document.getElementById('avatarInitial').textContent = v ? v[0].toUpperCase() : '?';
 });
 document.getElementById('avatarInput').addEventListener('change', function () {
-    const file = this.files[0]; if (!file) return;
+    const file = this.files[0];
+    if (!file) return;
     const reader = new FileReader();
     reader.onload = e => {
-        document.getElementById('avatarPreview').src = e.target.result;
+        document.getElementById('avatarPreview').src          = e.target.result;
         document.getElementById('avatarPreview').style.display = 'block';
         document.getElementById('avatarPlaceholder').style.display = 'none';
     };
     reader.readAsDataURL(file);
 });
 
-// ── Role Selection ────────────────────────────────────────────
+// ── Role selection & permissions matrix ──────────────────────
 const perms = {
-    superadmin: { Dashboard: true, Users: true, Doctors: true, Blogs: true, Services: true, Settings: true, Logs: true },
-    admin:      { Dashboard: true, Users: true, Doctors: true, Blogs: true, Services: true, Settings: false, Logs: false },
-    editor:     { Dashboard: true, Users: false, Doctors: true, Blogs: true, Services: true, Settings: false, Logs: false },
-    viewer:     { Dashboard: true, Users: false, Doctors: false, Blogs: false, Services: false, Settings: false, Logs: false },
+    superadmin: { Dashboard: true,  Users: true,  Doctors: true,  Blogs: true,  Services: true,  Settings: true,  Logs: true  },
+    admin:      { Dashboard: true,  Users: true,  Doctors: true,  Blogs: true,  Services: true,  Settings: false, Logs: false },
+    editor:     { Dashboard: true,  Users: false, Doctors: true,  Blogs: true,  Services: true,  Settings: false, Logs: false },
+    viewer:     { Dashboard: true,  Users: false, Doctors: false, Blogs: false, Services: false, Settings: false, Logs: false },
 };
 function selectRole(val, el) {
     document.getElementById('roleInput').value = val;
@@ -461,18 +521,18 @@ function renderPerms(role) {
 }
 renderPerms(document.getElementById('roleInput').value || 'admin');
 
-// ── Password Visibility ───────────────────────────────────────
+// ── Password visibility toggle ────────────────────────────────
 function toggleVis(inputId, iconId) {
     const inp  = document.getElementById(inputId);
     const icon = document.getElementById(iconId);
     const show = inp.type === 'password';
-    inp.type = show ? 'text' : 'password';
+    inp.type       = show ? 'text'            : 'password';
     icon.className = show ? 'fa fa-eye-slash' : 'fa fa-eye';
 }
 document.getElementById('togglePw').addEventListener('click',  () => toggleVis('passwordInput', 'eyeIcon1'));
 document.getElementById('toggleCfm').addEventListener('click', () => toggleVis('confirmInput',  'eyeIcon2'));
 
-// ── Password Strength ─────────────────────────────────────────
+// ── Password strength meter ───────────────────────────────────
 function checkStrength(val) {
     const checks = {
         'req-len':     val.length >= 8,
@@ -488,16 +548,16 @@ function checkStrength(val) {
         el.querySelector('i').className = met ? 'fa fa-check-circle' : 'fa fa-times-circle';
     });
     const levels = [
-        {pct:'10%', color:'#dc3545', label:'Very Weak'},
-        {pct:'30%', color:'#fd7e14', label:'Weak'},
-        {pct:'60%', color:'#ffc107', label:'Fair'},
-        {pct:'80%', color:'#0dcaf0', label:'Good'},
-        {pct:'100%',color:'#198754', label:'Strong'},
+        { pct: '10%',  color: '#dc3545', label: 'Very Weak' },
+        { pct: '30%',  color: '#fd7e14', label: 'Weak'      },
+        { pct: '60%',  color: '#ffc107', label: 'Fair'      },
+        { pct: '80%',  color: '#0dcaf0', label: 'Good'      },
+        { pct: '100%', color: '#198754', label: 'Strong'    },
     ];
-    const lvl  = levels[score] ?? levels[0];
-    const bar  = document.getElementById('pwBar');
-    const lbl  = document.getElementById('pwLabel');
-    bar.style.width      = val ? lvl.pct : '0%';
+    const lvl          = levels[score] ?? levels[0];
+    const bar          = document.getElementById('pwBar');
+    const lbl          = document.getElementById('pwLabel');
+    bar.style.width      = val ? lvl.pct   : '0%';
     bar.style.background = lvl.color;
     lbl.textContent      = val ? lvl.label : '—';
     lbl.style.color      = val ? lvl.color : '#adb5bd';
@@ -507,9 +567,10 @@ document.getElementById('passwordInput').addEventListener('input', function () {
     checkMatch();
 });
 document.getElementById('confirmInput').addEventListener('input', checkMatch);
+
 function checkMatch() {
-    const pw  = document.getElementById('passwordInput').value;
-    const cfm = document.getElementById('confirmInput').value;
+    const pw   = document.getElementById('passwordInput').value;
+    const cfm  = document.getElementById('confirmInput').value;
     const hint = document.getElementById('matchHint');
     if (!cfm || !pw) { hint.style.display = 'none'; return; }
     hint.style.display = 'block';
@@ -518,32 +579,42 @@ function checkMatch() {
         : '<i class="fa fa-times-circle text-danger me-1"></i><span class="text-danger">Passwords do not match</span>';
 }
 
-// ── Password Generator ────────────────────────────────────────
+// ── Password generator ────────────────────────────────────────
 document.getElementById('generatePwBtn').addEventListener('click', function () {
-    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+';
+    const lower   = 'abcdefghijklmnopqrstuvwxyz';
+    const upper   = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const digits  = '0123456789';
+    const special = '!@#$%^&*()-_=+';
+    const all     = lower + upper + digits + special;
     let pw = '';
-    for (let i = 0; i < 14; i++) pw += chars[Math.floor(Math.random() * chars.length)];
-    // Ensure requirements met
-    pw = pw.slice(0,10) + 'A1!x';
-    document.getElementById('passwordInput').value  = pw;
-    document.getElementById('confirmInput').value   = pw;
-    document.getElementById('passwordInput').type   = 'text';
-    document.getElementById('eyeIcon1').className   = 'fa fa-eye-slash';
+    // Guarantee at least one of each required type
+    pw += lower  [Math.floor(Math.random() * lower.length)];
+    pw += upper  [Math.floor(Math.random() * upper.length)];
+    pw += digits [Math.floor(Math.random() * digits.length)];
+    pw += special[Math.floor(Math.random() * special.length)];
+    for (let i = 4; i < 14; i++) pw += all[Math.floor(Math.random() * all.length)];
+    // Shuffle
+    pw = pw.split('').sort(() => Math.random() - 0.5).join('');
+
+    document.getElementById('passwordInput').value         = pw;
+    document.getElementById('confirmInput').value          = pw;
+    document.getElementById('passwordInput').type          = 'text';
+    document.getElementById('eyeIcon1').className          = 'fa fa-eye-slash';
     checkStrength(pw);
     checkMatch();
-    // Copy to clipboard
+
     navigator.clipboard.writeText(pw).then(() => {
-        document.getElementById('generatePwBtn').innerHTML = '<i class="fa fa-check me-1 text-success"></i> Copied!';
-        setTimeout(() => document.getElementById('generatePwBtn').innerHTML = '<i class="fa fa-magic me-1"></i> Generate', 2000);
+        this.innerHTML = '<i class="fa fa-check me-1 text-success"></i> Copied!';
+        setTimeout(() => { this.innerHTML = '<i class="fa fa-magic me-1"></i> Generate'; }, 2000);
     });
 });
 
-// ── Status Toggle Label ───────────────────────────────────────
+// ── Status toggle label ───────────────────────────────────────
 document.getElementById('statusToggle').addEventListener('change', function () {
     document.getElementById('statusLabel').textContent = this.checked ? 'Active' : 'Inactive';
 });
 
-// ── 2FA Hint ──────────────────────────────────────────────────
+// ── 2FA hint ──────────────────────────────────────────────────
 document.getElementById('twoFaToggle').addEventListener('change', function () {
     document.getElementById('twoFaNote').style.display = this.checked ? 'flex' : 'none';
 });

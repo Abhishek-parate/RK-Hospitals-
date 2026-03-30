@@ -87,9 +87,385 @@ $meta_keywords    = "RK Hospital Nagpur, about RK Hospital, Dr Rahul Agrawal ort
         }
     }
     </script>
+
+    <style>/* ════════════════════════════════════════════════
+   OUR STORY SECTION
+════════════════════════════════════════════════ */
+.rk-our-story-section {
+    padding: 96px 0 100px;
+    background: #fff;
+    position: relative;
+    overflow: hidden;
+}
+
+.rk-our-story-section::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 420px;
+    height: 420px;
+    background: radial-gradient(circle, rgba(220,53,69,0.05) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.rk-our-story-section::after {
+    content: '';
+    position: absolute;
+    bottom: -80px;
+    left: -80px;
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, rgba(13,110,253,0.04) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+/* ══ TOP: Centered Intro ════════════════════════ */
+.rk-story-top-center {
+    text-align: center;
+    max-width: 740px;
+    margin: 0 auto 64px;
+}
+
+.rk-story-main-heading {
+    font-size: clamp(1.85rem, 3.2vw, 2.6rem);
+    font-weight: 900;
+    color: #1a1a2e;
+    line-height: 1.22;
+    margin: 10px 0 18px;
+}
+
+.rk-story-main-heading .accent {
+    color: #dc3545;
+}
+
+.rk-story-intro-text {
+    font-size: 1rem;
+    color: #5a5a78;
+    line-height: 1.82;
+    margin-bottom: 36px;
+}
+
+/* Stat Strip */
+.rk-story-stat-strip {
+    display: inline-flex;
+    align-items: center;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border-radius: 18px;
+    padding: 18px 36px;
+    gap: 0;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.stat-strip-item {
+    text-align: center;
+    padding: 6px 28px;
+}
+
+.stat-strip-num {
+    font-size: 1.65rem;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -0.5px;
+    line-height: 1;
+}
+
+.stat-strip-lbl {
+    font-size: 0.67rem;
+    color: rgba(255,255,255,0.52);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 700;
+    margin-top: 5px;
+}
+
+.stat-strip-sep {
+    width: 1px;
+    height: 38px;
+    background: rgba(255,255,255,0.12);
+    flex-shrink: 0;
+}
+
+/* ══ BOTTOM: Body Row ═══════════════════════════ */
+.rk-story-body-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+@media (max-width: 991px) {
+    .rk-story-body-row {
+        grid-template-columns: 1fr;
+        gap: 48px;
+    }
+}
+
+/* ══ LEFT: Image Column ════════════════════════ */
+.rk-story-img-col { /* wrapper */ }
+
+.rk-story-visual {
+    position: relative;
+    padding-bottom: 90px;
+    padding-right: 56px;
+}
+
+/* Main Image */
+.story-img-main {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 20px 64px rgba(0,0,0,0.13);
+    z-index: 2;
+}
+
+.story-img-main img {
+    width: 100%;
+    height: 460px;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+    transition: transform 0.55s ease;
+}
+
+.story-img-main:hover img {
+    transform: scale(1.035);
+}
+
+/* Experience Badge */
+.story-exp-badge {
+    position: absolute;
+    top: 28px;
+    left: -20px;
+    background: linear-gradient(135deg, #dc3545, #b02a37);
+    color: #fff;
+    border-radius: 18px;
+    padding: 16px 18px;
+    box-shadow: 0 10px 30px rgba(220,53,69,0.38);
+    z-index: 5;
+    text-align: center;
+    min-width: 96px;
+}
+
+.story-exp-badge .exp-num {
+    font-size: 1.9rem;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -1px;
+}
+
+.story-exp-badge .exp-label {
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    opacity: 0.88;
+    margin-top: 4px;
+    line-height: 1.3;
+}
+
+/* Floating Secondary Image */
+.story-img-float {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 210px;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 5px solid #fff;
+    box-shadow: 0 12px 36px rgba(0,0,0,0.16);
+    z-index: 3;
+}
+
+.story-img-float img {
+    width: 100%;
+    height: 170px;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+    transition: transform 0.45s ease;
+}
+
+.story-img-float:hover img {
+    transform: scale(1.04);
+}
+
+/* Floating Stat Card */
+.story-float-card {
+    position: absolute;
+    bottom: 30px;
+    left: 20px;
+    background: #fff;
+    border-radius: 14px;
+    padding: 13px 16px;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.11);
+    border: 1px solid #eef0f4;
+    z-index: 4;
+    min-width: 185px;
+}
+
+.sfc-icon {
+    width: 38px;
+    height: 38px;
+    background: rgba(220,53,69,0.09);
+    color: #dc3545;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.sfc-num {
+    font-size: 1.05rem;
+    font-weight: 900;
+    color: #1a1a2e;
+    line-height: 1;
+}
+
+.sfc-lbl {
+    font-size: 0.66rem;
+    color: #8c8fa5;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    margin-top: 3px;
+}
+
+/* ══ RIGHT: Content Column ══════════════════════ */
+.rk-story-content-col { /* wrapper */ }
+
+.story-body-lead {
+    font-size: 0.97rem;
+    font-weight: 500;
+    color: #3a3a5c;
+    line-height: 1.8;
+    border-left: 3px solid #dc3545;
+    padding-left: 16px;
+    margin-bottom: 16px;
+}
+
+.story-body-text {
+    font-size: 0.9rem;
+    color: #5a5a78;
+    line-height: 1.82;
+    margin-bottom: 28px;
+}
+
+/* Highlights Grid */
+.rk-story-highlights {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 32px;
+}
+
+.story-hl-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #3a3a5c;
+    padding: 9px 13px;
+    border-radius: 10px;
+    background: #f8f9fb;
+    border: 1px solid #eef0f4;
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+    cursor: default;
+}
+
+.story-hl-item:hover {
+    background: #fff5f5;
+    border-color: #fecaca;
+    transform: translateX(4px);
+}
+
+.hl-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    flex-shrink: 0;
+}
+
+.hl-red    { background: rgba(220,53,69,0.10);  color: #dc3545; }
+.hl-blue   { background: rgba(13,110,253,0.10); color: #0d6efd; }
+.hl-green  { background: rgba(25,135,84,0.10);  color: #198754; }
+.hl-orange { background: rgba(253,126,20,0.10); color: #fd7e14; }
+.hl-pink   { background: rgba(214,51,132,0.10); color: #d63384; }
+.hl-purple { background: rgba(111,66,193,0.10); color: #6f42c1; }
+.hl-yellow { background: rgba(255,193,7,0.13);  color: #c49a00; }
+.hl-teal   { background: rgba(13,202,240,0.10); color: #0d8daa; }
+
+/* CTA Row */
+.story-cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: center;
+}
+
+/* ══ Responsive ═════════════════════════════════ */
+@media (max-width: 991px) {
+    .rk-our-story-section { padding: 72px 0 80px; }
+
+    .rk-story-visual {
+        padding-right: 44px;
+        padding-bottom: 72px;
+        max-width: 480px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 575px) {
+    .rk-our-story-section { padding: 56px 0 60px; }
+
+    .rk-story-top-center { margin-bottom: 44px; }
+
+    .rk-story-stat-strip {
+        padding: 14px 16px;
+        gap: 4px;
+        border-radius: 14px;
+    }
+    .stat-strip-item   { padding: 4px 14px; }
+    .stat-strip-num    { font-size: 1.25rem; }
+    .stat-strip-sep    { display: none; }
+
+    .story-img-main img  { height: 280px; }
+
+    .story-exp-badge {
+        top: 14px;
+        left: -10px;
+        min-width: 78px;
+        padding: 10px 12px;
+    }
+    .story-exp-badge .exp-num { font-size: 1.4rem; }
+
+    .story-img-float { width: 150px; }
+    .story-img-float img { height: 120px; }
+
+    .story-float-card  { min-width: 160px; left: 10px; }
+
+    .rk-story-highlights { grid-template-columns: 1fr; }
+
+    .story-cta-row { flex-direction: column; align-items: stretch; }
+    .story-cta-row .rk-btn-primary,
+    .story-cta-row .rk-btn-outline { text-align: center; justify-content: center; }
+}
+        </style>
 </head>
 
 <body>
+
 
 
     <!-- Main Wrapper -->
@@ -159,178 +535,236 @@ $meta_keywords    = "RK Hospital Nagpur, about RK Hospital, Dr Rahul Agrawal ort
             </div>
         </div>
 
-        <!-- ══════════════════════════════════════════
-             SECTION 2: OUR STORY
-        ══════════════════════════════════════════ -->
-        <section class="rk-story-section" aria-labelledby="story-heading">
-            <div class="container">
-                <div class="row align-items-center g-5">
-
-                    <!-- Images -->
-                    <div class="col-lg-5 col-md-12 wow fadeInLeft" data-wow-duration="1s">
-                        <div class="rk-story-img-stack">
-                            <img
-                                src="assets/img/home/about-doctor2.webp"
-                                class="img-main"
-                                alt="Dr. Rahul Agrawal — Best Orthopedic Surgeon Nagpur at R.K. Hospital"
-                                loading="lazy"
-                            >
-                            <img
-                                src="assets/img/home/about-doctor3.webp"
-                                class="img-secondary"
-                                alt="Dr. Priyanka Jain Agrawal — Best Gynecologist Nagpur at R.K. Hospital"
-                                loading="lazy"
-                            >
-                            <div class="experience-badge" aria-label="25 plus years of medical excellence">
-                                <span class="yr-num">25+</span>
-                                <span class="yr-text">Years of Excellence</span>
+        </section>
+        <!-- /Speciality Section -->
+        <!-- About Us -->
+      <section class="about-section">
+    <div class="container">
+        <div class="row align-items-center">
+            
+            <!-- Images (same as your code, just improve alt text) -->
+            <div class="col-lg-6 col-md-12">
+                <div class="about-img-info">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="about-inner-img">
+                                <div class="about-img">
+                                    <img src="assets/img/home/about-doctor1.webp" class="img-fluid" alt="Orthopedic Surgeon in Nagpur RK Hospital">
+                                </div>
+                                <div class="about-img">
+                                    <img src="assets/img/home/about-doctor3.webp" class="img-fluid" alt="Gynecology Treatment RK Hospital Nagpur">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="about-inner-img">
+                                <div class="about-box">
+                                    <h4>25+ Years of Medical Excellence in Nagpur</h4>
+                                </div>
+                                <div class="about-img">
+                                    <img src="assets/img/home/about-doctor2.webp" class="img-fluid" alt="Robotic Knee Replacement Surgery Nagpur">
+                                </div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
 
-                    <!-- Content -->
-                    <div class="col-lg-7 col-md-12 wow fadeInRight" data-wow-duration="1s">
-                        <div class="rk-story-content">
-                            <div class="rk-section-header">
-                                <div class="rk-section-eyebrow">Our Story</div>
-                                <h2 class="rk-heading" id="story-heading">
-                                    Building a Legacy of <span class="accent">Healing &amp; Trust in Nagpur</span><br>
-                                     <span class="blue-accent"></span>
-                                </h2>
-                                <p class="lead" style="margin-top: 16px;">
-                                    Dr. Agrawal's R.K. Hospital was founded with a single, unwavering commitment — to bring the highest standard of medical care within reach of every patient in Nagpur and the Vidarbha region.
-                                </p>
-                            </div>
+            <!-- Content -->
+            <div class="col-lg-6 col-md-12">
+                <div class="section-inner-header about-inner-header">
+                    <h6>About Dr. Agrawal's R.K. Hospital</h6>
+                    <h2>
+                        Leading Orthopedic & Gynecology Hospital in 
+                        <span class="text-danger">Nagpur</span>
+                    </h2>
+                </div>
 
-                            <p>
-                                What began as a vision to transform orthopedic and gynecological healthcare has grown into one of Nagpur's most trusted multi-specialty hospitals. Today, we are equipped with state-of-the-art robotic surgical technology, modular operation theatres, and a team of highly experienced specialists who have collectively performed thousands of successful surgeries.
-                            </p>
-                            <p>
-                                From complex robotic knee and hip replacement surgeries to high-risk pregnancy management, spine treatment, and advanced laparoscopic gynecology — our hospital stands as a complete healthcare destination for patients across Nagpur, Wardha, Amravati, and beyond.
-                            </p>
+                <div class="about-content">
+                    <div class="about-content-details">
 
-                            <!-- Highlights -->
-                            <ul class="rk-highlights" aria-label="Hospital highlights">
-                                <li>
-                                    <span class="hl-dot" aria-hidden="true"><i class="fa-solid fa-check"></i></span>
-                                    Robotic Joint Replacement Technology
-                                </li>
-                                <li>
-                                    <span class="hl-dot" aria-hidden="true"><i class="fa-solid fa-check"></i></span>
-                                    Modular Operation Theatres
-                                </li>
-                                <li>
-                                    <span class="hl-dot" aria-hidden="true"><i class="fa-solid fa-check"></i></span>
-                                    Cashless Insurance Facility
-                                </li>
-                                <li>
-                                    <span class="hl-dot" aria-hidden="true"><i class="fa-solid fa-check"></i></span>
-                                    24/7 Emergency &amp; Trauma Care
-                                </li>
-                                <li>
-                                    <span class="hl-dot" aria-hidden="true"><i class="fa-solid fa-check"></i></span>
-                                    High-Risk Pregnancy Management
-                                </li>
-                                <li>
-                                    <span class="hl-dot" aria-hidden="true"><i class="fa-solid fa-check"></i></span>
-                                    Advanced Laparoscopic Surgery
-                                </li>
-                                <li>
-                                    <span class="hl-dot" aria-hidden="true"><i class="fa-solid fa-check"></i></span>
-                                    5★ Rated Patient Care
-                                </li>
-                                <li>
-                                    <span class="hl-dot" aria-hidden="true"><i class="fa-solid fa-check"></i></span>
-                                    Experienced Specialist Doctors
-                                </li>
-                            </ul>
+                        <p>
+                            Dr. Agrawal's R.K. Hospital is one of the most trusted and advanced healthcare centers in Nagpur, specializing in Orthopedics and Gynecology. Known for its excellence in robotic knee replacement, hip replacement, spine surgery, and trauma care, the hospital provides world-class treatment using modern technology and highly experienced specialists.
+                        </p>
 
-                            <div class="d-flex flex-wrap gap-3">
-                                <a href="contact-us.php" class="rk-btn-primary">
-                                    <i class="fa-solid fa-calendar-check"></i>
-                                    Book Appointment
-                                </a>
-                                <a href="tel:+919766057372" class="rk-btn-outline">
-                                    <i class="fa-solid fa-phone"></i>
-                                    Call Now
-                                </a>
-                            </div>
+                        <p>
+                            Our gynecology and obstetrics department offers comprehensive pregnancy care, high-risk pregnancy management, and advanced laparoscopic surgeries. With a strong focus on patient safety, hygiene, and personalized care, we ensure the best outcomes for both mother and baby.
+                        </p>
+
+                        <p>
+                            With a 5-star patient rating and a reputation for successful surgeries, expert doctors, and supportive staff, R.K. Hospital stands as a leading choice for quality healthcare in Nagpur. We are available 24/7 for emergency services, ensuring timely and reliable medical care when you need it most.
+                        </p>
+
+                    </div>
+
+                    <!-- Contact -->
+                    <div class="about-contact">
+                        <div class="about-contact-icon">
+                            <span><i class="isax isax-call-calling5"></i></span>
+                        </div>
+                        <div class="about-contact-text">
+                            <p>24/7 Emergency & Appointment</p>
+                            <h4>+91 97660 57372</h4>
                         </div>
                     </div>
 
                 </div>
             </div>
-        </section>
-        <!-- ── /Our Story ── -->
 
-     <section class="section about-section-two">
-			<div class="container">
-				<div class="row align-items-center">
-					
-					<!-- About Img -->
-					<div class="col-lg-6">
-						<div class="about-img-two wow fadeInUp" data-wow-duration="2s">
-							<img src="assets/img/about/about.png" alt="about" class="img-fluid">
-							<a href="https://youtu.be/MyQxnFgPgQU?si=Z9y2WdynImbFnqL2" data-fancybox="">
-								<button class="animate-button" data-text="Play Video · Play Video ·">
-									<p class="button-text"></p>
-									<span class="button-circle">
-										<i class="isax isax-play"></i>
-									</span>
-								</button>
-							</a>
-						</div>
-					</div>
-					<!-- About Img End -->
-					
-					<!-- About Content -->
-					<div class="col-lg-6">
-						<div class="about-content-two">
-							<div class="section-header section-header-two">
-								<div class="section-sub-title"><img src="assets/img/icons/section-icon.svg" alt="icon">About Us</div>
-								<h2 class="section-title">
-  We Understand That Each One Is Unique &amp; Their 
-  <span style="color:#C22323 !important;">Health Journey.</span>
-</h2>
-								<p>We aim to provide faster diagnosis, clearer insights, and more accurate treatment decisions ensuring every patient receives safe, precise, and personalized care.</p>
-							</div>
-							<div class="row g-4">
-								<div class="col-md-6">
-									<div class="mission-item wow fadeInUp" data-wow-delay="0.2s" data-wow-duration="1s">
-										<div class="mission-inner">
-											<div class="mission-info">
-												<div class="mission-icon bg-primary">
-													<img src="assets/img/icons/mission.svg" alt="mission" class="img-fluid">
-												</div>
-												<h3 class="custom-title">Our Mission</h3>
-											</div>
-											<p>To deliver compassionate, patient-first healthcare by combining expert clinical judgment with technology.</p>
-										</div>
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="mission-item wow fadeInUp" data-wow-delay="0.2s" data-wow-duration="4s">
-										<div class="mission-inner">
-											<div class="mission-info">
-												<div class="mission-icon bg-secondary">
-													<img src="assets/img/icons/vision.svg" alt="vision" class="img-fluid">
-												</div>
-												<h3 class="custom-title">Our Vision</h3>
-											</div>
-											<p>Empower doctors to detect conditions earlier, improve outcomes, and redefine the future of modern healthcare.</p>
-										</div>
-									</div>
-								</div>
-							</div>
-							<a href="single-service.php" class="btn btn-md btn-primary">Know More<i class="isax isax-arrow-right-34 ms-2"></i></a>
-						</div>
-					</div>
-					<!-- About Content End -->
+        </div>
+    </div>
+</section>
+<!-- ══════════════════════════════════════════
+     SECTION 2: OUR STORY — REDESIGNED
+══════════════════════════════════════════ -->
+<section class="rk-our-story-section" aria-labelledby="story-heading">
+    <div class="container">
 
-				</div>
-			</div>
-			<img src="assets/img/bg/about-bg.png" alt="icon" class="img-fluid about-bg-01">
-		</section>
+        <!-- ── TOP: Centered Intro Block ── -->
+        <div class="rk-story-top-center wow fadeInUp" data-wow-duration="0.9s">
+            <div class="rk-section-eyebrow">Our Story</div>
+            <h2 class="rk-story-main-heading" id="story-heading">
+                Building a Legacy of <span class="accent">Healing &amp; Trust</span> in Nagpur
+            </h2>
+            <p class="rk-story-intro-text">
+                Dr. Agrawal's R.K. Hospital was founded with a single, unwavering commitment — to bring the
+                highest standard of medical care within reach of every patient in Nagpur and the Vidarbha region.
+                What began as a vision has grown into one of Nagpur's most trusted multi-specialty hospitals.
+            </p>
+
+            <!-- Centered Stats Strip -->
+            <div class="rk-story-stat-strip">
+                <div class="stat-strip-item">
+                    <div class="stat-strip-num">25+</div>
+                    <div class="stat-strip-lbl">Years of Excellence</div>
+                </div>
+                <div class="stat-strip-sep"></div>
+                <div class="stat-strip-item">
+                    <div class="stat-strip-num">25K+</div>
+                    <div class="stat-strip-lbl">Patients Treated</div>
+                </div>
+                <div class="stat-strip-sep"></div>
+                <div class="stat-strip-item">
+                    <div class="stat-strip-num">5.0★</div>
+                    <div class="stat-strip-lbl">Google Rating</div>
+                </div>
+                <div class="stat-strip-sep"></div>
+                <div class="stat-strip-item">
+                    <div class="stat-strip-num">496+</div>
+                    <div class="stat-strip-lbl">Verified Reviews</div>
+                </div>
+            </div>
+        </div>
+        <!-- /TOP Center -->
+
+
+        <!-- ── BOTTOM: Image LEFT + Content RIGHT ── -->
+        <div class="rk-story-body-row">
+
+            <!-- LEFT: Image Stack -->
+            <div class="rk-story-img-col wow fadeInLeft" data-wow-duration="1s">
+                <div class="rk-story-visual">
+
+                    <!-- Main Image -->
+                    <div class="story-img-main">
+                        <img
+                            src="assets/img/about/hospital.jpeg"
+                            alt="Dr. Rahul Agrawal — Best Orthopedic Surgeon Nagpur at R.K. Hospital"
+                            loading="lazy"
+                        >
+                        <!-- Experience Badge -->
+                        <div class="story-exp-badge">
+                            <div class="exp-num">25+</div>
+                            <div class="exp-label">Years of<br>Excellence</div>
+                        </div>
+                    </div>
+
+                    <!-- Floating Secondary Image -->
+                  
+
+                    <!-- Floating Stat Card -->
+                    
+
+                </div>
+            </div>
+            <!-- /LEFT -->
+
+            <!-- RIGHT: Content -->
+            <div class="rk-story-content-col wow fadeInRight" data-wow-duration="1s">
+
+                <!-- Body Text -->
+                <p class="story-body-lead">
+                    Equipped with <strong>state-of-the-art robotic surgical technology</strong>, modular operation
+                    theatres, and a team of highly experienced specialists who have collectively performed
+                    thousands of successful surgeries across orthopedics and gynecology.
+                </p>
+                <p class="story-body-text">
+                    From complex robotic knee and hip replacement surgeries to high-risk pregnancy management,
+                    spine treatment, and advanced laparoscopic gynecology — we are a complete healthcare
+                    destination for patients across Nagpur, Wardha, Amravati, and beyond.
+                </p>
+
+                <!-- Highlights Grid -->
+                <div class="rk-story-highlights">
+
+                    <div class="story-hl-item">
+                        <div class="hl-icon hl-red"><i class="fa-solid fa-robot"></i></div>
+                        <span>Robotic Joint Replacement</span>
+                    </div>
+                    <div class="story-hl-item">
+                        <div class="hl-icon hl-blue"><i class="fa-solid fa-kit-medical"></i></div>
+                        <span>Modular Operation Theatres</span>
+                    </div>
+                    <div class="story-hl-item">
+                        <div class="hl-icon hl-green"><i class="fa-solid fa-shield-halved"></i></div>
+                        <span>Cashless Insurance Facility</span>
+                    </div>
+                    <div class="story-hl-item">
+                        <div class="hl-icon hl-orange"><i class="fa-solid fa-truck-medical"></i></div>
+                        <span>24/7 Emergency &amp; Trauma Care</span>
+                    </div>
+                    <div class="story-hl-item">
+                        <div class="hl-icon hl-pink"><i class="fa-solid fa-baby"></i></div>
+                        <span>High-Risk Pregnancy Care</span>
+                    </div>
+                    <div class="story-hl-item">
+                        <div class="hl-icon hl-purple"><i class="fa-solid fa-stethoscope"></i></div>
+                        <span>Advanced Laparoscopic Surgery</span>
+                    </div>
+                    <div class="story-hl-item">
+                        <div class="hl-icon hl-yellow"><i class="fa-solid fa-star"></i></div>
+                        <span>5★ Rated Patient Care</span>
+                    </div>
+                    <div class="story-hl-item">
+                        <div class="hl-icon hl-teal"><i class="fa-solid fa-user-doctor"></i></div>
+                        <span>Experienced Specialist Doctors</span>
+                    </div>
+
+                </div>
+                <!-- /Highlights -->
+
+                <!-- CTA Buttons -->
+                <div class="story-cta-row">
+                    <a href="contact-us" class="rk-btn-primary">
+                        <i class="fa-solid fa-calendar-check"></i>
+                        Book Appointment
+                    </a>
+                    <a href="tel:+919766057372" class="rk-btn-outline">
+                        <i class="fa-solid fa-phone"></i>
+                        Call: +91 97660 57372
+                    </a>
+                </div>
+
+            </div>
+            <!-- /RIGHT -->
+
+        </div>
+        <!-- /BOTTOM Row -->
+
+    </div>
+</section>
+<!-- ── /Our Story ── -->
+ 
 
         <!-- ══════════════════════════════════════════
              SECTION 7: AWARDS & ACCREDITATIONS
@@ -413,7 +847,7 @@ $meta_keywords    = "RK Hospital Nagpur, about RK Hospital, Dr Rahul Agrawal ort
     <!-- ── Offcanvas Support Popup ── -->
     <div class="offcanvas offcanvas-offset offcanvas-end support_popup" tabindex="-1" id="support_item">
         <div class="offcanvas-header">
-            <a href="index.php">
+            <a href="/">
                 <img src="<?php echo $base_url; ?>assets/img/logo.svg" alt="RK Hospital Nagpur Logo" class="img-fluid logo">
             </a>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
