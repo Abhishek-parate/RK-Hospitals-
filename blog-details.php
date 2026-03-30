@@ -62,17 +62,7 @@ if (!$blog_res || $blog_res->num_rows === 0) {
 </head>
 
 <body>
-    <header class="header header-default inner-header">
-        <div class="container">
-            <nav class="navbar navbar-expand-lg header-nav">
-                <div class="navbar-header">
-                    <a href="index.php" class="navbar-brand logo">
-                        <img src="<?= asset('assets/img/RK-Logo.png') ?>" class="img-fluid" alt="Logo">
-                    </a>
-                </div>
-            </nav>
-        </div>
-    </header>
+    <?php $headerClass = 'header-default inner-header'; include 'include/header.php'; ?>
     <div class="main-wrapper">
         <div class="error-404-wrap">
             <div>
@@ -169,68 +159,7 @@ $meta_desc = truncate(strip_tags($blog['content']), 160);
 
     <div class="main-wrapper">
 
-        <header class="header header-default inner-header">
-            <div class="container">
-                <nav class="navbar navbar-expand-lg header-nav">
-                    <div class="navbar-header">
-                        <a id="mobile_btn" href="javascript:void(0);">
-                            <i class="fa-solid fa-bars"></i>
-                        </a>
-                        <a href="index.php" class="navbar-brand logo">
-                            <img src="<?= asset('assets/img/RK-Logo.png') ?>" class="img-fluid" alt="Logo">
-                        </a>
-                    </div>
-                    <div class="header-menu">
-                        <div class="main-menu-wrapper">
-                            <div class="menu-header">
-                                <a href="index.php" class="menu-logo">
-                                    <img src="<?= asset('assets/img/RK-Logo.png') ?>" class="img-fluid" alt="Logo">
-                                </a>
-                                <a id="menu_close" class="menu-close" href="javascript:void(0);">
-                                    <i class="fas fa-times"></i>
-                                </a>
-                            </div>
-                            <ul class="main-nav">
-                                <li class="has-submenu megamenu">
-                                    <a href="index.php" class="main-menu">Home</a>
-                                </li>
-                                <li class="has-submenu">
-                                    <a href="two-doctor.html" class="main-menu">Doctors</a>
-                                </li>
-                                <li class="has-submenu">
-                                    <a href="about-us.html" class="main-menu">About Us</a>
-                                </li>
-                                <li class="has-submenu">
-                                    <a href="#" class="main-menu" onclick="toggleMobileSubmenu(this); return false;">
-                                        Service
-                                        <span><i class="fa-solid fa-chevron-down"></i></span>
-                                    </a>
-                                    <ul class="submenu sub-menu-one sub-menu-default">
-                                        <li><a href="hospital-services.html">Hospital Services</a></li>
-                                        <li><a href="gynecology-services.html">Gynecology Services</a></li>
-                                        <li><a href="orthopedic-services.html">Orthopedic Services</a></li>
-                                    </ul>
-                                </li>
-                                <li class="has-submenu active">
-                                    <a href="blog-grid.php" class="main-menu">Blogs</a>
-                                </li>
-                                <li class="has-submenu">
-                                    <a href="contact-us.html" class="main-menu">Contact Us</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <ul class="nav header-navbar-rht">
-                        <li>
-                            <a href="contact-us.html" class="btn btn-md btn-primary-gradient d-none d-lg-inline-block"
-                                style="background: #1a6ef5 !important; color: #fff !important; border-color: #1a6ef5 !important;">
-                                <i class="isax isax-lock-1 me-2"></i><span>Book Now</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </header>
+        <?php $headerClass = 'header-default inner-header'; include 'include/header.php'; ?>
         <div class="content" style="padding-top: 40px;">
             <div class="container">
                 <div class="row">

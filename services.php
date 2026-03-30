@@ -91,70 +91,7 @@ while ($row = $tags_res->fetch_assoc()) {
 
 <div class="main-wrapper">
 
-    <!-- Header -->
-    <header class="header header-default inner-header">
-        <div class="container">
-            <nav class="navbar navbar-expand-lg header-nav">
-                <div class="navbar-header">
-                    <a id="mobile_btn" href="javascript:void(0);">
-                        <i class="fa-solid fa-bars"></i>
-                    </a>
-                    <a href="index-7.html" class="navbar-brand logo">
-                        <img src="assets/img/RK-Logo.png" class="img-fluid" alt="Logo">
-                    </a>
-                </div>
-                <div class="header-menu">
-                    <div class="main-menu-wrapper">
-                        <div class="menu-header">
-                            <a href="index-7.html" class="menu-logo">
-                                <img src="assets/img/RK-Logo.png" class="img-fluid" alt="Logo">
-                            </a>
-                            <a id="menu_close" class="menu-close" href="javascript:void(0);">
-                                <i class="fas fa-times"></i>
-                            </a>
-                        </div>
-                        <ul class="main-nav">
-                            <li class="has-submenu megamenu">
-                                <a href="index-7.html" class="main-menu">Home</a>
-                            </li>
-                            <li class="has-submenu">
-                                <a href="two-doctor.html" class="main-menu">Doctors</a>
-                            </li>
-                            <li class="has-submenu">
-                                <a href="about-us.html" class="main-menu">About Us</a>
-                            </li>
-                            <li class="has-submenu active">
-                                <a href="#" class="main-menu" onclick="toggleMobileSubmenu(this); return false;">
-                                    Service
-                                    <span><i class="fa-solid fa-chevron-down"></i></span>
-                                </a>
-                                <ul class="submenu sub-menu-one sub-menu-default">
-                                    <li><a href="hospital-services.html">Hospital Services</a></li>
-                                    <li><a href="gynecology-services.html">Gynecology Services</a></li>
-                                    <li><a href="orthopedic-services.html">Orthopedic Services</a></li>
-                                    <li><a href="services.php">All Services</a></li>
-                                </ul>
-                            </li>
-                            <li class="has-submenu">
-                                <a href="blog-grid.php" class="main-menu">Blogs</a>
-                            </li>
-                            <li class="has-submenu">
-                                <a href="contact-us.html" class="main-menu">Contact Us</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <li>
-                    <a href="contact-us.html"
-                       class="btn btn-md btn-primary-gradient d-none d-lg-inline-block"
-                       style="background: #1a6ef5 !important; color: #fff !important; border-color: #1a6ef5 !important;">
-                        <i class="isax isax-lock-1 me-2"></i><span>Book Now</span>
-                    </a>
-                </li>
-            </nav>
-        </div>
-    </header>
-    <!-- /Header -->
+    <?php $headerClass = 'header-default inner-header'; include 'include/header.php'; ?>
 
     <!-- Page Content -->
     <div class="content">

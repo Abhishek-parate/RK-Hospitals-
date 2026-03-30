@@ -1,14 +1,16 @@
 <?php
 /**
- * include/header.php — RK Hospital public navbar
- * Uses SITE_URL from config.php. Detects active nav item from REQUEST_URI.
+ * include/header.php — RK Hospital shared navbar
+ * Pages can set $headerClass before including to switch style.
+ *   Inner pages:  $headerClass = 'header-default inner-header';
+ *   Homepage:     (leave unset — defaults to 'header-fixed')
  */
 
-$_base = rtrim(SITE_URL, '/') . '/';
+$_base        = rtrim(SITE_URL, '/') . '/';
+$_headerClass = $headerClass ?? 'header-fixed';
 
-// Detect active nav item
-$_uri = strtok($_SERVER['REQUEST_URI'], '?');
-$_uri = rtrim($_uri, '/');
+// Auto-detect active nav item from URI
+$_uri = rtrim(strtok($_SERVER['REQUEST_URI'], '?'), '/');
 
 function navActive(string $segment): string {
     global $_uri;
@@ -19,19 +21,17 @@ function navActive(string $segment): string {
 }
 ?>
 <!-- Header -->
-<header class="header header-fixed">
+<header class="header <?= $_headerClass ?>">
     <div class="container">
         <nav class="navbar navbar-expand-lg header-nav">
 
             <!-- Logo / Mobile Toggle -->
             <div class="navbar-header">
                 <a id="mobile_btn" href="javascript:void(0);">
-                    <span class="bar-icon">
-                        <span></span><span></span><span></span>
-                    </span>
+                    <i class="fa-solid fa-bars"></i>
                 </a>
                 <a href="<?= $_base ?>" class="navbar-brand logo">
-                    <img src="<?= $_base ?>assets/img/logo.svg" class="img-fluid" alt="RK Hospital">
+                    <img src="<?= $_base ?>assets/img/RK-Logo.png" class="img-fluid" alt="RK Hospital">
                 </a>
             </div>
 
@@ -39,10 +39,10 @@ function navActive(string $segment): string {
             <div class="header-menu">
                 <div class="main-menu-wrapper">
 
-                    <!-- Mobile header inside drawer -->
+                    <!-- Mobile drawer header -->
                     <div class="menu-header">
                         <a href="<?= $_base ?>" class="menu-logo">
-                            <img src="<?= $_base ?>assets/img/logo.svg" class="img-fluid" alt="RK Hospital">
+                            <img src="<?= $_base ?>assets/img/RK-Logo.png" class="img-fluid" alt="RK Hospital">
                         </a>
                         <a id="menu_close" class="menu-close" href="javascript:void(0);">
                             <i class="fas fa-times"></i>
@@ -82,9 +82,8 @@ function navActive(string $segment): string {
             <!-- Right CTA -->
             <ul class="nav header-navbar-rht">
                 <li>
-                    <a href="<?= $_base ?>contact-us" class="btn btn-primary theme-5-btn">
-                        <span class="icon"><i class="isax isax-calendar-edit me-2"></i></span>
-                        <span>Book Appointment</span>
+                    <a href="<?= $_base ?>contact-us" class="btn btn-md btn-primary-gradient d-none d-lg-inline-block">
+                        <i class="isax isax-calendar-edit me-2"></i><span>Book Appointment</span>
                     </a>
                 </li>
             </ul>
