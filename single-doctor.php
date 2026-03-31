@@ -252,11 +252,47 @@ $hasBannerImage = !empty($doctorFeatureImage) && $doctorFeatureImage !== 'defaul
                 position: static;
             }
         }
+    }
+
+    /* ── Sticky header ── */
+    header.header.sticky {
+        position: fixed !important;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 999;
+        background: #fff !important;
+        box-shadow: 0 2px 16px rgba(0,0,0,.10);
+        animation: slideDown .3s ease forwards;
+    }
+    @keyframes slideDown {
+        from { transform: translateY(-100%); }
+        to   { transform: translateY(0); }
+    }
     </style>
 </head>
 
 <body>
-    <div class="main-wrapper">
+    <?php $headerClass = 'header-default inner-header'; require_once 'include/header.php'; ?>
+
+    <div class="content">
+        <div class="container">
+            <div class="doc-profile-card">
+                <div class="card-inner">
+                    <div class="doc-avatar-wrap">
+                        <img src="<?= asset($doctor['photo'] && $doctor['photo'] !== 'default.jpg' ? $doctor['photo'] : 'assets/img/doctors/default.jpg') ?>"
+                            alt="<?= htmlspecialchars($doctor['name']) ?>">
+                        <div class="doc-verified-badge" title="Verified Doctor"><i class="fas fa-check"></i></div>
+                    </div>
+                    <div class="doc-info-main">
+                        <h2><?= htmlspecialchars($doctor['name']) ?></h2>
+                        <p class="doc-degrees"><?= htmlspecialchars($doctor['designation']) ?></p>
+                        <?php if(!empty($doctor['specialty'])): ?>
+                        <span class="doc-specialty-tag">
+                            <?= htmlspecialchars($doctor['specialty']) ?>
+                        </span>
+                        <?php endif; ?>
+                    </div>
 
         <?php include 'include/header.php'; ?>
 

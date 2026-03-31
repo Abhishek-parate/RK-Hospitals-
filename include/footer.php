@@ -64,7 +64,6 @@
                                 <a href="mailto:info@rkhospital.in" class="text-dark">info@rkhospital.in</a>
                             </li>
                         </ul>
-                       
                     </div>
                 </div>
             </div>
@@ -76,12 +75,6 @@
             <div class="copyright">
                 <div class="copyright-text mb-0">
                     <p class="mb-0">Copyright &copy; <?= date('Y') ?> R.K. Hospital Nagpur. All Rights Reserved.</p>
-                </div>
-                <div class="copyright-menu">
-                    <ul class="policy-menu mb-0">
-                        <li><a href="<?= $_base ?>about-us">About</a></li>
-                        <li><a href="<?= $_base ?>contact-us">Contact</a></li>
-                    </ul>
                 </div>
             </div>
         </div>

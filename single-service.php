@@ -430,15 +430,6 @@ $latest_blogs_res = $conn->query($latest_blogs_sql);
 
     <div class="main-wrapper">
 
-        <div class="header-theme header-theme-two">
-            <button type="button" id="dark-mode-toggle" class="theme-toggle moon">
-                <i class="isax isax-moon5"></i>
-            </button>
-            <button type="button" id="light-mode-toggle" class="theme-toggle sun">
-                <i class="isax isax-sun-15"></i>
-            </button>
-        </div>
-
         <?php include 'include/header.php'; ?>
 
         <div class="breadcrumb-bar" style="

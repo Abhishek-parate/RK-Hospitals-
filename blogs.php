@@ -5,23 +5,28 @@ require_once 'include/config.php';
 $page     = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
 $offset   = ($page - 1) * BLOGS_PER_PAGE;
 
-// ─── Category Filter ──────────────────────────────────────────────────────────
-$cat_slug = isset($_GET['category']) ? clean($_GET['category']) : '';
-$search   = isset($_GET['search'])   ? clean($_GET['search'])   : '';
+// ─── Category & Tag Filter ────────────────────────────────────────────────────
+// Supports clean URLs for BOTH Categories and Tags (/blogs/Surgery)
+$cat_slug = '';
+if (!empty($_GET['category'])) {
+    // Decode to safely handle spaces, then sanitize
+    $cat_slug = urldecode($_GET['category']);
+    $cat_slug = preg_replace('/[^a-zA-Z0-9_\-\s]/', '', $cat_slug);
+}
+$search = isset($_GET['search']) ? clean($_GET['search']) : '';
 
 // ─── Build WHERE clause ───────────────────────────────────────────────────────
 $where = "WHERE b.is_published = 1";
 if (!empty($cat_slug)) {
-    $where .= " AND c.slug = '$cat_slug'";
-}
-if (!empty($search)) {
-    $where .= " AND (b.title LIKE '%$search%' OR b.excerpt LIKE '%$search%' OR b.tags LIKE '%$search%')";
+    $safe_cat = $conn->real_escape_string($cat_slug);
+    // Checks for exact category slug OR looks for the tag inside the tags string
+    $where .= " AND (c.slug = '$safe_cat' OR b.tags LIKE '%$safe_cat%')";
 }
 
 // ─── Total blogs count (for pagination) ───────────────────────────────────────
-$count_sql = "SELECT COUNT(*) as total FROM blogs b 
-              LEFT JOIN categories c ON b.category_id = c.id 
-              $where";
+$count_sql   = "SELECT COUNT(*) as total FROM blogs b 
+                LEFT JOIN categories c ON b.category_id = c.id 
+                $where";
 $count_res   = $conn->query($count_sql);
 $total_blogs = $count_res->fetch_assoc()['total'];
 $total_pages = ceil($total_blogs / BLOGS_PER_PAGE);
@@ -66,314 +71,343 @@ while ($row = $tags_res->fetch_assoc()) {
         }
     }
 }
+
+// ─── Helper: build clean category URL ────────────────────────────────────────
+function blogCategoryUrl($slug) {
+    return SITE_URL . '/blogs/' . urlencode($slug);
+}
+
+// ─── Helper: build clean pagination URL ──────────────────────────────────────
+function blogPageUrl($pageNum, $catSlug, $searchStr) {
+    global $cat_slug;
+    if (!empty($catSlug)) {
+        $url = SITE_URL . '/blogs/' . urlencode($catSlug) . '?page=' . $pageNum;
+        if (!empty($searchStr)) $url .= '&search=' . urlencode($searchStr);
+    } else {
+        $url = SITE_URL . '/blogs.php?page=' . $pageNum;
+        if (!empty($searchStr)) $url .= '&search=' . urlencode($searchStr);
+    }
+    return $url;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
-    <title>Blogs - Dr. Agrawal's R.K. Hospital</title>
+    <title><?= !empty($cat_slug) ? ucfirst(str_replace('-', ' ', $cat_slug)) . ' Blogs' : 'Blogs' ?> - Dr. Agrawal's
+        R.K. Hospital</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Read health articles and blogs from Dr. Agrawal's R.K. Hospital, Nagpur — covering orthopedics, gynecology, surgery, pregnancy, and general wellness.">
-    <meta name="keywords" content="hospital blog, orthopedic tips, gynecology advice, pregnancy care, RK Hospital Nagpur, health awareness">
+    <meta name="description"
+        content="Read health articles and blogs from Dr. Agrawal's R.K. Hospital, Nagpur — covering orthopedics, gynecology, surgery, pregnancy, and general wellness.">
+    <meta name="keywords"
+        content="hospital blog, orthopedic tips, gynecology advice, pregnancy care, RK Hospital Nagpur, health awareness">
     <meta name="author" content="Dr. Agrawal's R.K. Hospital">
 
-    <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png">
-    <script src="assets/js/theme-script.js"></script>
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/plugins/fontawesome/css/fontawesome.min.css">
-    <link rel="stylesheet" href="assets/plugins/fontawesome/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/iconsax.css">
-    <link rel="stylesheet" href="assets/css/feather.css">
-    <link rel="stylesheet" href="assets/plugins/fancybox/jquery.fancybox.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="shortcut icon" href="<?= SITE_URL ?>/assets/img/favicon.png" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="<?= SITE_URL ?>/assets/img/apple-touch-icon.png">
+    <script src="<?= SITE_URL ?>/assets/js/theme-script.js"></script>
+    <link rel="stylesheet" href="<?= SITE_URL ?>/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?= SITE_URL ?>/assets/plugins/fontawesome/css/fontawesome.min.css">
+    <link rel="stylesheet" href="<?= SITE_URL ?>/assets/plugins/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="<?= SITE_URL ?>/assets/css/iconsax.css">
+    <link rel="stylesheet" href="<?= SITE_URL ?>/assets/css/feather.css">
+    <link rel="stylesheet" href="<?= SITE_URL ?>/assets/plugins/fancybox/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="<?= SITE_URL ?>/assets/css/style.css">
 </head>
+
 <body>
 
-<div class="main-wrapper">
+    <div class="main-wrapper">
 
-    <?php $headerClass = 'header-default inner-header'; include 'include/header.php'; ?>
+        <?php $headerClass = 'header-default inner-header'; include 'include/header.php'; ?>
 
-    <!-- Page Content -->
-    <div class="content">
-        <div class="container">
-            <div class="row">
+        <!-- Page Content -->
+        <div class="content">
+            <div class="container">
+                <div class="row">
 
-                <!-- ─── Blog Grid ──────────────────────────────────────────── -->
-                <div class="col-lg-8 col-md-12">
-                    <div class="row blog-grid-row">
+                    <!-- ─── Blog Grid ──────────────────────────────────────────── -->
+                    <div class="col-lg-8 col-md-12">
+                        <div class="row blog-grid-row">
 
-                        <?php if ($blogs_res && $blogs_res->num_rows > 0): ?>
+                            <?php if ($blogs_res && $blogs_res->num_rows > 0): ?>
                             <?php while ($blog = $blogs_res->fetch_assoc()): ?>
-                                <div class="col-md-6 col-sm-12">
-                                    <div class="blog grid-blog">
-                                        <div class="blog-image">
-                                            <a href="blog/<?= htmlspecialchars($blog['slug']) ?>">
-                                                <img class="img-fluid"
-                                                     src="<?= htmlspecialchars($blog['image']) ?>"
-                                                     alt="<?= htmlspecialchars($blog['title']) ?>">
+                            <div class="col-md-6 col-sm-12">
+                                <div class="blog grid-blog">
+                                    <div class="blog-image">
+                                        <a href="<?= SITE_URL ?>/blog/<?= htmlspecialchars($blog['slug']) ?>">
+                                            <img class="img-fluid" src="<?= htmlspecialchars($blog['image']) ?>"
+                                                alt="<?= htmlspecialchars($blog['title']) ?>">
+                                        </a>
+                                        <?php if (!empty($blog['category_name']) && !empty($blog['category_slug'])): ?>
+                                        <span class="badge badge-cyan category-slug"
+                                            onclick="window.location='<?= blogCategoryUrl($blog['category_slug']) ?>'"
+                                            style="cursor:pointer;">
+                                            <?= htmlspecialchars($blog['category_name']) ?>
+                                        </span>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="blog-content">
+                                        <ul class="entry-meta meta-item">
+                                            <li>
+                                                <div class="post-author">
+                                                    <a href="<?= htmlspecialchars($blog['author_url'] ?? '#') ?>">
+                                                        <?php if (!empty($blog['author_photo'])): ?>
+                                                        <img src="<?= htmlspecialchars($blog['author_photo']) ?>"
+                                                            alt="<?= htmlspecialchars($blog['author_name'] ?? '') ?>">
+                                                        <?php endif; ?>
+                                                        <span><?= htmlspecialchars($blog['author_name'] ?? 'RK Hospital') ?></span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <i class="isax isax-calendar-1 me-1"></i>
+                                                <?= formatDate($blog['published_at']) ?>
+                                            </li>
+                                        </ul>
+                                        <h3 class="blog-title">
+                                            <a href="<?= SITE_URL ?>/blog/<?= htmlspecialchars($blog['slug']) ?>">
+                                                <?= htmlspecialchars($blog['title']) ?>
                                             </a>
-                                            <span class="badge badge-cyan category-slug">
-                                                <?= htmlspecialchars($blog['category_name']) ?>
-                                            </span>
-                                        </div>
-                                        <div class="blog-content">
-                                            <ul class="entry-meta meta-item">
-                                                <li>
-                                                    <div class="post-author">
-                                                        <a href="<?= htmlspecialchars($blog['author_url']) ?>">
-                                                            <img src="<?= htmlspecialchars($blog['author_photo']) ?>"
-                                                                 alt="<?= htmlspecialchars($blog['author_name']) ?>">
-                                                            <span><?= htmlspecialchars($blog['author_name']) ?></span>
-                                                        </a>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <i class="isax isax-calendar-1 me-1"></i>
-                                                    <?= formatDate($blog['published_at']) ?>
-                                                </li>
-                                            </ul>
-                                            <h3 class="blog-title">
-                                                <a href="blog/<?= htmlspecialchars($blog['slug']) ?>">
-                                                    <?= htmlspecialchars($blog['title']) ?>
-                                                </a>
-                                            </h3>
-                                            <p class="mb-0"><?= htmlspecialchars($blog['excerpt']) ?></p>
-                                        </div>
+                                        </h3>
+                                        <p class="mb-0"><?= htmlspecialchars($blog['excerpt']) ?></p>
                                     </div>
                                 </div>
+                            </div>
                             <?php endwhile; ?>
 
-                        <?php else: ?>
+                            <?php else: ?>
                             <div class="col-12">
                                 <div class="alert alert-info mt-3">
                                     <?php if (!empty($search)): ?>
-                                        No blogs found for "<strong><?= htmlspecialchars($search) ?></strong>".
-                                        <a href="blog-grid.php">Clear search</a>
+                                    No blogs found for "<strong><?= htmlspecialchars($search) ?></strong>".
+                                    <a href="<?= SITE_URL ?>/blogs.php">Clear search</a>
                                     <?php elseif (!empty($cat_slug)): ?>
-                                        No blogs found in this category.
-                                        <a href="blog-grid.php">View all blogs</a>
+                                    No blogs found in this category.
+                                    <a href="<?= SITE_URL ?>/blogs.php">View all blogs</a>
                                     <?php else: ?>
-                                        No blogs published yet. Check back soon!
+                                    No blogs published yet. Check back soon!
                                     <?php endif; ?>
                                 </div>
                             </div>
-                        <?php endif; ?>
+                            <?php endif; ?>
 
-                    </div>
+                        </div>
 
-                    <!-- ─── Pagination ─────────────────────────────────────── -->
-                    <?php if ($total_pages > 1): ?>
+                        <!-- ─── Pagination ─────────────────────────────────────── -->
+                        <?php if ($total_pages > 1): ?>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="pagination dashboard-pagination mt-md-3 mt-0 mb-4">
                                     <ul>
                                         <!-- Prev -->
                                         <li>
-                                            <a href="?page=<?= max(1, $page - 1) ?>&category=<?= urlencode($cat_slug) ?>&search=<?= urlencode($search) ?>"
-                                               class="page-link prev <?= $page == 1 ? 'disabled' : '' ?>">Prev</a>
+                                            <a href="<?= blogPageUrl(max(1, $page - 1), $cat_slug, $search) ?>"
+                                                class="page-link prev <?= $page == 1 ? 'disabled' : '' ?>">Prev</a>
                                         </li>
 
                                         <!-- Page Numbers -->
                                         <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-                                            <li>
-                                                <a href="?page=<?= $i ?>&category=<?= urlencode($cat_slug) ?>&search=<?= urlencode($search) ?>"
-                                                   class="page-link <?= $i == $page ? 'active' : '' ?>">
-                                                    <?= $i ?>
-                                                </a>
-                                            </li>
+                                        <li>
+                                            <a href="<?= blogPageUrl($i, $cat_slug, $search) ?>"
+                                                class="page-link <?= $i == $page ? 'active' : '' ?>">
+                                                <?= $i ?>
+                                            </a>
+                                        </li>
                                         <?php endfor; ?>
 
                                         <!-- Next -->
                                         <li>
-                                            <a href="?page=<?= min($total_pages, $page + 1) ?>&category=<?= urlencode($cat_slug) ?>&search=<?= urlencode($search) ?>"
-                                               class="page-link next <?= $page == $total_pages ? 'disabled' : '' ?>">Next</a>
+                                            <a href="<?= blogPageUrl(min($total_pages, $page + 1), $cat_slug, $search) ?>"
+                                                class="page-link next <?= $page == $total_pages ? 'disabled' : '' ?>">Next</a>
                                         </li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
-                    <?php endif; ?>
-                    <!-- /Pagination -->
+                        <?php endif; ?>
+                        <!-- /Pagination -->
 
-                </div>
-                <!-- /Blog Grid -->
-
-                <!-- ─── Sidebar ────────────────────────────────────────────── -->
-                <div class="col-lg-4 col-md-12 sidebar-right theiaStickySidebar">
-
-                    <!-- Search -->
-                    <div class="card search-widget">
-                        <div class="card-body">
-                            <form class="search-form" method="GET" action="blog-grid.php">
-                                <div class="input-group">
-                                    <input type="text" name="search"
-                                           placeholder="Search..."
-                                           value="<?= htmlspecialchars($search) ?>"
-                                           class="form-control">
-                                    <button type="submit" class="btn btn-primary">
-                                        <i class="isax isax-search-normal"></i>
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
                     </div>
-                    <!-- /Search -->
+                    <!-- /Blog Grid -->
 
-                    <!-- Latest Posts -->
-                    <div class="card post-widget">
-                        <div class="card-body">
-                            <h5 class="mb-3">Latest News</h5>
-                            <ul class="latest-posts">
-                                <?php
+                    <!-- ─── Sidebar ────────────────────────────────────────────── -->
+                    <div class="col-lg-4 col-md-12 sidebar-right theiaStickySidebar">
+
+                        <!-- Search -->
+                        <div class="card search-widget">
+                            <div class="card-body">
+                                <form class="search-form" method="GET" action="<?= SITE_URL ?>/blogs.php">
+                                    <div class="input-group">
+                                        <input type="text" name="search" placeholder="Search..."
+                                            value="<?= htmlspecialchars($search) ?>" class="form-control">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="isax isax-search-normal"></i>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- /Search -->
+
+                        <!-- Latest Posts -->
+                        <div class="card post-widget">
+                            <div class="card-body">
+                                <h5 class="mb-3">Latest News</h5>
+                                <ul class="latest-posts">
+                                    <?php
                                 $latest_res->data_seek(0);
                                 while ($latest = $latest_res->fetch_assoc()):
                                 ?>
                                     <li>
                                         <div class="post-thumb">
-                                            <a href="blog/<?= htmlspecialchars($latest['slug']) ?>">
-                                                <img class="img-fluid"
-                                                     src="<?= htmlspecialchars($latest['image']) ?>"
-                                                     alt="<?= htmlspecialchars($latest['title']) ?>">
+                                            <a href="<?= SITE_URL ?>/blog/<?= htmlspecialchars($latest['slug']) ?>">
+                                                <img class="img-fluid" src="<?= htmlspecialchars($latest['image']) ?>"
+                                                    alt="<?= htmlspecialchars($latest['title']) ?>">
                                             </a>
                                         </div>
                                         <div class="post-info">
                                             <p><?= formatDate($latest['published_at']) ?></p>
                                             <h4>
-                                                <a href="blog/<?= htmlspecialchars($latest['slug']) ?>">
+                                                <a href="<?= SITE_URL ?>/blog/<?= htmlspecialchars($latest['slug']) ?>">
                                                     <?= htmlspecialchars($latest['title']) ?>
                                                 </a>
                                             </h4>
                                         </div>
                                     </li>
-                                <?php endwhile; ?>
-                            </ul>
+                                    <?php endwhile; ?>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-                    <!-- /Latest Posts -->
+                        <!-- /Latest Posts -->
 
-                    <!-- Categories -->
-                    <div class="card category-widget">
-                        <div class="card-body">
-                            <h5 class="mb-3">Categories</h5>
-                            <ul class="categories">
-                                <?php
+                        <!-- Categories -->
+                        <div class="card category-widget">
+                            <div class="card-body">
+                                <h5 class="mb-3">Categories</h5>
+                                <ul class="categories">
+                                    <?php
                                 $categories_res->data_seek(0);
                                 while ($cat = $categories_res->fetch_assoc()):
-                                    $active = ($cat_slug === $cat['slug']) ? 'style="font-weight:600;"' : '';
+                                    $active = ($cat_slug === $cat['slug']) ? 'style="font-weight:600; color:#d32f2f;"' : '';
                                 ?>
                                     <li>
-                                        <a href="blog-grid.php?category=<?= urlencode($cat['slug']) ?>" <?= $active ?>>
+                                        <!-- Clean URL: /blogs/gynecology -->
+                                        <a href="<?= blogCategoryUrl($cat['slug']) ?>" <?= $active ?>>
                                             <?= htmlspecialchars($cat['name']) ?>
                                             <span>(<?= $cat['blog_count'] ?>)</span>
                                         </a>
                                     </li>
-                                <?php endwhile; ?>
-                                <?php if (!empty($cat_slug)): ?>
-                                    <li><a href="blog-grid.php">View All</a></li>
-                                <?php endif; ?>
-                            </ul>
+                                    <?php endwhile; ?>
+                                    <?php if (!empty($cat_slug)): ?>
+                                    <li><a href="<?= SITE_URL ?>/blogs.php">View All</a></li>
+                                    <?php endif; ?>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-                    <!-- /Categories -->
+                        <!-- /Categories -->
 
-                    <!-- Tags -->
-                    <div class="card tags-widget">
-                        <div class="card-body">
-                            <h5 class="mb-3">Tags</h5>
-                            <ul class="tags">
-                                <?php foreach ($all_tags as $tag): ?>
+                        <div class="card tags-widget">
+                            <div class="card-body">
+                                <h5 class="mb-3">Tags</h5>
+                                <ul class="tags">
+                                    <?php foreach ($all_tags as $tag): ?>
                                     <li>
-                                        <a href="blog-grid.php?search=<?= urlencode($tag) ?>" class="tag">
+                                        <a href="<?= SITE_URL ?>/blogs/<?= urlencode($tag) ?>" class="tag">
                                             <?= htmlspecialchars($tag) ?>
                                         </a>
                                     </li>
-                                <?php endforeach; ?>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- /Tags -->
-
-                </div>
-                <!-- /Sidebar -->
-
-            </div>
-        </div>
-    </div>
-    <!-- /Page Content -->
-
-    <!-- Footer -->
-    <footer class="footer inner-footer">
-        <div class="footer-top">
-            <div class="container">
-                <div class="row align-items-start">
-                    <div class="col-xl-2 col-lg-3 col-md-6">
-                        <div class="footer-widget">
-                            <div class="footer-logo mb-3">
-                                <img src="assets/img/RK-Logo.png" alt="RK Hospital Logo" class="img-fluid logo">
+                                    <?php endforeach; ?>
+                                </ul>
                             </div>
-                            <p>Dr. Agrawal's R.K. Hospital provides quality healthcare in Nagpur with advanced medical facilities and compassionate care.</p>
                         </div>
+
                     </div>
-                    <div class="col-xl-2 col-lg-3 col-md-6">
-                        <div class="footer-widget footer-menu">
-                            <h6 class="footer-title">Quick Links</h6>
-                            <ul>
-                                <li><a href="index-7.html">Home</a></li>
-                                <li><a href="about-us.html">About Us</a></li>
-                                <li><a href="two-doctor.html">Doctors</a></li>
-                                <li><a href="contact-us">Contact Us</a></li>
-                            </ul>
+                    <!-- /Sidebar -->
+
+                </div>
+            </div>
+        </div>
+        <!-- /Page Content -->
+
+        <!-- Footer -->
+        <footer class="footer inner-footer">
+            <div class="footer-top">
+                <div class="container">
+                    <div class="row align-items-start">
+                        <div class="col-xl-2 col-lg-3 col-md-6">
+                            <div class="footer-widget">
+                                <div class="footer-logo mb-3">
+                                    <img src="<?= SITE_URL ?>/assets/img/RK-Logo.png" alt="RK Hospital Logo"
+                                        class="img-fluid logo">
+                                </div>
+                                <p>Dr. Agrawal's R.K. Hospital provides quality healthcare in Nagpur with advanced
+                                    medical facilities and compassionate care.</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-xl-2 col-lg-3 col-md-6">
-                        <div class="footer-widget footer-menu">
-                            <h6 class="footer-title">Treatments</h6>
-                            <ul>
-                                <li><a href="orthopedic-services.html">Orthopedic Services</a></li>
-                                <li><a href="gynecology-services.html">Gynecology Services</a></li>
-                                <li><a href="hospital-services.html">Hospital Services</a></li>
-                            </ul>
+                        <div class="col-xl-2 col-lg-3 col-md-6">
+                            <div class="footer-widget footer-menu">
+                                <h6 class="footer-title">Quick Links</h6>
+                                <ul>
+                                    <li><a href="<?= SITE_URL ?>/">Home</a></li>
+                                    <li><a href="<?= SITE_URL ?>/about-us.php">About Us</a></li>
+                                    <li><a href="<?= SITE_URL ?>/index.php#doctors">Doctors</a></li>
+                                    <li><a href="<?= SITE_URL ?>/contact-us.php">Contact Us</a></li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-xl-2 col-lg-3 col-md-6">
-                        <div class="footer-widget footer-menu">
-                            <h6 class="footer-title">Policies</h6>
-                            <ul>
-                                <li><a href="#">Legal Notice</a></li>
-                                <li><a href="#">Privacy Policy</a></li>
-                                <li><a href="#">Refund Policy</a></li>
-                            </ul>
+                        <div class="col-xl-2 col-lg-3 col-md-6">
+                            <div class="footer-widget footer-menu">
+                                <h6 class="footer-title">Treatments</h6>
+                                <ul>
+                                    <li><a href="<?= SITE_URL ?>/services.php">All Services</a></li>
+                                    <li><a href="<?= blogCategoryUrl('orthopedic') ?>">Orthopedic Blogs</a></li>
+                                    <li><a href="<?= blogCategoryUrl('gynecology') ?>">Gynecology Blogs</a></li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-12 col-md-12">
-                        <div class="footer-widget">
-                            <h6 class="footer-title">Reach Us</h6>
-                            <p class="mb-2"><strong>Dr. Agrawal's R.K. Hospital</strong><br>Central Avenue, Ladpura<br>Itwari, Nagpur</p>
-                            <p class="mb-1"><strong>Phone:</strong> 097660 57372</p>
-                            <p class="mb-0"><strong>Email:</strong> info@rkhospital.com</p>
+                        <div class="col-xl-2 col-lg-3 col-md-6">
+                            <div class="footer-widget footer-menu">
+                                <h6 class="footer-title">Policies</h6>
+                                <ul>
+                                    <li><a href="#">Legal Notice</a></li>
+                                    <li><a href="#">Privacy Policy</a></li>
+                                    <li><a href="#">Refund Policy</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-12 col-md-12">
+                            <div class="footer-widget">
+                                <h6 class="footer-title">Reach Us</h6>
+                                <p class="mb-2"><strong>Dr. Agrawal's R.K. Hospital</strong><br>Central Avenue,
+                                    Ladpura<br>Itwari, Nagpur</p>
+                                <p class="mb-1"><strong>Phone:</strong> 097660 57372</p>
+                                <p class="mb-0"><strong>Email:</strong> info@rkhospital.com</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="footer-bottom">
-            <div class="container">
-                <p class="text-center mb-0">Copyright &copy; <?= date('Y') ?> Dr. Agrawal's R.K. Hospital, Nagpur. All Rights Reserved.</p>
+            <div class="footer-bottom">
+                <div class="container">
+                    <p class="text-center mb-0">Copyright &copy; <?= date('Y') ?> Dr. Agrawal's R.K. Hospital, Nagpur.
+                        All Rights Reserved.</p>
+                </div>
             </div>
-        </div>
-    </footer>
-    <!-- /Footer -->
+        </footer>
+        <!-- /Footer -->
 
-</div>
-<!-- /Main Wrapper -->
+    </div>
+    <!-- /Main Wrapper -->
 
-<script src="assets/js/jquery-3.7.1.min.js"></script>
-<script src="assets/js/bootstrap.bundle.min.js"></script>
-<script src="assets/plugins/theia-sticky-sidebar/ResizeSensor.js"></script>
-<script src="assets/plugins/theia-sticky-sidebar/theia-sticky-sidebar.js"></script>
-<script src="assets/plugins/fancybox/jquery.fancybox.min.js"></script>
-<script src="assets/js/script.js"></script>
+    <script src="<?= SITE_URL ?>/assets/js/jquery-3.7.1.min.js"></script>
+    <script src="<?= SITE_URL ?>/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="<?= SITE_URL ?>/assets/plugins/theia-sticky-sidebar/ResizeSensor.js"></script>
+    <script src="<?= SITE_URL ?>/assets/plugins/theia-sticky-sidebar/theia-sticky-sidebar.js"></script>
+    <script src="<?= SITE_URL ?>/assets/plugins/fancybox/jquery.fancybox.min.js"></script>
+    <script src="<?= SITE_URL ?>/assets/js/script.js"></script>
 </body>
+
 </html>
 <?php $conn->close(); ?>
