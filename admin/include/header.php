@@ -240,9 +240,9 @@ if (canAccess('blogs')) {
 
 // Services
 if (canAccess('services')) {
-    $_menuItems[] = ['section'=>'Services', 'icon'=>'fe fe-briefcase', 'label'=>'All Services', 'url'=>$_base.'services/'];
+    $_menuItems[] = ['section'=>'Services', 'icon'=>'fe fe-layout', 'label'=>'All Services', 'url'=>$_base.'services/'];
     if (!hasRole('viewer'))
-        $_menuItems[] = ['section'=>'Services','icon'=>'fe fe-briefcase','label'=>'Add Service', 'url'=>$_base.'services/add'];
+        $_menuItems[] = ['section'=>'Services','icon'=>'fe fe-layout','label'=>'Add Service', 'url'=>$_base.'services/add'];
 }
 
 // Profile (always)

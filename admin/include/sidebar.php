@@ -101,7 +101,7 @@ function sbOpen(string $prefix, string $active): string {
                 <?php if (canAccess('services')): ?>
                 <li<?= sbParent('services', $activePage) ?>>
                     <a href="#">
-                        <i class="fe fe-briefcase"></i> <span>Services</span>
+                        <i class="fe fe-layout"></i> <span>Services</span>
                         <span class="menu-arrow"></span>
                     </a>
                     <ul style="display:<?= sbOpen('services', $activePage) ?>;">

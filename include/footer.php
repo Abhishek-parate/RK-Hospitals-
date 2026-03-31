@@ -8,7 +8,8 @@
                 <div class="col-xl-4 col-lg-4 col-md-6 mb-4 mb-lg-0">
                     <div class="footer-widget">
                         <a href="<?= $_base ?>" class="d-inline-block mb-3">
-                            <img src="<?= $_base ?>assets/img/logo.svg" alt="RK Hospital" height="36">
+                           <img src="<?= $_base ?>assets/img/home/rk-logo.png" alt="RK Hospital" 
+     style="height:80px; width:auto; max-width:200px; object-fit:contain;">
                         </a>
                         <p class="text-dark mb-4">
                             R.K. Hospital, Nagpur — providing compassionate, quality healthcare for over 20 years. Your health is our priority.

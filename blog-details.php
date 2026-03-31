@@ -352,7 +352,7 @@ $meta_desc = truncate(strip_tags($blog['content']), 160);
                                 <p class="mb-3" style="font-size: 14px; opacity: 0.9; color: white;">
                                     Book an appointment with our specialist doctors at R.K. Hospital, Nagpur.
                                 </p>
-                                <a href="contact-us.html" class="btn btn-light fw-semibold w-100">
+                                <a href="contact-us" class="btn btn-light fw-semibold w-100">
                                     <i class="isax isax-calendar-add me-2"></i>Book Appointment
                                 </a>
                                 <p class="mt-2 mb-0" style="font-size: 13px; opacity: 0.85; color: wheat;">
@@ -385,7 +385,7 @@ $meta_desc = truncate(strip_tags($blog['content']), 160);
                                     <li><a href="index.php">Home</a></li>
                                     <li><a href="about-us.html">About Us</a></li>
                                     <li><a href="two-doctor.html">Doctors</a></li>
-                                    <li><a href="contact-us.html">Contact Us</a></li>
+                                    <li><a href="contact-us">Contact Us</a></li>
                                 </ul>
                             </div>
                         </div>
