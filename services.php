@@ -303,7 +303,7 @@ while ($row = $tags_res->fetch_assoc()) {
                             <i class="fa-solid fa-calendar-check fa-2x mb-3"></i>
                             <h5 class="mb-2">Need a Consultation?</h5>
                             <p class="mb-3" style="font-size:0.9rem; opacity:0.9;">Book an appointment with our specialists today.</p>
-                            <a href="contact-us.html"
+                            <a href="contact-us"
                                class="btn btn-light btn-sm fw-semibold"
                                style="color:#1a6ef5;">
                                 Book Now
@@ -340,7 +340,7 @@ while ($row = $tags_res->fetch_assoc()) {
                                 <li><a href="index-7.html">Home</a></li>
                                 <li><a href="about-us.html">About Us</a></li>
                                 <li><a href="two-doctor.html">Doctors</a></li>
-                                <li><a href="contact-us.html">Contact Us</a></li>
+                                <li><a href="contact-us">Contact Us</a></li>
                             </ul>
                         </div>
                     </div>

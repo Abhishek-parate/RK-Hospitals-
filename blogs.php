@@ -322,7 +322,7 @@ while ($row = $tags_res->fetch_assoc()) {
                                 <li><a href="index-7.html">Home</a></li>
                                 <li><a href="about-us.html">About Us</a></li>
                                 <li><a href="two-doctor.html">Doctors</a></li>
-                                <li><a href="contact-us.html">Contact Us</a></li>
+                                <li><a href="contact-us">Contact Us</a></li>
                             </ul>
                         </div>
                     </div>

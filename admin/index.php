@@ -196,7 +196,7 @@ require_once __DIR__ . '/include/head.php';
                         <div class="card-body">
                             <div class="dash-widget-header">
                                 <span class="dash-widget-icon text-warning border-warning">
-                                    <i class="fe fe-briefcase"></i>
+                                    <i class="fe fe-layout"></i>
                                 </span>
                                 <div class="dash-count">
                                     <h3><?= $totalServices ?></h3>

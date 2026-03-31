@@ -8,7 +8,8 @@
                 <div class="col-xl-4 col-lg-4 col-md-6 mb-4 mb-lg-0">
                     <div class="footer-widget">
                         <a href="<?= $_base ?>" class="d-inline-block mb-3">
-                            <img src="<?= $_base ?>assets/img/logo.svg" alt="RK Hospital" height="36">
+                           <img src="<?= $_base ?>assets/img/home/rk-logo.png" alt="RK Hospital" 
+     style="height:80px; width:auto; max-width:200px; object-fit:contain;">
                         </a>
                         <p class="text-dark mb-4">
                             R.K. Hospital, Nagpur — providing compassionate, quality healthcare for over 20 years. Your health is our priority.
@@ -63,15 +64,7 @@
                                 <a href="mailto:info@rkhospital.in" class="text-dark">info@rkhospital.in</a>
                             </li>
                         </ul>
-                        <h6 class="footer-title">Newsletter</h6>
-                        <div class="subscribe-input">
-                            <form action="<?= $_base ?>contact-us" method="get">
-                                <input type="email" name="email" class="form-control" placeholder="Enter your email">
-                                <button type="submit" class="btn btn-md btn-primary-gradient d-inline-flex align-items-center">
-                                    <i class="isax isax-send-25 me-1"></i>Subscribe
-                                </button>
-                            </form>
-                        </div>
+                       
                     </div>
                 </div>
             </div>

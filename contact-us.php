@@ -121,7 +121,7 @@
             <div class="container">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.php"><i class="fa-solid fa-house me-1"></i>Home</a></li>
+                        <li class="breadcrumb-item"><a href="/"><i class="fa-solid fa-house me-1"></i>Home</a></li>
                         <li class="breadcrumb-item active">Contact Us</li>
                     </ol>
                 </nav>
@@ -482,7 +482,7 @@
     <!-- Offcanvas (same as index) -->
     <div class="offcanvas offcanvas-offset offcanvas-end support_popup" tabindex="-1" id="support_item">
         <div class="offcanvas-header">
-            <a href="index.php"><img src="assets/img/logo.svg" alt="logo" class="img-fluid logo"></a>
+            <a href="/"><img src="assets/img/logo.svg" alt="logo" class="img-fluid logo"></a>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
                 <i class="isax isax-close-circle"></i>
             </button>
