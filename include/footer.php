@@ -11,8 +11,7 @@
                     <div class="footer-widget">
                         <a href="<?= $_base ?>" class="d-inline-block mb-3">
                             <img src="<?= $_base ?>assets/img/team/rk-hospital-best-hospital-in-nagpur.png"
-                                 alt="RK Hospital"
-                                 style="height:80px; width:auto; max-width:200px; object-fit:contain;">
+                                alt="RK Hospital" style="height:80px; width:auto; max-width:200px; object-fit:contain;">
                         </a>
 
                         <p class="text-dark mb-4">
@@ -38,7 +37,7 @@
                             <li><a href="<?= $_base ?>about-us">About Us</a></li>
                             <li><a href="<?= $_base ?>doctors">Our Doctors</a></li>
                             <li><a href="<?= $_base ?>services">Services</a></li>
-                           
+
                         </ul>
                     </div>
                 </div>
@@ -63,12 +62,33 @@
                             <li><a href="<?= $_base ?>privacy-policy">Privacy Policy</a></li>
                             <li><a href="<?= $_base ?>cancellation-policy">Cancellation Policy</a></li>
                             <li><a href="<?= $_base ?>terms-conditions">Terms & Conditions</a></li>
-                             <li><a href="<?= $_base ?>contact-us">Contact Us</a></li>
+                            <li><a href="<?= $_base ?>contact-us">Contact Us</a></li>
                         </ul>
                     </div>
                 </div>
 
-            
+                <!-- Contact + Newsletter -->
+                <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+                    <div class="footer-widget">
+                        <h6 class="footer-title">Contact Us</h6>
+
+                        <ul class="list-unstyled mb-3">
+                            <li class="mb-2">
+                                <i class="fa fa-map-marker-alt me-2 text-primary"></i>
+                                RK Hospital, Nagpur, Maharashtra
+                            </li>
+                            <li class="mb-2">
+                                <i class="fa fa-phone me-2 text-primary"></i>
+                                <a href="tel:+910712000000">+91 0712 000 000</a>
+                            </li>
+                            <li class="mb-3">
+                                <i class="fa fa-envelope me-2 text-primary"></i>
+                                <a href="mailto:info@rkhospital.in">info@rkhospital.in</a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
 
             </div>
         </div>
