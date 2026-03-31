@@ -5,7 +5,7 @@ require_once 'include/config.php';
 $slug = isset($_GET['slug']) ? clean($_GET['slug']) : '';
 
 if (empty($slug)) {
-    header("Location: blog-grid.php");
+    header("Location: " . SITE_URL . "/blogs.php");
     exit;
 }
 
@@ -94,7 +94,7 @@ if (!$blog_res || $blog_res->num_rows === 0) {
                 <a href="index.php" class="btn btn-primary me-2">
                     <i class="fa fa-home me-1"></i> Go to Home
                 </a>
-                <a href="blog-grid.php" class="btn btn-outline-primary">
+                <a href="<?= SITE_URL ?>/blogs.php" class="btn btn-outline-primary">
                     <i class="fa fa-newspaper-o me-1"></i> Browse Blogs
                 </a>
             </div>
@@ -272,7 +272,7 @@ $meta_desc = truncate(strip_tags($blog['content']), 160);
 
                         <div class="card search-widget">
                             <div class="card-body">
-                                <form class="search-form" method="GET" action="blog-grid.php">
+                                <form class="search-form" method="GET" action="<?= SITE_URL ?>/blogs.php">
                                     <div class="input-group">
                                         <input type="text" name="search" placeholder="Search articles..."
                                             class="form-control">
@@ -294,7 +294,7 @@ $meta_desc = truncate(strip_tags($blog['content']), 160);
                                         $active = ($blog['category_slug'] === $cat['slug']) ? 'style="font-weight:600;"' : '';
                                     ?>
                                     <li>
-                                        <a href="blog-grid.php?category=<?= urlencode($cat['slug']) ?>" <?= $active ?>>
+                                        <a href="<?= SITE_URL ?>/blogs/<?= urlencode($cat['slug']) ?>" <?= $active ?>>
                                             <?= htmlspecialchars($cat['name']) ?>
                                             <span>(<?= $cat['blog_count'] ?>)</span>
                                         </a>
@@ -310,7 +310,7 @@ $meta_desc = truncate(strip_tags($blog['content']), 160);
                                     <?php if ($latest_res) { while ($latest = $latest_res->fetch_assoc()): ?>
                                     <li>
                                         <div class="post-thumb">
-                                            <a href="blog/<?= htmlspecialchars($latest['slug']) ?>">
+                                            <a href="<?= SITE_URL ?>/blog/<?= htmlspecialchars($latest['slug']) ?>">
                                                 <img class="img-fluid" src="<?= asset($latest['image']) ?>"
                                                     alt="<?= htmlspecialchars($latest['title']) ?>">
                                             </a>
@@ -318,7 +318,7 @@ $meta_desc = truncate(strip_tags($blog['content']), 160);
                                         <div class="post-info">
                                             <p><?= formatDate($latest['published_at']) ?></p>
                                             <h4>
-                                                <a href="blog/<?= htmlspecialchars($latest['slug']) ?>">
+                                                <a href="<?= SITE_URL ?>/blog/<?= htmlspecialchars($latest['slug']) ?>">
                                                     <?= htmlspecialchars($latest['title']) ?>
                                                 </a>
                                             </h4>
@@ -352,7 +352,7 @@ $meta_desc = truncate(strip_tags($blog['content']), 160);
                                 <p class="mb-3" style="font-size: 14px; opacity: 0.9; color: white;">
                                     Book an appointment with our specialist doctors at R.K. Hospital, Nagpur.
                                 </p>
-                                <a href="contact-us" class="btn btn-light fw-semibold w-100">
+                                <a href="contact-us.html" class="btn btn-light fw-semibold w-100">
                                     <i class="isax isax-calendar-add me-2"></i>Book Appointment
                                 </a>
                                 <p class="mt-2 mb-0" style="font-size: 13px; opacity: 0.85; color: wheat;">
@@ -385,7 +385,7 @@ $meta_desc = truncate(strip_tags($blog['content']), 160);
                                     <li><a href="index.php">Home</a></li>
                                     <li><a href="about-us.html">About Us</a></li>
                                     <li><a href="two-doctor.html">Doctors</a></li>
-                                    <li><a href="contact-us">Contact Us</a></li>
+                                    <li><a href="contact-us.html">Contact Us</a></li>
                                 </ul>
                             </div>
                         </div>
