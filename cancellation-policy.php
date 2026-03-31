@@ -12,8 +12,8 @@
     <title>Cancellation & Refund Policy | Dr. Agrawal's R.K. Hospital Nagpur</title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="<?php echo $base_url; ?>assets/img/favicon.png" type="image/x-icon">
-    <link rel="apple-touch-icon" sizes="180x180" href="<?php echo $base_url; ?>assets/img/apple-touch-icon.png">
+    <link rel="shortcut icon" href="<?php echo $base_url; ?>assets/img/RK-Logo.png" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="<?php echo $base_url; ?>assets/img/RK-Logo.png">
 
     <!-- Theme Settings Js -->
     <script src="assets/js/theme-script.js"></script>

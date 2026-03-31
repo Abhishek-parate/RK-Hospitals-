@@ -35,8 +35,8 @@ $meta_keywords    = "RK Hospital Nagpur, about RK Hospital, Dr Rahul Agrawal ort
 
     <title><?php echo htmlspecialchars($page_title); ?></title>
 
-    <link rel="shortcut icon" href="<?php echo $base_url; ?>assets/img/favicon.png" type="image/x-icon">
-    <link rel="apple-touch-icon" sizes="180x180" href="<?php echo $base_url; ?>assets/img/apple-touch-icon.png">
+    <link rel="shortcut icon" href="<?php echo $base_url; ?>assets/img/RK-Logo.png" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="<?php echo $base_url; ?>assets/img/RK-Logo.png">
 
     <script src="<?php echo $base_url; ?>assets/js/theme-script.js"></script>
 

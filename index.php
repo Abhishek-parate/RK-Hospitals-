@@ -583,8 +583,7 @@
     </style>
 </head>
 
-<body><a href="https://doccure.dreamstechnologies.com/cdn-cgi/content?id=9AwWJ6OYRjeADANYsu6BhO8Xh1spBbpICR_64ULwChU-1773164928.2015598-1.0.1.1-pqZR2On.5acTxHq8lZV9fTE0YFo5d6y17w8iArEoNAk"
-        aria-hidden="true" rel="nofollow noopener" style="display: none !important; visibility: hidden !important"></a>
+<body>
 
     <!-- Main Wrapper -->
     <div class="main-wrapper">

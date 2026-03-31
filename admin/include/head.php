@@ -9,7 +9,7 @@ $pageTitle = isset($pageTitle) ? $pageTitle : 'Dashboard';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RK Hospital - <?= htmlspecialchars($pageTitle) ?></title>
 
-    <link rel="shortcut icon" type="image/x-icon" href="<?= SITE_URL ?>/admin/assets/img/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="<?= SITE_URL ?>/admin/assets/img/RK-Logo.png">
     <link rel="stylesheet" href="<?= SITE_URL ?>/admin/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="<?= SITE_URL ?>/admin/assets/plugins/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="<?= SITE_URL ?>/admin/assets/css/feathericon.min.css">

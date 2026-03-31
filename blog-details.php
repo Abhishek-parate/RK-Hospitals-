@@ -39,7 +39,7 @@ if (!$blog_res || $blog_res->num_rows === 0) {
     <base href="<?= SITE_URL ?>/">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 - Blog Not Found | Dr. Agrawal's R.K. Hospital</title>
-    <link rel="shortcut icon" href="<?= asset('assets/img/favicon.png') ?>" type="image/x-icon">
+    <link rel="shortcut icon" href="<?= asset('assets/img/RK-Logo.png') ?>" type="image/x-icon">
     <link rel="stylesheet" href="<?= asset('assets/css/bootstrap.min.css') ?>">
     <link rel="stylesheet" href="<?= asset('assets/plugins/fontawesome/css/fontawesome.min.css') ?>">
     <link rel="stylesheet" href="<?= asset('assets/plugins/fontawesome/css/all.min.css') ?>">
@@ -162,8 +162,8 @@ $meta_desc = truncate(strip_tags($blog['content']), 160);
     <meta property="og:url" content="<?= SITE_URL ?>/blog/<?= urlencode($blog['slug']) ?>">
     <meta property="og:type" content="article">
 
-    <link rel="shortcut icon" href="<?= asset('assets/img/favicon.png') ?>" type="image/x-icon">
-    <link rel="apple-touch-icon" sizes="180x180" href="<?= asset('assets/img/apple-touch-icon.png') ?>">
+    <link rel="shortcut icon" href="<?= asset('assets/img/RK-Logo.png') ?>" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="<?= asset('assets/img/RK-Logo.png') ?>">
     <script src="<?= asset('assets/js/theme-script.js') ?>"></script>
     <link rel="stylesheet" href="<?= asset('assets/css/bootstrap.min.css') ?>">
     <link rel="stylesheet" href="<?= asset('assets/plugins/fontawesome/css/fontawesome.min.css') ?>">

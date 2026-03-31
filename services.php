@@ -76,8 +76,8 @@ while ($row = $tags_res->fetch_assoc()) {
     <meta name="keywords" content="hospital services, orthopedic, gynecology, RK Hospital Nagpur, medical care Nagpur">
     <meta name="author" content="Dr. Agrawal's R.K. Hospital">
 
-    <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png">
+    <link rel="shortcut icon" href="assets/img/RK-Logo.png" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/RK-Logo.png">
     <script src="assets/js/theme-script.js"></script>
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/plugins/fontawesome/css/fontawesome.min.css">

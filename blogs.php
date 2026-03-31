@@ -104,8 +104,8 @@ function blogPageUrl($pageNum, $catSlug, $searchStr) {
         content="hospital blog, orthopedic tips, gynecology advice, pregnancy care, RK Hospital Nagpur, health awareness">
     <meta name="author" content="Dr. Agrawal's R.K. Hospital">
 
-    <link rel="shortcut icon" href="<?= SITE_URL ?>/assets/img/favicon.png" type="image/x-icon">
-    <link rel="apple-touch-icon" sizes="180x180" href="<?= SITE_URL ?>/assets/img/apple-touch-icon.png">
+    <link rel="shortcut icon" href="<?= SITE_URL ?>/assets/img/RK-Logo.png" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="<?= SITE_URL ?>/assets/img/RK-Logo.png">
     <script src="<?= SITE_URL ?>/assets/js/theme-script.js"></script>
     <link rel="stylesheet" href="<?= SITE_URL ?>/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="<?= SITE_URL ?>/assets/plugins/fontawesome/css/fontawesome.min.css">
