@@ -130,7 +130,7 @@ if ($lbRes) {
         </div>
 
         <div class="text-center load-item wow fadeInUp mt-5" data-wow-duration="1s">
-            <a href="blog-grid.php" class="btn btn-dark d-inline-flex align-items-center">
+            <a href="blogs.php" class="btn btn-dark d-inline-flex align-items-center">
                 View All Blogs
                 <i class="isax isax-arrow-right-3 ms-2"></i>
             </a>

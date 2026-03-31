@@ -46,17 +46,36 @@ if (!$blog_res || $blog_res->num_rows === 0) {
     <link rel="stylesheet" href="<?= asset('assets/css/style.css') ?>">
     <style>
     .error-404-wrap {
-        min-height: 80vh; display: flex; align-items: center; justify-content: center;
-        text-align: center; padding: 60px 20px;
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 60px 20px;
     }
+
     .error-404-code {
-        font-size: 100px; font-weight: 800; color: #1a6ef5; line-height: 1; margin-bottom: 10px;
+        font-size: 100px;
+        font-weight: 800;
+        color: #1a6ef5;
+        line-height: 1;
+        margin-bottom: 10px;
     }
+
     .error-404-title {
-        font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 12px;
+        font-size: 26px;
+        font-weight: 700;
+        color: #1a1a2e;
+        margin-bottom: 12px;
     }
+
     .error-404-msg {
-        color: #6c757d; font-size: 15px; margin-bottom: 30px; max-width: 440px; margin-left: auto; margin-right: auto;
+        color: #6c757d;
+        font-size: 15px;
+        margin-bottom: 30px;
+        max-width: 440px;
+        margin-left: auto;
+        margin-right: auto;
     }
     </style>
 </head>
@@ -240,7 +259,7 @@ $meta_desc = truncate(strip_tags($blog['content']), 160);
                             <h4 class="mb-3 mt-4">Tags</h4>
                             <div class="d-flex align-items-center flex-wrap blog-tags gap-3 mb-4">
                                 <?php foreach ($tags as $tag): ?>
-                                <a href="blog-grid.php?search=<?= urlencode($tag) ?>" class="badge">
+                                <a href="<?= SITE_URL ?>/blogs/<?= urlencode($tag) ?>" class="badge">
                                     <?= htmlspecialchars($tag) ?>
                                 </a>
                                 <?php endforeach; ?>
@@ -316,7 +335,7 @@ $meta_desc = truncate(strip_tags($blog['content']), 160);
                                 <ul class="tags">
                                     <?php foreach ($tags as $tag): ?>
                                     <li>
-                                        <a href="blog-grid.php?search=<?= urlencode($tag) ?>" class="tag">
+                                        <a href="<?= SITE_URL ?>/blogs/<?= urlencode($tag) ?>" class="tag">
                                             <?= htmlspecialchars($tag) ?>
                                         </a>
                                     </li>
@@ -341,8 +360,8 @@ $meta_desc = truncate(strip_tags($blog['content']), 160);
                                 </p>
                             </div>
                         </div>
-                        </div>
                     </div>
+                </div>
             </div>
         </div>
         <footer class="footer inner-footer">
@@ -352,7 +371,8 @@ $meta_desc = truncate(strip_tags($blog['content']), 160);
                         <div class="col-xl-2 col-lg-3 col-md-6">
                             <div class="footer-widget">
                                 <div class="footer-logo mb-3">
-                                    <img src="<?= asset('assets/img/RK-Logo.png') ?>" alt="RK Hospital Logo" class="img-fluid logo">
+                                    <img src="<?= asset('assets/img/RK-Logo.png') ?>" alt="RK Hospital Logo"
+                                        class="img-fluid logo">
                                 </div>
                                 <p>Dr. Agrawal's R.K. Hospital provides quality healthcare in Nagpur with advanced
                                     medical facilities and compassionate care.</p>
@@ -408,7 +428,7 @@ $meta_desc = truncate(strip_tags($blog['content']), 160);
                 </div>
             </div>
         </footer>
-        </div>
+    </div>
     <script src="<?= asset('assets/js/jquery-3.7.1.min.js') ?>"></script>
     <script src="<?= asset('assets/js/bootstrap.bundle.min.js') ?>"></script>
     <script src="<?= asset('assets/plugins/theia-sticky-sidebar/ResizeSensor.js') ?>"></script>

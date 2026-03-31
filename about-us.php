@@ -19,7 +19,6 @@ $meta_keywords    = "RK Hospital Nagpur, about RK Hospital, Dr Rahul Agrawal ort
     <meta name="author" content="Dr. Agrawal's R.K. Hospital Nagpur">
     <meta name="robots" content="index, follow">
 
-    <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="<?php echo $base_url; ?>about-us.php">
     <meta property="og:title" content="<?php echo htmlspecialchars($page_title); ?>">
@@ -27,25 +26,20 @@ $meta_keywords    = "RK Hospital Nagpur, about RK Hospital, Dr Rahul Agrawal ort
     <meta property="og:image" content="<?php echo $base_url; ?>assets/img/home/about-doctor1.webp">
     <meta property="og:site_name" content="Dr. Agrawal's R.K. Hospital Nagpur">
 
-    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="<?php echo htmlspecialchars($page_title); ?>">
     <meta name="twitter:description" content="<?php echo htmlspecialchars($meta_description); ?>">
     <meta name="twitter:image" content="<?php echo $base_url; ?>assets/img/home/about-doctor1.webp">
 
-    <!-- Canonical URL -->
     <link rel="canonical" href="<?php echo $base_url; ?>about-us.php">
 
     <title><?php echo htmlspecialchars($page_title); ?></title>
 
-    <!-- Favicon -->
     <link rel="shortcut icon" href="<?php echo $base_url; ?>assets/img/favicon.png" type="image/x-icon">
     <link rel="apple-touch-icon" sizes="180x180" href="<?php echo $base_url; ?>assets/img/apple-touch-icon.png">
 
-    <!-- Theme Script -->
     <script src="<?php echo $base_url; ?>assets/js/theme-script.js"></script>
 
-    <!-- Core CSS -->
     <link rel="stylesheet" href="<?php echo $base_url; ?>assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="<?php echo $base_url; ?>assets/css/animate.css">
     <link rel="stylesheet" href="<?php echo $base_url; ?>assets/plugins/fontawesome/css/fontawesome.min.css">
@@ -56,10 +50,8 @@ $meta_keywords    = "RK Hospital Nagpur, about RK Hospital, Dr Rahul Agrawal ort
     <link rel="stylesheet" href="<?php echo $base_url; ?>assets/plugins/fancybox/jquery.fancybox.min.css">
     <link rel="stylesheet" href="<?php echo $base_url; ?>assets/css/style.css">
 
-    <!-- About Page Custom CSS (no :root redefinition — uses existing variables) -->
     <link rel="stylesheet" href="<?php echo $base_url; ?>assets/css/about-us.css">
 
-    <!-- Structured Data: Hospital -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -88,7 +80,8 @@ $meta_keywords    = "RK Hospital Nagpur, about RK Hospital, Dr Rahul Agrawal ort
     }
     </script>
 
-    <style>/* ════════════════════════════════════════════════
+    <style>
+/* ════════════════════════════════════════════════
    OUR STORY SECTION
 ════════════════════════════════════════════════ */
 .rk-our-story-section {
@@ -461,27 +454,73 @@ $meta_keywords    = "RK Hospital Nagpur, about RK Hospital, Dr Rahul Agrawal ort
     .story-cta-row .rk-btn-primary,
     .story-cta-row .rk-btn-outline { text-align: center; justify-content: center; }
 }
-        </style>
+
+/* ════════════════════════════════════════════════
+   AWARDS & ACCREDITATIONS OVERRIDE (Top Icon Layout)
+════════════════════════════════════════════════ */
+.rk-award-card {
+    display: flex !important;
+    flex-direction: column !important; /* Forces top-to-bottom */
+    align-items: center !important;    /* Centers horizontally */
+    text-align: center;                /* Centers text */
+    background: #fff;
+    padding: 40px 24px;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+    border: 1px solid #eef0f4;
+    height: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.rk-award-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 50px rgba(0,0,0,0.1);
+}
+
+.rk-award-card .aw-icon {
+    width: 72px;
+    height: 72px;
+    background: linear-gradient(135deg, #dc3545, #b02a37);
+    color: #fff;
+    font-size: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 18px;
+    margin-bottom: 24px; /* Space between icon and text */
+    box-shadow: 0 10px 24px rgba(220,53,69,0.35);
+}
+
+.rk-award-card .aw-content h4 {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #1a1a2e;
+    margin-bottom: 12px;
+    line-height: 1.4;
+}
+
+.rk-award-card .aw-content p {
+    font-size: 0.9rem;
+    color: #5a5a78;
+    line-height: 1.7;
+    margin-bottom: 0;
+}
+    </style>
 </head>
 
 <body>
 
 
 
-    <!-- Main Wrapper -->
     <div class="main-wrapper">
 
         <?php include 'include/header.php'; ?>
 
-        <!-- ══════════════════════════════════════════
-             SECTION 1: ABOUT HERO BANNER
-        ══════════════════════════════════════════ -->
         <section class="contact-hero-banner">
             <img src="<?= $base_url ?>assets/img/home/image-crousel2.webp" alt="RK Hospital Nagpur About Us" class="banner-img">
             <div class="banner-grid-pattern"></div>
             <div class="banner-overlay"></div>
 
-            <!-- Floating Stat Badges -->
             <div class="banner-stat-badge badge-left">
                 <div class="badge-icon"><i class="fa-solid fa-award"></i></div>
                 <div class="badge-text">
@@ -523,7 +562,6 @@ $meta_keywords    = "RK Hospital Nagpur, about RK Hospital, Dr Rahul Agrawal ort
             </div>
         </section>
 
-        <!-- Breadcrumb -->
         <div class="breadcrumb-strip">
             <div class="container">
                 <nav aria-label="breadcrumb">
@@ -536,13 +574,10 @@ $meta_keywords    = "RK Hospital Nagpur, about RK Hospital, Dr Rahul Agrawal ort
         </div>
 
         </section>
-        <!-- /Speciality Section -->
-        <!-- About Us -->
-      <section class="about-section">
+        <section class="about-section">
     <div class="container">
         <div class="row align-items-center">
             
-            <!-- Images (same as your code, just improve alt text) -->
             <div class="col-lg-6 col-md-12">
                 <div class="about-img-info">
                     <div class="row">
@@ -570,7 +605,6 @@ $meta_keywords    = "RK Hospital Nagpur, about RK Hospital, Dr Rahul Agrawal ort
                 </div>
             </div>
 
-            <!-- Content -->
             <div class="col-lg-6 col-md-12">
                 <div class="section-inner-header about-inner-header">
                     <h6>About Dr. Agrawal's R.K. Hospital</h6>
@@ -581,7 +615,7 @@ $meta_keywords    = "RK Hospital Nagpur, about RK Hospital, Dr Rahul Agrawal ort
                 </div>
 
                 <div class="about-content">
-                    <div class="about-content-details">
+                    <div class="about-content-details" style="text-align: justify;">
 
                         <p>
                             Dr. Agrawal's R.K. Hospital is one of the most trusted and advanced healthcare centers in Nagpur, specializing in Orthopedics and Gynecology. Known for its excellence in robotic knee replacement, hip replacement, spine surgery, and trauma care, the hospital provides world-class treatment using modern technology and highly experienced specialists.
@@ -597,7 +631,6 @@ $meta_keywords    = "RK Hospital Nagpur, about RK Hospital, Dr Rahul Agrawal ort
 
                     </div>
 
-                    <!-- Contact -->
                     <div class="about-contact">
                         <div class="about-contact-icon">
                             <span><i class="isax isax-call-calling5"></i></span>
@@ -614,13 +647,9 @@ $meta_keywords    = "RK Hospital Nagpur, about RK Hospital, Dr Rahul Agrawal ort
         </div>
     </div>
 </section>
-<!-- ══════════════════════════════════════════
-     SECTION 2: OUR STORY — REDESIGNED
-══════════════════════════════════════════ -->
 <section class="rk-our-story-section" aria-labelledby="story-heading">
     <div class="container">
 
-        <!-- ── TOP: Centered Intro Block ── -->
         <div class="rk-story-top-center wow fadeInUp" data-wow-duration="0.9s">
             <div class="rk-section-eyebrow">Our Story</div>
             <h2 class="rk-story-main-heading" id="story-heading">
@@ -632,7 +661,6 @@ $meta_keywords    = "RK Hospital Nagpur, about RK Hospital, Dr Rahul Agrawal ort
                 What began as a vision has grown into one of Nagpur's most trusted multi-specialty hospitals.
             </p>
 
-            <!-- Centered Stats Strip -->
             <div class="rk-story-stat-strip">
                 <div class="stat-strip-item">
                     <div class="stat-strip-num">25+</div>
@@ -655,44 +683,23 @@ $meta_keywords    = "RK Hospital Nagpur, about RK Hospital, Dr Rahul Agrawal ort
                 </div>
             </div>
         </div>
-        <!-- /TOP Center -->
-
-
-        <!-- ── BOTTOM: Image LEFT + Content RIGHT ── -->
         <div class="rk-story-body-row">
 
-            <!-- LEFT: Image Stack -->
             <div class="rk-story-img-col wow fadeInLeft" data-wow-duration="1s">
                 <div class="rk-story-visual">
 
-                    <!-- Main Image -->
                     <div class="story-img-main">
                         <img
                             src="assets/img/about/hospital.jpeg"
                             alt="Dr. Rahul Agrawal — Best Orthopedic Surgeon Nagpur at R.K. Hospital"
                             loading="lazy"
                         >
-                        <!-- Experience Badge -->
-                        <div class="story-exp-badge">
-                            <div class="exp-num">25+</div>
-                            <div class="exp-label">Years of<br>Excellence</div>
-                        </div>
                     </div>
 
-                    <!-- Floating Secondary Image -->
-                  
-
-                    <!-- Floating Stat Card -->
-                    
-
-                </div>
+                    </div>
             </div>
-            <!-- /LEFT -->
-
-            <!-- RIGHT: Content -->
             <div class="rk-story-content-col wow fadeInRight" data-wow-duration="1s">
 
-                <!-- Body Text -->
                 <p class="story-body-lead">
                     Equipped with <strong>state-of-the-art robotic surgical technology</strong>, modular operation
                     theatres, and a team of highly experienced specialists who have collectively performed
@@ -704,7 +711,6 @@ $meta_keywords    = "RK Hospital Nagpur, about RK Hospital, Dr Rahul Agrawal ort
                     destination for patients across Nagpur, Wardha, Amravati, and beyond.
                 </p>
 
-                <!-- Highlights Grid -->
                 <div class="rk-story-highlights">
 
                     <div class="story-hl-item">
@@ -741,9 +747,6 @@ $meta_keywords    = "RK Hospital Nagpur, about RK Hospital, Dr Rahul Agrawal ort
                     </div>
 
                 </div>
-                <!-- /Highlights -->
-
-                <!-- CTA Buttons -->
                 <div class="story-cta-row">
                     <a href="contact-us" class="rk-btn-primary">
                         <i class="fa-solid fa-calendar-check"></i>
@@ -756,20 +759,10 @@ $meta_keywords    = "RK Hospital Nagpur, about RK Hospital, Dr Rahul Agrawal ort
                 </div>
 
             </div>
-            <!-- /RIGHT -->
-
+            </div>
         </div>
-        <!-- /BOTTOM Row -->
-
-    </div>
 </section>
-<!-- ── /Our Story ── -->
- 
-
-        <!-- ══════════════════════════════════════════
-             SECTION 7: AWARDS & ACCREDITATIONS
-        ══════════════════════════════════════════ -->
-        <section class="rk-awards-section" aria-labelledby="awards-heading">
+<section class="rk-awards-section" aria-labelledby="awards-heading">
             <div class="container">
                 <div class="rk-section-header center">
                     <div class="rk-section-eyebrow">Recognition &amp; Trust</div>
@@ -826,25 +819,12 @@ $meta_keywords    = "RK Hospital Nagpur, about RK Hospital, Dr Rahul Agrawal ort
                 </div>
             </div>
         </section>
-        <!-- ── /Awards ── -->
-
-     
-        <!-- ══════════════════════════════════════════
-             SECTION 8: CTA — Book Appointment
-    
-        <!-- ── /CTA ── -->
-
-        <!-- Cursor -->
         <div class="mouse-cursor cursor-outer"></div>
         <div class="mouse-cursor cursor-inner"></div>
 
         <?php include 'include/footer.php'; ?>
 
     </div>
-    <!-- /Main Wrapper -->
-
-
-    <!-- ── Offcanvas Support Popup ── -->
     <div class="offcanvas offcanvas-offset offcanvas-end support_popup" tabindex="-1" id="support_item">
         <div class="offcanvas-header">
             <a href="/">
@@ -899,7 +879,6 @@ $meta_keywords    = "RK Hospital Nagpur, about RK Hospital, Dr Rahul Agrawal ort
         <img src="<?php echo $base_url; ?>assets/img/bg/offcanvas-bg.png" alt="" class="element-01" aria-hidden="true">
     </div>
 
-    <!-- ScrollToTop -->
     <div class="progress-wrap active-progress">
         <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102" aria-hidden="true">
             <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"
@@ -908,7 +887,6 @@ $meta_keywords    = "RK Hospital Nagpur, about RK Hospital, Dr Rahul Agrawal ort
         </svg>
     </div>
 
-    <!-- Scripts -->
     <script src="<?php echo $base_url; ?>assets/js/jquery-3.7.1.min.js"></script>
     <script src="<?php echo $base_url; ?>assets/js/bootstrap.bundle.min.js"></script>
     <script src="<?php echo $base_url; ?>assets/js/feather.min.js"></script>

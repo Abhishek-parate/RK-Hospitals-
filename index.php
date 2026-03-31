@@ -28,10 +28,10 @@
     <title>Doccure</title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="<?php echo $base_url; ?>assets/img/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="<?php echo $base_url; ?>assets/img/RK-Logo.png" type="image/x-icon">
 
     <!-- Apple Touch Icon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="<?php echo $base_url; ?>assets/img/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="<?php echo $base_url; ?>assets/img/RK-Logo.png">
 
     <!-- Theme Settings Js -->
     <script src="assets/js/theme-script.js"></script>
@@ -460,6 +460,126 @@
         transform: translateY(-2px);
         box-shadow: 0 8px 24px rgba(183, 28, 28, 0.35);
     }
+
+    /* ── Sticky header ── */
+    header.header.sticky {
+        position: fixed !important;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 999;
+        background: #fff !important;
+        box-shadow: 0 2px 16px rgba(0, 0, 0, .10);
+        animation: slideDown .3s ease forwards;
+    }
+
+    @keyframes slideDown {
+        from {
+            transform: translateY(-100%);
+        }
+
+        to {
+            transform: translateY(0);
+        }
+    }
+
+    /* ─────────────────────────────────────────
+   WORK SECTION TEXT FIX (SCOPED ONLY)
+──────────────────────────────────────── */
+
+    /* Target ONLY this section */
+    .work-section-seven .work-item-two .custom-title {
+        font-size: 18px !important;
+        line-height: 1.4 !important;
+        font-weight: 600 !important;
+    }
+
+    /* Paragraph inside work cards */
+    .work-section-seven .work-item-two p {
+        font-size: 14px !important;
+        line-height: 1.7 !important;
+        text-align: justify !important;
+        color: #555 !important;
+    }
+
+    /* Reduce number size */
+    .work-section-seven .count-number {
+        font-size: 30px !important;
+    }
+
+    /* Improve spacing */
+    .work-section-seven .work-item-two {
+        padding: 18px !important;
+    }
+
+    /* Optional: slight heading improvement */
+    .work-section-seven .section-title {
+        font-size: 26px !important;
+    }
+
+    /* Mobile fix */
+    @media (max-width: 768px) {
+        .work-section-seven .work-item-two .custom-title {
+            font-size: 16px !important;
+        }
+
+        .work-section-seven .work-item-two p {
+            font-size: 13.5px !important;
+        }
+    }
+
+    /* About section text justify ONLY */
+    .about-section .about-content-details p {
+        text-align: justify;
+    }
+
+    /* Reduce ONLY step card titles */
+    .choose-step-nine .choose-step .custom-title {
+        font-size: 20px;
+        /* adjust if needed (16–18 best) */
+        line-height: 1.4;
+    }
+
+    /* ─────────────────────────────────────────
+       FAQ SECTION TITLE FONT SIZE FIX
+    ──────────────────────────────────────── */
+    .faq-section-eight .accordion-button {
+        font-size: 16px !important;
+        /* Adjust this number (e.g., 15px or 17px) if needed */
+        font-weight: 600 !important;
+        line-height: 1.5 !important;
+    }
+
+    @media (max-width: 768px) {
+        .faq-section-eight .accordion-button {
+            font-size: 15px !important;
+            /* Slightly smaller on mobile devices */
+        }
+    }
+
+    /* ─────────────────────────────────────────
+       FAQ MAIN HEADING FONT SIZE FIX
+    ──────────────────────────────────────── */
+    .faq-section-eight .section-header-eight .section-title {
+        font-size: 32px !important;
+        /* Adjust this number down (e.g., 28px) if you want it even smaller */
+        line-height: 1.3 !important;
+    }
+
+    @media (max-width: 768px) {
+        .faq-section-eight .section-header-eight .section-title {
+            font-size: 24px !important;
+            /* Smaller size for mobile screens */
+        }
+    }
+
+    /* ─────────────────────────────────────────
+       REDUCE SPACING BETWEEN FAQ TITLE & ACCORDION
+    ──────────────────────────────────────── */
+    .faq-section-eight .section-header-eight {
+        margin-bottom: 12px !important;
+        /* Adjust this number to make the gap smaller or larger */
+    }
     </style>
 </head>
 
@@ -469,17 +589,8 @@
     <!-- Main Wrapper -->
     <div class="main-wrapper">
 
-        <div class="header-theme header-theme-two">
-            <button type="button" id="dark-mode-toggle" class="theme-toggle moon">
-                <i class="isax isax-moon5"></i>
-            </button>
-            <button type="button" id="light-mode-toggle" class="theme-toggle sun">
-                <i class="isax isax-sun-15"></i>
-            </button>
-        </div>
 
-
-        <?php include 'include/header.php'; ?>
+        <?php $headerClass = 'header-default inner-header'; include 'include/header.php'; ?>
         <!-- Full Width Image Carousel Banner -->
         <section class="banner-section-full">
 
@@ -812,7 +923,7 @@
                                 <div class="count-number">03</div>
                             </div>
                             <p>
-                                Expert treatment for spine problems, slip disc, fractures, accident injuries, sports
+                                Expert treatment for spine, slip disc, fractures, accident injuries, sports
                                 injuries, and orthopedic trauma care with advanced diagnostics and rehabilitation.
                             </p>
                         </div>
@@ -830,7 +941,7 @@
                                 <div class="count-number">04</div>
                             </div>
                             <p>
-                                Trusted maternity hospital in Nagpur providing high-risk pregnancy care, normal
+                                Trusted maternity hospital in Nagpur providing high-risk pregnancy care,
                                 delivery, C-section, prenatal checkups, and postnatal care with 24/7 expert support.
                             </p>
                         </div>
@@ -1049,7 +1160,7 @@
 
                         <div class="col-xl-4">
                             <div class="text-xl-end">
-                                <a href="orthopedic-services.html" class="btn btn-white theme-7-btn">
+                                <a href="<?= SITE_URL ?>/services.php" class="btn btn-white theme-7-btn">
                                     View All Services
                                     <span class="icon"><i class="isax isax-arrow-right-3"></i></span>
                                 </a>
@@ -1185,7 +1296,7 @@
 
                 <div class="row g-4 justify-content-center">
 
-                <?php if ($doc_count > 0): ?>
+                    <?php if ($doc_count > 0): ?>
                     <?php while ($doc = $doc_result->fetch_assoc()): ?>
 
                     <?php
@@ -1225,8 +1336,9 @@
                                 <div class="deco-ring r2"></div>
                                 <div class="doc-photo-wrap">
                                     <img src="<?= htmlspecialchars($photo) ?>"
-                                         alt="<?= htmlspecialchars($doc['name']) ?> – <?= htmlspecialchars($doc['designation'] ?? '') ?>">
-                                    <span class="doc-spec-badge"><?= htmlspecialchars($doc['designation'] ?? $doc['specialty'] ?? '') ?></span>
+                                        alt="<?= htmlspecialchars($doc['name']) ?> – <?= htmlspecialchars($doc['designation'] ?? '') ?>">
+                                    <span
+                                        class="doc-spec-badge"><?= htmlspecialchars($doc['designation'] ?? $doc['specialty'] ?? '') ?></span>
                                 </div>
                             </div>
 
@@ -1255,16 +1367,18 @@
                                     <?php if (!empty($doc['consultation_fee'])): ?>
                                     <div class="doc-info-item">
                                         <i class="fa-solid fa-indian-rupee-sign"></i>
-                                        <span>Consultation: <strong>&#8377;<?= htmlspecialchars($doc['consultation_fee']) ?></strong></span>
+                                        <span>Consultation:
+                                            <strong>&#8377;<?= htmlspecialchars($doc['consultation_fee']) ?></strong></span>
                                     </div>
                                     <?php endif; ?>
                                 </div>
 
                                 <div class="doc-actions">
-                                    <a href="<?= $profile_link ?>" class="btn-rk-primary">
+                                    <a href="<?= SITE_URL ?>/doctors/<?= urlencode($doc['slug']) ?>"
+                                        class="btn-rk-primary">
                                         View Profile
                                     </a>
-                                    <a href="contact-us.php" class="btn-rk-outline">
+                                    <a href="<?= SITE_URL ?>/contact-us.php" class="btn-rk-outline">
                                         Book Appointment
                                     </a>
                                 </div>
@@ -1275,11 +1389,11 @@
 
                     <?php endwhile; ?>
 
-                <?php else: ?>
+                    <?php else: ?>
                     <div class="col-12 text-center py-5">
                         <p class="text-muted">Doctor profiles coming soon. Please check back later.</p>
                     </div>
-                <?php endif; ?>
+                    <?php endif; ?>
 
                 </div>
             </div>
@@ -1452,9 +1566,10 @@
             <div class="container">
                 <div class="row">
 
-                    <div class="col-lg-5">
-                        <div class="faq-support">
-                            <img src="assets/img/home/faq1.webp" alt="RK Hospital Nagpur FAQ" class="img-fluid img-1">
+                    <div class="col-lg-5 mb-4 mb-lg-0">
+                        <div class="faq-support w-100 position-relative">
+                            <img src="assets/img/faq.webp" alt="RK Hospital Nagpur FAQ" class="img-fluid"
+                                style="width: 100%; height: 520px; object-fit: cover; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
                         </div>
                     </div>
 
@@ -1472,14 +1587,14 @@
                         <div class="faq-info wow zoomIn">
                             <div class="accordion" id="faq-details-one">
 
-                                <!-- FAQ 1 -->
                                 <div class="accordion-item">
                                     <h3 class="accordion-header">
                                         <a class="accordion-button" data-bs-toggle="collapse" data-bs-target="#faq1">
                                             What are the operating hours of RK Hospital Nagpur?
                                         </a>
                                     </h3>
-                                    <div id="faq1" class="accordion-collapse collapse show">
+                                    <div id="faq1" class="accordion-collapse collapse show"
+                                        data-bs-parent="#faq-details-one">
                                         <div class="accordion-body">
                                             <p>
                                                 Dr. Agrawal's R.K. Hospital Nagpur is open 24/7 for emergency services.
@@ -1489,7 +1604,6 @@
                                     </div>
                                 </div>
 
-                                <!-- FAQ 2 -->
                                 <div class="accordion-item">
                                     <h3 class="accordion-header">
                                         <a class="accordion-button collapsed" data-bs-toggle="collapse"
@@ -1497,7 +1611,8 @@
                                             How can I book an appointment at RK Hospital Nagpur?
                                         </a>
                                     </h3>
-                                    <div id="faq2" class="accordion-collapse collapse">
+                                    <div id="faq2" class="accordion-collapse collapse"
+                                        data-bs-parent="#faq-details-one">
                                         <div class="accordion-body">
                                             <p>
                                                 You can book an appointment by calling +91 97660 57372 or 8999290433.
@@ -1507,7 +1622,6 @@
                                     </div>
                                 </div>
 
-                                <!-- FAQ 3 -->
                                 <div class="accordion-item">
                                     <h3 class="accordion-header">
                                         <a class="accordion-button collapsed" data-bs-toggle="collapse"
@@ -1515,7 +1629,8 @@
                                             What treatments are available at RK Hospital Nagpur?
                                         </a>
                                     </h3>
-                                    <div id="faq3" class="accordion-collapse collapse">
+                                    <div id="faq3" class="accordion-collapse collapse"
+                                        data-bs-parent="#faq-details-one">
                                         <div class="accordion-body">
                                             <p>
                                                 RK Hospital specializes in robotic knee & hip replacement, spine
@@ -1526,7 +1641,6 @@
                                     </div>
                                 </div>
 
-                                <!-- FAQ 4 -->
                                 <div class="accordion-item">
                                     <h3 class="accordion-header">
                                         <a class="accordion-button collapsed" data-bs-toggle="collapse"
@@ -1534,7 +1648,8 @@
                                             Does RK Hospital provide robotic surgery in Nagpur?
                                         </a>
                                     </h3>
-                                    <div id="faq4" class="accordion-collapse collapse">
+                                    <div id="faq4" class="accordion-collapse collapse"
+                                        data-bs-parent="#faq-details-one">
                                         <div class="accordion-body">
                                             <p>
                                                 Yes, Dr. Agrawal's R.K. Hospital is a leading center for robotic knee
@@ -1545,7 +1660,6 @@
                                     </div>
                                 </div>
 
-                                <!-- FAQ 5 -->
                                 <div class="accordion-item">
                                     <h3 class="accordion-header">
                                         <a class="accordion-button collapsed" data-bs-toggle="collapse"
@@ -1553,7 +1667,8 @@
                                             Where is RK Hospital located in Nagpur?
                                         </a>
                                     </h3>
-                                    <div id="faq5" class="accordion-collapse collapse">
+                                    <div id="faq5" class="accordion-collapse collapse"
+                                        data-bs-parent="#faq-details-one">
                                         <div class="accordion-body">
                                             <p>
                                                 Dr. Agrawal's R.K. Hospital is located at Central Avenue, beside Hotel
@@ -1570,91 +1685,11 @@
                 </div>
             </div>
         </section>
+        ```
         <!-- End Faq -->
         <!-- /Article Section -->
         <?php include 'include/latest-blog.php'; ?>
 
-        <!-- Info Section -->
-        <section class="info-section">
-            <div class="container">
-                <div class="contact-info">
-                    <div class="info-col">
-                        <div class="wow fadeInUp" data-wow-duration="1s">
-                            <h3 class="info-title">
-                                Contact Dr. Agrawal's R.K. Hospital Nagpur
-                            </h3>
-                        </div>
-
-                        <div class="support-info wow fadeInUp" data-wow-duration="1s">
-
-                            <!-- Phone -->
-                            <div class="con-info">
-                                <span class="con-icon">
-                                    <i class="isax isax-headphone5"></i>
-                                </span>
-                                <div class="con-details">
-                                    <p class="title">24/7 Emergency & Appointment</p>
-                                    <p class="description">
-                                        +91 97660 57372 <br>
-                                        +91 89992 90433
-                                    </p>
-                                </div>
-                            </div>
-
-                            <!-- Email -->
-                            <div class="con-info">
-                                <span class="con-icon">
-                                    <i class="isax isax-message-25"></i>
-                                </span>
-                                <div class="con-details">
-                                    <p class="title">Email Support</p>
-                                    <p class="description">
-                                        <a href="">
-
-                                        </a>
-                                    </p>
-                                </div>
-                            </div>
-
-                            <!-- Address -->
-                            <div class="con-info">
-                                <span class="con-icon">
-                                    <i class="isax isax-location"></i>
-                                </span>
-                                <div class="con-details">
-                                    <p class="title">Hospital Address</p>
-                                    <p class="description">
-                                        27, Chandrashekhar Azad Square, Central Avenue Road,<br>
-                                        Beside Hotel Al Zam Zam, Gandhibagh,<br>
-                                        Nagpur, Maharashtra 440002
-                                    </p>
-                                </div>
-                            </div>
-
-                            <!-- Website -->
-                            <div class="con-info">
-                                <span class="con-icon">
-                                    <i class="isax isax-global"></i>
-                                </span>
-                                <div class="con-details">
-                                    <p class="title">Official Website</p>
-                                    <p class="description">
-                                        <a href="" target="_blank">
-
-                                        </a>
-                                    </p>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <img src="assets/img/bg/info-bg.png" alt="RK Hospital Nagpur Contact Info"
-                        class="img-fluid element-01">
-                </div>
-            </div>
-        </section>
-        <!-- /Info Section -->
         <?php include 'include/footer.php'; ?>
 
         <!-- Cursor -->
@@ -1807,6 +1842,25 @@
         fade: true,
         cssEase: 'ease-in-out'
     });
+    </script>
+    <script>
+    // Sticky header — guaranteed fallback regardless of script.js
+    (function() {
+        var header = document.querySelector('header.header');
+        if (!header) return;
+
+        function onScroll() {
+            if (window.scrollY > 80) {
+                header.classList.add('sticky');
+            } else {
+                header.classList.remove('sticky');
+            }
+        }
+        window.addEventListener('scroll', onScroll, {
+            passive: true
+        });
+        onScroll();
+    })();
     </script>
 </body>
 

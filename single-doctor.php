@@ -437,11 +437,27 @@ $specializations = !empty($doctor['specializations']) ? explode(',', $doctor['sp
             grid-template-columns: 1fr;
         }
     }
+
+    /* ── Sticky header ── */
+    header.header.sticky {
+        position: fixed !important;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 999;
+        background: #fff !important;
+        box-shadow: 0 2px 16px rgba(0,0,0,.10);
+        animation: slideDown .3s ease forwards;
+    }
+    @keyframes slideDown {
+        from { transform: translateY(-100%); }
+        to   { transform: translateY(0); }
+    }
     </style>
 </head>
 
 <body>
-    <?php require_once 'include/header.php'; ?>
+    <?php $headerClass = 'header-default inner-header'; require_once 'include/header.php'; ?>
 
     <div class="content">
         <div class="container">
@@ -588,6 +604,23 @@ $specializations = !empty($doctor['specializations']) ? explode(',', $doctor['sp
     <?php require_once 'include/footer.php'; ?>
     <script src="<?= asset('assets/js/jquery-3.7.1.min.js') ?>"></script>
     <script src="<?= asset('assets/js/bootstrap.bundle.min.js') ?>"></script>
+    <script src="<?= asset('assets/js/script.js') ?>"></script>
+    <script>
+    // Sticky header — guaranteed fallback regardless of script.js
+    (function () {
+        var header = document.querySelector('header.header');
+        if (!header) return;
+        function onScroll() {
+            if (window.scrollY > 80) {
+                header.classList.add('sticky');
+            } else {
+                header.classList.remove('sticky');
+            }
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+    })();
+    </script>
 </body>
 
 </html>
