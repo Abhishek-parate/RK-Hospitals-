@@ -31,7 +31,7 @@ $meta_keywords    = "RK Hospital Nagpur, about RK Hospital, Dr Rahul Agrawal ort
     <meta name="twitter:description" content="<?php echo htmlspecialchars($meta_description); ?>">
     <meta name="twitter:image" content="<?php echo $base_url; ?>assets/img/home/about-doctor1.webp">
 
-    <link rel="canonical" href="<?php echo $base_url; ?>about-us.php">
+    <link rel="canonical" href="<?php echo $base_url; ?>about-us">
 
     <title><?php echo htmlspecialchars($page_title); ?></title>
 
@@ -69,7 +69,7 @@ $meta_keywords    = "RK Hospital Nagpur, about RK Hospital, Dr Rahul Agrawal ort
             "postalCode": "440002",
             "addressCountry": "IN"
         },
-        "telephone": ["+919766057372", "+918999290433"],
+        "telephone": ["+919766057372"],
         "openingHours": ["Mo-Sa 11:00-16:00", "Mo-Sa 19:00-21:00"],
         "medicalSpecialty": ["Orthopedic Surgery", "Gynecology", "Obstetrics", "Trauma Surgery"],
         "aggregateRating": {
@@ -524,7 +524,7 @@ $meta_keywords    = "RK Hospital Nagpur, about RK Hospital, Dr Rahul Agrawal ort
             <div class="banner-stat-badge badge-left">
                 <div class="badge-icon"><i class="fa-solid fa-award"></i></div>
                 <div class="badge-text">
-                    <div class="num">25+</div>
+                    <div class="num">5+</div>
                     <div class="label">Years of Excellence</div>
                 </div>
             </div>
@@ -594,7 +594,7 @@ $meta_keywords    = "RK Hospital Nagpur, about RK Hospital, Dr Rahul Agrawal ort
                         <div class="col-md-6">
                             <div class="about-inner-img">
                                 <div class="about-box">
-                                    <h4>25+ Years of Medical Excellence in Nagpur</h4>
+                                    <h4>5+ Years of Medical Excellence in Nagpur</h4>
                                 </div>
                                 <div class="about-img">
                                     <img src="assets/img/home/about-doctor2.webp" class="img-fluid" alt="Robotic Knee Replacement Surgery Nagpur">
@@ -663,7 +663,7 @@ $meta_keywords    = "RK Hospital Nagpur, about RK Hospital, Dr Rahul Agrawal ort
 
             <div class="rk-story-stat-strip">
                 <div class="stat-strip-item">
-                    <div class="stat-strip-num">25+</div>
+                    <div class="stat-strip-num">5+</div>
                     <div class="stat-strip-lbl">Years of Excellence</div>
                 </div>
                 <div class="stat-strip-sep"></div>
@@ -861,10 +861,7 @@ $meta_keywords    = "RK Hospital Nagpur, about RK Hospital, Dr Rahul Agrawal ort
                     <div class="avatar avatar-lg bg-primary rounded-circle">
                         <i class="isax isax-headphone5"></i>
                     </div>
-                    <div>
-                        <p class="title">Alternate Number</p>
-                        <h5 class="link"><a href="tel:+918999290433">+91 89992 90433</a></h5>
-                    </div>
+                   
                 </div>
             </div>
             <div class="about-popup-item border-0">

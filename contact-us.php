@@ -431,8 +431,7 @@
                     <div class="qi-text">
                         <div class="label">Emergency & Appointment</div>
                         <div class="value">
-                            <a href="tel:+919766057372">+91 97660 57372 / </a>
-                            <a href="tel:+918999290433">+91 89992 90433</a>
+                            <a href="tel:+919766057372">+91 97660 57372  </a>
                         </div>
                     </div>
                 </div>
@@ -504,9 +503,7 @@
                                     <h4>Phone Numbers</h4>
                                     <a href="tel:+919766057372"
                                         style="font-weight:700; font-size:16px; color:var(--red);">+91 97660 57372</a>
-                                    <a href="tel:+918999290433"
-                                        style="font-weight:700; font-size:16px; color:var(--text-mid); margin-top:4px;">+91
-                                        89992 90433</a>
+                                 
                                     <p style="margin-top:10px; font-size:12.5px; color:var(--text-soft);">Available 24/7
                                         for Emergency · OPD: 11AM–4PM & 7PM–9PM</p>
                                 </div>
@@ -827,9 +824,7 @@
                                     <a href="tel:+919766057372" class="emergency-num-link">
                                         <i class="fa-solid fa-phone"></i> +91 97660 57372
                                     </a>
-                                    <a href="tel:+918999290433" class="emergency-num-link">
-                                        <i class="fa-solid fa-phone"></i> +91 89992 90433
-                                    </a>
+                                    
                                 </div>
                             </div>
                         </div>

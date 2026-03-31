@@ -859,7 +859,7 @@
                         <i class="fa-solid fa-phone"></i>
                         Call Now: +91 97660 57372
                     </a>
-                    <a href="contact-us.php" class="cp-btn-outline">
+                    <a href="contact-us" class="cp-btn-outline">
                         <i class="fa-solid fa-calendar-check"></i>
                         Book Appointment
                     </a>
@@ -942,7 +942,7 @@
                                 <i class="fa-solid fa-headset"></i>
                                 <h6>Need Help Cancelling?</h6>
                                 <p>Our billing team is available to assist you with cancellations and refund queries.</p>
-                                <a href="contact-us.php">
+                                <a href="contact-us">
                                     <i class="fa-solid fa-phone"></i> Contact Us
                                 </a>
                             </div>
@@ -1022,7 +1022,7 @@
                                     </li>
                                     <li>
                                         <span class="li-icon blue"><i class="fa-solid fa-check"></i></span>
-                                        Cancellations must be made by calling our helpline numbers: <strong>+91 97660 57372</strong> or <strong>+91 89992 90433</strong>. Walk-in cancellations at the reception desk are also accepted.
+                                        Cancellations must be made by calling our helpline numbers: <strong>+91 97660 57372</strong>. Walk-in cancellations at the reception desk are also accepted.
                                     </li>
                                     <li>
                                         <span class="li-icon blue"><i class="fa-solid fa-check"></i></span>
@@ -1234,7 +1234,7 @@
                                     </li>
                                     <li>
                                         <span class="li-icon blue"><i class="fa-solid fa-check"></i></span>
-                                        To reschedule, contact our reception at <strong>+91 97660 57372</strong> or <strong>+91 89992 90433</strong> during OPD hours: 11AM–4PM and 7PM–9PM, Mon–Saturday.
+                                        To reschedule, contact our reception at <strong>+91 97660 57372</strong> during OPD hours: 11AM–4PM and 7PM–9PM, Mon–Saturday.
                                     </li>
                                 </ul>
                                 <div class="tc-info-grid">
@@ -1242,7 +1242,7 @@
                                         <i class="fa-solid fa-phone-volume"></i>
                                         <div>
                                             <h6>Call to Reschedule</h6>
-                                            <p>+91 97660 57372<br>+91 89992 90433</p>
+                                            <p>+91 97660 57372</p>
                                         </div>
                                     </div>
                                     <div class="tc-info-card">
@@ -1395,7 +1395,7 @@
                                 <ul class="tc-list">
                                     <li>
                                         <span class="li-icon blue"><i class="fa-solid fa-phone"></i></span>
-                                        <span><strong>By Phone:</strong> Call our helpline at <strong>+91 97660 57372</strong> or <strong>+91 89992 90433</strong> during OPD hours (11AM–4PM and 7PM–9PM, Mon–Sat). For urgent cancellations, our emergency line is available 24/7.</span>
+                                        <span><strong>By Phone:</strong> Call our helpline at <strong>+91 97660 57372</strong> during OPD hours (11AM–4PM and 7PM–9PM, Mon–Sat). For urgent cancellations, our emergency line is available 24/7.</span>
                                     </li>
                                     <li>
                                         <span class="li-icon blue"><i class="fa-solid fa-person-walking-arrow-right"></i></span>
@@ -1415,7 +1415,7 @@
                                         <i class="fa-solid fa-phone-volume"></i>
                                         <div>
                                             <h6>Cancellation Helpline</h6>
-                                            <p>+91 97660 57372<br>+91 89992 90433</p>
+                                            <p>+91 97660 57372</p>
                                         </div>
                                     </div>
                                     <div class="tc-info-card">
@@ -1440,7 +1440,7 @@
                                 Our cancellation policy is built on trust and transparency. If you have any doubts or concerns, our team is always available to assist you at no extra hassle.
                             </p>
                             <div class="tc-agreement-actions">
-                                <a href="contact-us.php" class="btn-tc-primary">
+                                <a href="contact-us" class="btn-tc-primary">
                                     <i class="fa-solid fa-calendar-plus"></i> Book an Appointment
                                 </a>
                                 <a href="terms-conditions.php" class="btn-tc-outline">
@@ -1510,10 +1510,7 @@
                     <div class="avatar avatar-lg bg-primary rounded-circle">
                         <i class="isax isax-call-calling"></i>
                     </div>
-                    <div>
-                        <p class="title">Appointment</p>
-                        <h5 class="link"><a href="tel:+918999290433">+91 89992 90433</a></h5>
-                    </div>
+                
                 </div>
             </div>
             <div class="about-popup-item border-0">

@@ -750,7 +750,7 @@
                                 <i class="fa-solid fa-headset"></i>
                                 <h6>Have Questions?</h6>
                                 <p>Our team is available 24/7 to help you with any queries.</p>
-                                <a href="contact-us.php">
+                                <a href="contact-us">
                                     <i class="fa-solid fa-phone"></i> Contact Us
                                 </a>
                             </div>
@@ -859,13 +859,7 @@
                                     </li>
                                 </ul>
                                 <div class="tc-info-grid">
-                                    <div class="tc-info-card">
-                                        <i class="fa-solid fa-phone-volume"></i>
-                                        <div>
-                                            <h6>Call for Appointment</h6>
-                                            <p>+91 97660 57372<br>+91 89992 90433</p>
-                                        </div>
-                                    </div>
+                                   
                                     <div class="tc-info-card">
                                         <i class="fa-regular fa-clock"></i>
                                         <div>
@@ -1184,7 +1178,7 @@
                                 <div class="tc-highlight blue" style="margin-top:20px;">
                                     For any queries or concerns regarding these Terms, please contact us at: <br>
                                     <strong>Dr. Agrawal's R.K. Hospital</strong> | 27, Central Avenue Road, Nagpur – 440002 <br>
-                                    <strong>Phone:</strong> +91 97660 57372 &nbsp;|&nbsp; <strong>Emergency:</strong> +91 89992 90433
+                                    <strong>Phone:</strong> +91 97660 57372 &nbsp;|&nbsp;  <br>
                                 </div>
                             </div>
                         </div>
@@ -1197,7 +1191,7 @@
                                 These terms are designed to protect both our patients and our hospital. We are committed to delivering world-class orthopedic and gynecology care to every patient who walks through our doors.
                             </p>
                             <div class="tc-agreement-actions">
-                                <a href="contact-us.php" class="btn-tc-primary">
+                                <a href="contact-us" class="btn-tc-primary">
                                     <i class="fa-solid fa-calendar-plus"></i> Book an Appointment
                                 </a>
                                 <a href="index.php" class="btn-tc-outline">
@@ -1263,15 +1257,7 @@
                         <h5 class="link"><a href="tel:+919766057372">+91 97660 57372</a></h5>
                     </div>
                 </div>
-                <div class="support-item">
-                    <div class="avatar avatar-lg bg-primary rounded-circle">
-                        <i class="isax isax-call-calling"></i>
-                    </div>
-                    <div>
-                        <p class="title">Appointment</p>
-                        <h5 class="link"><a href="tel:+918999290433">+91 89992 90433</a></h5>
-                    </div>
-                </div>
+            
             </div>
             <div class="about-popup-item border-0">
                 <h3 class="title">Follow Us</h3>

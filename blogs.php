@@ -353,7 +353,7 @@ function blogPageUrl($pageNum, $catSlug, $searchStr) {
                                     <li><a href="<?= SITE_URL ?>/">Home</a></li>
                                     <li><a href="<?= SITE_URL ?>/about-us.php">About Us</a></li>
                                     <li><a href="<?= SITE_URL ?>/index.php#doctors">Doctors</a></li>
-                                    <li><a href="<?= SITE_URL ?>/contact-us.php">Contact Us</a></li>
+                                    <li><a href="<?= SITE_URL ?>/contact-us">Contact Us</a></li>
                                 </ul>
                             </div>
                         </div>

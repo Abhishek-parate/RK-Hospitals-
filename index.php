@@ -769,7 +769,7 @@
                                 <div class="col-md-6">
                                     <div class="about-inner-img">
                                         <div class="about-box">
-                                            <h4>25+ Years of Medical Excellence in Nagpur</h4>
+                                            <h4>5+ Years of Medical Excellence in Nagpur</h4>
                                         </div>
                                         <div class="about-img">
                                             <img src="assets/img/home/about-doctor2.webp" class="img-fluid"
@@ -1159,7 +1159,7 @@
 
                         <div class="col-xl-4">
                             <div class="text-xl-end">
-                                <a href="<?= SITE_URL ?>/services.php" class="btn btn-white theme-7-btn">
+                                <a href="<?= SITE_URL ?>/services" class="btn btn-white theme-7-btn">
                                     View All Services
                                     <span class="icon"><i class="isax isax-arrow-right-3"></i></span>
                                 </a>
@@ -1377,7 +1377,7 @@
                                         class="btn-rk-primary">
                                         View Profile
                                     </a>
-                                    <a href="<?= SITE_URL ?>/contact-us.php" class="btn-rk-outline">
+                                    <a href="<?= SITE_URL ?>/contact-us" class="btn-rk-outline">
                                         Book Appointment
                                     </a>
                                 </div>
@@ -1614,7 +1614,7 @@
                                         data-bs-parent="#faq-details-one">
                                         <div class="accordion-body">
                                             <p>
-                                                You can book an appointment by calling +91 97660 57372 or 8999290433.
+                                                You can book an appointment by calling +91 97660 57372.
                                                 Walk-in and online booking options are also available.
                                             </p>
                                         </div>

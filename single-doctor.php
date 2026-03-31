@@ -407,7 +407,7 @@ $hasBannerImage = !empty($doctorFeatureImage) && $doctorFeatureImage !== 'defaul
                                 </li>
                             </ul>
                             
-                            <a href="<?= $base_url ?>contact-us.php" class="btn btn-primary w-100 mt-4" style="background: var(--brand-primary); border: none; padding: 12px; border-radius: 8px; font-weight: 500;">
+                            <a href="<?= $base_url ?>contact-us" class="btn btn-primary w-100 mt-4" style="background: var(--brand-primary); border: none; padding: 12px; border-radius: 8px; font-weight: 500;">
                                 <i class="fa-regular fa-calendar-check me-2"></i> Book Appointment
                             </a>
                         </div>

@@ -627,7 +627,7 @@
                         <i class="fa-solid fa-phone"></i>
                         Call Now: +91 97660 57372
                     </a>
-                    <a href="contact-us.php" class="banner-btn-outline">
+                    <a href="contact-us" class="banner-btn-outline">
                         <i class="fa-solid fa-calendar-check"></i>
                         Book Appointment
                     </a>
@@ -710,7 +710,7 @@
                                 <i class="fa-solid fa-shield-halved"></i>
                                 <h6>Privacy Concerns?</h6>
                                 <p>Contact our Data Protection Officer for any privacy-related queries.</p>
-                                <a href="contact-us.php">
+                                <a href="contact-us">
                                     <i class="fa-solid fa-envelope"></i> Contact Us
                                 </a>
                             </div>
@@ -1197,7 +1197,7 @@
                                 <div class="pp-highlight blue" style="margin-top:20px;">
                                     For any privacy-related concerns, data requests, or complaints, please contact us at:<br>
                                     <strong>Dr. Agrawal's R.K. Hospital</strong> | 27, Central Avenue Road, Nagpur – 440002<br>
-                                    <strong>Phone:</strong> +91 97660 57372 &nbsp;|&nbsp; <strong>Emergency:</strong> +91 89992 90433<br>
+                                    <strong>Phone:</strong> +91 97660 57372 &nbsp;|&nbsp; <br>
                                     <strong>Email:</strong> info@rkhospitalnagpur.com
                                 </div>
                             </div>
@@ -1211,7 +1211,7 @@
                                 We are dedicated to keeping your personal and medical information safe, secure, and confidential. Trust is the foundation of every patient relationship at R.K. Hospital.
                             </p>
                             <div class="pp-agreement-actions">
-                                <a href="contact-us.php" class="btn-pp-primary">
+                                <a href="contact-us" class="btn-pp-primary">
                                     <i class="fa-solid fa-calendar-plus"></i> Book an Appointment
                                 </a>
                                 <a href="index.php" class="btn-pp-outline">
@@ -1246,7 +1246,7 @@
         <div class="offcanvas-body">
             <div class="about-popup-item">
                 <h3 class="title">About R.K. Hospital</h3>
-                <p>Leading Orthopedic &amp; Gynecology Hospital in Nagpur with 25+ years of medical excellence.</p>
+                <p>Leading Orthopedic &amp; Gynecology Hospital in Nagpur with 5+ years of medical excellence.</p>
                 <div class="about-img d-flex align-items-center gap-2 justify-content-between">
                     <a href="<?php echo $base_url; ?>assets/img/banner/about-img-1.jpg" data-fancybox="gallery">
                         <img src="assets/img/banner/about-img-1.jpg" alt="RK Hospital Nagpur" class="img-fluid">
@@ -1281,10 +1281,7 @@
                     <div class="avatar avatar-lg bg-primary rounded-circle">
                         <i class="isax isax-call-calling"></i>
                     </div>
-                    <div>
-                        <p class="title">Appointment</p>
-                        <h5 class="link"><a href="tel:+918999290433">+91 89992 90433</a></h5>
-                    </div>
+                   
                 </div>
             </div>
             <div class="about-popup-item border-0">

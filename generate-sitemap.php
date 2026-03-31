@@ -19,7 +19,11 @@ $static_pages = [
     '/orthopedic-services',
     '/gynecology-services',
     '/hospital-services',
-    '/blog-grid'
+    '/blogs',
+    '/privacy-policy',
+    '/terms-conditions',
+    '/cancellation-policy'
+    
 ];
 
 foreach ($static_pages as $page) {
