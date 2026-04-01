@@ -896,6 +896,43 @@ $meta_keywords    = "RK Hospital Nagpur, about RK Hospital, Dr Rahul Agrawal ort
         // Initialize WOW.js animations
         new WOW().init();
     </script>
+     <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+    const progressWrap = document.querySelector(".progress-wrap");
+    const progressPath = document.querySelector(".progress-wrap path");
+
+    const pathLength = progressPath.getTotalLength();
+
+    progressPath.style.strokeDasharray = pathLength;
+    progressPath.style.strokeDashoffset = pathLength;
+
+    // Scroll update
+    window.addEventListener("scroll", function () {
+        let scroll = window.scrollY;
+        let height = document.documentElement.scrollHeight - window.innerHeight;
+
+        let progress = pathLength - (scroll * pathLength / height);
+        progressPath.style.strokeDashoffset = progress;
+
+        // Show / hide button
+        if (scroll > 100) {
+            progressWrap.classList.add("active-progress");
+        } else {
+            progressWrap.classList.remove("active-progress");
+        }
+    });
+
+    // Click scroll to top
+    progressWrap.addEventListener("click", function () {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    });
+
+});
+</script>
 
 </body>
 </html>

@@ -175,58 +175,73 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $schema_json = json_encode($schemaData, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
     }
 
-    // ── Insert ───────────────────────────────────────────────────
-    if (empty($errors)) {
-        $robots_meta = $robots_index . ',' . $robots_follow;
+if (empty($errors)) {
+    $robots_meta = $robots_index . ',' . $robots_follow;
 
-        $stmt = $conn->prepare("
-            INSERT INTO doctors (
-                name, slug, designation, specialty,
-                satisfaction_rate, feedback_count, location, consultation_fee,
-                bio, excerpt, education_json, experience_json, awards_json,
-                specializations, map_iframe, photo, tags,
-                is_published, published_at,
-                meta_title, meta_description, focus_keyword, canonical_url,
-                og_title, og_description, og_image, og_type,
-                twitter_title, twitter_description, twitter_card,
-                robots_meta, schema_type, schema_json,
-                views, created_at, updated_at
-            ) VALUES (
-                ?, ?, ?, ?,
-                ?, ?, ?, ?,
-                ?, ?, ?, ?, ?,
-                ?, ?, ?, ?,
-                ?, ?,
-                ?, ?, ?, ?,
-                ?, ?, ?, ?,
-                ?, ?, ?,
-                ?, ?, ?,
-                0, NOW(), NOW()
-            )
-        ");
+    // Count karo: 33 variables
+    $stmt = $conn->prepare("
+        INSERT INTO doctors (
+            name, slug, designation, specialty,
+            satisfaction_rate, feedback_count, location, consultation_fee,
+            bio, excerpt, education_json, experience_json, awards_json,
+            specializations, map_iframe, photo, tags,
+            is_published, published_at,
+            meta_title, meta_description, focus_keyword, canonical_url,
+            og_title, og_description, og_image, og_type,
+            twitter_title, twitter_description, twitter_card,
+            robots_meta, schema_type, schema_json,
+            views, created_at, updated_at
+        ) VALUES (
+            ?, ?, ?, ?,
+            ?, ?, ?, ?,
+            ?, ?, ?, ?, ?,
+            ?, ?, ?, ?,
+            ?, ?,
+            ?, ?, ?, ?,
+            ?, ?, ?, ?,
+            ?, ?, ?,
+            ?, ?, ?,
+            0, NOW(), NOW()
+        )
+    ");
 
-        $stmt->bind_param(
-            "ssssiiссsssssssssiisssssssssssss",
-            $name, $slug, $designation, $specialty,
-            $satisfaction_rate, $feedback_count, $location, $consultation_fee,
-            $bio, $excerpt, $edu_json, $exp_json, $awd_json,
-            $specializations, $map_iframe, $photo, $tags,
-            $is_published, $published_at,
-            $meta_title, $meta_description, $focus_keyword, $canonical_url,
-            $og_title, $og_description, $ogImage, $og_type,
-            $twitter_title, $twitter_description, $twitter_card,
-            $robots_meta, $schema_type, $schema_json
-        );
+    // Type string: exactly 33 chars for 33 variables
+    // s=string, i=integer
+    // name(s) slug(s) designation(s) specialty(s) = 4s
+    // satisfaction_rate(i) feedback_count(i) = 2i  
+    // location(s) consultation_fee(s) bio(s) excerpt(s) = 4s
+    // edu_json(s) exp_json(s) awd_json(s) = 3s
+    // specializations(s) map_iframe(s) photo(s) tags(s) = 4s
+    // is_published(i) = 1i
+    // published_at(s) meta_title(s) meta_description(s) focus_keyword(s) canonical_url(s) = 5s
+    // og_title(s) og_description(s) ogImage(s) og_type(s) = 4s
+    // twitter_title(s) twitter_description(s) twitter_card(s) = 3s
+    // robots_meta(s) schema_type(s) schema_json(s) = 3s
+    // TOTAL: 4+2+4+3+4+1+5+4+3+3 = 33
 
-        if ($stmt->execute()) {
-            header("Location: ./?msg=added");
-            exit;
-        } else {
-            $errors[] = 'Database error: ' . $stmt->error;
-        }
+    $stmt->bind_param(
+        "ssssii" . "ssss" . "sss" . "ssss" . "i" . "sssss" . "ssss" . "sss" . "sss",
+        $name, $slug, $designation, $specialty,
+        $satisfaction_rate, $feedback_count,
+        $location, $consultation_fee, $bio, $excerpt,
+        $edu_json, $exp_json, $awd_json,
+        $specializations, $map_iframe, $photo, $tags,
+        $is_published,
+        $published_at, $meta_title, $meta_description, $focus_keyword, $canonical_url,
+        $og_title, $og_description, $ogImage, $og_type,
+        $twitter_title, $twitter_description, $twitter_card,
+        $robots_meta, $schema_type, $schema_json
+    );
+
+if ($stmt->execute()) {
+        header("Location: ./?msg=added");
+        exit;
+    } else {
+        $errors[] = 'Database error: ' . $stmt->error;
     }
-}
+}  
 
+} 
 // Repopulate helper
 $p = fn($k) => htmlspecialchars($_POST[$k] ?? '');
 

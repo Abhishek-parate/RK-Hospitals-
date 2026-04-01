@@ -130,6 +130,17 @@ $assetBase  = '../';
 
 $extraCSS = '
 <style>
+
+.table-hover-soft tbody tr:hover { background-color: #f8f9fa !important; }
+
+
+#doctorsTableBody td { white-space: normal !important; }
+#doctorsTableBody .text-truncate { 
+    white-space: normal !important; 
+    overflow: visible !important;
+    text-overflow: unset !important;
+    max-width: 250px !important;
+}
     .stat-card-hover { transition: transform 0.2s ease, box-shadow 0.2s ease; }
     .stat-card-hover:hover { transform: translateY(-3px); box-shadow: 0 .5rem 1rem rgba(0,0,0,.08)!important; }
     .table-hover-soft tbody tr { transition: background-color 0.15s ease; }
@@ -304,7 +315,7 @@ require_once '../include/head.php';
                     </div>
 
                     <div class="table-responsive">
-                        <table class="table table-hover-soft table-borderless align-middle mb-0 text-nowrap">
+                        <table class="table table-hover-soft table-borderless align-middle mb-0">
                             <thead class="bg-light">
                                 <tr class="text-uppercase text-muted" style="font-size:0.75rem;letter-spacing:0.5px;">
                                     <th class="ps-4 py-3 fw-bold">Doctor</th>
@@ -343,34 +354,44 @@ require_once '../include/head.php';
                                 ?>
                                 <tr class="border-bottom border-light">
 
-                                    <!-- Doctor Name & Photo -->
-                                    <td class="ps-4 py-3">
-                                        <div class="d-flex align-items-center gap-3">
-                                            <?php if (!empty($imgSrc) && $doc['photo'] !== 'default.jpg'): ?>
-                                            <img src="<?= htmlspecialchars($imgSrc) ?>"
-                                                class="doctor-thumb shadow-sm"
-                                                alt="<?= htmlspecialchars($doc['name']) ?>"
-                                                onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-                                            <div class="doctor-thumb-placeholder" style="display:none;"><i class="fa fa-user-md"></i></div>
-                                            <?php else: ?>
-                                            <div class="doctor-thumb-placeholder"><i class="fa fa-user-md"></i></div>
-                                            <?php endif; ?>
-                                            <div>
-                                                <h6 class="mb-1 fw-bold text-dark text-truncate" style="max-width:220px;"
-                                                    title="<?= htmlspecialchars($doc['name']) ?>">
-                                                    <?= htmlspecialchars($doc['name']) ?>
-                                                </h6>
-                                                <div class="small text-muted d-flex align-items-center gap-2">
-                                                    <span class="text-truncate" style="max-width:180px;"><?= htmlspecialchars($doc['designation'] ?? '') ?></span>
-                                                    <?php if (!empty($doc['location'])): ?>
-                                                    <i class="fa fa-circle" style="font-size:3px;"></i>
-                                                    <span><i class="fa fa-map-marker-alt me-1"></i><?= htmlspecialchars($doc['location']) ?></span>
-                                                    <?php endif; ?>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
+                                  <!-- Doctor Name & Photo -->
+<td class="ps-4 py-3" style="max-width:260px;">
+    <div class="d-flex align-items-center gap-3">
+        <?php if (!empty($imgSrc) && $doc['photo'] !== 'default.jpg'): ?>
+        <img src="<?= htmlspecialchars($imgSrc) ?>"
+            class="doctor-thumb shadow-sm"
+            alt="<?= htmlspecialchars($doc['name']) ?>"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+        <div class="doctor-thumb-placeholder" style="display:none;"><i class="fa fa-user-md"></i></div>
+        <?php else: ?>
+        <div class="doctor-thumb-placeholder"><i class="fa fa-user-md"></i></div>
+        <?php endif; ?>
 
+        <div style="min-width:0; max-width:190px;">
+       
+            <h6 class="mb-1 fw-bold text-dark"
+                style="word-break:break-word; white-space:normal;"
+                title="<?= htmlspecialchars($doc['name']) ?>">
+                <?= htmlspecialchars($doc['name']) ?>
+            </h6>
+           
+            <?php if (!empty($doc['designation'])): ?>
+            <div class="small text-muted mb-1"
+                style="word-break:break-word; white-space:normal;">
+                <?= htmlspecialchars($doc['designation']) ?>
+            </div>
+            <?php endif; ?>
+            
+            <?php if (!empty($doc['location'])): ?>
+            <div class="small text-muted"
+                style="word-break:break-word; white-space:normal;">
+                <i class="fa fa-map-marker-alt me-1 text-danger" style="font-size:0.7rem;"></i>
+                <?= htmlspecialchars($doc['location']) ?>
+            </div>
+            <?php endif; ?>
+        </div>
+    </div>
+</td>
                                     <!-- Specialty -->
                                     <td class="py-3">
                                         <?php if (!empty($doc['specialty'])): ?>

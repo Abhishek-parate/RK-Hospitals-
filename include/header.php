@@ -174,6 +174,31 @@ if ($_navDoctorsRes) {
         height: 40px !important;
     }
 }
+@media (max-width: 991.98px) {
+    .main-nav .has-submenu .submenu.sub-menu-default {
+        position: static !important;
+        transform: none !important;
+        left: auto !important;
+        top: auto !important;
+        min-width: 100% !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        box-shadow: none !important;
+        border-radius: 8px !important;
+        border: 1px solid #ebebeb !important;
+        margin-top: 6px !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+}
+.header {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 9999 !important;
+    background: #fff !important;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.08) !important;
+    width: 100% !important;
+}
 </style>
 <!-- Header -->
 <header class="header <?= $_headerClass ?>">
@@ -267,4 +292,5 @@ if ($_navDoctorsRes) {
         </nav>
     </div>
 </header>
+
 <!-- /Header -->

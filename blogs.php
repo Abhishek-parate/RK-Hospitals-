@@ -331,71 +331,7 @@ function blogPageUrl($pageNum, $catSlug, $searchStr) {
         </div>
         <!-- /Page Content -->
 
-        <!-- Footer -->
-        <footer class="footer inner-footer">
-            <div class="footer-top">
-                <div class="container">
-                    <div class="row align-items-start">
-                        <div class="col-xl-2 col-lg-3 col-md-6">
-                            <div class="footer-widget">
-                                <div class="footer-logo mb-3">
-                                    <img src="<?= SITE_URL ?>/assets/img/RK-Logo.png" alt="RK Hospital Logo"
-                                        class="img-fluid logo">
-                                </div>
-                                <p>Dr. Agrawal's R.K. Hospital provides quality healthcare in Nagpur with advanced
-                                    medical facilities and compassionate care.</p>
-                            </div>
-                        </div>
-                        <div class="col-xl-2 col-lg-3 col-md-6">
-                            <div class="footer-widget footer-menu">
-                                <h6 class="footer-title">Quick Links</h6>
-                                <ul>
-                                    <li><a href="<?= SITE_URL ?>/">Home</a></li>
-                                    <li><a href="<?= SITE_URL ?>/about-us.php">About Us</a></li>
-                                    <li><a href="<?= SITE_URL ?>/index.php#doctors">Doctors</a></li>
-                                    <li><a href="<?= SITE_URL ?>/contact-us">Contact Us</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-xl-2 col-lg-3 col-md-6">
-                            <div class="footer-widget footer-menu">
-                                <h6 class="footer-title">Treatments</h6>
-                                <ul>
-                                    <li><a href="<?= SITE_URL ?>/services.php">All Services</a></li>
-                                    <li><a href="<?= blogCategoryUrl('orthopedic') ?>">Orthopedic Blogs</a></li>
-                                    <li><a href="<?= blogCategoryUrl('gynecology') ?>">Gynecology Blogs</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-xl-2 col-lg-3 col-md-6">
-                            <div class="footer-widget footer-menu">
-                                <h6 class="footer-title">Policies</h6>
-                                <ul>
-                                    <li><a href="#">Legal Notice</a></li>
-                                    <li><a href="#">Privacy Policy</a></li>
-                                    <li><a href="#">Refund Policy</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-xl-4 col-lg-12 col-md-12">
-                            <div class="footer-widget">
-                                <h6 class="footer-title">Reach Us</h6>
-                                <p class="mb-2"><strong>Dr. Agrawal's R.K. Hospital</strong><br>Central Avenue,
-                                    Ladpura<br>Itwari, Nagpur</p>
-                                <p class="mb-1"><strong>Phone:</strong> 097660 57372</p>
-                                <p class="mb-0"><strong>Email:</strong> info@rkhospital.com</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <div class="container">
-                    <p class="text-center mb-0">Copyright &copy; <?= date('Y') ?> Dr. Agrawal's R.K. Hospital, Nagpur.
-                        All Rights Reserved.</p>
-                </div>
-            </div>
-        </footer>
+       <?php include 'include/footer.php'; ?>
         <!-- /Footer -->
 
     </div>

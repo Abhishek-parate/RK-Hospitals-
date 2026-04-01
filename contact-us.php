@@ -345,6 +345,22 @@
             gap: 10px;
         }
     }
+    .doc-read-more-btn {
+    background: none;
+    border: none;
+    color: #c0392b;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 4px 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 4px;
+}
+.doc-read-more-btn:hover { text-decoration: underline; }
+.doc-read-more-btn i { font-size: 0.7rem; transition: transform 0.2s; }
+.doc-read-more-btn.open i { transform: rotate(180deg); }
     </style>
 </head>
 
@@ -766,7 +782,7 @@
                                 <?php endif; ?>
 
                                 <?php if (!empty($bio_text)): ?>
-                                <p class="doc-bio">
+                                <p class="doc-bio" style="text-align:justify;">
                                     <?= nl2br(htmlspecialchars($bio_text)) ?>
                                 </p>
                                 <?php endif; ?>
@@ -784,7 +800,7 @@
                                     </div>
                                     <?php endif; ?>
                                 </div>
-
+             
                                 <div class="doc-actions">
                                     <a href="<?= SITE_URL ?>/doctors/<?= urlencode($doc['slug']) ?>"
                                         class="btn-rk-primary">

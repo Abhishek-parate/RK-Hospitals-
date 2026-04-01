@@ -35,7 +35,7 @@
                         <ul class="list-unstyled">
                             <li><a href="<?= $_base ?>">Home</a></li>
                             <li><a href="<?= $_base ?>about-us">About Us</a></li>
-                            <li><a href="<?= $_base ?>doctors">Our Doctors</a></li>
+                            <li><a href="<?= $_base ?>doctors/Abhishek">Our Doctors</a></li>
                             <li><a href="<?= $_base ?>services">Services</a></li>
 
                         </ul>
@@ -75,15 +75,15 @@
                         <ul class="list-unstyled mb-3">
                             <li class="mb-2">
                                 <i class="fa fa-map-marker-alt me-2 text-primary"></i>
-                                RK Hospital, Nagpur, Maharashtra
+                               <a style="color:#0F172A;"> 27 Chandrashekhar, Azad Square, Central Ave, Ladpura, Itwari, Nagpur, Maharashtra 440002</a>
                             </li>
                             <li class="mb-2">
                                 <i class="fa fa-phone me-2 text-primary"></i>
-                                <a href="tel:+910712000000">+91 0712 000 000</a>
+                                <a href="tel:+919766057372">+91 97660 57372</a>
                             </li>
                             <li class="mb-3">
                                 <i class="fa fa-envelope me-2 text-primary"></i>
-                                <a href="mailto:info@rkhospital.in">info@rkhospital.in</a>
+                                <a href="mailto: info@dragrawalsrkhospital.in"> info@dragrawalsrkhospital.in</a>
                             </li>
                         </ul>
 

@@ -321,7 +321,7 @@ $hasBannerImage = !empty($doctorFeatureImage) && $doctorFeatureImage !== 'defaul
                             <div class="icon-box"><i class="fa-regular fa-user"></i></div>
                             About The Doctor
                         </h2>
-                        <p style="font-size: 1rem; line-height: 1.7; color: var(--text-muted); margin: 0;">
+                        <p style="font-size: 1rem; line-height: 1.7; color: var(--text-muted); margin: 0;text-align:justify;">
                             <?= nl2br(htmlspecialchars($doctorBio)) ?>
                         </p>
                     </div>

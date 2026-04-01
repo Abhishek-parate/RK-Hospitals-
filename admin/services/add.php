@@ -1005,7 +1005,7 @@ require_once '../include/head.php';
                             <div class="svc-card-body">
                                 <div class="form-check form-switch mb-3">
                                     <input class="form-check-input" type="checkbox" role="switch" name="is_published"
-                                        id="isPublished" <?= !empty($_POST['is_published']) ? 'checked' : '' ?>>
+    id="isPublished" <?= (!isset($_POST['is_published']) || !empty($_POST['is_published'])) ? 'checked' : '' ?>>
                                     <label class="form-check-label fw-semibold" for="isPublished">
                                         <span class="pub-badge badge" id="pubBadge" style="background:#e9ecef;color:#6c757d;">Draft</span>
                                     </label>

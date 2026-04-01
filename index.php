@@ -8,24 +8,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description"
-        content="The responsive professional Doccure template offers many features, like scheduling appointments with  top doctors, clinics, and hospitals via voice, video call & chat.">
+        content="The responsive professional RK-Hospital template offers many features, like scheduling appointments with  top doctors, clinics, and hospitals via voice, video call & chat.">
     <meta name="keywords"
-        content="practo clone, doccure, doctor appointment, Practo clone html template, doctor booking template">
+        content="practo clone, RK-Hospital, doctor appointment, Practo clone html template, doctor booking template">
     <meta name="author" content="Practo Clone HTML Template - Doctor Booking Template">
-    <meta property="og:url" content="https://doccure.dreamstechnologies.com/html/">
+    <meta property="og:url" content="https://RK-Hospital.dreamstechnologies.com/html/">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Doctors Appointment HTML Website Templates | Doccure">
+    <meta property="og:title" content="Doctors Appointment HTML Website Templates | RK-Hospital">
     <meta property="og:description"
-        content="The responsive professional Doccure template offers many features, like scheduling appointments with  top doctors, clinics, and hospitals via voice, video call & chat.">
+        content="The responsive professional RK-Hospital template offers many features, like scheduling appointments with  top doctors, clinics, and hospitals via voice, video call & chat.">
     <meta property="og:image" content="assets/img/preview-banner.jpg">
     <meta name="twitter:card" content="summary_large_image">
-    <meta property="twitter:domain" content="https://doccure.dreamstechnologies.com/html/">
-    <meta property="twitter:url" content="https://doccure.dreamstechnologies.com/html/">
-    <meta name="twitter:title" content="Doctors Appointment HTML Website Templates | Doccure">
+    <meta property="twitter:domain" content="https://RK-Hospital.dreamstechnologies.com/html/">
+    <meta property="twitter:url" content="https://RK-Hospital.dreamstechnologies.com/html/">
+    <meta name="twitter:title" content="Doctors Appointment HTML Website Templates | RK-Hospital">
     <meta name="twitter:description"
-        content="The responsive professional Doccure template offers many features, like scheduling appointments with  top doctors, clinics, and hospitals via voice, video call & chat.">
+        content="The responsive professional RK-Hospital template offers many features, like scheduling appointments with  top doctors, clinics, and hospitals via voice, video call & chat.">
     <meta name="twitter:image" content="assets/img/preview-banner.jpg">
-    <title>Doccure</title>
+    <title>RK-Hospital</title>
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="<?php echo $base_url; ?>assets/img/RK-Logo.png" type="image/x-icon">
@@ -580,6 +580,22 @@
         margin-bottom: 12px !important;
         /* Adjust this number to make the gap smaller or larger */
     }
+    .doc-read-more-btn {
+    background: none;
+    border: none;
+    color: #c0392b;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 4px 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 4px;
+}
+.doc-read-more-btn:hover { text-decoration: underline; }
+.doc-read-more-btn i { font-size: 0.7rem; transition: transform 0.2s; }
+.doc-read-more-btn.open i { transform: rotate(180deg); }
     </style>
 </head>
 
@@ -1159,7 +1175,7 @@
 
                         <div class="col-xl-4">
                             <div class="text-xl-end">
-                                <a href="<?= SITE_URL ?>/services" class="btn btn-white theme-7-btn">
+                                <a href="<?= SITE_URL ?>/services.php" class="btn btn-white theme-7-btn">
                                     View All Services
                                     <span class="icon"><i class="isax isax-arrow-right-3"></i></span>
                                 </a>
@@ -1353,10 +1369,20 @@
                                 <?php endif; ?>
 
                                 <?php if (!empty($bio_text)): ?>
-                                <p class="doc-bio">
-                                    <?= nl2br(htmlspecialchars($bio_text)) ?>
-                                </p>
-                                <?php endif; ?>
+<div class="doc-bio-wrap" style="text-align:justify;">
+    <p class="doc-bio doc-bio-short">
+       <?= nl2br(htmlspecialchars(mb_substr(strip_tags($bio_text), 0, 800))) ?>...
+    </p>
+    <p class="doc-bio doc-bio-full" style="display:none;">
+        <?= nl2br(htmlspecialchars($bio_text)) ?>
+    </p>
+    <?php if (mb_strlen(strip_tags($bio_text)) > 800): ?>
+    <button class="doc-read-more-btn" onclick="toggleBio(this)">
+        Read More <i class="fa-solid fa-chevron-down"></i>
+    </button>
+    <?php endif; ?>
+</div>
+<?php endif; ?>
 
                                 <div class="doc-info-strip">
                                     <div class="doc-info-item">
@@ -1377,7 +1403,7 @@
                                         class="btn-rk-primary">
                                         View Profile
                                     </a>
-                                    <a href="<?= SITE_URL ?>/contact-us" class="btn-rk-outline">
+                                    <a href="<?= SITE_URL ?>/contact-us.php" class="btn-rk-outline">
                                         Book Appointment
                                     </a>
                                 </div>
@@ -1614,7 +1640,7 @@
                                         data-bs-parent="#faq-details-one">
                                         <div class="accordion-body">
                                             <p>
-                                                You can book an appointment by calling +91 97660 57372.
+                                                You can book an appointment by calling +91 97660 57372 or 8999290433.
                                                 Walk-in and online booking options are also available.
                                             </p>
                                         </div>
@@ -1711,7 +1737,7 @@
 
             <!-- Item 1 -->
             <div class="about-popup-item">
-                <h3 class="title">About Doccure</h3>
+                <h3 class="title">About RK-Hospital</h3>
                 <p>Modern healthcare platform designed to simplify the way patients connect with doctors, clinics &
                     medical services.</p>
                 <div class="about-img d-flex align-items-center gap-2 justify-content-between">
@@ -1785,7 +1811,7 @@
     <!-- end offcanvas -->
 
 
-    <!-- ScrollToTop -->
+   <!-- ScrollToTop -->
     <div class="progress-wrap active-progress">
         <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
             <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"
@@ -1793,6 +1819,7 @@
             </path>
         </svg>
     </div>
+
     <!-- /ScrollToTop -->
 
     <!-- jQuery -->
@@ -1861,6 +1888,63 @@
         onScroll();
     })();
     </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+    const progressWrap = document.querySelector(".progress-wrap");
+    const progressPath = document.querySelector(".progress-wrap path");
+
+    const pathLength = progressPath.getTotalLength();
+
+    progressPath.style.strokeDasharray = pathLength;
+    progressPath.style.strokeDashoffset = pathLength;
+
+    // Scroll update
+    window.addEventListener("scroll", function () {
+        let scroll = window.scrollY;
+        let height = document.documentElement.scrollHeight - window.innerHeight;
+
+        let progress = pathLength - (scroll * pathLength / height);
+        progressPath.style.strokeDashoffset = progress;
+
+        // Show / hide button
+        if (scroll > 100) {
+            progressWrap.classList.add("active-progress");
+        } else {
+            progressWrap.classList.remove("active-progress");
+        }
+    });
+
+    // Click scroll to top
+    progressWrap.addEventListener("click", function () {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    });
+
+});
+</script>
+<script>
+function toggleBio(btn) {
+    var wrap  = btn.closest('.doc-bio-wrap');
+    var short = wrap.querySelector('.doc-bio-short');
+    var full  = wrap.querySelector('.doc-bio-full');
+    var isOpen = btn.classList.contains('open');
+    if (isOpen) {
+        full.style.display  = 'none';
+        short.style.display = 'block';
+        btn.classList.remove('open');
+        btn.innerHTML = 'Read More <i class="fa-solid fa-chevron-down"></i>';
+    } else {
+        short.style.display = 'none';
+        full.style.display  = 'block';
+        btn.classList.add('open');
+        btn.innerHTML = 'Read Less <i class="fa-solid fa-chevron-up"></i>';
+    }
+}
+</script>
+    
 </body>
 
 </html>
