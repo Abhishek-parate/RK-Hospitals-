@@ -505,6 +505,26 @@ $meta_keywords    = "RK Hospital Nagpur, about RK Hospital, Dr Rahul Agrawal ort
     line-height: 1.7;
     margin-bottom: 0;
 }
+/* ─── Mobile Spacing Fix — about-us.php ─── */
+@media (max-width: 768px) {
+    .about-section {
+        padding-top: 35px !important;
+        padding-bottom: 35px !important;
+    }
+    .rk-our-story-section {
+        padding-top: 35px !important;
+        padding-bottom: 35px !important;
+    }
+    .rk-awards-section {
+        padding-top: 35px !important;
+        padding-bottom: 35px !important;
+    }
+}
+@media (max-width: 768px) {
+    .rk-story-body-row {
+        gap: 24px !important;
+    }
+}
     </style>
 </head>
 

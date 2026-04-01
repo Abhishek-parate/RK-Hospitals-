@@ -1,5 +1,14 @@
 <?php $_base = rtrim(SITE_URL, '/') . '/'; ?>
-
+<style>
+.footer.inner-footer { margin-top: 0 !important; padding-top: 0 !important; }
+.footer-top { padding-bottom: 10px !important; }
+@media (max-width: 768px) {
+    .footer-bottom {
+        padding-top: 12px !important;
+        padding-bottom: 12px !important;
+    }
+}
+</style>
 <!-- Footer Section -->
 <footer class="footer inner-footer footer-info">
     <div class="footer-top py-5">
@@ -15,15 +24,15 @@
                         </a>
 
                         <p class="text-dark mb-4">
-                            R.K. Hospital, Nagpur — providing compassionate, quality healthcare for over 20 years.
+                            R.K. Hospital, Nagpur — providing compassionate, quality healthcare for over 5+ years.
                             Your health is our priority.
                         </p>
 
                         <ul class="d-flex gap-3 list-unstyled">
-                            <li><a href="#"><i class="fa-brands fa-facebook"></i></a></li>
-                            <li><a href="#"><i class="fa-brands fa-x-twitter"></i></a></li>
-                            <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
-                            <li><a href="#"><i class="fa-brands fa-linkedin"></i></a></li>
+                            <li><a href="https://www.facebook.com/share/1Aze23diqp/" class="social-icon" target="_blank"><i class="fa-brands fa-facebook"></i></a></li>
+                           
+                            <li><a href="https://www.instagram.com/dr.agrawalsrkhospital?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="><i class="fa-brands fa-instagram"></i></a></li>
+                   
                         </ul>
                     </div>
                 </div>
@@ -75,7 +84,7 @@
                         <ul class="list-unstyled mb-3">
                             <li class="mb-2">
                                 <i class="fa fa-map-marker-alt me-2 text-primary"></i>
-                               <a style="color:#0F172A;"> 27 Chandrashekhar, Azad Square, Central Ave, Ladpura, Itwari, Nagpur, Maharashtra 440002</a>
+                               <a style="color:#0F172A;">27 Chandrashekhar, Azad Square, Central Ave, Ladpura, Itwari, Nagpur, Maharashtra 440002</a>
                             </li>
                             <li class="mb-2">
                                 <i class="fa fa-phone me-2 text-primary"></i>
@@ -93,24 +102,28 @@
             </div>
         </div>
     </div>
+<!-- Footer Bottom -->
+<div class="footer-bottom py-3 border-top">
+    <div class="container">
+        <div class="d-flex flex-wrap justify-content-between align-items-center">
 
-    <!-- Footer Bottom -->
-    <div class="footer-bottom py-3 border-top">
-        <div class="container">
-            <div class="d-flex flex-wrap justify-content-between align-items-center">
+            <ul class="list-unstyled d-flex gap-3 mb-0 invisible">
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
 
-                <p class="mb-0">
-                    Copyright &copy; <?= date('Y') ?> R.K. Hospital Nagpur. All Rights Reserved.
-                </p>
+            <p style="text-align: center; margin-bottom: 0;">
+                Copyright &copy; <?= date('Y') ?> R.K. Hospital Nagpur. All Rights Reserved | Designed And Developed By 
+                <a href="https://techinbox.in/" target="_blank" style="color:#0F172A;">Techinbox.in</a>
+            </p>
 
-                <ul class="list-unstyled d-flex gap-3 mb-0">
-                    <li><a href="<?= $_base ?>about-us">About</a></li>
-                    <li><a href="<?= $_base ?>contact-us">Contact</a></li>
-                </ul>
+            <ul class="list-unstyled d-flex gap-3 mb-0 d-none d-md-flex">
+                <li><a href="<?= $_base ?>about-us">About</a></li>
+                <li><a href="<?= $_base ?>contact-us">Contact</a></li>
+            </ul>
 
-            </div>
         </div>
     </div>
-
+</div>
 </footer>
 <!-- /Footer Section -->

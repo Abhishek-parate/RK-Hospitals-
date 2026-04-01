@@ -1263,7 +1263,7 @@
                 <h3 class="title">Hospital Location</h3>
                 <div class="loction-item mb-3">
                     <h4 class="title">R.K. Hospital Nagpur</h4>
-                    <p class="location">27, Central Avenue Road, Beside Hotel Al Zam Zam, Gandhibagh, Nagpur – 440002</p>
+                    <p class="location">27 Chandrashekhar, Azad Square, Central Ave, Ladpura, Itwari, Nagpur, Maharashtra 440002</p>
                 </div>
             </div>
             <div class="about-popup-item">

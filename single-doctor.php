@@ -97,7 +97,7 @@ $hasBannerImage = !empty($doctorFeatureImage) && $doctorFeatureImage !== 'defaul
         .profile-header-bg {
             position: relative;
             width: 100%;
-            height: 50vh; /* Taller banner */
+            height: 70vh; /* Taller banner */
             min-height: 350px;
             background: <?= $hasBannerImage ? 'url("'.asset($doctorFeatureImage).'") center/cover no-repeat' : '#1e293b' ?>;
             display: flex;
@@ -315,17 +315,29 @@ $hasBannerImage = !empty($doctorFeatureImage) && $doctorFeatureImage !== 'defaul
                 
                 <div class="col-lg-8">
                     
-                    <?php if (!empty($doctorBio)): ?>
-                    <div class="doc-card wow fadeInUp" data-wow-duration="0.8s" data-wow-delay="0.2s">
-                        <h2 class="doc-card-title">
-                            <div class="icon-box"><i class="fa-regular fa-user"></i></div>
-                            About The Doctor
-                        </h2>
-                        <p style="font-size: 1rem; line-height: 1.7; color: var(--text-muted); margin: 0;text-align:justify;">
-                            <?= nl2br(htmlspecialchars($doctorBio)) ?>
-                        </p>
-                    </div>
-                    <?php endif; ?>
+                 <?php if (!empty($doctorBio)): ?>
+<div class="doc-card wow fadeInUp" data-wow-duration="0.8s" data-wow-delay="0.2s">
+    <h2 class="doc-card-title">
+        <div class="icon-box"><i class="fa-regular fa-user"></i></div>
+        About The Doctor
+    </h2>
+    <?php
+        $bio = str_replace(["\r\n", "\r"], "\n", trim($doctorBio));
+        
+       
+        $paras = preg_split('/\n\n+/', $bio);
+        $paras = array_filter(array_map('trim', $paras));
+        
+        foreach ($paras as $para):
+          
+            $para = preg_replace('/\n/', ' ', $para);
+    ?>
+    <p style="font-size:1rem; line-height:1.8; color:var(--text-muted); margin:0 0 16px 0; text-align:justify;">
+        <?= htmlspecialchars($para) ?>
+    </p>
+    <?php endforeach; ?>
+</div>
+<?php endif; ?>
 
                     <?php if (!empty($experience)): ?>
                     <div class="doc-card wow fadeInUp" data-wow-duration="0.8s" data-wow-delay="0.3s">

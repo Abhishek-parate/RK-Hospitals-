@@ -1422,7 +1422,7 @@
                                         <i class="fa-solid fa-location-dot red"></i>
                                         <div>
                                             <h6>Hospital Address</h6>
-                                            <p>27, Central Avenue Road,<br>Gandhibagh, Nagpur – 440002</p>
+                                            <p>27 Chandrashekhar, Azad Square, Central Ave, Ladpura, Itwari, Nagpur, Maharashtra 440002</p>
                                         </div>
                                     </div>
                                 </div>
