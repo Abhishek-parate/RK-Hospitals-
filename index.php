@@ -580,22 +580,62 @@
         margin-bottom: 12px !important;
         /* Adjust this number to make the gap smaller or larger */
     }
-    .doc-read-more-btn {
-    background: none;
-    border: none;
-    color: #c0392b;
-    font-size: 0.82rem;
-    font-weight: 600;
-    padding: 4px 0;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    margin-top: 4px;
+    /* ─── Mobile Spacing Fix — index.php ─── */
+@media (max-width: 768px) {
+    .speciality-section {
+        padding-top: 45px !important;
+        padding-bottom: 45px !important;
+    }
+    .about-section {
+        padding-top: 45px !important;
+        padding-bottom: 45px !important;
+    }
+    .work-section-seven {
+        padding-top: 45px !important;
+        padding-bottom: 45px !important;
+    }
+    .whychoose-section-nine {
+        padding-top: 45px !important;
+        padding-bottom: 45px !important;
+    }
+    .services-section {
+        padding-top: 30px !important;
+        padding-bottom: 30px !important;
+    }
+    .services-section-seven {
+        padding-top: 45px !important;
+        padding-bottom: 45px !important;
+    }
+    /* Doctors section */
+    section[style*="padding: 56px"] {
+        padding: 45px 0 50px !important;
+    }
+    .testimonial-section-one {
+        padding-top: 45px !important;
+        padding-bottom: 45px !important;
+    }
+    .faq-section-eight {
+        padding-top: 45px !important;
+        padding-bottom: 45px !important;
+    }
+    /* FAQ image height fix on mobile */
+    .faq-support img {
+        height: 250px !important;
+    }
+    /* Bootstrap utility override */
+    .mt-5 { margin-top: 35px !important; }
+    .mb-5 { margin-bottom: 35px !important; }
+    .py-5 { padding-top: 35px !important; padding-bottom: 35px !important; }
 }
-.doc-read-more-btn:hover { text-decoration: underline; }
-.doc-read-more-btn i { font-size: 0.7rem; transition: transform 0.2s; }
-.doc-read-more-btn.open i { transform: rotate(180deg); }
+@media (max-width: 768px) {
+    .banner-section-full {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+    }
+    .speciality-section {
+        padding-top: 20px !important;
+    }
+}
     </style>
 </head>
 
@@ -1368,19 +1408,21 @@
                                 </div>
                                 <?php endif; ?>
 
-                                <?php if (!empty($bio_text)): ?>
-<div class="doc-bio-wrap" style="text-align:justify;">
-    <p class="doc-bio doc-bio-short">
-       <?= nl2br(htmlspecialchars(mb_substr(strip_tags($bio_text), 0, 800))) ?>...
-    </p>
-    <p class="doc-bio doc-bio-full" style="display:none;">
-        <?= nl2br(htmlspecialchars($bio_text)) ?>
-    </p>
-    <?php if (mb_strlen(strip_tags($bio_text)) > 800): ?>
-    <button class="doc-read-more-btn" onclick="toggleBio(this)">
-        Read More <i class="fa-solid fa-chevron-down"></i>
-    </button>
-    <?php endif; ?>
+<?php if (!empty($bio_text)): ?>
+<div class="doc-bio">
+    <?php
+        // Remove HTML tags
+        $clean_bio = strip_tags($bio_text);
+        // Remove extra whitespace/newlines
+        $clean_bio = preg_replace('/\s+/', ' ', $clean_bio);
+        $clean_bio = trim($clean_bio);
+        // Cut to ~200 characters cleanly at word boundary
+        if (strlen($clean_bio) > 200) {
+            $clean_bio = substr($clean_bio, 0, 200);
+            $clean_bio = substr($clean_bio, 0, strrpos($clean_bio, ' ')) . '...';
+        }
+    ?>
+    <p><?= htmlspecialchars($clean_bio) ?></p>
 </div>
 <?php endif; ?>
 
@@ -1403,7 +1445,7 @@
                                         class="btn-rk-primary">
                                         View Profile
                                     </a>
-                                    <a href="<?= SITE_URL ?>/contact-us.php" class="btn-rk-outline">
+                                    <a href="<?= SITE_URL ?>/contact-us" class="btn-rk-outline">
                                         Book Appointment
                                     </a>
                                 </div>
@@ -1623,7 +1665,7 @@
                                         <div class="accordion-body">
                                             <p>
                                                 Dr. Agrawal's R.K. Hospital Nagpur is open 24/7 for emergency services.
-                                                OPD timings are 11:00 AM to 4:00 PM and 7:00 PM to 9:00 PM (Mon–Sat).
+                                               opens 24 Hours
                                             </p>
                                         </div>
                                     </div>
@@ -1640,7 +1682,7 @@
                                         data-bs-parent="#faq-details-one">
                                         <div class="accordion-body">
                                             <p>
-                                                You can book an appointment by calling +91 97660 57372 or 8999290433.
+                                                You can book an appointment by calling +91 97660 57372
                                                 Walk-in and online booking options are also available.
                                             </p>
                                         </div>
@@ -1696,8 +1738,7 @@
                                         data-bs-parent="#faq-details-one">
                                         <div class="accordion-body">
                                             <p>
-                                                Dr. Agrawal's R.K. Hospital is located at Central Avenue, beside Hotel
-                                                Al Zam Zam, Nagpur, Maharashtra, easily accessible from all major areas.
+                                                Dr. Agrawal's R.K. Hospital is located at  27 Chandrashekhar, Azad Square, Central Ave, Ladpura, Itwari, Nagpur, Maharashtra 440002 easily accessible from all major areas.
                                             </p>
                                         </div>
                                     </div>
@@ -1870,25 +1911,6 @@
     });
     </script>
     <script>
-    // Sticky header — guaranteed fallback regardless of script.js
-    (function() {
-        var header = document.querySelector('header.header');
-        if (!header) return;
-
-        function onScroll() {
-            if (window.scrollY > 80) {
-                header.classList.add('sticky');
-            } else {
-                header.classList.remove('sticky');
-            }
-        }
-        window.addEventListener('scroll', onScroll, {
-            passive: true
-        });
-        onScroll();
-    })();
-    </script>
-    <script>
         document.addEventListener("DOMContentLoaded", function () {
 
     const progressWrap = document.querySelector(".progress-wrap");
@@ -1925,26 +1947,38 @@
 
 });
 </script>
-<script>
-function toggleBio(btn) {
-    var wrap  = btn.closest('.doc-bio-wrap');
-    var short = wrap.querySelector('.doc-bio-short');
-    var full  = wrap.querySelector('.doc-bio-full');
-    var isOpen = btn.classList.contains('open');
-    if (isOpen) {
-        full.style.display  = 'none';
-        short.style.display = 'block';
-        btn.classList.remove('open');
-        btn.innerHTML = 'Read More <i class="fa-solid fa-chevron-down"></i>';
-    } else {
-        short.style.display = 'none';
-        full.style.display  = 'block';
-        btn.classList.add('open');
-        btn.innerHTML = 'Read Less <i class="fa-solid fa-chevron-up"></i>';
-    }
-}
+ <script>
+(function() {
+    var checkSlick = setInterval(function() {
+        var $slider = $('.spciality-slider');
+        if ($slider.hasClass('slick-initialized')) {
+            clearInterval(checkSlick);
+            $slider.slick('unslick');
+        }
+        
+        $slider.slick({
+            slidesToShow: 6,
+            slidesToScroll: 1,
+            autoplay: true,
+            autoplaySpeed: 0,        // ← 0 = non-stop
+            speed: 3000,             // ← smooth transition speed
+            infinite: true,
+            cssEase: 'linear',       // ← LINEAR = smooth non-stop flow
+            pauseOnHover: true,
+            pauseOnFocus: false,
+            arrows: true,
+            prevArrow: $('.spciality-prev'),
+            nextArrow: $('.spciality-next'),
+            responsive: [
+                { breakpoint: 1200, settings: { slidesToShow: 4 } },
+                { breakpoint: 992,  settings: { slidesToShow: 3 } },
+                { breakpoint: 768,  settings: { slidesToShow: 2 } },
+                { breakpoint: 480,  settings: { slidesToShow: 1 } }
+            ]
+        });
+    }, 300);
+})();
 </script>
-    
 </body>
 
 </html>

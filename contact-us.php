@@ -439,7 +439,7 @@
                     <div class="qi-icon"><i class="fa-solid fa-location-dot"></i></div>
                     <div class="qi-text">
                         <div class="label">Our Location</div>
-                        <div class="value">Central Avenue, Gandhibagh, Nagpur 440002</div>
+                        <div class="value"> 27 Chandrashekhar, Azad Square, Central Ave, Ladpura, Itwari, Nagpur, Maharashtra 440002</div>
                     </div>
                 </div>
                 <div class="quick-info-item">
@@ -454,8 +454,8 @@
                 <div class="quick-info-item">
                     <div class="qi-icon"><i class="fa-solid fa-clock"></i></div>
                     <div class="qi-text">
-                        <div class="label">OPD Timings</div>
-                        <div class="value">11AM–4PM · 7PM–9PM (Mon–Sat)</div>
+                        <div class="label"> Timings</div>
+                        <div class="value">Opens 24 Hours</div>
                     </div>
                 </div>
                 <div class="quick-info-item">
@@ -497,10 +497,7 @@
                                         <i class="fa-solid fa-building-columns"></i>
                                     </div>
                                     <h4>Hospital Address</h4>
-                                    <p>27, Chandrashekhar Azad Square,<br>
-                                        Central Avenue Road,<br>
-                                        Beside Hotel Al Zam Zam, Gandhibagh,<br>
-                                        Nagpur, Maharashtra – 440002</p>
+                                    <p>27 Chandrashekhar, Azad Square, Central Ave, Ladpura, Itwari, Nagpur, Maharashtra 440002</p>
                                     <a href="https://maps.google.com/?q=Dr.Agrawal%27s+R.K.Hospital+Nagpur"
                                         target="_blank" rel="noopener"
                                         style="color:var(--red); font-weight:700; margin-top:8px; display:inline-flex; align-items:center; gap:6px; font-size:13px;">
@@ -521,7 +518,7 @@
                                         style="font-weight:700; font-size:16px; color:var(--red);">+91 97660 57372</a>
                                  
                                     <p style="margin-top:10px; font-size:12.5px; color:var(--text-soft);">Available 24/7
-                                        for Emergency · OPD: 11AM–4PM & 7PM–9PM</p>
+                                        for Emergency .</p>
                                 </div>
                             </div>
 
@@ -535,12 +532,12 @@
                                     <h4>Working Hours</h4>
                                     <table class="opd-table">
                                         <tr>
-                                            <td>Monday – Saturday</td>
-                                            <td>11AM – 4PM</td>
+                                            <td>Monday – Sunday</td>
+                                            <td>Opens 24 Hours</td>
                                         </tr>
                                         <tr>
-                                            <td>Monday – Saturday</td>
-                                            <td>7PM – 9PM</td>
+                                            <td>Monday – Sunday</td>
+                                            <td>24 Hours Service Available</td>
                                         </tr>
                                         <tr>
                                             <td>Sunday</td>
@@ -559,19 +556,17 @@
                                 <div class="sidebar-card">
                                     <h5><i class="fa-solid fa-share-nodes"></i> Connect With Us</h5>
                                     <div class="social-links-grid">
-                                        <a href="#" class="social-link-card fb" target="_blank">
+                                        <a href="https://www.facebook.com/share/1Aze23diqp/" class="social-link-card fb" target="_blank">
                                             <i class="fa-brands fa-facebook"></i> Facebook
                                         </a>
-                                        <a href="#" class="social-link-card ig" target="_blank">
+                                        <a href="https://www.instagram.com/dr.agrawalsrkhospital?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" class="social-link-card ig" target="_blank">
                                             <i class="fa-brands fa-instagram"></i> Instagram
                                         </a>
                                         <a href="https://wa.me/919766057372" class="social-link-card wa"
                                             target="_blank">
                                             <i class="fa-brands fa-whatsapp"></i> WhatsApp
                                         </a>
-                                        <a href="#" class="social-link-card yt" target="_blank">
-                                            <i class="fa-brands fa-youtube"></i> YouTube
-                                        </a>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -584,7 +579,7 @@
                         <div class="form-section-wrap">
                             <div class="form-section-header">
                                 <h3>Book an Appointment</h3>
-                                <p>Fill in the form and our team will get back to you within 30 minutes during OPD
+                                <p>Fill in the form and our team will get back to you within 30 minutes during Hospital
                                     hours.</p>
                             </div>
                             <div class="form-section-body">
@@ -781,11 +776,16 @@
                                 </div>
                                 <?php endif; ?>
 
-                                <?php if (!empty($bio_text)): ?>
-                                <p class="doc-bio" style="text-align:justify;">
-                                    <?= nl2br(htmlspecialchars($bio_text)) ?>
-                                </p>
-                                <?php endif; ?>
+                            <?php if (!empty($bio_text)): ?>
+<div class="doc-bio-wrap" style="text-align:justify; flex:1; margin-bottom:18px;">
+    <p class="doc-bio doc-bio-short" style="margin-bottom:6px; flex:unset;">
+        <?= nl2br(htmlspecialchars(mb_substr(strip_tags($bio_text), 0, 300))) ?>...
+    </p>
+    <p class="doc-bio doc-bio-full" style="display:none; margin-bottom:6px; flex:unset;">
+        <?= nl2br(htmlspecialchars($bio_text)) ?>
+    </p>
+</div>
+<?php endif; ?>
 
                                 <div class="doc-info-strip">
                                     <div class="doc-info-item">
@@ -915,8 +915,8 @@
             <div class="about-popup-item border-0">
                 <h3 class="title">Follow Us</h3>
                 <ul class="d-flex align-items-center gap-2 social-iyem">
-                    <li><a href="#" class="social-icon"><i class="fa-brands fa-facebook"></i></a></li>
-                    <li><a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a></li>
+                    <li><a href="https://www.facebook.com/share/1Aze23diqp/" class="social-icon"><i class="fa-brands fa-facebook"></i></a></li>
+                    <li><a href="https://www.instagram.com/dr.agrawalsrkhospital?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" class="social-icon"><i class="fa-brands fa-instagram"></i></a></li>
                     <li><a href="https://wa.me/919766057372" class="social-icon" target="_blank"><i
                                 class="fa-brands fa-whatsapp"></i></a></li>
                 </ul>
@@ -934,38 +934,36 @@
         </svg>
     </div>
 
-    <!-- jQuery -->
-    <script src="assets/js/jquery-3.7.1.min.js"></script>
-    <!-- Bootstrap Bundle JS -->
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <!-- Feather Icon JS -->
-    <script src="assets/js/feather.min.js"></script>
-    <!-- BacktoTop JS -->
-    <script src="assets/js/backToTop.js"></script>
-    <!-- Slick Slider -->
-    <script src="assets/plugins/slick/slick.min.js"></script>
-    <!-- Fancybox JS -->
-    <script src="assets/plugins/fancybox/jquery.fancybox.min.js"></script>
-    <!-- Wow JS -->
-    <script src="assets/plugins/wow/js/wow.min.js"></script>
-    <!-- Custom JS -->
-    <script src="assets/js/script.js"></script>
+   <script src="assets/js/jquery-3.7.1.min.js"></script>
+<script src="assets/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/feather.min.js"></script>
+<script src="assets/js/backToTop.js"></script>
+<script src="assets/plugins/slick/slick.min.js"></script>
+<script src="assets/plugins/fancybox/jquery.fancybox.min.js"></script>
+<script src="assets/plugins/wow/js/wow.min.js"></script>
+<script src="assets/js/script.js"></script>
 
-    <script>
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                e.preventDefault();
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-    </script>
+<script>
+function toggleBio(btn) {
+    var wrap  = btn.closest('.doc-bio-wrap');
+    var short = wrap.querySelector('.doc-bio-short');
+    var full  = wrap.querySelector('.doc-bio-full');
+    var isOpen = btn.classList.contains('open');
+    if (isOpen) {
+        full.style.display  = 'none';
+        short.style.display = 'block';
+        btn.classList.remove('open');
+        btn.innerHTML = 'Read More <i class="fa-solid fa-chevron-down"></i>';
+    } else {
+        short.style.display = 'none';
+        full.style.display  = 'block';
+        btn.classList.add('open');
+        btn.innerHTML = 'Read Less <i class="fa-solid fa-chevron-up"></i>';
+    }
+}
+</script>
+</body>
+
 </body>
 
 </html>

@@ -1,90 +1,102 @@
 <?php
 require_once 'include/config.php';
 
-// ─── Pagination ───────────────────────────────────────────────────────────────
-$page     = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
-$offset   = ($page - 1) * BLOGS_PER_PAGE;
+// ─── Pagination ───────────────────────────────────────────
+$page   = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
+$offset = ($page - 1) * BLOGS_PER_PAGE;
 
-// ─── Category & Tag Filter ────────────────────────────────────────────────────
-// Supports clean URLs for BOTH Categories and Tags (/blogs/Surgery)
+// ─── Filters ──────────────────────────────────────────────
 $cat_slug = '';
 if (!empty($_GET['category'])) {
-    // Decode to safely handle spaces, then sanitize
     $cat_slug = urldecode($_GET['category']);
     $cat_slug = preg_replace('/[^a-zA-Z0-9_\-\s]/', '', $cat_slug);
 }
-$search = isset($_GET['search']) ? clean($_GET['search']) : '';
 
-// ─── Build WHERE clause ───────────────────────────────────────────────────────
+$search = isset($_GET['search']) ? trim($_GET['search']) : '';
+
+// ─── Single WHERE block ────────────────────────────────────
 $where = "WHERE b.is_published = 1";
+
 if (!empty($cat_slug)) {
-    $safe_cat = $conn->real_escape_string($cat_slug);
-    // Checks for exact category slug OR looks for the tag inside the tags string
-    $where .= " AND (c.slug = '$safe_cat' OR b.tags LIKE '%$safe_cat%')";
+    $safe_cat  = $conn->real_escape_string($cat_slug);
+    $where    .= " AND (c.slug = '$safe_cat' OR b.tags LIKE '%$safe_cat%')";
 }
 
-// ─── Total blogs count (for pagination) ───────────────────────────────────────
-$count_sql   = "SELECT COUNT(*) as total FROM blogs b 
-                LEFT JOIN categories c ON b.category_id = c.id 
+if (!empty($search)) {
+    $safe_search = $conn->real_escape_string($search);
+    $where      .= " AND (
+                        b.title    LIKE '%$safe_search%'
+                     OR b.excerpt  LIKE '%$safe_search%'
+                     OR b.tags     LIKE '%$safe_search%'
+                     OR c.name     LIKE '%$safe_search%'
+                    )";
+}
+
+// ─── Total count (pagination) ─────────────────────────────
+$count_sql   = "SELECT COUNT(*) as total 
+                FROM blogs b
+                LEFT JOIN categories c ON b.category_id = c.id
                 $where";
 $count_res   = $conn->query($count_sql);
 $total_blogs = $count_res->fetch_assoc()['total'];
-$total_pages = ceil($total_blogs / BLOGS_PER_PAGE);
+$total_pages = max(1, ceil($total_blogs / BLOGS_PER_PAGE));
 
-// ─── Fetch blogs ──────────────────────────────────────────────────────────────
-$blogs_sql = "SELECT 
+// ─── Fetch Blogs ───────────────────────────────────────────
+$blogs_sql = "SELECT
                 b.id, b.title, b.slug, b.excerpt, b.image,
                 b.views, b.comments, b.published_at,
-                c.name  AS category_name, c.slug AS category_slug,
-                a.name  AS author_name,   a.photo AS author_photo, a.profile_url AS author_url
+                c.name  AS category_name,
+                c.slug  AS category_slug,
+                a.name  AS author_name,
+                a.photo AS author_photo,
+                a.profile_url AS author_url
               FROM blogs b
               LEFT JOIN categories c ON b.category_id = c.id
               LEFT JOIN doctors    a ON b.doctor_id   = a.id
               $where
               ORDER BY b.published_at DESC
-              LIMIT " . BLOGS_PER_PAGE . " OFFSET $offset";
+              LIMIT " . (int)BLOGS_PER_PAGE . " OFFSET $offset";
 $blogs_res = $conn->query($blogs_sql);
 
-// ─── Sidebar: Categories with count ──────────────────────────────────────────
-$categories_sql = "SELECT c.name, c.slug, COUNT(b.id) as blog_count 
-                   FROM categories c 
+// ─── Sidebar: Categories ───────────────────────────────────
+$categories_sql = "SELECT c.name, c.slug, COUNT(b.id) as blog_count
+                   FROM categories c
                    LEFT JOIN blogs b ON b.category_id = c.id AND b.is_published = 1
-                   GROUP BY c.id ORDER BY blog_count DESC";
+                   GROUP BY c.id
+                   ORDER BY blog_count DESC";
 $categories_res = $conn->query($categories_sql);
 
-// ─── Sidebar: Latest 4 posts ──────────────────────────────────────────────────
-$latest_sql = "SELECT b.title, b.slug, b.image, b.published_at 
-               FROM blogs b 
-               WHERE b.is_published = 1 
-               ORDER BY b.published_at DESC LIMIT 4";
+// ─── Sidebar: Latest 4 Posts ───────────────────────────────
+$latest_sql = "SELECT b.title, b.slug, b.image, b.published_at
+               FROM blogs b
+               WHERE b.is_published = 1
+               ORDER BY b.published_at DESC
+               LIMIT 4";
 $latest_res = $conn->query($latest_sql);
 
-// ─── Sidebar: All unique tags ─────────────────────────────────────────────────
+// ─── Sidebar: All Unique Tags ──────────────────────────────
 $tags_sql = "SELECT tags FROM blogs WHERE is_published = 1 AND tags IS NOT NULL AND tags != ''";
 $tags_res = $conn->query($tags_sql);
 $all_tags = [];
 while ($row = $tags_res->fetch_assoc()) {
-    $tag_list = array_map('trim', explode(',', $row['tags']));
-    foreach ($tag_list as $tag) {
+    foreach (array_map('trim', explode(',', $row['tags'])) as $tag) {
         if (!empty($tag) && !in_array($tag, $all_tags)) {
             $all_tags[] = $tag;
         }
     }
 }
 
-// ─── Helper: build clean category URL ────────────────────────────────────────
+// ─── Helpers ───────────────────────────────────────────────
 function blogCategoryUrl($slug) {
     return SITE_URL . '/blogs/' . urlencode($slug);
 }
 
-// ─── Helper: build clean pagination URL ──────────────────────────────────────
 function blogPageUrl($pageNum, $catSlug, $searchStr) {
-    global $cat_slug;
     if (!empty($catSlug)) {
-        $url = SITE_URL . '/blogs/' . urlencode($catSlug) . '?page=' . $pageNum;
+        $url  = SITE_URL . '/blogs/' . urlencode($catSlug) . '?page=' . $pageNum;
         if (!empty($searchStr)) $url .= '&search=' . urlencode($searchStr);
     } else {
-        $url = SITE_URL . '/blogs.php?page=' . $pageNum;
+        $url  = SITE_URL . '/blogs.php?page=' . $pageNum;
         if (!empty($searchStr)) $url .= '&search=' . urlencode($searchStr);
     }
     return $url;
@@ -183,6 +195,7 @@ function blogPageUrl($pageNum, $catSlug, $searchStr) {
                                     <?php if (!empty($search)): ?>
                                     No blogs found for "<strong><?= htmlspecialchars($search) ?></strong>".
                                     <a href="<?= SITE_URL ?>/blogs.php">Clear search</a>
+                                    
                                     <?php elseif (!empty($cat_slug)): ?>
                                     No blogs found in this category.
                                     <a href="<?= SITE_URL ?>/blogs.php">View all blogs</a>
@@ -238,7 +251,7 @@ function blogPageUrl($pageNum, $catSlug, $searchStr) {
                         <!-- Search -->
                         <div class="card search-widget">
                             <div class="card-body">
-                                <form class="search-form" method="GET" action="<?= SITE_URL ?>/blogs.php">
+                                <form method="GET" action="">
                                     <div class="input-group">
                                         <input type="text" name="search" placeholder="Search..."
                                             value="<?= htmlspecialchars($search) ?>" class="form-control">

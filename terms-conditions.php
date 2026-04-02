@@ -780,7 +780,7 @@
                                     By visiting our hospital, booking an appointment, using our website, or availing any of our medical services, you acknowledge that you have read, understood, and agree to be bound by these Terms. If you do not agree, please do not use our services.
                                 </p>
                                 <div class="tc-highlight">
-                                    <strong>Note:</strong> These terms apply to all patients, attendants, visitors, and any individual accessing the services of Dr. Agrawal's R.K. Hospital, located at 27, Central Avenue Road, Beside Hotel Al Zam Zam, Gandhibagh, Nagpur – 440002, Maharashtra.
+                                    <strong>Note:</strong> These terms apply to all patients, attendants, visitors, and any individual accessing the services of Dr. Agrawal's R.K. Hospital,27 Chandrashekhar, Azad Square, Central Ave, Ladpura, Itwari, Nagpur, Maharashtra 440002
                                 </div>
                             </div>
                         </div>
@@ -839,7 +839,7 @@
                                 <ul class="tc-list">
                                     <li>
                                         <span class="li-icon"><i class="fa-solid fa-check"></i></span>
-                                        OPD timings are <strong>11:00 AM – 4:00 PM</strong> and <strong>7:00 PM – 9:00 PM</strong>, Monday to Saturday. Emergency services are available 24/7.
+                                         Timings are <strong>Opens 24 Hours</strong> Monday to Sunday . Emergency services are available 24/7.
                                     </li>
                                     <li>
                                         <span class="li-icon"><i class="fa-solid fa-check"></i></span>
