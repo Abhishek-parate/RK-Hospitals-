@@ -291,19 +291,21 @@ $latest_blogs_res = $conn->query($latest_blogs_sql);
 
     <style>
     /* ── WYSIWYG Content Fixes (Bullet points, spacing, full width) ── */
-    .service-content, .widget.about-widget {
+    .service-content,
+    .widget.about-widget {
         width: 100% !important;
         max-width: 100% !important;
         display: block !important;
         box-sizing: border-box !important;
     }
-    
-    .service-content *, .widget.about-widget * {
+
+    .service-content *,
+    .widget.about-widget * {
         max-width: 100% !important;
     }
 
     /* Target all paragraphs and divs inside content to force 100% width and cancel theme padding */
-    .service-content p, 
+    .service-content p,
     .widget.about-widget p,
     .service-content div {
         width: 100% !important;
@@ -312,29 +314,51 @@ $latest_blogs_res = $conn->query($latest_blogs_sql);
         margin-bottom: 1.2rem !important;
         line-height: 1.8 !important;
         color: #555 !important;
-        padding-right: 0px !important;  /* Forces removal of theme's right spacing */
-        margin-right: 0px !important;   /* Forces removal of theme's right spacing */
+        padding-right: 0px !important;
+        /* Forces removal of theme's right spacing */
+        margin-right: 0px !important;
+        /* Forces removal of theme's right spacing */
         word-wrap: break-word !important;
     }
 
     /* Quill specific alignment overrides */
-    .service-content .ql-align-justify, .widget .ql-align-justify { text-align: justify !important; }
-    .service-content .ql-align-center, .widget .ql-align-center { text-align: center !important; }
-    .service-content .ql-align-right, .widget .ql-align-right { text-align: right !important; }
-    .service-content .ql-align-left, .widget .ql-align-left { text-align: left !important; }
+    .service-content .ql-align-justify,
+    .widget .ql-align-justify {
+        text-align: justify !important;
+    }
+
+    .service-content .ql-align-center,
+    .widget .ql-align-center {
+        text-align: center !important;
+    }
+
+    .service-content .ql-align-right,
+    .widget .ql-align-right {
+        text-align: right !important;
+    }
+
+    .service-content .ql-align-left,
+    .widget .ql-align-left {
+        text-align: left !important;
+    }
 
     /* Force restore bullet points & numbered lists for content generated from WYSIWYG */
-    .service-content ul, .widget.about-widget ul {
+    .service-content ul,
+    .widget.about-widget ul {
         list-style-type: disc !important;
         padding-left: 2.5rem !important;
         margin-bottom: 1.5rem !important;
     }
-    .service-content ol, .widget.about-widget ol {
+
+    .service-content ol,
+    .widget.about-widget ol {
         list-style-type: decimal !important;
         padding-left: 2.5rem !important;
         margin-bottom: 1.5rem !important;
     }
-    .service-content li, .widget.about-widget li {
+
+    .service-content li,
+    .widget.about-widget li {
         list-style: inherit !important;
         display: list-item !important;
         margin-bottom: 8px !important;
@@ -346,6 +370,7 @@ $latest_blogs_res = $conn->query($latest_blogs_sql);
         list-style-type: none !important;
         padding-left: 0 !important;
     }
+
     ul.experience-list li {
         list-style: none !important;
         display: block !important;
@@ -489,7 +514,7 @@ $latest_blogs_res = $conn->query($latest_blogs_sql);
 
     /* ── About section ───────────────────────────────────────────── */
     .aboutsection {
-        padding: 40px 0 0;
+        padding: 20px 0 0;
     }
     </style>
 </head>
@@ -500,52 +525,53 @@ $latest_blogs_res = $conn->query($latest_blogs_sql);
 
         <?php include 'include/header.php'; ?>
 
-        <div class="breadcrumb-bar" style="
-            min-height: 500px;
-            display: flex; align-items: center; position: relative;
-            background: url('<?= asset($hero_img) ?>') center center / cover no-repeat;">
+        <div style="width: 100%;">
+            <img src="<?= asset($hero_img) ?>" alt="<?= htmlspecialchars($page_h1) ?> Banner"
+                style="width: 100%; height: auto; display: block;">
+        </div>
 
-            <div style="position:absolute;inset:0;background:rgba(0,0,0,.50);"></div>
-
-            <div class="container" style="position:relative;z-index:2;">
-                <div class="row align-items-center inner-banner">
+        <div class="page-title-section pt-3 pb-0">
+            <div class="container">
+                <div class="row align-items-center">
                     <div class="col-md-12 col-12 text-center">
 
                         <?php if (!empty($service['category_name'])): ?>
-                        <span class="badge mb-3 px-3 py-2"
-                            style="background:rgba(255,255,255,.2);color:#fff;font-size:13px;border:1px solid rgba(255,255,255,.4);border-radius:30px;">
+                        <span class="badge mb-2 px-3 py-2"
+                            style="background:#0d6efd;color:#fff;font-size:13px;border-radius:30px;">
                             <?= htmlspecialchars($service['category_name']) ?>
                         </span>
                         <?php endif; ?>
 
-                        <nav aria-label="breadcrumb" class="page-breadcrumb">
-                            <ol class="breadcrumb justify-content-center">
+                        <nav aria-label="breadcrumb" class="page-breadcrumb mb-2">
+                            <ol class="breadcrumb justify-content-center m-0 p-0" style="background: transparent;">
                                 <li class="breadcrumb-item">
-                                    <a href="index.php"><i class="isax isax-home-15"></i></a>
+                                    <a href="index.php" class="text-muted"><i class="isax isax-home-15"></i></a>
                                 </li>
                                 <li class="breadcrumb-item">
-                                    <a href="services.php">Services</a>
+                                    <a href="services.php" class="text-muted">Services</a>
                                 </li>
                                 <?php if (!empty($service['category_name'])): ?>
                                 <li class="breadcrumb-item">
-                                    <a href="services.php?category=<?= urlencode($service['category_slug']) ?>">
+                                    <a href="services.php?category=<?= urlencode($service['category_slug']) ?>"
+                                        class="text-muted">
                                         <?= htmlspecialchars($service['category_name']) ?>
                                     </a>
                                 </li>
                                 <?php endif; ?>
-                                <li class="breadcrumb-item active" aria-current="page">
+                                <li class="breadcrumb-item active text-dark fw-bold" aria-current="page">
                                     <?= htmlspecialchars($service['title']) ?>
                                 </li>
                             </ol>
-
-                            <h1 class="breadcrumb-title"><?= htmlspecialchars($page_h1) ?></h1>
-
-                            <?php if (!empty($hero_subtitle)): ?>
-                            <p style="color:rgba(255,255,255,.85);max-width:620px;margin:12px auto 0;font-size:16px;">
-                                <?= htmlspecialchars($hero_subtitle) ?>
-                            </p>
-                            <?php endif; ?>
                         </nav>
+
+                        <h1 class="h2 mb-2" style="color: #1a1a2e; font-weight: 700;"><?= htmlspecialchars($page_h1) ?>
+                        </h1>
+
+                        <?php if (!empty($hero_subtitle)): ?>
+                        <p class="text-muted mx-auto mb-2" style="max-width:800px;font-size:16px;">
+                            <?= htmlspecialchars($hero_subtitle) ?>
+                        </p>
+                        <?php endif; ?>
 
                     </div>
                 </div>
@@ -565,7 +591,7 @@ $icon_map = ['doctor' => 'fa-solid fa-user-doctor', 'heart' => 'fa-solid fa-hear
 ?>
 
         <?php if (!empty($hc_heading) || !empty($service['short_description'])): ?>
-        <div class="about-sec aboutsection">
+        <div class="about-sec aboutsection pb-4">
             <div class="container">
                 <div class="row align-items-center">
 
@@ -620,6 +646,7 @@ $icon_map = ['doctor' => 'fa-solid fa-user-doctor', 'heart' => 'fa-solid fa-hear
         <?php endif; ?>
 
         <?php endif; ?>
+
         <div class="content">
             <div class="container">
                 <div class="row">
@@ -725,8 +752,7 @@ $icon_map = ['doctor' => 'fa-solid fa-user-doctor', 'heart' => 'fa-solid fa-hear
                                             <div class="row g-3 service-gallery">
                                                 <?php foreach ($gallery as $img): ?>
                                                 <div class="col-md-4 col-6">
-                                                    <a href="<?= asset($img['src']) ?>"
-                                                        class="gallery-item"
+                                                    <a href="<?= asset($img['src']) ?>" class="gallery-item"
                                                         data-fancybox="service-gallery"
                                                         data-caption="<?= htmlspecialchars($img['alt'] ?? $service['title']) ?>">
                                                         <img src="<?= asset($img['src']) ?>"
@@ -909,11 +935,12 @@ $icon_map = ['doctor' => 'fa-solid fa-user-doctor', 'heart' => 'fa-solid fa-hear
                                         </div>
                                     </li>
                                     <li class="list-group-item px-0">
-                                        <div class="d-flex align-items-center gap-3">
+                                        <div class="d-flex align-items-center gap-1">
                                             <div class="contact-icon"><i class="isax isax-messages-3"></i></div>
                                             <div>
                                                 <p class="mb-0 text-muted small">Email Us</p>
-                                                <a href="mailto:info@rkhospital.com"><b>info@rkhospital.com</b></a>
+                                                <a
+                                                    href="mailto:info@dragrawalsrkhospital.in"><b>info@dragrawalsrkhospital.in</b></a>
                                             </div>
                                         </div>
                                     </li>
@@ -931,7 +958,7 @@ $icon_map = ['doctor' => 'fa-solid fa-user-doctor', 'heart' => 'fa-solid fa-hear
                                             <div class="contact-icon"><i class="isax isax-clock"></i></div>
                                             <div>
                                                 <p class="mb-0 text-muted small">Working Hours</p>
-                                                <b>Mon–Sat: 9AM – 7PM</b>
+                                                <b>Open 24 Hours</b>
                                             </div>
                                         </div>
                                     </li>
