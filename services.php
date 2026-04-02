@@ -65,14 +65,26 @@ while ($row = $tags_res->fetch_assoc()) {
         }
     }
 }
+
+// ─── Build Base URL for Pagination Links ──────────────────────────────────────
+$pagination_base_url = "services";
+if (!empty($cat_id)) {
+    $pagination_base_url = "services/category/" . $cat_id;
+} elseif (!empty($search)) {
+    $pagination_base_url = "services/search/" . urlencode($search);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <base href="/rkhospital/">
+
     <meta charset="utf-8">
     <title>Our Services - Dr. Agrawal's R.K. Hospital</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore all medical services at Dr. Agrawal's R.K. Hospital, Nagpur — orthopedics, gynecology, surgery, maternity care, and more.">
+    <meta name="description"
+        content="Explore all medical services at Dr. Agrawal's R.K. Hospital, Nagpur — orthopedics, gynecology, surgery, maternity care, and more.">
     <meta name="keywords" content="hospital services, orthopedic, gynecology, RK Hospital Nagpur, medical care Nagpur">
     <meta name="author" content="Dr. Agrawal's R.K. Hospital">
 
@@ -87,161 +99,143 @@ while ($row = $tags_res->fetch_assoc()) {
     <link rel="stylesheet" href="assets/plugins/fancybox/jquery.fancybox.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
+
 <body>
 
-<div class="main-wrapper">
+    <div class="main-wrapper">
 
-    <?php $headerClass = 'header-default inner-header'; include 'include/header.php'; ?>
+        <?php $headerClass = 'header-default inner-header'; include 'include/header.php'; ?>
 
-    <!-- Page Content -->
-    <div class="content">
-        <div class="container">
-            <div class="row">
+        <div class="content">
+            <div class="container">
+                <div class="row">
 
-                <!-- ─── Services Grid ──────────────────────────────────────── -->
-                <div class="col-lg-8 col-md-12">
-                    <div class="row blog-grid-row">
+                    <div class="col-lg-8 col-md-12">
+                        <div class="row blog-grid-row">
 
-                        <?php if ($services_res && $services_res->num_rows > 0): ?>
+                            <?php if ($services_res && $services_res->num_rows > 0): ?>
                             <?php while ($service = $services_res->fetch_assoc()): ?>
-                                <div class="col-md-6 col-sm-12">
-                                    <div class="blog grid-blog">
-                                        <div class="blog-image">
+                            <div class="col-md-6 col-sm-12">
+                                <div class="blog grid-blog">
+                                    <div class="blog-image">
+                                        <a href="service/<?= htmlspecialchars($service['slug']) ?>">
+                                            <img class="img-fluid" src="<?= htmlspecialchars($service['image']) ?>"
+                                                alt="<?= htmlspecialchars($service['image_alt'] ?: $service['title']) ?>">
+                                        </a>
+                                        <?php if (!empty($service['category_name'])): ?>
+                                        <span class="badge badge-cyan category-slug">
+                                            <?= htmlspecialchars($service['category_name']) ?>
+                                        </span>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="blog-content">
+                                        <ul class="entry-meta meta-item">
+                                            <li>
+                                                <div class="post-author">
+                                                    <?php if (!empty($service['icon'])): ?>
+                                                    <i class="<?= htmlspecialchars($service['icon']) ?> me-1"></i>
+                                                    <?php endif; ?>
+                                                    <span><?= htmlspecialchars($service['category_name'] ?: 'General') ?></span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <h3 class="blog-title">
                                             <a href="service/<?= htmlspecialchars($service['slug']) ?>">
-                                                <img class="img-fluid"
-                                                     src="<?= htmlspecialchars($service['image']) ?>"
-                                                     alt="<?= htmlspecialchars($service['image_alt'] ?: $service['title']) ?>">
+                                                <?= htmlspecialchars($service['title']) ?>
                                             </a>
-                                            <?php if (!empty($service['category_name'])): ?>
-                                                <span class="badge badge-cyan category-slug">
-                                                    <?= htmlspecialchars($service['category_name']) ?>
-                                                </span>
-                                            <?php endif; ?>
-                                        </div>
-                                        <div class="blog-content">
-                                            <ul class="entry-meta meta-item">
-                                                <li>
-                                                    <div class="post-author">
-                                                        <?php if (!empty($service['icon'])): ?>
-                                                            <i class="<?= htmlspecialchars($service['icon']) ?> me-1"></i>
-                                                        <?php endif; ?>
-                                                        <span><?= htmlspecialchars($service['category_name'] ?: 'General') ?></span>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                            <h3 class="blog-title">
-                                                <a href="service/<?= htmlspecialchars($service['slug']) ?>">
-                                                    <?= htmlspecialchars($service['title']) ?>
-                                                </a>
-                                            </h3>
-                                            <p class="mb-0"><?= htmlspecialchars($service['short_description']) ?></p>
-                                            <div class="mt-3">
-                                                <a href="service/<?= htmlspecialchars($service['slug']) ?>"
-                                                   class="btn btn-sm"
-                                                   style="background:#1a6ef5; color:#fff; border-color:#1a6ef5;">
-                                                    Learn More <i class="fa-solid fa-arrow-right ms-1"></i>
-                                                </a>
-                                            </div>
+                                        </h3>
+                                        <p class="mb-0"><?= htmlspecialchars($service['short_description']) ?></p>
+                                        <div class="mt-3">
+                                            <a href="service/<?= htmlspecialchars($service['slug']) ?>"
+                                                class="btn btn-sm"
+                                                style="background:#1a6ef5; color:#fff; border-color:#1a6ef5;">
+                                                Learn More <i class="fa-solid fa-arrow-right ms-1"></i>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
                             <?php endwhile; ?>
 
-                        <?php else: ?>
+                            <?php else: ?>
                             <div class="col-12">
                                 <div class="alert alert-info mt-3">
                                     <?php if (!empty($search)): ?>
-                                        No services found for "<strong><?= htmlspecialchars($search) ?></strong>".
-                                        <a href="services.php">Clear search</a>
+                                    No services found for "<strong><?= htmlspecialchars($search) ?></strong>".
+                                    <a href="services">Clear search</a>
                                     <?php elseif (!empty($cat_id)): ?>
-                                        No services found in this category.
-                                        <a href="services.php">View all services</a>
+                                    No services found in this category.
+                                    <a href="services">View all services</a>
                                     <?php else: ?>
-                                        No services published yet. Check back soon!
+                                    No services published yet. Check back soon!
                                     <?php endif; ?>
                                 </div>
                             </div>
-                        <?php endif; ?>
+                            <?php endif; ?>
 
-                    </div>
+                        </div>
 
-                    <!-- ─── Pagination ─────────────────────────────────────── -->
-                    <?php if ($total_pages > 1): ?>
+                        <?php if ($total_pages > 1): ?>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="pagination dashboard-pagination mt-md-3 mt-0 mb-4">
                                     <ul>
-                                        <!-- Prev -->
                                         <li>
-                                            <a href="?page=<?= max(1, $page - 1) ?>&category=<?= $cat_id ?>&search=<?= urlencode($search) ?>"
-                                               class="page-link prev <?= $page == 1 ? 'disabled' : '' ?>">Prev</a>
+                                            <a href="<?= $pagination_base_url ?>?page=<?= max(1, $page - 1) ?>"
+                                                class="page-link prev <?= $page == 1 ? 'disabled' : '' ?>">Prev</a>
                                         </li>
 
-                                        <!-- Page Numbers -->
                                         <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-                                            <li>
-                                                <a href="?page=<?= $i ?>&category=<?= $cat_id ?>&search=<?= urlencode($search) ?>"
-                                                   class="page-link <?= $i == $page ? 'active' : '' ?>">
-                                                    <?= $i ?>
-                                                </a>
-                                            </li>
+                                        <li>
+                                            <a href="<?= $pagination_base_url ?>?page=<?= $i ?>"
+                                                class="page-link <?= $i == $page ? 'active' : '' ?>">
+                                                <?= $i ?>
+                                            </a>
+                                        </li>
                                         <?php endfor; ?>
 
-                                        <!-- Next -->
                                         <li>
-                                            <a href="?page=<?= min($total_pages, $page + 1) ?>&category=<?= $cat_id ?>&search=<?= urlencode($search) ?>"
-                                               class="page-link next <?= $page == $total_pages ? 'disabled' : '' ?>">Next</a>
+                                            <a href="<?= $pagination_base_url ?>?page=<?= min($total_pages, $page + 1) ?>"
+                                                class="page-link next <?= $page == $total_pages ? 'disabled' : '' ?>">Next</a>
                                         </li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
-                    <?php endif; ?>
-                    <!-- /Pagination -->
-
-                </div>
-                <!-- /Services Grid -->
-
-                <!-- ─── Sidebar ────────────────────────────────────────────── -->
-                <div class="col-lg-4 col-md-12 sidebar-right theiaStickySidebar">
-
-                    <!-- Search -->
-                    <div class="card search-widget">
-                        <div class="card-body">
-                            <form class="search-form" method="GET" action="services.php">
-                                <div class="input-group">
-                                    <input type="text" name="search"
-                                           placeholder="Search services..."
-                                           value="<?= htmlspecialchars($search) ?>"
-                                           class="form-control">
-                                    <button type="submit" class="btn btn-primary">
-                                        <i class="isax isax-search-normal"></i>
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
+                        <?php endif; ?>
                     </div>
-                    <!-- /Search -->
+                    <div class="col-lg-4 col-md-12 sidebar-right theiaStickySidebar">
 
-                    <!-- Latest Services -->
-                    <div class="card post-widget">
-                        <div class="card-body">
-                            <h5 class="mb-3">Latest Services</h5>
-                            <ul class="latest-posts">
-                                <?php
+                        <div class="card search-widget">
+                            <div class="card-body">
+                                <form class="search-form" method="GET" action="services">
+                                    <div class="input-group">
+                                        <input type="text" name="search" placeholder="Search services..."
+                                            value="<?= htmlspecialchars($search) ?>" class="form-control">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="isax isax-search-normal"></i>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="card post-widget">
+                            <div class="card-body">
+                                <h5 class="mb-3">Latest Services</h5>
+                                <ul class="latest-posts">
+                                    <?php
                                 $latest_res->data_seek(0);
                                 while ($latest = $latest_res->fetch_assoc()):
                                 ?>
                                     <li>
                                         <div class="post-thumb">
                                             <a href="service/<?= htmlspecialchars($latest['slug']) ?>">
-                                                <img class="img-fluid"
-                                                     src="<?= htmlspecialchars($latest['image']) ?>"
-                                                     alt="<?= htmlspecialchars($latest['image_alt'] ?: $latest['title']) ?>">
+                                                <img class="img-fluid" src="<?= htmlspecialchars($latest['image']) ?>"
+                                                    alt="<?= htmlspecialchars($latest['image_alt'] ?: $latest['title']) ?>">
                                             </a>
                                         </div>
                                         <div class="post-info">
-                                            <p><?= formatDate($latest['created_at']) ?></p>
+                                            <p><?= date('d M Y', strtotime($latest['created_at'])) ?></p>
                                             <h4>
                                                 <a href="service/<?= htmlspecialchars($latest['slug']) ?>">
                                                     <?= htmlspecialchars($latest['title']) ?>
@@ -249,90 +243,70 @@ while ($row = $tags_res->fetch_assoc()) {
                                             </h4>
                                         </div>
                                     </li>
-                                <?php endwhile; ?>
-                            </ul>
+                                    <?php endwhile; ?>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-                    <!-- /Latest Services -->
-
-                    <!-- Categories -->
-                    <div class="card category-widget">
-                        <div class="card-body">
-                            <h5 class="mb-3">Categories</h5>
-                            <ul class="categories">
-                                <?php
+                        <div class="card category-widget">
+                            <div class="card-body">
+                                <h5 class="mb-3">Categories</h5>
+                                <ul class="categories">
+                                    <?php
                                 $categories_res->data_seek(0);
                                 while ($cat = $categories_res->fetch_assoc()):
                                     $active = ($cat_id === (int)$cat['id']) ? 'style="font-weight:600;"' : '';
                                 ?>
                                     <li>
-                                        <a href="services.php?category=<?= (int)$cat['id'] ?>" <?= $active ?>>
+                                        <a href="services/category/<?= (int)$cat['id'] ?>" <?= $active ?>>
                                             <?= htmlspecialchars($cat['name']) ?>
                                             <span>(<?= $cat['service_count'] ?>)</span>
                                         </a>
                                     </li>
-                                <?php endwhile; ?>
-                                <?php if (!empty($cat_id)): ?>
-                                    <li><a href="services.php">View All</a></li>
-                                <?php endif; ?>
-                            </ul>
+                                    <?php endwhile; ?>
+                                    <?php if (!empty($cat_id)): ?>
+                                    <li><a href="services">View All</a></li>
+                                    <?php endif; ?>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-                    <!-- /Categories -->
-
-                    <!-- Tags (Focus Keywords) -->
-                    <div class="card tags-widget">
-                        <div class="card-body">
-                            <h5 class="mb-3">Keywords</h5>
-                            <ul class="tags">
-                                <?php foreach ($all_tags as $tag): ?>
+                        <div class="card tags-widget">
+                            <div class="card-body">
+                                <h5 class="mb-3">Keywords</h5>
+                                <ul class="tags">
+                                    <?php foreach ($all_tags as $tag): ?>
                                     <li>
-                                        <a href="services.php?search=<?= urlencode($tag) ?>" class="tag">
+                                        <a href="services/search/<?= urlencode($tag) ?>" class="tag">
                                             <?= htmlspecialchars($tag) ?>
                                         </a>
                                     </li>
-                                <?php endforeach; ?>
-                            </ul>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card" style="background: linear-gradient(135deg, #1a6ef5, #0d4fbf); color:#fff;">
+                            <div class="card-body text-center py-4">
+                                <i class="fa-solid fa-calendar-check fa-2x mb-3"></i>
+                                <h5 class="mb-2">Need a Consultation?</h5>
+                                <p class="mb-3" style="font-size:0.9rem; opacity:0.9;">Book an appointment with our
+                                    specialists today.</p>
+                                <a href="contact-us" class="btn btn-light btn-sm fw-semibold" style="color:#1a6ef5;">
+                                    Book Now
+                                </a>
+                            </div>
                         </div>
                     </div>
-                    <!-- /Tags -->
-
-                    <!-- Book Appointment CTA -->
-                    <div class="card" style="background: linear-gradient(135deg, #1a6ef5, #0d4fbf); color:#fff;">
-                        <div class="card-body text-center py-4">
-                            <i class="fa-solid fa-calendar-check fa-2x mb-3"></i>
-                            <h5 class="mb-2">Need a Consultation?</h5>
-                            <p class="mb-3" style="font-size:0.9rem; opacity:0.9;">Book an appointment with our specialists today.</p>
-                            <a href="contact-us"
-                               class="btn btn-light btn-sm fw-semibold"
-                               style="color:#1a6ef5;">
-                                Book Now
-                            </a>
-                        </div>
-                    </div>
-                    <!-- /Book Appointment CTA -->
-
                 </div>
-                <!-- /Sidebar -->
-
             </div>
         </div>
+        <?php include 'include/footer.php'; ?>
     </div>
-    <!-- /Page Content -->
-
-    <!-- Footer -->
-    <?php include 'include/footer.php'; ?>
-    <!-- /Footer -->
-
-</div>
-<!-- /Main Wrapper -->
-
-<script src="assets/js/jquery-3.7.1.min.js"></script>
-<script src="assets/js/bootstrap.bundle.min.js"></script>
-<script src="assets/plugins/theia-sticky-sidebar/ResizeSensor.js"></script>
-<script src="assets/plugins/theia-sticky-sidebar/theia-sticky-sidebar.js"></script>
-<script src="assets/plugins/fancybox/jquery.fancybox.min.js"></script>
-<script src="assets/js/script.js"></script>
+    <script src="assets/js/jquery-3.7.1.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/plugins/theia-sticky-sidebar/ResizeSensor.js"></script>
+    <script src="assets/plugins/theia-sticky-sidebar/theia-sticky-sidebar.js"></script>
+    <script src="assets/plugins/fancybox/jquery.fancybox.min.js"></script>
+    <script src="assets/js/script.js"></script>
 </body>
+
 </html>
 <?php $conn->close(); ?>

@@ -15,7 +15,13 @@ RewriteRule ^blogs/([^/]+)/?$ blogs.php?category=$1 [B,L,QSA]
 # 4. SERVICE CLEAN URL  (/service/slug)
 RewriteRule ^service/([a-zA-Z0-9_-]+)$ single-service.php?slug=$1 [L,QSA]
 
-# 5. REMOVE .php FROM URL (INTERNAL)
+# 5. SERVICES CATEGORY CLEAN URL (/services/category/id)
+RewriteRule ^services/category/([^/]+)/?$ services.php?category=$1 [B,L,QSA]
+
+# 6. SERVICES KEYWORD SEARCH CLEAN URL (/services/search/keyword)
+RewriteRule ^services/search/([^/]+)/?$ services.php?search=$1 [B,L,QSA]
+
+# 7. REMOVE .php FROM URL (INTERNAL)
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.php -f
 RewriteRule ^([^/]+)$ $1.php [L]

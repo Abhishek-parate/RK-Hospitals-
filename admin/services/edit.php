@@ -237,10 +237,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ['name'=>$title,     'url'=>'/'.$slug]
     ], JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
 
-    // Gallery — keep existing + add new
+    // Gallery — keep selected existing images + add new uploads
     $existingGallery = [];
     if (!empty($svc['gallery_json']))
         $existingGallery = json_decode($svc['gallery_json'], true) ?: [];
+
+    // Filter existing gallery: only keep images whose hidden input was submitted
+    // (user removes an existing image by clicking ✕ which removes its hidden input from the DOM)
+    if (!empty($existingGallery)) {
+        $keptPaths = isset($_POST['gallery_keep']) ? (array)$_POST['gallery_keep'] : [];
+        $existingGallery = array_values(array_filter($existingGallery, function($gi) use ($keptPaths) {
+            return in_array($gi['src'], $keptPaths);
+        }));
+    }
 
     if (!empty($_FILES['gallery_images']['name'][0])) {
         $galleryDir = '../../assets/img/services/gallery/';
@@ -1071,21 +1080,29 @@ require_once '../include/head.php';
                                 $existingGalleryView = !empty($svc['gallery_json']) ? (json_decode($svc['gallery_json'], true) ?: []) : [];
                                 if (!empty($existingGalleryView)):
                                 ?>
-                                <div class="row g-2 mb-3">
+                                <p class="mb-2" style="font-size:.72rem;color:#6c757d;"><i class="fa fa-info-circle me-1 text-primary"></i>Click <strong style="color:#dc3545;">✕</strong> on an image to remove it. New uploads are added below.</p>
+                                <div class="row g-2 mb-3" id="existingGalleryWrap">
                                     <?php foreach ($existingGalleryView as $gi): ?>
-                                    <div class="col-4">
+                                    <div class="col-4 existing-gallery-item">
                                         <div class="gallery-thumb-wrap">
-                                            <img src="../../<?= htmlspecialchars($gi['src']) ?>" alt="">
+                                            <img src="../../<?= htmlspecialchars($gi['src']) ?>" alt="<?= htmlspecialchars($gi['alt'] ?? '') ?>">
+                                            <button type="button" class="gallery-thumb-remove" onclick="this.closest('.existing-gallery-item').remove()" title="Remove this image">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                            <input type="hidden" name="gallery_keep[]" value="<?= htmlspecialchars($gi['src']) ?>">
                                         </div>
                                     </div>
                                     <?php endforeach; ?>
                                 </div>
-                                <small class="text-muted d-block mb-2" style="font-size:.72rem;"><i class="fa fa-info-circle me-1"></i>New uploads will be added to existing gallery.</small>
                                 <?php endif; ?>
                                 <div class="upload-zone" id="galleryZone">
                                     <div class="uz-icon"><i class="fa fa-images"></i></div>
-                                    <p>Click or drag to add Gallery Images</p>
+                                    <p>Click or drag to add more Gallery Images</p>
+                                    <small class="text-muted" style="font-size:.72rem;">Multiple files — auto-converted to WebP</small>
                                 </div>
+                                <!-- galleryPicker: UI trigger only (no name) — safe to reset after each pick -->
+                                <input type="file" id="galleryPicker" accept="image/*" class="d-none" multiple>
+                                <!-- galleryInput: actual form submission — rebuilt via DataTransfer, never reset -->
                                 <input type="file" name="gallery_images[]" id="galleryInput" accept="image/*" class="d-none" multiple>
                                 <div class="row g-2 mt-2" id="galleryPreview"></div>
                             </div>
@@ -1199,16 +1216,18 @@ if (el('quillEditor')) {
         theme: 'snow',
         modules: {
             toolbar: [
-                [{ header: [1,2,3,false] }],
+                [{ header: [1,2,3,4,5,6,false] }],
+                [{ 'align': [] }], // ◄ Alignment dropdown (includes justify)
                 ['bold','italic','underline','strike'],
+                [{ 'color': [] }, { 'background': [] }],
                 [{ list:'ordered' },{ list:'bullet' }],
                 ['blockquote','link'],
-                [{ align:[] }],
                 ['clean']
             ]
         }
     });
     var saved = el('svcContent') ? el('svcContent').value : '';
+    
     if (saved) quill.clipboard.dangerouslyPasteHTML(saved);
     quill.on('text-change', function () {
         if (el('svcContent')) el('svcContent').value = quill.root.innerHTML;
@@ -1293,36 +1312,76 @@ bindZone('ogZone',      'ogInput',      'ogPrev',      'ogImgBox', 0.80);
 bindZone('hcImgZone',   'hcImgInput',   'hcImgPrev',   null,       0.85);
 bindZone('scThumbZone', 'scThumbInput', 'scThumbPrev', null,       0.85);
 
-var galleryZone=el('galleryZone'), galleryInput=el('galleryInput');
-if (galleryZone && galleryInput) {
-    galleryZone.onclick   = function(){ galleryInput.click(); };
-    galleryZone.ondragover= function(e){ e.preventDefault(); this.style.borderColor='#0d6efd'; };
-    galleryZone.ondragleave=function() { this.style.borderColor=''; };
-    galleryZone.ondrop    = function(e){
-        e.preventDefault(); this.style.borderColor='';
-        if (e.dataTransfer.files.length) {
-            try { var dt=new DataTransfer(); Array.from(e.dataTransfer.files).forEach(function(f){dt.items.add(f);}); galleryInput.files=dt.files; } catch(ex){}
-            galleryInput.dispatchEvent(new Event('change'));
-        }
-    };
-    galleryInput.onchange = function(){
-        var wrap=el('galleryPreview'); if(!wrap) return; wrap.innerHTML='';
-        Array.from(this.files).forEach(function(file){
-            var reader=new FileReader();
-            reader.onload=function(ev){
-                var img=new Image();
-                img.onload=function(){
-                    var c=document.createElement('canvas'); c.width=img.width; c.height=img.height;
-                    c.getContext('2d').drawImage(img,0,0);
-                    var url=c.toDataURL('image/webp',0.80);
-                    var col=document.createElement('div'); col.className='col-4';
-                    col.innerHTML='<div class="gallery-thumb-wrap"><img src="'+url+'" alt=""><span class="gallery-thumb-name">'+file.name+'</span><button type="button" class="gallery-thumb-remove" onclick="this.closest(\'.col-4\').remove()"><i class="fa fa-times"></i></button></div>';
-                    wrap.appendChild(col);
+var galleryZone=el('galleryZone'), galleryInput=el('galleryInput'), galleryPicker=el('galleryPicker');
+
+// ── Gallery: accumulating file list with individual remove ───────────────
+var galleryFiles = []; // tracks all selected File objects
+
+function rebuildGalleryInput() {
+    if (!galleryInput) return;
+    try {
+        var dt = new DataTransfer();
+        galleryFiles.forEach(function(f){ dt.items.add(f); });
+        galleryInput.files = dt.files; // this is the SUBMIT input — never reset
+    } catch(ex) { console.warn('[Gallery] DataTransfer not supported', ex); }
+}
+
+function renderGalleryPreviews() {
+    var wrap = el('galleryPreview');
+    if (!wrap) return;
+    wrap.innerHTML = '';
+    if (galleryFiles.length === 0) return;
+    galleryFiles.forEach(function(file, idx) {
+        var reader = new FileReader();
+        reader.onload = function(ev) {
+            var img = new Image();
+            img.onload = function() {
+                var c = document.createElement('canvas');
+                c.width = img.width; c.height = img.height;
+                c.getContext('2d').drawImage(img, 0, 0);
+                var url = c.toDataURL('image/webp', 0.80);
+                var col = document.createElement('div');
+                col.className = 'col-4';
+                col.setAttribute('data-gallery-idx', idx);
+                col.innerHTML =
+                    '<div class="gallery-thumb-wrap">' +
+                    '<img src="'+url+'" alt="">' +
+                    '<button type="button" class="gallery-thumb-remove" data-idx="'+idx+'" title="Remove"><i class="fa fa-times"></i></button>' +
+                    '<span class="gallery-thumb-name">'+file.name+'</span>' +
+                    '</div>';
+                col.querySelector('.gallery-thumb-remove').onclick = function() {
+                    var i = parseInt(this.getAttribute('data-idx'));
+                    galleryFiles.splice(i, 1);
+                    rebuildGalleryInput();
+                    renderGalleryPreviews();
                 };
-                img.src=ev.target.result;
+                wrap.appendChild(col);
             };
-            reader.readAsDataURL(file);
-        });
+            img.src = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+    });
+}
+
+function addFilesToGallery(files) {
+    Array.from(files).forEach(function(f){ galleryFiles.push(f); });
+    rebuildGalleryInput();
+    renderGalleryPreviews();
+}
+
+if (galleryZone && galleryPicker) {
+    // Zone clicks open the PICKER (not the submit input)
+    galleryZone.onclick   = function(){ galleryPicker.click(); };
+    galleryZone.ondragover= function(e){ e.preventDefault(); this.style.borderColor='#0d6efd'; this.style.background='#f0f7ff'; };
+    galleryZone.ondragleave=function() { this.style.borderColor=''; this.style.background=''; };
+    galleryZone.ondrop    = function(e){
+        e.preventDefault(); this.style.borderColor=''; this.style.background='';
+        if (e.dataTransfer.files.length) addFilesToGallery(e.dataTransfer.files);
+    };
+    // Picker onchange: accumulate then RESET picker (safe — this is NOT the submit input)
+    galleryPicker.onchange = function(){
+        if (this.files && this.files.length) addFilesToGallery(this.files);
+        this.value = ''; // safe to reset — galleryInput (submit) was rebuilt via DataTransfer
     };
 }
 

@@ -1103,6 +1103,7 @@ require_once '../include/head.php';
                                     <p>Click or drag Gallery Images</p>
                                     <small class="text-muted" style="font-size:.72rem;">Multiple files — auto-converted to WebP</small>
                                 </div>
+                                <input type="file" id="galleryPicker" accept="image/*" class="d-none" multiple>
                                 <input type="file" name="gallery_images[]" id="galleryInput" accept="image/*" class="d-none" multiple>
                                 <div class="row g-2 mt-2" id="galleryPreview"></div>
                             </div>
@@ -1215,15 +1216,17 @@ if (quillEl) {
         placeholder: 'Write detailed service description here...',
         modules: {
             toolbar: [
-                [{ header: [1,2,3,false] }],
+                [{ header: [1,2,3,4,5,6,false] }],
+                [{ 'align': [] }], // ◄ Added this line explicitly to enable justify dropdown
                 ['bold','italic','underline','strike'],
+                [{ 'color': [] }, { 'background': [] }],
                 [{ list:'ordered' },{ list:'bullet' }],
                 ['blockquote','link'],
-                [{ align:[] }],
                 ['clean']
             ]
         }
     });
+
 
     var savedContent = el('svcContent') ? el('svcContent').value : '';
     if (savedContent) quill.clipboard.dangerouslyPasteHTML(savedContent);
@@ -1369,47 +1372,76 @@ bindZone('ogZone',      'ogInput',      'ogPrev',      'ogImgBox', 0.80);
 bindZone('hcImgZone',   'hcImgInput',   'hcImgPrev',   null,       0.85);
 bindZone('scThumbZone', 'scThumbInput', 'scThumbPrev', null,       0.85);
 
-// Gallery
-var galleryZone  = el('galleryZone');
-var galleryInput = el('galleryInput');
-if (galleryZone && galleryInput) {
-    galleryZone.onclick   = function () { galleryInput.click(); };
-    galleryZone.ondragover= function (e){ e.preventDefault(); this.style.borderColor='#0d6efd'; };
-    galleryZone.ondragleave=function ()  { this.style.borderColor=''; };
-    galleryZone.ondrop    = function (e) {
-        e.preventDefault(); this.style.borderColor='';
-        if (e.dataTransfer.files.length) {
-            try { var dt=new DataTransfer(); Array.from(e.dataTransfer.files).forEach(function(f){dt.items.add(f);}); galleryInput.files=dt.files; } catch(ex){}
-            galleryInput.dispatchEvent(new Event('change'));
-        }
-    };
-    galleryInput.onchange = function () {
-        var wrap = el('galleryPreview');
-        if (!wrap) return;
-        wrap.innerHTML = '';
-        Array.from(this.files).forEach(function (file) {
-            var reader = new FileReader();
-            reader.onload = function (ev) {
-                var img = new Image();
-                img.onload = function () {
-                    var canvas = document.createElement('canvas');
-                    canvas.width=img.width; canvas.height=img.height;
-                    canvas.getContext('2d').drawImage(img,0,0);
-                    var url = canvas.toDataURL('image/webp', 0.80);
-                    var col = document.createElement('div');
-                    col.className = 'col-4';
-                    col.innerHTML =
-                        '<div class="gallery-thumb-wrap">'+
-                        '<img src="'+url+'" alt="">'+
-                        '<span class="gallery-thumb-name">'+file.name+'</span>'+
-                        '<button type="button" class="gallery-thumb-remove" onclick="this.closest(\'.col-4\').remove()"><i class="fa fa-times"></i></button>'+
-                        '</div>';
-                    wrap.appendChild(col);
+// Gallery — accumulating multi-file with individual remove
+var galleryFiles = []; // tracks all selected File objects
+var galleryZone   = el('galleryZone');
+var galleryPicker = el('galleryPicker'); // UI trigger only — safe to reset
+var galleryInput  = el('galleryInput'); // form submit input — rebuilt via DataTransfer, never reset
+
+function rebuildGalleryInput() {
+    if (!galleryInput) return;
+    try {
+        var dt = new DataTransfer();
+        galleryFiles.forEach(function(f){ dt.items.add(f); });
+        galleryInput.files = dt.files; // never reset this input after setting
+    } catch(ex) { console.warn('[Gallery] DataTransfer not supported', ex); }
+}
+
+function renderGalleryPreviews() {
+    var wrap = el('galleryPreview');
+    if (!wrap) return;
+    wrap.innerHTML = '';
+    if (galleryFiles.length === 0) return;
+    galleryFiles.forEach(function(file, idx) {
+        var reader = new FileReader();
+        reader.onload = function(ev) {
+            var img = new Image();
+            img.onload = function() {
+                var canvas = document.createElement('canvas');
+                canvas.width = img.width; canvas.height = img.height;
+                canvas.getContext('2d').drawImage(img, 0, 0);
+                var url = canvas.toDataURL('image/webp', 0.80);
+                var col = document.createElement('div');
+                col.className = 'col-4';
+                col.setAttribute('data-gallery-idx', idx);
+                col.innerHTML =
+                    '<div class="gallery-thumb-wrap">' +
+                    '<img src="' + url + '" alt="">' +
+                    '<button type="button" class="gallery-thumb-remove" data-idx="' + idx + '" title="Remove"><i class="fa fa-times"></i></button>' +
+                    '<span class="gallery-thumb-name">' + file.name + '</span>' +
+                    '</div>';
+                col.querySelector('.gallery-thumb-remove').onclick = function() {
+                    var i = parseInt(this.getAttribute('data-idx'));
+                    galleryFiles.splice(i, 1);
+                    rebuildGalleryInput();
+                    renderGalleryPreviews();
                 };
-                img.src = ev.target.result;
+                wrap.appendChild(col);
             };
-            reader.readAsDataURL(file);
-        });
+            img.src = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+    });
+}
+
+function addFilesToGallery(files) {
+    Array.from(files).forEach(function(f){ galleryFiles.push(f); });
+    rebuildGalleryInput();
+    renderGalleryPreviews();
+}
+
+if (galleryZone && galleryPicker) {
+    galleryZone.onclick    = function () { galleryPicker.click(); }; // open PICKER not submit input
+    galleryZone.ondragover = function (e){ e.preventDefault(); this.style.borderColor='#0d6efd'; this.style.background='#f0f7ff'; };
+    galleryZone.ondragleave= function ()  { this.style.borderColor=''; this.style.background=''; };
+    galleryZone.ondrop     = function (e) {
+        e.preventDefault(); this.style.borderColor=''; this.style.background='';
+        if (e.dataTransfer.files.length) addFilesToGallery(e.dataTransfer.files);
+    };
+    // Picker onchange: accumulate then reset PICKER (safe — galleryInput is the real submit input)
+    galleryPicker.onchange = function () {
+        if (this.files && this.files.length) addFilesToGallery(this.files);
+        this.value = ''; // safe: resets only the picker, not galleryInput
     };
 }
 

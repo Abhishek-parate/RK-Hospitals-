@@ -290,6 +290,67 @@ $latest_blogs_res = $conn->query($latest_blogs_sql);
     <link rel="stylesheet" href="<?= asset('assets/css/style.css') ?>">
 
     <style>
+    /* ── WYSIWYG Content Fixes (Bullet points, spacing, full width) ── */
+    .service-content, .widget.about-widget {
+        width: 100% !important;
+        max-width: 100% !important;
+        display: block !important;
+        box-sizing: border-box !important;
+    }
+    
+    .service-content *, .widget.about-widget * {
+        max-width: 100% !important;
+    }
+
+    /* Target all paragraphs and divs inside content to force 100% width and cancel theme padding */
+    .service-content p, 
+    .widget.about-widget p,
+    .service-content div {
+        width: 100% !important;
+        max-width: 100% !important;
+        text-align: justify !important;
+        margin-bottom: 1.2rem !important;
+        line-height: 1.8 !important;
+        color: #555 !important;
+        padding-right: 0px !important;  /* Forces removal of theme's right spacing */
+        margin-right: 0px !important;   /* Forces removal of theme's right spacing */
+        word-wrap: break-word !important;
+    }
+
+    /* Quill specific alignment overrides */
+    .service-content .ql-align-justify, .widget .ql-align-justify { text-align: justify !important; }
+    .service-content .ql-align-center, .widget .ql-align-center { text-align: center !important; }
+    .service-content .ql-align-right, .widget .ql-align-right { text-align: right !important; }
+    .service-content .ql-align-left, .widget .ql-align-left { text-align: left !important; }
+
+    /* Force restore bullet points & numbered lists for content generated from WYSIWYG */
+    .service-content ul, .widget.about-widget ul {
+        list-style-type: disc !important;
+        padding-left: 2.5rem !important;
+        margin-bottom: 1.5rem !important;
+    }
+    .service-content ol, .widget.about-widget ol {
+        list-style-type: decimal !important;
+        padding-left: 2.5rem !important;
+        margin-bottom: 1.5rem !important;
+    }
+    .service-content li, .widget.about-widget li {
+        list-style: inherit !important;
+        display: list-item !important;
+        margin-bottom: 8px !important;
+        line-height: 1.7;
+    }
+
+    /* Reset the experience-list timeline so it does not inherit bullet point fixes */
+    ul.experience-list {
+        list-style-type: none !important;
+        padding-left: 0 !important;
+    }
+    ul.experience-list li {
+        list-style: none !important;
+        display: block !important;
+    }
+
     /* ── Appointment Form Styles ─────────────────────────────────── */
     .date-icon {
         position: absolute;
@@ -407,12 +468,19 @@ $latest_blogs_res = $conn->query($latest_blogs_sql);
     }
 
     /* ── Gallery grid ────────────────────────────────────────────── */
+    .service-gallery .gallery-item {
+        overflow: hidden;
+        border-radius: 10px;
+        display: block;
+    }
+
     .service-gallery img {
         border-radius: 10px;
         object-fit: cover;
         width: 100%;
-        height: 140px;
+        height: 180px;
         transition: transform .3s;
+        display: block;
     }
 
     .service-gallery a:hover img {
@@ -657,10 +725,13 @@ $icon_map = ['doctor' => 'fa-solid fa-user-doctor', 'heart' => 'fa-solid fa-hear
                                             <div class="row g-3 service-gallery">
                                                 <?php foreach ($gallery as $img): ?>
                                                 <div class="col-md-4 col-6">
-                                                    <a href="<?= htmlspecialchars($img['src']) ?>"
-                                                        data-fancybox="service-gallery">
-                                                        <img src="<?= htmlspecialchars($img['src']) ?>"
-                                                            alt="<?= htmlspecialchars($img['alt'] ?? $service['title']) ?>">
+                                                    <a href="<?= asset($img['src']) ?>"
+                                                        class="gallery-item"
+                                                        data-fancybox="service-gallery"
+                                                        data-caption="<?= htmlspecialchars($img['alt'] ?? $service['title']) ?>">
+                                                        <img src="<?= asset($img['src']) ?>"
+                                                            alt="<?= htmlspecialchars($img['alt'] ?? $service['title']) ?>"
+                                                            loading="lazy">
                                                     </a>
                                                 </div>
                                                 <?php endforeach; ?>
@@ -668,8 +739,6 @@ $icon_map = ['doctor' => 'fa-solid fa-user-doctor', 'heart' => 'fa-solid fa-hear
                                         </div>
                                         <?php endif; ?>
 
-                                        <!-- ─── Why Choose RK Hospital ───────────────────────────────────────────── -->
-                                        <!-- ─── Why Choose RK Hospital ───────────────────────────────────────────── -->
                                         <?php if (!empty($why_choose)): ?>
                                         <div class="widget about-widget">
                                             <h3 class="widget-title">
